@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Stack, Text, Title } from '@mantine/core'
 import { motion } from 'motion/react'
 import { useEffect } from 'react'
 import { LegalPageShell } from '../components/legal/LegalPageShell'
@@ -23,11 +24,11 @@ function ImpressumPage() {
       title={
         <>
           {m.legal_imprint_title()}
-          <span style={{ color: 'var(--accent-gold)' }}>.</span>
+          <Text component="span" c="var(--app-accent-gold)">.</Text>
         </>
       }
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 44 }}>
+      <Stack gap={44}>
         {blocks.map((block, blockIndex) => (
           <motion.article
             key={block.title ?? `block-${blockIndex}`}
@@ -36,18 +37,19 @@ function ImpressumPage() {
             transition={{ duration: 0.55, delay: 0.08 * blockIndex, ease: [0.16, 1, 0.3, 1] }}
           >
             {block.title && (
-              <h2
+              <Title
+                order={2}
                 className="display"
                 style={{
                   fontSize: '1.35rem',
                   fontWeight: 400,
                   margin: '0 0 18px',
                   letterSpacing: '-0.01em',
-                  color: 'var(--text-primary)',
+                  color: 'var(--app-text-primary)',
                 }}
               >
                 {block.title}
-              </h2>
+              </Title>
             )}
             {block.paragraphs.map((paragraph, i) => (
               <LegalParagraph key={i} last={i === block.paragraphs.length - 1}>
@@ -56,7 +58,7 @@ function ImpressumPage() {
             ))}
           </motion.article>
         ))}
-      </div>
+      </Stack>
     </LegalPageShell>
   )
 }

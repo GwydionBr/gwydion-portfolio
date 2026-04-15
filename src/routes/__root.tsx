@@ -2,7 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
-import { theme } from "../lib/theme";
+import { cssVariablesResolver, theme } from "../lib/theme";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { LanguageProvider, useLanguage } from "../lib/LanguageContext";
@@ -42,7 +42,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="auto">
+        <MantineProvider
+          theme={theme}
+          cssVariablesResolver={cssVariablesResolver}
+          defaultColorScheme="auto"
+        >
           <LanguageProvider>
             <div className="grain-overlay" aria-hidden="true" />
             <ConnectedHeader />

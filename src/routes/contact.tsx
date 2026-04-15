@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Alert, Anchor, Button, Group, SimpleGrid, Stack, Text, TextInput, Textarea, ThemeIcon } from '@mantine/core'
 import { motion } from 'motion/react'
-import { PaperPlaneTilt, ArrowUpRight } from '@phosphor-icons/react'
+import { PaperPlaneTiltIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useForm } from '@mantine/form'
+import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
 import * as m from '../paraglide/messages'
 import { contactLimits, contactSchema, type ContactForm } from '../lib/contact'
 
@@ -36,154 +38,136 @@ function ContactPage() {
   }
 
   return (
-    <main style={{ position: 'relative', zIndex: 1, paddingTop: 100 }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
+    <PageMain>
+      <PageContainer>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">{m.contact_heading()}</span>
-          <h1
-            className="display"
-            style={{
-              fontSize: 'clamp(3rem, 7vw, 6rem)',
-              lineHeight: 0.96,
-              margin: '16px 0 0',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {m.contact_heading()}.
-          </h1>
+          <Eyebrow mb={16}>{m.contact_heading()}</Eyebrow>
+          <DisplayTitle>
+            {m.contact_heading()}
+            <span style={{ color: 'var(--app-accent-gold)' }}>.</span>
+          </DisplayTitle>
         </motion.div>
 
-        <motion.hr
-          className="gold-rule"
+        <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left', margin: '40px 0 60px' }}
-        />
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '60px 80px',
-            alignItems: 'start',
-          }}
+          style={{ transformOrigin: 'left' }}
         >
-          {/* Left: info */}
+          <AccentRule my={40} />
+        </motion.div>
+
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={80} verticalSpacing={60}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p style={{ fontSize: '1.05rem', lineHeight: 1.75, color: 'var(--text-secondary)', margin: '0 0 40px' }}>
+            <Text size="lg" lh={1.75} c="var(--app-text-secondary)" mb={40}>
               {m.contact_sub()}
-            </p>
+            </Text>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Stack gap="md">
               {CONTACT_ITEMS.map(({ label, value, href }) => (
-                <div key={label}>
-                  <div className="mono-label" style={{ marginBottom: 6 }}>{label}</div>
+                <Stack key={label} gap={6}>
+                  <Eyebrow>{label}</Eyebrow>
                   {href ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 5,
-                        fontSize: '0.9rem', color: 'var(--text-primary)',
-                        textDecoration: 'none', transition: 'color 0.2s',
-                      }}
-                    >
-                      {value} <ArrowUpRight size={13} />
-                    </a>
+                    <Anchor href={href} target="_blank" rel="noopener noreferrer" c="var(--app-text-primary)" underline="never">
+                      <Group component="span" gap={5}>
+                        {value} <ArrowUpRightIcon size={13} />
+                      </Group>
+                    </Anchor>
                   ) : (
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>{value}</span>
+                    <Text size="sm" c="var(--app-text-primary)">
+                      {value}
+                    </Text>
                   )}
-                </div>
+                </Stack>
               ))}
-            </div>
+            </Stack>
           </motion.div>
 
-          {/* Right: form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="card"
-                style={{ padding: '48px 40px', textAlign: 'center' }}
-              >
-                <PaperPlaneTilt
-                  size={40}
-                  weight="thin"
-                  style={{ color: 'var(--accent-green)', marginBottom: 20 }}
-                />
-                <h3 className="display" style={{ margin: '0 0 12px', fontSize: '1.8rem' }}>
-                  {m.contact_success()}
-                </h3>
+              <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
+                <AppCard p={48} ta="center">
+                  <ThemeIcon color="forest" size={56} radius="xl" mx="auto" mb={20}>
+                    <PaperPlaneTiltIcon size={28} weight="thin" />
+                  </ThemeIcon>
+                  <DisplayTitle order={3} size="1.8rem" mb={0}>
+                    {m.contact_success()}
+                  </DisplayTitle>
+                </AppCard>
               </motion.div>
             ) : (
-              <form
-                onSubmit={form.onSubmit(handleSubmit)}
-                style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
-              >
-                <FormField label={m.contact_name()} error={form.errors.name as string}>
-                  <input id="contact-name" type="text" autoComplete="name" placeholder="Gwydion" {...form.getInputProps('name')} style={inputStyle(!!form.errors.name)} />
-                </FormField>
+              <form onSubmit={form.onSubmit(handleSubmit)}>
+                <Stack gap="md">
+                  <TextInput
+                    label={m.contact_name()}
+                    id="contact-name"
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Gwydion"
+                    error={form.errors.name as string}
+                    {...form.getInputProps('name')}
+                  />
 
-                <FormField label={m.contact_email()} error={form.errors.email as string}>
-                  <input id="contact-email" type="email" autoComplete="email" placeholder="hello@example.com" {...form.getInputProps('email')} style={inputStyle(!!form.errors.email)} />
-                </FormField>
+                  <TextInput
+                    label={m.contact_email()}
+                    id="contact-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="hello@example.com"
+                    error={form.errors.email as string}
+                    {...form.getInputProps('email')}
+                  />
 
-                <FormField label={m.contact_message()} error={form.errors.message as string}>
-                  <textarea id="contact-message" rows={6} {...form.getInputProps('message')} style={{ ...inputStyle(!!form.errors.message), resize: 'vertical', minHeight: 140 }} />
-                </FormField>
+                  <Textarea
+                    label={m.contact_message()}
+                    id="contact-message"
+                    minRows={6}
+                    autosize
+                    error={form.errors.message as string}
+                    {...form.getInputProps('message')}
+                  />
 
-                <input
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  {...form.getInputProps('website')}
-                  style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
-                />
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    {...form.getInputProps('website')}
+                    style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+                  />
 
-                {status === 'error' && (
-                  <p style={{ margin: 0, fontSize: '0.825rem', color: '#e05252' }}>
-                    {m.contact_error()}
-                  </p>
-                )}
+                  {status === 'error' && (
+                    <Alert color="red" variant="light">
+                      {m.contact_error()}
+                    </Alert>
+                  )}
 
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                    gap: 8, padding: '14px 28px',
-                    background: status === 'sending' ? 'var(--text-muted)' : 'var(--accent-green)',
-                    color: '#fff', border: 'none', borderRadius: 10,
-                    fontSize: '0.875rem', fontWeight: 500, letterSpacing: '0.02em',
-                    cursor: status === 'sending' ? 'not-allowed' : 'pointer',
-                    transition: 'opacity 0.2s, transform 0.2s', fontFamily: 'var(--font-body)',
-                  }}
-                >
-                  <PaperPlaneTilt size={16} weight="light" />
-                  {status === 'sending' ? m.contact_sending() : m.contact_send()}
-                </button>
+                  <Button
+                    type="submit"
+                    loading={status === 'sending'}
+                    leftSection={<PaperPlaneTiltIcon size={16} weight="light" />}
+                  >
+                    {status === 'sending' ? m.contact_sending() : m.contact_send()}
+                  </Button>
+                </Stack>
               </form>
             )}
           </motion.div>
-        </div>
-      </div>
-    </main>
+        </SimpleGrid>
+      </PageContainer>
+    </PageMain>
   )
 }
 
@@ -213,35 +197,6 @@ function validateContactForm(values: ContactForm) {
     return errors
   }, {})
 }
-
-/* ── Sub-components ──────────────────────────────────────────────────── */
-function FormField({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <label style={{ fontSize: '0.78rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-        {label}
-      </label>
-      {children}
-      {error && (
-        <span style={{ fontSize: '0.78rem', color: '#e05252' }}>{error}</span>
-      )}
-    </div>
-  )
-}
-
-/* ── Helpers ─────────────────────────────────────────────────────────── */
-const inputStyle = (hasError: boolean): React.CSSProperties => ({
-  width: '100%',
-  padding: '12px 16px',
-  background: 'var(--bg-elevated)',
-  border: `1px solid ${hasError ? '#e05252' : 'var(--border)'}`,
-  borderRadius: 10,
-  color: 'var(--text-primary)',
-  fontSize: '0.9rem',
-  fontFamily: 'var(--font-body)',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-})
 
 const CONTACT_ITEMS = [
   { label: 'Email', value: 'hello@gwydion.dev', href: 'mailto:hello@gwydion.dev' },

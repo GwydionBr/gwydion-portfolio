@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Button, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import { motion } from 'motion/react'
-import { Leaf, Barbell, Code, ArrowUpRight } from '@phosphor-icons/react'
+import { LeafIcon, BarbellIcon, CodeIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
+import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
 import * as m from '../paraglide/messages'
 
 export const Route = createFileRoute('/about')({ component: AboutPage })
@@ -10,128 +12,89 @@ function AboutPage() {
   const nowItems = getNowItems()
 
   return (
-    <main style={{ position: 'relative', zIndex: 1, paddingTop: 100 }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
-        {/* Header */}
+    <PageMain>
+      <PageContainer>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">{m.about_heading()}</span>
-          <h1
-            className="display"
-            style={{
-              fontSize: 'clamp(3rem, 7vw, 6rem)',
-              lineHeight: 0.96,
-              margin: '16px 0 0',
-              letterSpacing: '-0.02em',
-            }}
-          >
+          <Eyebrow mb={16}>{m.about_heading()}</Eyebrow>
+          <DisplayTitle>
             {m.about_title_a()}<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>{m.about_title_b()}</em>
+            <em>{m.about_title_b()}</em>
             <br />{m.about_title_c()}
-          </h1>
+          </DisplayTitle>
         </motion.div>
 
-        <motion.hr
-          className="gold-rule"
+        <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left', margin: '40px 0' }}
-        />
-
-        {/* Two-column layout */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '60px 80px',
-            marginBottom: 100,
-          }}
+          style={{ transformOrigin: 'left' }}
         >
-          {/* Bio */}
+          <AccentRule my={40} />
+        </motion.div>
+
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={80} verticalSpacing={60} mb={100}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '1.35rem',
-                lineHeight: 1.6,
-                color: 'var(--text-primary)',
-                margin: '0 0 28px',
-                fontWeight: 400,
-              }}
+            <Text
+              component="p"
+              ff="var(--font-display)"
+              size="xl"
+              lh={1.6}
+              c="var(--app-text-primary)"
+              mb={28}
             >
               "{m.about_p1()}"
-            </p>
-            <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--text-secondary)', margin: '0 0 20px' }}>
+            </Text>
+            <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)" mb={20}>
               {m.about_p2()}
-            </p>
-            <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--text-secondary)', margin: 0 }}>
+            </Text>
+            <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">
               {m.about_p3()}
-            </p>
+            </Text>
           </motion.div>
 
-          {/* Focus areas */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="mono-label" style={{ marginBottom: 24, display: 'block' }}>
-              {m.about_focus_heading()}
-            </span>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Eyebrow mb={24}>{m.about_focus_heading()}</Eyebrow>
+            <Stack gap="md">
               {focusAreas.map(({ icon, title, desc }, i) => (
                 <motion.div
                   key={title}
-                  className="card"
                   initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  style={{
-                    padding: '18px 20px',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 16,
-                  }}
                 >
-                  <div
-                    style={{
-                      color: 'var(--accent-green)',
-                      marginTop: 2,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {icon}
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: '0.85rem',
-                        fontWeight: 500,
-                        color: 'var(--text-primary)',
-                        marginBottom: 4,
-                      }}
-                    >
-                      {title}
-                    </div>
-                    <div style={{ fontSize: '0.825rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                      {desc}
-                    </div>
-                  </div>
+                  <AppCard p="md">
+                    <Group align="flex-start" gap="md" wrap="nowrap">
+                      <ThemeIcon color="forest" size={36}>
+                        {icon}
+                      </ThemeIcon>
+                      <Stack gap={4}>
+                        <Text size="sm" fw={500} c="var(--app-text-primary)">
+                          {title}
+                        </Text>
+                        <Text size="xs" lh={1.6} c="var(--app-text-muted)">
+                          {desc}
+                        </Text>
+                      </Stack>
+                    </Group>
+                  </AppCard>
                 </motion.div>
               ))}
-            </div>
+            </Stack>
           </motion.div>
-        </div>
+        </SimpleGrid>
 
-        {/* Currently section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -139,20 +102,8 @@ function AboutPage() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           style={{ marginBottom: 100 }}
         >
-          <span className="mono-label" style={{ marginBottom: 24, display: 'block' }}>
-            {m.about_now_heading()}
-          </span>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: 1,
-              background: 'var(--border)',
-              borderRadius: 16,
-              overflow: 'hidden',
-              border: '1px solid var(--border)',
-            }}
-          >
+          <Eyebrow mb={24}>{m.about_now_heading()}</Eyebrow>
+          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
             {nowItems.map(({ label, value }, i) => (
               <motion.div
                 key={label}
@@ -160,76 +111,59 @@ function AboutPage() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
-                style={{
-                  background: 'var(--bg-elevated)',
-                  padding: '28px 24px',
-                }}
               >
-                <div className="mono-label" style={{ marginBottom: 10 }}>{label}</div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.5 }}>
-                  {value}
-                </div>
+                <AppCard p="lg" radius={0} h="100%">
+                  <Eyebrow mb={10}>{label}</Eyebrow>
+                  <Text size="sm" lh={1.5} c="var(--app-text-primary)">
+                    {value}
+                  </Text>
+                </AppCard>
               </motion.div>
             ))}
-          </div>
+          </SimpleGrid>
         </motion.div>
 
-        {/* Links */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 12,
-            paddingBottom: 40,
-          }}
         >
-          {LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '10px 18px',
-                borderRadius: 8,
-                background: 'var(--bg-elevated)',
-                border: '1px solid var(--border)',
-                fontSize: '0.825rem',
-                color: 'var(--text-secondary)',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s, color 0.2s',
-              }}
-            >
-              {label} <ArrowUpRight size={13} />
-            </a>
-          ))}
+          <Group gap={12} pb={40}>
+            {LINKS.map(({ label, href }) => (
+              <Button
+                key={label}
+                component="a"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="default"
+                rightSection={<ArrowUpRightIcon size={13} />}
+              >
+                {label}
+              </Button>
+            ))}
+          </Group>
         </motion.div>
-      </div>
-    </main>
+      </PageContainer>
+    </PageMain>
   )
 }
 
 function getFocusAreas() {
   return [
     {
-      icon: <Code size={18} weight="light" />,
+      icon: <CodeIcon size={18} weight="light" />,
       title: m.about_focus_software_title(),
       desc: m.about_focus_software_desc(),
     },
     {
-      icon: <Leaf size={18} weight="light" />,
+      icon: <LeafIcon size={18} weight="light" />,
       title: m.about_focus_practice_title(),
       desc: m.about_focus_practice_desc(),
     },
     {
-      icon: <Barbell size={18} weight="light" />,
+      icon: <BarbellIcon size={18} weight="light" />,
       title: m.about_focus_training_title(),
       desc: m.about_focus_training_desc(),
     },

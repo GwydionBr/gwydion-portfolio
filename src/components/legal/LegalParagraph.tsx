@@ -16,10 +16,10 @@ export function LegalParagraph({ children, last }: LegalParagraphProps) {
     <Text
       component="p"
       size="sm"
+      c="var(--app-text-secondary)"
       style={{
         lineHeight: 1.78,
         margin: last ? 0 : '0 0 14px',
-        color: 'var(--text-secondary)',
       }}
     >
       {parts.map((part, i) =>
@@ -30,7 +30,7 @@ export function LegalParagraph({ children, last }: LegalParagraphProps) {
             target="_blank"
             rel="noopener noreferrer"
             size="sm"
-            c="var(--accent-green)"
+            c="var(--app-accent-green)"
             underline="hover"
           >
             {part}

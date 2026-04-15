@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { motion } from 'motion/react'
+import { AccentRule, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../ui/Page'
 
 interface LegalPageShellProps {
   monoLabel: string
@@ -10,37 +11,30 @@ interface LegalPageShellProps {
 /** Shared hero + container for legal pages (matches About / Contact rhythm). */
 export function LegalPageShell({ monoLabel, title, children }: LegalPageShellProps) {
   return (
-    <main style={{ position: 'relative', zIndex: 1, paddingTop: 100 }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px 80px' }}>
+    <PageMain>
+      <PageContainer pb={80}>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">{monoLabel}</span>
-          <h1
-            className="display"
-            style={{
-              fontSize: 'clamp(2.25rem, 5.5vw, 4rem)',
-              lineHeight: 1.02,
-              margin: '16px 0 0',
-              letterSpacing: '-0.02em',
-            }}
-          >
+          <Eyebrow mb={16}>{monoLabel}</Eyebrow>
+          <DisplayTitle size="clamp(2.25rem, 5.5vw, 4rem)">
             {title}
-          </h1>
+          </DisplayTitle>
         </motion.div>
 
-        <motion.hr
-          className="gold-rule"
+        <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left', margin: '36px 0 48px' }}
-        />
+          style={{ transformOrigin: 'left' }}
+        >
+          <AccentRule my={36} />
+        </motion.div>
 
         {children}
-      </div>
-    </main>
+      </PageContainer>
+    </PageMain>
   )
 }

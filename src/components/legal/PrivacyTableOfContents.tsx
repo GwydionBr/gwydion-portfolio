@@ -1,4 +1,4 @@
-import { Anchor, Paper, Text } from '@mantine/core'
+import { Anchor, List, Paper, Text } from '@mantine/core'
 
 interface TocItem {
   id: string
@@ -20,8 +20,6 @@ export function PrivacyTableOfContents({ heading, items }: PrivacyTableOfContent
       radius="lg"
       withBorder
       style={{
-        borderColor: 'var(--border)',
-        background: 'var(--bg-elevated)',
         position: 'sticky',
         top: 96,
       }}
@@ -32,32 +30,21 @@ export function PrivacyTableOfContents({ heading, items }: PrivacyTableOfContent
       >
         {heading}
       </Text>
-      <ol
-        style={{
-          margin: 0,
-          paddingLeft: 18,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 8,
-          listStyle: 'decimal',
-          color: 'var(--text-secondary)',
-          fontSize: '0.875rem',
-        }}
-      >
+      <List type="ordered" spacing={8} c="var(--app-text-secondary)" size="sm">
         {items.map((item) => (
-          <li key={item.id} style={{ paddingLeft: 4 }}>
+          <List.Item key={item.id}>
             <Anchor
               href={`#${item.id}`}
               size="sm"
-              c="var(--text-secondary)"
+              c="var(--app-text-secondary)"
               underline="hover"
               style={{ lineHeight: 1.45 }}
             >
               {item.title}
             </Anchor>
-          </li>
+          </List.Item>
         ))}
-      </ol>
+      </List>
     </Paper>
   )
 }

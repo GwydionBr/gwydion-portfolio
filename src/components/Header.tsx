@@ -1,13 +1,11 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, Select, useMantineColorScheme } from "@mantine/core";
+import { ActionIcon, Burger, Menu, Select, useMantineColorScheme } from "@mantine/core";
 import {
   CheckIcon,
   DesktopIcon,
-  GithubLogo,
+  GithubLogoIcon,
   MoonIcon,
   SunIcon,
-  ListIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import { ReactCountryFlag } from "react-country-flag";
@@ -79,7 +77,7 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
         className="site-logo"
       >
         gwydion
-        <span style={{ color: "var(--accent-gold)", marginLeft: 1 }}>.</span>
+        <span style={{ color: "var(--app-accent-gold)", marginLeft: 1 }}>.</span>
       </Link>
 
       {/* Nav + controls */}
@@ -132,15 +130,17 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
             )}
           />
 
-          <a
+          <ActionIcon
+            component="a"
             href={GITHUB_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="icon-control square-control"
+            className="square-control"
+            size={34}
             aria-label={m.header_github()}
           >
-            <GithubLogo size={17} weight="light" aria-hidden />
-          </a>
+            <GithubLogoIcon size={17} weight="light" aria-hidden />
+          </ActionIcon>
 
           <Menu
             position="bottom-end"
@@ -155,14 +155,15 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
             }}
           >
             <Menu.Target>
-              <button
+              <ActionIcon
                 type="button"
                 aria-label={m.theme_choose()}
                 aria-haspopup="menu"
-                className="icon-control square-control"
+                className="square-control"
+                size={34}
               >
                 <ThemeTriggerIcon scheme={resolvedScheme} />
-              </button>
+              </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown className="theme-menu-dropdown">
               {themeOptions.map(({ value, label, icon: Icon }) => (
@@ -186,16 +187,17 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
         </div>
       </nav>
 
-      <button
+      <Burger
         type="button"
         className="icon-control square-control mobile-menu-button"
         aria-label={menuOpen ? m.menu_close() : m.menu_open()}
         aria-controls="site-navigation"
         aria-expanded={menuOpen}
+        opened={menuOpen}
+        size="xs"
+        color="var(--app-text-muted)"
         onClick={() => setMenuOpen((value) => !value)}
-      >
-        {menuOpen ? <XIcon size={16} weight="light" /> : <ListIcon size={17} weight="light" />}
-      </button>
+      />
     </header>
   );
 }

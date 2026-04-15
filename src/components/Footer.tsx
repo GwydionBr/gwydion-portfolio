@@ -1,143 +1,126 @@
 import { Link } from '@tanstack/react-router'
-import { GithubLogo, ArrowUpRight } from '@phosphor-icons/react'
+import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core'
+import { GithubLogoIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '../lib/githubUrls'
 import * as m from '../paraglide/messages'
+
+const FOOTER_COLUMNS = [
+  {
+    heading: m.footer_pages,
+    links: [
+      { href: '/', label: m.nav_home },
+      { href: '/about', label: m.nav_about },
+      { href: '/projects', label: m.nav_projects },
+    ],
+  },
+  {
+    heading: m.footer_more,
+    links: [
+      { href: '/blog', label: m.nav_blog },
+      { href: '/contact', label: m.nav_contact },
+    ],
+  },
+  {
+    heading: m.footer_legal,
+    links: [
+      { href: '/impressum', label: m.nav_imprint },
+      { href: '/datenschutz', label: m.nav_privacy },
+    ],
+  },
+]
 
 export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer
+    <Box
+      component="footer"
+      mt={120}
+      pt={48}
+      pb={56}
+      px={28}
       style={{
         position: 'relative',
         zIndex: 1,
-        marginTop: 120,
-        borderTop: '1px solid var(--border)',
-        padding: '48px 28px 56px',
+        borderTop: '1px solid var(--app-border)',
       }}
     >
-      <div
-        style={{
-          maxWidth: 1080,
-          margin: '0 auto',
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'flex-start',
-          justifyContent: 'space-between',
-          gap: 40,
-        }}
-      >
-        {/* Brand */}
-        <div>
-          <Link
-            to="/"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.35rem',
-              fontWeight: 400,
-              color: 'var(--text-primary)',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-            }}
-          >
-            gwydion<span style={{ color: 'var(--accent-gold)' }}>.</span>
-          </Link>
-          <p
-            style={{
-              marginTop: 10,
-              fontSize: '0.8rem',
-              color: 'var(--text-muted)',
-              fontFamily: 'var(--font-mono)',
-              letterSpacing: '0.05em',
-            }}
-          >
-            {m.footer_built()}
-          </p>
-        </div>
-
-        {/* Nav */}
-        <nav style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <span className="mono-label">{m.footer_pages()}</span>
-            {[
-              { href: '/',         label: m.nav_home },
-              { href: '/about',    label: m.nav_about },
-              { href: '/projects', label: m.nav_projects },
-            ].map(({ href, label }) => (
-              <Link key={href} to={href} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                {label()}
-              </Link>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <span className="mono-label">{m.footer_more()}</span>
-            {[
-              { href: '/blog',    label: m.nav_blog },
-              { href: '/contact', label: m.nav_contact },
-            ].map(({ href, label }) => (
-              <Link key={href} to={href} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                {label()}
-              </Link>
-            ))}
-            <a
-              href={GITHUB_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: '0.875rem' }}
-            >
-              GitHub <ArrowUpRight size={12} />
-            </a>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <span className="mono-label">{m.footer_legal()}</span>
-            <Link to="/impressum" className="nav-link" style={{ fontSize: '0.875rem' }}>
-              {m.nav_imprint()}
+      <Container size={1080} px={0}>
+        <Group align="flex-start" justify="space-between" gap={40} wrap="wrap">
+          <Stack gap={10}>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Title
+                order={2}
+                className="display"
+                style={{
+                  fontSize: '1.35rem',
+                  color: 'var(--app-text-primary)',
+                }}
+              >
+                gwydion<span style={{ color: 'var(--app-accent-gold)' }}>.</span>
+              </Title>
             </Link>
-            <Link to="/datenschutz" className="nav-link" style={{ fontSize: '0.875rem' }}>
-              {m.nav_privacy()}
-            </Link>
-          </div>
-        </nav>
-      </div>
+            <Text size="xs" c="var(--app-text-muted)" ff="var(--font-mono)" style={{ letterSpacing: '0.05em' }}>
+              {m.footer_built()}
+            </Text>
+          </Stack>
 
-      {/* Bottom bar */}
-      <div
-        style={{
-          maxWidth: 1080,
-          margin: '40px auto 0',
-          paddingTop: 20,
-          borderTop: '1px solid var(--border-subtle)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 12,
-        }}
-      >
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-          © {year} Gwydion Braunsdorf
-        </span>
-        <a
-          href={GITHUB_SITE_REPO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            fontSize: '0.75rem',
-            color: 'var(--text-muted)',
-            textDecoration: 'none',
-            transition: 'color 0.2s',
-          }}
+          <Group component="nav" align="flex-start" gap={40} wrap="wrap">
+            {FOOTER_COLUMNS.map(({ heading, links }) => (
+              <Stack key={heading()} gap={12}>
+                <Text component="span" className="mono-label">
+                  {heading()}
+                </Text>
+                {links.map(({ href, label }) => (
+                  <Link key={href} to={href} className="nav-link">
+                    {label()}
+                  </Link>
+                ))}
+                {heading === m.footer_more && (
+                  <Anchor
+                    href={GITHUB_PROFILE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nav-link"
+                    c="var(--app-text-secondary)"
+                    underline="never"
+                  >
+                    <Group component="span" gap={4}>
+                      GitHub <ArrowUpRightIcon size={12} />
+                    </Group>
+                  </Anchor>
+                )}
+              </Stack>
+            ))}
+          </Group>
+        </Group>
+
+        <Group
+          mt={40}
+          pt={20}
+          justify="space-between"
+          gap={12}
+          wrap="wrap"
+          style={{ borderTop: '1px solid var(--app-border-subtle)' }}
         >
-          <GithubLogo size={14} weight="light" />
-          {m.footer_source()}
-        </a>
-      </div>
-    </footer>
+          <Text size="xs" c="var(--app-text-muted)" ff="var(--font-mono)">
+            © {year} Gwydion Braunsdorf
+          </Text>
+          <Anchor
+            href={GITHUB_SITE_REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="xs"
+            c="var(--app-text-muted)"
+            underline="never"
+          >
+            <Group component="span" gap={6}>
+              <GithubLogoIcon size={14} weight="light" />
+              {m.footer_source()}
+            </Group>
+          </Anchor>
+        </Group>
+      </Container>
+    </Box>
   )
 }
