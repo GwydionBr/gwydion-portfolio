@@ -5,6 +5,7 @@ import {
   ArrowLeft, ArrowUpRight, CheckCircle,
 } from '@phosphor-icons/react'
 import * as m from '../../paraglide/messages'
+import { GITHUB_PROFILE_URL } from '../../lib/githubUrls'
 
 export const Route = createFileRoute('/projects/self-engine')({ component: SelfEnginePage })
 
@@ -241,7 +242,7 @@ function SelfEnginePage() {
             {m.self_open_source_desc()}
           </p>
           <a
-            href="https://github.com/gwydion"
+            href={GITHUB_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
             style={{
