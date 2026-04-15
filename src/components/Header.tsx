@@ -1,7 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useMantineColorScheme } from "@mantine/core";
-import { SunIcon, MoonIcon, GlobeIcon, ListIcon, XIcon } from "@phosphor-icons/react";
+import { Menu, Select, useMantineColorScheme } from "@mantine/core";
+import { CheckIcon, DesktopIcon, MoonIcon, SunIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
+import { ReactCountryFlag } from "react-country-flag";
+import type { Locale } from "../lib/LanguageContext";
 import * as m from "../paraglide/messages";
 
 const NAV_LINKS = [
@@ -13,18 +15,23 @@ const NAV_LINKS = [
 ] as const;
 
 interface HeaderProps {
-  lang?: "en" | "de";
-  onLangChange?: (lang: "en" | "de") => void;
+  lang?: Locale;
+  onLangChange?: (lang: Locale) => void;
 }
 
+const LANGUAGE_OPTIONS: Array<{ value: Locale; label: string; countryCode: string; name: string }> = [
+  { value: "en", label: "EN", countryCode: "GB", name: "English" },
+  { value: "de", label: "DE", countryCode: "DE", name: "Deutsch" },
+];
+
+type ThemeChoice = "auto" | "light" | "dark";
+
 export function Header({ lang = "en", onLangChange }: HeaderProps) {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  // mounted prevents SSR/client hydration mismatch for color-scheme-dependent icons.
-  // Before mount: always render as "dark" (matches defaultColorScheme="dark" on server).
-  // After mount: use the real value from localStorage.
+  // Avoids hydration mismatch when the client restores a stored scheme from localStorage.
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -39,7 +46,17 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const isDark = mounted ? colorScheme === "dark" : true;
+  const resolvedScheme: ThemeChoice = mounted ? colorScheme : "auto";
+
+  const themeOptions: Array<{
+    value: ThemeChoice;
+    label: () => string;
+    icon: typeof SunIcon;
+  }> = [
+    { value: "auto", label: m.theme_system, icon: DesktopIcon },
+    { value: "light", label: m.theme_toggle_light, icon: SunIcon },
+    { value: "dark", label: m.theme_toggle_dark, icon: MoonIcon },
+  ];
 
   return (
     <header
@@ -81,36 +98,72 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
 
         {/* Controls */}
         <div className="site-controls">
-          <button
-            type="button"
-            onClick={() => onLangChange?.(lang === "en" ? "de" : "en")}
+          <Select<Locale>
             aria-label={m.language_toggle()}
-            className="icon-control language-control"
-          >
-            <GlobeIcon size={13} weight="light" />
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.68rem",
-                letterSpacing: "0.1em",
-              }}
-            >
-              {lang.toUpperCase()}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => toggleColorScheme()}
-            aria-label={m.theme_toggle()}
-            className="icon-control square-control"
-          >
-            {isDark ? (
-              <SunIcon size={15} weight="light" />
-            ) : (
-              <MoonIcon size={15} weight="light" />
+            value={lang}
+            data={LANGUAGE_OPTIONS.map(({ value, label }) => ({ value, label }))}
+            allowDeselect={false}
+            searchable={false}
+            checkIconPosition="right"
+            leftSection={<LanguageFlag locale={lang} />}
+            leftSectionPointerEvents="none"
+            className="language-select"
+            classNames={{ input: "language-select-input", option: "language-select-option" }}
+            comboboxProps={{ width: 126, position: "bottom-end" }}
+            onChange={(value) => {
+              if (value) {
+                onLangChange?.(value);
+              }
+            }}
+            renderOption={({ option }) => (
+              <span className="language-select-option-content">
+                <LanguageFlag locale={option.value as Locale} />
+                <span>{getLanguageOption(option.value as Locale).name}</span>
+              </span>
             )}
-          </button>
+          />
+
+          <Menu
+            position="bottom-end"
+            offset={6}
+            shadow="md"
+            width={200}
+            zIndex={10001}
+            transitionProps={{
+              transition: "pop",
+              duration: 220,
+              timingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            <Menu.Target>
+              <button
+                type="button"
+                aria-label={m.theme_choose()}
+                aria-haspopup="menu"
+                className="icon-control square-control"
+              >
+                <ThemeTriggerIcon scheme={resolvedScheme} />
+              </button>
+            </Menu.Target>
+            <Menu.Dropdown className="theme-menu-dropdown">
+              {themeOptions.map(({ value, label, icon: Icon }) => (
+                <Menu.Item
+                  key={value}
+                  leftSection={<Icon size={16} weight="light" aria-hidden />}
+                  rightSection={
+                    resolvedScheme === value ? (
+                      <CheckIcon size={14} weight="bold" aria-hidden className="theme-menu-check" />
+                    ) : (
+                      <span style={{ width: 14 }} aria-hidden />
+                    )
+                  }
+                  onClick={() => setColorScheme(value)}
+                >
+                  {label()}
+                </Menu.Item>
+              ))}
+            </Menu.Dropdown>
+          </Menu>
         </div>
       </nav>
 
@@ -126,4 +179,33 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
       </button>
     </header>
   );
+}
+
+function ThemeTriggerIcon({ scheme }: { scheme: ThemeChoice }) {
+  const iconProps = { size: 15, weight: "light" as const };
+  if (scheme === "auto") {
+    return <DesktopIcon {...iconProps} />;
+  }
+  if (scheme === "light") {
+    return <SunIcon {...iconProps} />;
+  }
+  return <MoonIcon {...iconProps} />;
+}
+
+function LanguageFlag({ locale }: { locale: Locale }) {
+  const option = getLanguageOption(locale);
+
+  return (
+    <ReactCountryFlag
+      countryCode={option.countryCode}
+      svg
+      title={option.name}
+      aria-label={option.name}
+      className="language-flag"
+    />
+  );
+}
+
+function getLanguageOption(locale: Locale) {
+  return LANGUAGE_OPTIONS.find((option) => option.value === locale) ?? LANGUAGE_OPTIONS[0];
 }
