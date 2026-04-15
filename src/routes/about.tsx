@@ -6,6 +6,9 @@ import * as m from '../paraglide/messages'
 export const Route = createFileRoute('/about')({ component: AboutPage })
 
 function AboutPage() {
+  const focusAreas = getFocusAreas()
+  const nowItems = getNowItems()
+
   return (
     <main style={{ position: 'relative', zIndex: 1, paddingTop: 100 }}>
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 28px' }}>
@@ -25,9 +28,9 @@ function AboutPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Developer.<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>Builder.</em>
-            <br />Human.
+            {m.about_title_a()}<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>{m.about_title_b()}</em>
+            <br />{m.about_title_c()}
           </h1>
         </motion.div>
 
@@ -81,10 +84,10 @@ function AboutPage() {
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="mono-label" style={{ marginBottom: 24, display: 'block' }}>
-              Focus areas
+              {m.about_focus_heading()}
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {FOCUS_AREAS.map(({ icon, title, desc }, i) => (
+              {focusAreas.map(({ icon, title, desc }, i) => (
                 <motion.div
                   key={title}
                   className="card"
@@ -137,7 +140,7 @@ function AboutPage() {
           style={{ marginBottom: 100 }}
         >
           <span className="mono-label" style={{ marginBottom: 24, display: 'block' }}>
-            Right now
+            {m.about_now_heading()}
           </span>
           <div
             style={{
@@ -150,7 +153,7 @@ function AboutPage() {
               border: '1px solid var(--border)',
             }}
           >
-            {NOW_ITEMS.map(({ label, value }, i) => (
+            {nowItems.map(({ label, value }, i) => (
               <motion.div
                 key={label}
                 initial={{ opacity: 0 }}
@@ -213,30 +216,34 @@ function AboutPage() {
   )
 }
 
-const FOCUS_AREAS = [
-  {
-    icon: <Code size={18} weight="light" />,
-    title: 'Software development',
-    desc: 'TypeScript, React, full-stack. Preference for simple, durable systems.',
-  },
-  {
-    icon: <Leaf size={18} weight="light" />,
-    title: 'Buddhist practice',
-    desc: 'Theravāda tradition. Meditation, mindfulness, ethical living.',
-  },
-  {
-    icon: <Barbell size={18} weight="light" />,
-    title: 'Physical training',
-    desc: 'Strength and endurance. Consistency over intensity.',
-  },
-]
+function getFocusAreas() {
+  return [
+    {
+      icon: <Code size={18} weight="light" />,
+      title: m.about_focus_software_title(),
+      desc: m.about_focus_software_desc(),
+    },
+    {
+      icon: <Leaf size={18} weight="light" />,
+      title: m.about_focus_practice_title(),
+      desc: m.about_focus_practice_desc(),
+    },
+    {
+      icon: <Barbell size={18} weight="light" />,
+      title: m.about_focus_training_title(),
+      desc: m.about_focus_training_desc(),
+    },
+  ]
+}
 
-const NOW_ITEMS = [
-  { label: 'Main project', value: 'Self-Engine' },
-  { label: 'Learning', value: 'Systems design & Buddhist philosophy' },
-  { label: 'Reading', value: 'Dhammapada' },
-  { label: 'Location', value: 'Germany' },
-]
+function getNowItems() {
+  return [
+    { label: m.about_now_project(), value: m.se_title() },
+    { label: m.about_now_learning(), value: m.about_now_learning_value() },
+    { label: m.about_now_reading(), value: 'Dhammapada' },
+    { label: m.about_now_location(), value: 'Germany' },
+  ]
+}
 
 const LINKS = [
   { label: 'GitHub', href: 'https://github.com/gwydion' },

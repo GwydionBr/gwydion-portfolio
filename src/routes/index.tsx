@@ -140,7 +140,7 @@ function CurrentlySection() {
         >
           <span className="mono-label">{m.currently_heading()}</span>
           <h2 className="display" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', margin: '12px 0 48px', lineHeight: 1.1 }}>
-            Where my focus is.
+            {m.home_focus_heading()}
           </h2>
         </motion.div>
 
@@ -202,10 +202,10 @@ function FeaturedProjectSection() {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 36 }}>
             {[
-              { icon: <Timer size={14} />, label: 'Time tracking' },
-              { icon: <CurrencyCircleDollar size={14} />, label: 'Finance' },
-              { icon: <CalendarDots size={14} />, label: 'Calendar' },
-              { icon: <Code size={14} />, label: 'Project management' },
+              { icon: <Timer size={14} />, label: m.project_tag_time() },
+              { icon: <CurrencyCircleDollar size={14} />, label: m.project_tag_finance() },
+              { icon: <CalendarDots size={14} />, label: m.project_tag_calendar() },
+              { icon: <Code size={14} />, label: m.project_tag_management() },
             ].map(({ icon, label }) => (
               <span key={label} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 6, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
                 {icon} {label}
@@ -240,8 +240,8 @@ function AboutTeaser() {
         >
           <span className="mono-label">{m.about_heading()}</span>
           <h2 className="display" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', margin: '12px 0 24px', lineHeight: 1.1 }}>
-            Code, practice,<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>presence.</em>
+            {m.home_about_title_a()}<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>{m.home_about_title_b()}</em>
           </h2>
           <p style={{ fontSize: '0.975rem', lineHeight: 1.75, color: 'var(--text-secondary)', margin: '0 0 32px' }}>
             {m.about_p1()}

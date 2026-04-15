@@ -20,7 +20,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // After mount: read from localStorage or detect browser language
-    const stored = localStorage.getItem(STORAGE_KEY) as Locale | null
+    const stored = readStoredLocale()
     let resolved: Locale = 'en'
     if (stored && (locales as readonly string[]).includes(stored)) {
       resolved = stored
@@ -33,7 +33,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const setLang = (newLang: Locale) => {
     applyLocale(newLang)
-    localStorage.setItem(STORAGE_KEY, newLang)
+    storeLocale(newLang)
     setLangState(newLang)
   }
 
@@ -48,4 +48,21 @@ export const useLanguage = () => useContext(LanguageContext)
 
 function applyLocale(locale: Locale) {
   setLocale(locale, { reload: false })
+  document.documentElement.lang = locale
+}
+
+function readStoredLocale() {
+  try {
+    return localStorage.getItem(STORAGE_KEY) as Locale | null
+  } catch {
+    return null
+  }
+}
+
+function storeLocale(locale: Locale) {
+  try {
+    localStorage.setItem(STORAGE_KEY, locale)
+  } catch {
+    // Ignore storage failures in private or restricted browser contexts.
+  }
 }

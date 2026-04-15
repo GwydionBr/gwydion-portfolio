@@ -76,13 +76,11 @@ function BlogPage() {
             className="display"
             style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', margin: '0 0 16px', lineHeight: 1.2 }}
           >
-            Posts are coming.
+            {m.blog_card_title()}
           </h2>
 
           <p style={{ fontSize: '0.975rem', lineHeight: 1.75, color: 'var(--text-secondary)', margin: '0 0 32px', maxWidth: 480 }}>
-            I'm planning to write about building Self-Engine, thoughts on productivity
-            systems, Buddhist philosophy, open source, and the craft of software.
-            Check back soon.
+            {m.blog_card_desc()}
           </p>
 
           {/* Topics preview */}
@@ -115,7 +113,7 @@ function BlogPage() {
               textDecoration: 'none',
             }}
           >
-            Follow on GitHub in the meantime <ArrowUpRight size={13} />
+            {m.blog_follow()} <ArrowUpRight size={13} />
           </a>
         </motion.div>
       </div>

@@ -1,11 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { GithubLogo, ArrowUpRight } from '@phosphor-icons/react'
+import * as m from '../paraglide/messages'
 
-interface FooterProps {
-  lang?: 'en' | 'de'
-}
-
-export function Footer({ lang = 'en' }: FooterProps) {
+export function Footer() {
   const year = new Date().getFullYear()
 
   return (
@@ -53,33 +50,33 @@ export function Footer({ lang = 'en' }: FooterProps) {
               letterSpacing: '0.05em',
             }}
           >
-            {lang === 'de' ? 'Mit Intention gebaut.' : 'Built with intention.'}
+            {m.footer_built()}
           </p>
         </div>
 
         {/* Nav */}
         <nav style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <span className="mono-label">{lang === 'de' ? 'Seiten' : 'Pages'}</span>
+            <span className="mono-label">{m.footer_pages()}</span>
             {[
-              { href: '/',         en: 'Home',     de: 'Start' },
-              { href: '/about',    en: 'About',    de: 'Über mich' },
-              { href: '/projects', en: 'Projects', de: 'Projekte' },
-            ].map(({ href, en, de }) => (
+              { href: '/',         label: m.nav_home },
+              { href: '/about',    label: m.nav_about },
+              { href: '/projects', label: m.nav_projects },
+            ].map(({ href, label }) => (
               <Link key={href} to={href} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                {lang === 'de' ? de : en}
+                {label()}
               </Link>
             ))}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <span className="mono-label">{lang === 'de' ? 'Mehr' : 'More'}</span>
+            <span className="mono-label">{m.footer_more()}</span>
             {[
-              { href: '/blog',    en: 'Blog',    de: 'Blog' },
-              { href: '/contact', en: 'Contact', de: 'Kontakt' },
-            ].map(({ href, en, de }) => (
+              { href: '/blog',    label: m.nav_blog },
+              { href: '/contact', label: m.nav_contact },
+            ].map(({ href, label }) => (
               <Link key={href} to={href} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                {lang === 'de' ? de : en}
+                {label()}
               </Link>
             ))}
             <a
@@ -127,7 +124,7 @@ export function Footer({ lang = 'en' }: FooterProps) {
           }}
         >
           <GithubLogo size={14} weight="light" />
-          {lang === 'de' ? 'Quellcode' : 'Source'}
+          {m.footer_source()}
         </a>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import {
   Timer, CurrencyCircleDollar, CalendarDots, Code,
   ArrowLeft, ArrowUpRight, CheckCircle,
 } from '@phosphor-icons/react'
+import * as m from '../../paraglide/messages'
 
 export const Route = createFileRoute('/projects/self-engine')({ component: SelfEnginePage })
 
@@ -27,7 +28,7 @@ function SelfEnginePage() {
               textDecoration: 'none', transition: 'color 0.2s',
             }}
           >
-            <ArrowLeft size={14} /> Back to projects
+            <ArrowLeft size={14} /> {m.self_back()}
           </Link>
         </motion.div>
 
@@ -38,7 +39,7 @@ function SelfEnginePage() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <span className="mono-label">Project</span>
+            <span className="mono-label">{m.self_project_label()}</span>
             <span style={{ width: 24, height: 1, background: 'var(--border)' }} />
             <div
               style={{
@@ -49,7 +50,7 @@ function SelfEnginePage() {
             >
               <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent-gold)', boxShadow: '0 0 5px var(--accent-gold)' }} />
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.66rem', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
-                Active development
+                {m.self_active()}
               </span>
             </div>
           </div>
@@ -63,13 +64,11 @@ function SelfEnginePage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Self-Engine
+            {m.se_title()}
           </h1>
 
           <p style={{ maxWidth: 560, fontSize: '1.1rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0 }}>
-            A personal productivity system built for intentional work — combining
-            time tracking, project management, financial clarity, and calendar
-            visualization in one unified interface.
+            {m.self_intro()}
           </p>
         </motion.div>
 
@@ -88,7 +87,7 @@ function SelfEnginePage() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           style={{ marginBottom: 72 }}
         >
-          <span className="mono-label" style={{ display: 'block', marginBottom: 24 }}>Features</span>
+          <span className="mono-label" style={{ display: 'block', marginBottom: 24 }}>{m.self_features()}</span>
           <div
             style={{
               display: 'grid',
@@ -141,7 +140,7 @@ function SelfEnginePage() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           style={{ marginBottom: 72 }}
         >
-          <span className="mono-label" style={{ display: 'block', marginBottom: 24 }}>Roadmap</span>
+          <span className="mono-label" style={{ display: 'block', marginBottom: 24 }}>{m.self_roadmap()}</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {ROADMAP.map(({ item, done }, i) => (
               <motion.div
@@ -183,7 +182,7 @@ function SelfEnginePage() {
                       textTransform: 'uppercase',
                     }}
                   >
-                    Done
+                    {m.status_done()}
                   </span>
                 )}
               </motion.div>
@@ -199,7 +198,7 @@ function SelfEnginePage() {
           transition={{ duration: 0.6 }}
           style={{ marginBottom: 72 }}
         >
-          <span className="mono-label" style={{ display: 'block', marginBottom: 20 }}>Built with</span>
+          <span className="mono-label" style={{ display: 'block', marginBottom: 20 }}>{m.self_built_with()}</span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {TECH.map((t) => (
               <span
@@ -237,11 +236,9 @@ function SelfEnginePage() {
               background: 'radial-gradient(circle, var(--accent-gold-dim), transparent 70%)',
             }}
           />
-          <span className="mono-label" style={{ display: 'block', marginBottom: 12 }}>Open source</span>
+          <span className="mono-label" style={{ display: 'block', marginBottom: 12 }}>{m.self_open_source()}</span>
           <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: '0 0 20px', maxWidth: 500 }}>
-            Self-Engine is currently closed source while in early development.
-            The plan is to open source it as it matures — because good tools
-            should be accessible and community-driven.
+            {m.self_open_source_desc()}
           </p>
           <a
             href="https://github.com/gwydion"
@@ -253,7 +250,7 @@ function SelfEnginePage() {
               textDecoration: 'none',
             }}
           >
-            Follow on GitHub for updates <ArrowUpRight size={13} />
+            {m.self_follow()} <ArrowUpRight size={13} />
           </a>
         </motion.div>
 

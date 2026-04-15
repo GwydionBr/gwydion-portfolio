@@ -46,11 +46,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <LanguageProvider>
             <div className="grain-overlay" aria-hidden="true" />
             <ConnectedHeader />
-            {children}
+            <LocalizedContent>{children}</LocalizedContent>
             <ConnectedFooter />
           </LanguageProvider>
           <TanStackDevtools
-            config={{ position: "bottom-right" }}
+            config={{ position: "middle-left" }}
             plugins={[
               {
                 name: "Tanstack Router",
@@ -71,6 +71,15 @@ function ConnectedHeader() {
 }
 
 function ConnectedFooter() {
+  useLanguage();
+  return <Footer />;
+}
+
+function LocalizedContent({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();
-  return <Footer lang={lang} />;
+  return (
+    <div key={lang} style={{ display: "contents" }}>
+      {children}
+    </div>
+  );
 }

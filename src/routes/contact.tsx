@@ -4,17 +4,9 @@ import { PaperPlaneTilt, ArrowUpRight } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useForm } from '@mantine/form'
 import * as m from '../paraglide/messages'
-import { z } from 'zod'
+import { contactLimits, contactSchema, type ContactForm } from '../lib/contact'
 
 export const Route = createFileRoute('/contact')({ component: ContactPage })
-
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name is too short'),
-  email: z.string().email('Invalid email address'),
-  message: z.string().min(20, 'Message is too short (min 20 characters)'),
-})
-
-type ContactForm = z.infer<typeof contactSchema>
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -22,21 +14,18 @@ function ContactPage() {
   const [status, setStatus] = useState<Status>('idle')
 
   const form = useForm<ContactForm>({
-    initialValues: { name: '', email: '', message: '' },
-    validate: {
-      name: (v) => (v.length < 2 ? 'Name is too short' : null),
-      email: (v) => (/^\S+@\S+\.\S+$/.test(v) ? null : 'Invalid email address'),
-      message: (v) => (v.length < 20 ? 'Message is too short' : null),
-    },
+    initialValues: { name: '', email: '', message: '', website: '' },
+    validate: validateContactForm,
   })
 
   const handleSubmit = async (values: ContactForm) => {
     setStatus('sending')
     try {
+      const payload = contactSchema.parse(values)
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       })
       if (!res.ok) throw new Error('Server error')
       setStatus('success')
@@ -147,16 +136,25 @@ function ContactPage() {
                 style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
               >
                 <FormField label={m.contact_name()} error={form.errors.name as string}>
-                  <input type="text" placeholder="Gwydion" {...form.getInputProps('name')} style={inputStyle(!!form.errors.name)} />
+                  <input id="contact-name" type="text" autoComplete="name" placeholder="Gwydion" {...form.getInputProps('name')} style={inputStyle(!!form.errors.name)} />
                 </FormField>
 
                 <FormField label={m.contact_email()} error={form.errors.email as string}>
-                  <input type="email" placeholder="hello@example.com" {...form.getInputProps('email')} style={inputStyle(!!form.errors.email)} />
+                  <input id="contact-email" type="email" autoComplete="email" placeholder="hello@example.com" {...form.getInputProps('email')} style={inputStyle(!!form.errors.email)} />
                 </FormField>
 
                 <FormField label={m.contact_message()} error={form.errors.message as string}>
-                  <textarea rows={6} {...form.getInputProps('message')} style={{ ...inputStyle(!!form.errors.message), resize: 'vertical', minHeight: 140 }} />
+                  <textarea id="contact-message" rows={6} {...form.getInputProps('message')} style={{ ...inputStyle(!!form.errors.message), resize: 'vertical', minHeight: 140 }} />
                 </FormField>
+
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  {...form.getInputProps('website')}
+                  style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+                />
 
                 {status === 'error' && (
                   <p style={{ margin: 0, fontSize: '0.825rem', color: '#e05252' }}>
@@ -187,6 +185,33 @@ function ContactPage() {
       </div>
     </main>
   )
+}
+
+function validateContactForm(values: ContactForm) {
+  const result = contactSchema.safeParse(values)
+
+  if (result.success) {
+    return {}
+  }
+
+  return result.error.issues.reduce<Record<string, string>>((errors, issue) => {
+    const field = String(issue.path[0] ?? '')
+    if (field in errors || field === 'website') {
+      return errors
+    }
+
+    if (field === 'name') {
+      errors[field] = m.contact_error_name()
+    } else if (field === 'email') {
+      errors[field] = m.contact_error_email()
+    } else if (field === 'message') {
+      errors[field] = issue.code === 'too_big'
+        ? m.contact_error_message_long({ max: contactLimits.messageMax })
+        : m.contact_error_message_short({ min: contactLimits.messageMin })
+    }
+
+    return errors
+  }, {})
 }
 
 /* ── Sub-components ──────────────────────────────────────────────────── */

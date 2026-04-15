@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { ArrowRight, Timer, CurrencyCircleDollar, CalendarDots, Code } from '@phosphor-icons/react'
+import * as m from '../../paraglide/messages'
 
 export const Route = createFileRoute('/projects/')({ component: ProjectsPage })
 
@@ -13,7 +14,7 @@ function ProjectsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">Projects</span>
+          <span className="mono-label">{m.projects_heading()}</span>
           <h1
             className="display"
             style={{
@@ -23,8 +24,8 @@ function ProjectsPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Things I build<br />
-            and <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>care about.</em>
+            {m.projects_title_a()}<br />
+            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>{m.projects_title_b()}</em>
           </h1>
         </motion.div>
 
@@ -79,7 +80,7 @@ function ProjectsPage() {
                   >
                     <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-gold)', boxShadow: '0 0 6px var(--accent-gold)' }} />
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.1em', color: 'var(--accent-gold)' }}>
-                      In active development
+                      {m.se_status()}
                     </span>
                   </div>
 
@@ -87,21 +88,19 @@ function ProjectsPage() {
                     className="display"
                     style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', margin: '0 0 16px', lineHeight: 1.05 }}
                   >
-                    Self-Engine
+                    {m.se_title()}
                   </h2>
 
                   <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-secondary)', margin: '0 0 28px', maxWidth: 520 }}>
-                    A personal productivity system for time tracking, project management,
-                    financial clarity, and calendar visualization. Built for people who
-                    want to work with intention.
+                    {m.se_desc()}
                   </p>
 
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
                     {[
-                      { icon: <Timer size={13} />, label: 'Time tracking' },
-                      { icon: <CurrencyCircleDollar size={13} />, label: 'Finance' },
-                      { icon: <CalendarDots size={13} />, label: 'Calendar' },
-                      { icon: <Code size={13} />, label: 'Project management' },
+                      { icon: <Timer size={13} />, label: m.project_tag_time() },
+                      { icon: <CurrencyCircleDollar size={13} />, label: m.project_tag_finance() },
+                      { icon: <CalendarDots size={13} />, label: m.project_tag_calendar() },
+                      { icon: <Code size={13} />, label: m.project_tag_management() },
                     ].map(({ icon, label }) => (
                       <span
                         key={label}
@@ -128,7 +127,7 @@ function ProjectsPage() {
                       color: 'var(--accent-green)',
                     }}
                   >
-                    View project <ArrowRight size={15} weight="bold" />
+                    {m.projects_view()} <ArrowRight size={15} weight="bold" />
                   </span>
                 </div>
               </div>
@@ -154,10 +153,10 @@ function ProjectsPage() {
               gap: 16,
             }}
           >
-            <span className="mono-label">More coming soon</span>
+            <span className="mono-label">{m.projects_more_heading()}</span>
             <span style={{ width: 40, height: 1, background: 'var(--border)' }} />
             <span style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-              Open source projects and experiments on the way.
+              {m.projects_more_desc()}
             </span>
           </div>
         </motion.div>
