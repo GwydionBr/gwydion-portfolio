@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { PencilSimpleLine, ArrowUpRight } from '@phosphor-icons/react'
+import * as m from '../paraglide/messages'
 
 export const Route = createFileRoute('/blog')({ component: BlogPage })
 
@@ -13,7 +14,7 @@ function BlogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">Writing</span>
+          <span className="mono-label">{m.blog_heading()}</span>
           <h1
             className="display"
             style={{
@@ -23,9 +24,7 @@ function BlogPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Thoughts on<br />
-            <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>systems</em>,<br />
-            code & practice.
+            {m.blog_sub()}
           </h1>
         </motion.div>
 

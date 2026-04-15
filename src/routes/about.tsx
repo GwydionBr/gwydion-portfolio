@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { Leaf, Barbell, Code, ArrowUpRight } from '@phosphor-icons/react'
+import * as m from '../paraglide/messages'
 
 export const Route = createFileRoute('/about')({ component: AboutPage })
 
@@ -14,7 +15,7 @@ function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">About</span>
+          <span className="mono-label">{m.about_heading()}</span>
           <h1
             className="display"
             style={{
@@ -63,18 +64,13 @@ function AboutPage() {
                 fontWeight: 400,
               }}
             >
-              "I'm Gwydion — a developer and builder from Germany. I spend most of my
-              time working on Self-Engine, a tool I started because I couldn't find
-              anything that fit the way I think about time and work."
+              "{m.about_p1()}"
             </p>
             <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--text-secondary)', margin: '0 0 20px' }}>
-              I care deeply about open source, intentional systems, and the intersection
-              of technology and inner life. Buddhism shapes how I approach both code and
-              everyday existence — with patience, presence, and an eye for what's essential.
+              {m.about_p2()}
             </p>
             <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--text-secondary)', margin: 0 }}>
-              Outside of the screen: I train, I read, I sit in silence. These aren't
-              hobbies — they're part of the system too.
+              {m.about_p3()}
             </p>
           </motion.div>
 

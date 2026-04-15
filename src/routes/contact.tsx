@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { PaperPlaneTilt, ArrowUpRight } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useForm } from '@mantine/form'
+import * as m from '../paraglide/messages'
 import { z } from 'zod'
 
 export const Route = createFileRoute('/contact')({ component: ContactPage })
@@ -53,7 +54,7 @@ function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="mono-label">Contact</span>
+          <span className="mono-label">{m.contact_heading()}</span>
           <h1
             className="display"
             style={{
@@ -63,7 +64,7 @@ function ContactPage() {
               letterSpacing: '-0.02em',
             }}
           >
-            Say <em style={{ fontStyle: 'italic', color: 'var(--accent-green)' }}>hello.</em>
+            {m.contact_heading()}.
           </h1>
         </motion.div>
 
@@ -90,9 +91,7 @@ function ContactPage() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <p style={{ fontSize: '1.05rem', lineHeight: 1.75, color: 'var(--text-secondary)', margin: '0 0 40px' }}>
-              Got a project in mind, want to collaborate, or just want to talk
-              about productivity systems, open source, or Buddhist philosophy?
-              I'm reachable.
+              {m.contact_sub()}
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -139,56 +138,29 @@ function ContactPage() {
                   style={{ color: 'var(--accent-green)', marginBottom: 20 }}
                 />
                 <h3 className="display" style={{ margin: '0 0 12px', fontSize: '1.8rem' }}>
-                  Message sent.
+                  {m.contact_success()}
                 </h3>
-                <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                  I'll be in touch.
-                </p>
               </motion.div>
             ) : (
               <form
                 onSubmit={form.onSubmit(handleSubmit)}
                 style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
               >
-                <FormField
-                  label="Your name"
-                  error={form.errors.name as string}
-                >
-                  <input
-                    type="text"
-                    placeholder="Gwydion"
-                    {...form.getInputProps('name')}
-                    style={inputStyle(!!form.errors.name)}
-                  />
+                <FormField label={m.contact_name()} error={form.errors.name as string}>
+                  <input type="text" placeholder="Gwydion" {...form.getInputProps('name')} style={inputStyle(!!form.errors.name)} />
                 </FormField>
 
-                <FormField
-                  label="Your email"
-                  error={form.errors.email as string}
-                >
-                  <input
-                    type="email"
-                    placeholder="hello@example.com"
-                    {...form.getInputProps('email')}
-                    style={inputStyle(!!form.errors.email)}
-                  />
+                <FormField label={m.contact_email()} error={form.errors.email as string}>
+                  <input type="email" placeholder="hello@example.com" {...form.getInputProps('email')} style={inputStyle(!!form.errors.email)} />
                 </FormField>
 
-                <FormField
-                  label="Your message"
-                  error={form.errors.message as string}
-                >
-                  <textarea
-                    placeholder="What's on your mind?"
-                    rows={6}
-                    {...form.getInputProps('message')}
-                    style={{ ...inputStyle(!!form.errors.message), resize: 'vertical', minHeight: 140 }}
-                  />
+                <FormField label={m.contact_message()} error={form.errors.message as string}>
+                  <textarea rows={6} {...form.getInputProps('message')} style={{ ...inputStyle(!!form.errors.message), resize: 'vertical', minHeight: 140 }} />
                 </FormField>
 
                 {status === 'error' && (
                   <p style={{ margin: 0, fontSize: '0.825rem', color: '#e05252' }}>
-                    Something went wrong. Please try again.
+                    {m.contact_error()}
                   </p>
                 )}
 
@@ -196,25 +168,17 @@ function ContactPage() {
                   type="submit"
                   disabled={status === 'sending'}
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                    padding: '14px 28px',
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    gap: 8, padding: '14px 28px',
                     background: status === 'sending' ? 'var(--text-muted)' : 'var(--accent-green)',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: 10,
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                    letterSpacing: '0.02em',
+                    color: '#fff', border: 'none', borderRadius: 10,
+                    fontSize: '0.875rem', fontWeight: 500, letterSpacing: '0.02em',
                     cursor: status === 'sending' ? 'not-allowed' : 'pointer',
-                    transition: 'opacity 0.2s, transform 0.2s',
-                    fontFamily: 'var(--font-body)',
+                    transition: 'opacity 0.2s, transform 0.2s', fontFamily: 'var(--font-body)',
                   }}
                 >
                   <PaperPlaneTilt size={16} weight="light" />
-                  {status === 'sending' ? 'Sending…' : 'Send message'}
+                  {status === 'sending' ? m.contact_sending() : m.contact_send()}
                 </button>
               </form>
             )}

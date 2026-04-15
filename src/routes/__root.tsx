@@ -5,6 +5,7 @@ import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../lib/theme";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { LanguageProvider, useLanguage } from "../lib/LanguageContext";
 
 import appCss from "../styles.css?url";
 
@@ -42,10 +43,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
-          <div className="grain-overlay" aria-hidden="true" />
-          <Header />
-          {children}
-          <Footer />
+          <LanguageProvider>
+            <div className="grain-overlay" aria-hidden="true" />
+            <ConnectedHeader />
+            {children}
+            <ConnectedFooter />
+          </LanguageProvider>
           <TanStackDevtools
             config={{ position: "bottom-right" }}
             plugins={[
@@ -60,4 +63,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   );
+}
+
+function ConnectedHeader() {
+  const { lang, setLang } = useLanguage();
+  return <Header lang={lang} onLangChange={setLang} />;
+}
+
+function ConnectedFooter() {
+  const { lang } = useLanguage();
+  return <Footer lang={lang} />;
 }
