@@ -20,14 +20,20 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const isDark = colorScheme === "dark";
+  // mounted prevents SSR/client hydration mismatch for color-scheme-dependent icons.
+  // Before mount: always render as "dark" (matches defaultColorScheme="dark" on server).
+  // After mount: use the real value from localStorage.
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler, { passive: true });
     handler();
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  const isDark = mounted ? colorScheme === "dark" : true;
 
   return (
     <header
@@ -116,7 +122,7 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
           <button
             type="button"
             onClick={() => toggleColorScheme()}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label="Toggle color scheme"
             style={{ ...ctrlStyle, width: 34, padding: "0" }}
           >
             {isDark ? (
