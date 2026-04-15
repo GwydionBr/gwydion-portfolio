@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { GithubLogo, ArrowUpRight } from '@phosphor-icons/react'
+import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '../lib/githubUrls'
 import * as m from '../paraglide/messages'
 
 export function Footer() {
@@ -80,7 +81,7 @@ export function Footer() {
               </Link>
             ))}
             <a
-              href="https://github.com/gwydion"
+              href={GITHUB_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="nav-link"
@@ -88,6 +89,16 @@ export function Footer() {
             >
               GitHub <ArrowUpRight size={12} />
             </a>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <span className="mono-label">{m.footer_legal()}</span>
+            <Link to="/impressum" className="nav-link" style={{ fontSize: '0.875rem' }}>
+              {m.nav_imprint()}
+            </Link>
+            <Link to="/datenschutz" className="nav-link" style={{ fontSize: '0.875rem' }}>
+              {m.nav_privacy()}
+            </Link>
           </div>
         </nav>
       </div>
@@ -110,7 +121,7 @@ export function Footer() {
           © {year} Gwydion Braunsdorf
         </span>
         <a
-          href="https://github.com/gwydion/gwydion.dev"
+          href={GITHUB_SITE_REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
           style={{

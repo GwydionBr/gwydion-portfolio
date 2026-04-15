@@ -1,9 +1,18 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, Select, useMantineColorScheme } from "@mantine/core";
-import { CheckIcon, DesktopIcon, MoonIcon, SunIcon, ListIcon, XIcon } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  DesktopIcon,
+  GithubLogo,
+  MoonIcon,
+  SunIcon,
+  ListIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import { ReactCountryFlag } from "react-country-flag";
 import type { Locale } from "../lib/LanguageContext";
+import { GITHUB_PROFILE_URL } from "../lib/githubUrls";
 import * as m from "../paraglide/messages";
 
 const NAV_LINKS = [
@@ -122,6 +131,16 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
               </span>
             )}
           />
+
+          <a
+            href={GITHUB_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="icon-control square-control"
+            aria-label={m.header_github()}
+          >
+            <GithubLogo size={17} weight="light" aria-hidden />
+          </a>
 
           <Menu
             position="bottom-end"

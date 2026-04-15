@@ -51,6 +51,7 @@
   "theme_toggle_dark": "Dunkelmodus",
   "theme_toggle_light": "Hellmodus",
   "theme_system": "System",
+  "header_github": "GitHub-Profil",
   "language_toggle": "Sprache wechseln",
   "theme_toggle": "Farbschema wechseln",
   "theme_choose": "Farbschema wählen",
@@ -97,5 +98,11 @@
   "self_open_source": "Open Source",
   "self_open_source_desc": "Self-Engine ist während der frühen Entwicklung noch closed source. Der Plan ist, es später zu öffnen — weil gute Tools zugänglich und gemeinschaftlich sein sollten.",
   "self_follow": "Für Updates auf GitHub folgen",
-  "status_done": "Fertig"
+  "status_done": "Fertig",
+  "nav_imprint": "Impressum",
+  "nav_privacy": "Datenschutz",
+  "legal_imprint_title": "Impressum",
+  "legal_privacy_title": "Datenschutzerklärung",
+  "legal_toc_heading": "Inhalt",
+  "footer_legal": "Rechtliches"
 }
