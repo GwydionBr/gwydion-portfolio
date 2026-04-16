@@ -20,8 +20,9 @@ import {
   LeafIcon,
   CodeIcon,
 } from "@phosphor-icons/react";
-import { motion } from "motion/react";
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageMain } from "../components/ui/Page";
+import { motion, useReducedMotion } from "motion/react";
+import { AnimatedAccentRule, Reveal, StaggerGroup, StaggerItem } from "../components/motion";
+import { AppCard, DisplayTitle, Eyebrow, PageMain } from "../components/ui/Page";
 import * as m from "../paraglide/messages";
 
 export const Route = createFileRoute("/")({ component: HomePage });
@@ -38,6 +39,8 @@ function HomePage() {
 }
 
 function HeroSection() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <Box
       component="section"
@@ -52,48 +55,25 @@ function HeroSection() {
       }}
     >
       <Container size={1080} px={0} w="100%">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal distance={12} duration={0.6}>
           <Eyebrow>gwydion.dev</Eyebrow>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal distance={30} duration={0.9} delay={0.1}>
           <DisplayTitle order={1} size="hero" mb={0}>
             {m.hero_tagline()}
           </DisplayTitle>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: "left" }}
-        >
-          <AccentRule my={32} />
-        </motion.div>
+        <AnimatedAccentRule my={32} delay={0.4} />
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal distance={16} duration={0.7} delay={0.5}>
           <Text maw={480} size="lg" lh={1.7} c="var(--app-text-secondary)">
             {m.hero_sub()}
           </Text>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal distance={16} duration={0.7} delay={0.65}>
           <Group gap={14} mt={40}>
             <Button component={Link} to="/projects" rightSection={<ArrowRightIcon size={15} weight="bold" />}>
               {m.hero_cta_projects()}
@@ -102,13 +82,13 @@ function HeroSection() {
               {m.hero_cta_contact()}
             </Button>
           </Group>
-        </motion.div>
+        </Reveal>
       </Container>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 1 }}
+      <Reveal
+        preset="fade-in"
+        duration={1}
+        delay={1.4}
         style={{
           position: "absolute",
           bottom: 40,
@@ -127,8 +107,8 @@ function HeroSection() {
             scroll
           </Text>
           <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            animate={reducedMotion ? undefined : { y: [0, 6, 0] }}
+            transition={reducedMotion ? undefined : { repeat: Infinity, duration: 2, ease: "easeInOut" }}
             style={{
               width: 1,
               height: 32,
@@ -136,7 +116,7 @@ function HeroSection() {
             }}
           />
         </Stack>
-      </motion.div>
+      </Reveal>
     </Box>
   );
 }
@@ -163,45 +143,32 @@ function CurrentlySection() {
   return (
     <Box component="section" pt={120} px={28}>
       <Container size={1080} px={0}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal trigger="inView" viewport={{ margin: "-80px" }} duration={0.7}>
           <Eyebrow mb={12}>{m.currently_heading()}</Eyebrow>
           <DisplayTitle order={2} size="section" mb={48}>
             {m.home_focus_heading()}
           </DisplayTitle>
-        </motion.div>
+        </Reveal>
 
-        <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
-          {items.map(({ icon, label, text }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <AppCard p="xl" h="100%">
-                <Stack gap="sm">
-                  <ThemeIcon color="forest" size={40}>
-                    {icon}
-                  </ThemeIcon>
-                  <Eyebrow>{label}</Eyebrow>
-                  <Text size="sm" lh={1.65} c="var(--app-text-secondary)">
-                    {text}
-                  </Text>
-                </Stack>
-              </AppCard>
-            </motion.div>
-          ))}
-        </SimpleGrid>
+        <StaggerGroup trigger="inView" stagger={0.1}>
+          <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md">
+            {items.map(({ icon, label, text }) => (
+              <StaggerItem key={label} duration={0.6}>
+                <AppCard p="xl" h="100%">
+                  <Stack gap="sm">
+                    <ThemeIcon color="forest" size={40}>
+                      {icon}
+                    </ThemeIcon>
+                    <Eyebrow>{label}</Eyebrow>
+                    <Text size="sm" lh={1.65} c="var(--app-text-secondary)">
+                      {text}
+                    </Text>
+                  </Stack>
+                </AppCard>
+              </StaggerItem>
+            ))}
+          </SimpleGrid>
+        </StaggerGroup>
       </Container>
     </Box>
   );
@@ -211,21 +178,11 @@ function FeaturedProjectSection() {
   return (
     <Box component="section" pt={120} px={28}>
       <Container size={1080} px={0}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal trigger="inView" viewport={{ margin: "-80px" }} duration={0.7}>
           <Eyebrow>{m.projects_heading()}</Eyebrow>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal trigger="inView" distance={28} duration={0.8} delay={0.1}>
           <AppCard mt={20} p={48} style={{ position: "relative", overflow: "hidden" }}>
             <Box
               aria-hidden
@@ -263,7 +220,7 @@ function FeaturedProjectSection() {
               </Button>
             </Stack>
           </AppCard>
-        </motion.div>
+        </Reveal>
       </Container>
     </Box>
   );
@@ -274,12 +231,7 @@ function AboutTeaser() {
     <Box component="section" pt={120} px={28}>
       <Container size={1080} px={0}>
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={60} verticalSpacing={48}>
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <Reveal trigger="inView" preset="fade-left" distance={24} duration={0.8} viewport={{ margin: "-80px" }}>
             <Eyebrow mb={12}>{m.about_heading()}</Eyebrow>
             <DisplayTitle order={2} size="section" mb={24}>
               {m.home_about_title_a()}
@@ -298,13 +250,14 @@ function AboutTeaser() {
             >
               {m.about_cta()}
             </Button>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          <Reveal
+            trigger="inView"
+            preset="scale-in"
+            duration={0.8}
+            delay={0.15}
+            viewport={{ margin: "-80px" }}
           >
             <AppCard
               style={{
@@ -350,7 +303,7 @@ function AboutTeaser() {
                 </Text>
               </Center>
             </AppCard>
-          </motion.div>
+          </Reveal>
         </SimpleGrid>
       </Container>
     </Box>

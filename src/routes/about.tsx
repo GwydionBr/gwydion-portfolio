@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
-import { motion } from 'motion/react'
 import { LeafIcon, BarbellIcon, CodeIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
+import { PageIntro, Reveal, StaggerGroup, StaggerItem } from '../components/motion'
+import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
 import * as m from '../paraglide/messages'
 
 export const Route = createFileRoute('/about')({ component: AboutPage })
@@ -14,34 +14,19 @@ function AboutPage() {
   return (
     <PageMain>
       <PageContainer>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Eyebrow mb={16}>{m.about_heading()}</Eyebrow>
-          <DisplayTitle>
-            {m.about_title_a()}<br />
-            <em>{m.about_title_b()}</em>
-            <br />{m.about_title_c()}
-          </DisplayTitle>
-        </motion.div>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left' }}
-        >
-          <AccentRule my={40} />
-        </motion.div>
+        <PageIntro
+          eyebrow={<Eyebrow mb={16}>{m.about_heading()}</Eyebrow>}
+          title={
+            <DisplayTitle>
+              {m.about_title_a()}<br />
+              <em>{m.about_title_b()}</em>
+              <br />{m.about_title_c()}
+            </DisplayTitle>
+          }
+        />
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={80} verticalSpacing={60} mb={100}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <Reveal delay={0.2}>
             <Text
               component="p"
               ff="var(--mantine-font-family-headings)"
@@ -57,77 +42,57 @@ function AboutPage() {
             <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">
               {m.about_p3()}
             </Text>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <Reveal delay={0.35}>
             <Eyebrow mb={24}>{m.about_focus_heading()}</Eyebrow>
-            <Stack gap="md">
-              {focusAreas.map(({ icon, title, desc }, i) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <AppCard p="md">
-                    <Group align="flex-start" gap="md" wrap="nowrap">
-                      <ThemeIcon color="forest" size={36}>
-                        {icon}
-                      </ThemeIcon>
-                      <Stack gap={4}>
-                        <Text size="sm" fw={500}>
-                          {title}
-                        </Text>
-                        <Text size="xs" lh={1.6} c="var(--app-text-muted)">
-                          {desc}
-                        </Text>
-                      </Stack>
-                    </Group>
-                  </AppCard>
-                </motion.div>
-              ))}
-            </Stack>
-          </motion.div>
+            <StaggerGroup stagger={0.08} delayChildren={0.05}>
+              <Stack gap="md">
+                {focusAreas.map(({ icon, title, desc }) => (
+                  <StaggerItem key={title} preset="fade-right" distance={16} duration={0.5}>
+                    <AppCard p="md">
+                      <Group align="flex-start" gap="md" wrap="nowrap">
+                        <ThemeIcon color="forest" size={36}>
+                          {icon}
+                        </ThemeIcon>
+                        <Stack gap={4}>
+                          <Text size="sm" fw={500}>
+                            {title}
+                          </Text>
+                          <Text size="xs" lh={1.6} c="var(--app-text-muted)">
+                            {desc}
+                          </Text>
+                        </Stack>
+                      </Group>
+                    </AppCard>
+                  </StaggerItem>
+                ))}
+              </Stack>
+            </StaggerGroup>
+          </Reveal>
         </SimpleGrid>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginBottom: 100 }}
-        >
-          <Eyebrow mb={24}>{m.about_now_heading()}</Eyebrow>
-          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
-            {nowItems.map(({ label, value }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-              >
-                <AppCard p="lg" radius={0} h="100%">
-                  <Eyebrow mb={10}>{label}</Eyebrow>
-                  <Text size="sm" lh={1.5}>
-                    {value}
-                  </Text>
-                </AppCard>
-              </motion.div>
-            ))}
-          </SimpleGrid>
-        </motion.div>
+        <div style={{ marginBottom: 100 }}>
+          <Reveal trigger="inView">
+            <Eyebrow mb={24}>{m.about_now_heading()}</Eyebrow>
+          </Reveal>
+          <StaggerGroup trigger="inView" stagger={0.07}>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
+              {nowItems.map(({ label, value }) => (
+                <StaggerItem key={label} preset="fade-in" duration={0.5}>
+                  <AppCard p="lg" radius={0} h="100%">
+                    <Eyebrow mb={10}>{label}</Eyebrow>
+                    <Text size="sm" lh={1.5}>
+                      {value}
+                    </Text>
+                  </AppCard>
+                </StaggerItem>
+              ))}
+            </SimpleGrid>
+          </StaggerGroup>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <Reveal trigger="inView" distance={16} duration={0.6}>
           <Group gap={12} pb={40}>
             {LINKS.map(({ label, href }) => (
               <Button
@@ -143,7 +108,7 @@ function AboutPage() {
               </Button>
             ))}
           </Group>
-        </motion.div>
+        </Reveal>
       </PageContainer>
     </PageMain>
   )

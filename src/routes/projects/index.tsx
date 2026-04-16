@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Badge, Box, Group, Stack, Text } from '@mantine/core'
-import { motion } from 'motion/react'
 import { ArrowRightIcon, TimerIcon, CurrencyCircleDollarIcon, CalendarDotsIcon, CodeIcon } from '@phosphor-icons/react'
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../../components/ui/Page'
+import { PageIntro, Reveal } from '../../components/motion'
+import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../../components/ui/Page'
 import * as m from '../../paraglide/messages'
 
 export const Route = createFileRoute('/projects/')({ component: ProjectsPage })
@@ -11,32 +11,17 @@ function ProjectsPage() {
   return (
     <PageMain>
       <PageContainer>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Eyebrow mb={16}>{m.projects_heading()}</Eyebrow>
-          <DisplayTitle>
-            {m.projects_title_a()}<br />
-            <em>{m.projects_title_b()}</em>
-          </DisplayTitle>
-        </motion.div>
+        <PageIntro
+          eyebrow={<Eyebrow mb={16}>{m.projects_heading()}</Eyebrow>}
+          title={
+            <DisplayTitle>
+              {m.projects_title_a()}<br />
+              <em>{m.projects_title_b()}</em>
+            </DisplayTitle>
+          }
+        />
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left' }}
-        >
-          <AccentRule my={40} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal delay={0.2} distance={28} duration={0.8}>
           <AppCard
             component={Link}
             to="/projects/self-engine"
@@ -80,14 +65,9 @@ function ProjectsPage() {
               </Group>
             </Stack>
           </AppCard>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <Reveal trigger="inView" preset="fade-in" duration={0.6} delay={0.2}>
           <AppCard mt={16} p="xl" style={{ borderStyle: 'dashed' }}>
             <Group gap="md">
               <Eyebrow>{m.projects_more_heading()}</Eyebrow>
@@ -97,7 +77,7 @@ function ProjectsPage() {
               </Text>
             </Group>
           </AppCard>
-        </motion.div>
+        </Reveal>
       </PageContainer>
     </PageMain>
   )

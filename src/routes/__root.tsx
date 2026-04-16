@@ -2,6 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { MotionConfig } from "motion/react";
 import { cssVariablesResolver, theme } from "../lib/theme";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
@@ -42,27 +43,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <MantineProvider
-          theme={theme}
-          cssVariablesResolver={cssVariablesResolver}
-          defaultColorScheme="auto"
-        >
-          <LanguageProvider>
-            <div className="grain-overlay" aria-hidden="true" />
-            <ConnectedHeader />
-            <LocalizedContent>{children}</LocalizedContent>
-            <ConnectedFooter />
-          </LanguageProvider>
-          <TanStackDevtools
-            config={{ position: "middle-left" }}
-            plugins={[
-              {
-                name: "Tanstack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
-        </MantineProvider>
+        <MotionConfig reducedMotion="user">
+          <MantineProvider
+            theme={theme}
+            cssVariablesResolver={cssVariablesResolver}
+            defaultColorScheme="auto"
+          >
+            <LanguageProvider>
+              <div className="grain-overlay" aria-hidden="true" />
+              <ConnectedHeader />
+              <LocalizedContent>{children}</LocalizedContent>
+              <ConnectedFooter />
+            </LanguageProvider>
+            <TanStackDevtools
+              config={{ position: "middle-left" }}
+              plugins={[
+                {
+                  name: "Tanstack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+              ]}
+            />
+          </MantineProvider>
+        </MotionConfig>
         <Scripts />
       </body>
     </html>

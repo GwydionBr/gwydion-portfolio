@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Stack, Text, Title } from '@mantine/core'
-import { motion } from 'motion/react'
 import { useEffect } from 'react'
+import { StaggerGroup, StaggerItem } from '../components/motion'
 import { LegalPageShell } from '../components/legal/LegalPageShell'
 import { LegalParagraph } from '../components/legal/LegalParagraph'
 import { getImpressumBlocks } from '../content/legal/impressum'
@@ -28,36 +28,35 @@ function ImpressumPage() {
         </>
       }
     >
-      <Stack gap={44}>
-        {blocks.map((block, blockIndex) => (
-          <motion.article
-            key={block.title ?? `block-${blockIndex}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 * blockIndex, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {block.title && (
-              <Title
-                order={2}
-                className="display"
-                style={{
-                  fontSize: '1.35rem',
-                  fontWeight: 400,
-                  margin: '0 0 18px',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                {block.title}
-              </Title>
-            )}
-            {block.paragraphs.map((paragraph, i) => (
-              <LegalParagraph key={i} last={i === block.paragraphs.length - 1}>
-                {paragraph}
-              </LegalParagraph>
-            ))}
-          </motion.article>
-        ))}
-      </Stack>
+      <StaggerGroup stagger={0.08}>
+        <Stack gap={44}>
+          {blocks.map((block, blockIndex) => (
+            <StaggerItem key={block.title ?? `block-${blockIndex}`} distance={14} duration={0.55}>
+              <article>
+                {block.title && (
+                  <Title
+                    order={2}
+                    className="display"
+                    style={{
+                      fontSize: '1.35rem',
+                      fontWeight: 400,
+                      margin: '0 0 18px',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {block.title}
+                  </Title>
+                )}
+                {block.paragraphs.map((paragraph, i) => (
+                  <LegalParagraph key={i} last={i === block.paragraphs.length - 1}>
+                    {paragraph}
+                  </LegalParagraph>
+                ))}
+              </article>
+            </StaggerItem>
+          ))}
+        </Stack>
+      </StaggerGroup>
     </LegalPageShell>
   )
 }

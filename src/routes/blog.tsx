@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Anchor, Badge, Box, Group, Stack, Text, ThemeIcon } from '@mantine/core'
-import { motion } from 'motion/react'
 import { PencilSimpleLineIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
+import { PageIntro, Reveal } from '../components/motion'
+import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
 import * as m from '../paraglide/messages'
 
 export const Route = createFileRoute('/blog')({ component: BlogPage })
@@ -11,29 +11,12 @@ function BlogPage() {
   return (
     <PageMain>
       <PageContainer>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Eyebrow mb={16}>{m.blog_heading()}</Eyebrow>
-          <DisplayTitle>{m.blog_sub()}</DisplayTitle>
-        </motion.div>
+        <PageIntro
+          eyebrow={<Eyebrow mb={16}>{m.blog_heading()}</Eyebrow>}
+          title={<DisplayTitle>{m.blog_sub()}</DisplayTitle>}
+        />
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left' }}
-        >
-          <AccentRule my={40} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal delay={0.25}>
           <AppCard p={48} style={{ position: 'relative', overflow: 'hidden' }}>
             <Box
               aria-hidden
@@ -76,7 +59,7 @@ function BlogPage() {
               </Anchor>
             </Stack>
           </AppCard>
-        </motion.div>
+        </Reveal>
       </PageContainer>
     </PageMain>
   )

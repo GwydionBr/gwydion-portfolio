@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Anchor, Badge, Box, Button, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
-import { motion } from 'motion/react'
 import {
   TimerIcon, CurrencyCircleDollarIcon, CalendarDotsIcon, CodeIcon,
   ArrowLeftIcon, ArrowUpRightIcon, CheckCircleIcon,
 } from '@phosphor-icons/react'
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../../components/ui/Page'
+import { AnimatedAccentRule, Reveal, StaggerGroup, StaggerItem } from '../../components/motion'
+import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../../components/ui/Page'
 import * as m from '../../paraglide/messages'
 import { GITHUB_PROFILE_URL } from '../../lib/githubUrls'
 
@@ -15,12 +15,7 @@ function SelfEnginePage() {
   return (
     <PageMain>
       <PageContainer>
-        <motion.div
-          initial={{ opacity: 0, x: -12 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          style={{ marginBottom: 48 }}
-        >
+        <Reveal preset="fade-left" duration={0.5} distance={12} style={{ marginBottom: 48 }}>
           <Button
             component={Link}
             to="/projects"
@@ -31,13 +26,9 @@ function SelfEnginePage() {
           >
             {m.self_back()}
           </Button>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <Reveal duration={0.8}>
           <Group gap={12} mb={20}>
             <Eyebrow>{m.self_project_label()}</Eyebrow>
             <Box w={24} h={1} bg="var(--app-border)" />
@@ -53,94 +44,67 @@ function SelfEnginePage() {
           <Text maw={560} size="lg" lh={1.7} c="var(--app-text-secondary)">
             {m.self_intro()}
           </Text>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left' }}
-        >
-          <AccentRule my={48} />
-        </motion.div>
+        <AnimatedAccentRule my={48} />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginBottom: 72 }}
-        >
-          <Eyebrow mb={24}>{m.self_features()}</Eyebrow>
-          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
-            {FEATURES.map(({ icon, title, desc }, i) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.08 }}
-              >
-                <AppCard p="xl" radius={0} h="100%">
-                  <Stack gap="sm">
-                    <ThemeIcon color="forest" size={40}>
-                      {icon}
-                    </ThemeIcon>
-                    <Text size="sm" fw={500}>
-                      {title}
-                    </Text>
-                    <Text size="xs" lh={1.65} c="var(--app-text-muted)">
-                      {desc}
-                    </Text>
-                  </Stack>
-                </AppCard>
-              </motion.div>
-            ))}
-          </SimpleGrid>
-        </motion.div>
+        <div style={{ marginBottom: 72 }}>
+          <Reveal delay={0.2}>
+            <Eyebrow mb={24}>{m.self_features()}</Eyebrow>
+          </Reveal>
+          <StaggerGroup stagger={0.08} delayChildren={0.3}>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
+              {FEATURES.map(({ icon, title, desc }) => (
+                <StaggerItem key={title} preset="fade-in" duration={0.5}>
+                  <AppCard p="xl" radius={0} h="100%">
+                    <Stack gap="sm">
+                      <ThemeIcon color="forest" size={40}>
+                        {icon}
+                      </ThemeIcon>
+                      <Text size="sm" fw={500}>
+                        {title}
+                      </Text>
+                      <Text size="xs" lh={1.65} c="var(--app-text-muted)">
+                        {desc}
+                      </Text>
+                    </Stack>
+                  </AppCard>
+                </StaggerItem>
+              ))}
+            </SimpleGrid>
+          </StaggerGroup>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginBottom: 72 }}
-        >
-          <Eyebrow mb={24}>{m.self_roadmap()}</Eyebrow>
-          <Stack gap="sm">
-            {ROADMAP.map(({ item, done }, i) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-              >
-                <AppCard p="md">
-                  <Group gap="md" wrap="nowrap">
-                    <ThemeIcon color={done ? 'forest' : 'gray'} variant={done ? 'light' : 'default'} size={34}>
-                      <CheckCircleIcon size={18} weight={done ? 'fill' : 'light'} />
-                    </ThemeIcon>
-                    <Text size="sm" c={done ? 'inherit' : 'var(--app-text-muted)'}>
-                      {item}
-                    </Text>
-                    {done && (
-                      <Badge color="forest" ml="auto">
-                        {m.status_done()}
-                      </Badge>
-                    )}
-                  </Group>
-                </AppCard>
-              </motion.div>
-            ))}
-          </Stack>
-        </motion.div>
+        <div style={{ marginBottom: 72 }}>
+          <Reveal trigger="inView">
+            <Eyebrow mb={24}>{m.self_roadmap()}</Eyebrow>
+          </Reveal>
+          <StaggerGroup trigger="inView" stagger={0.07}>
+            <Stack gap="sm">
+              {ROADMAP.map(({ item, done }) => (
+                <StaggerItem key={item} preset="fade-left" distance={12} duration={0.5}>
+                  <AppCard p="md">
+                    <Group gap="md" wrap="nowrap">
+                      <ThemeIcon color={done ? 'forest' : 'gray'} variant={done ? 'light' : 'default'} size={34}>
+                        <CheckCircleIcon size={18} weight={done ? 'fill' : 'light'} />
+                      </ThemeIcon>
+                      <Text size="sm" c={done ? 'inherit' : 'var(--app-text-muted)'}>
+                        {item}
+                      </Text>
+                      {done && (
+                        <Badge color="forest" ml="auto">
+                          {m.status_done()}
+                        </Badge>
+                      )}
+                    </Group>
+                  </AppCard>
+                </StaggerItem>
+              ))}
+            </Stack>
+          </StaggerGroup>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ marginBottom: 72 }}
-        >
+        <Reveal trigger="inView" distance={16} duration={0.6} style={{ marginBottom: 72 }}>
           <Eyebrow mb={20}>{m.self_built_with()}</Eyebrow>
           <Group gap={8}>
             {TECH.map((t) => (
@@ -149,14 +113,9 @@ function SelfEnginePage() {
               </Badge>
             ))}
           </Group>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <Reveal trigger="inView" distance={16} duration={0.6}>
           <AppCard p="xl" mb={60} style={{ position: 'relative', overflow: 'hidden' }}>
             <Box
               aria-hidden
@@ -182,7 +141,7 @@ function SelfEnginePage() {
               </Anchor>
             </Stack>
           </AppCard>
-        </motion.div>
+        </Reveal>
       </PageContainer>
     </PageMain>
   )

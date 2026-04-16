@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Alert, Anchor, Button, Group, SimpleGrid, Stack, Text, TextInput, Textarea, ThemeIcon } from '@mantine/core'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { PaperPlaneTiltIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { useState } from 'react'
 import { useForm } from '@mantine/form'
-import { AccentRule, AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
+import { PageIntro, Reveal, createRevealTransition } from '../components/motion'
+import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '../components/ui/Page'
 import * as m from '../paraglide/messages'
 import { contactLimits, contactSchema, type ContactForm } from '../lib/contact'
 
@@ -40,33 +41,18 @@ function ContactPage() {
   return (
     <PageMain>
       <PageContainer>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Eyebrow mb={16}>{m.contact_heading()}</Eyebrow>
-          <DisplayTitle>
-            {m.contact_heading()}
-            <span style={{ color: 'var(--mantine-color-gold-filled)' }}>.</span>
-          </DisplayTitle>
-        </motion.div>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformOrigin: 'left' }}
-        >
-          <AccentRule my={40} />
-        </motion.div>
+        <PageIntro
+          eyebrow={<Eyebrow mb={16}>{m.contact_heading()}</Eyebrow>}
+          title={
+            <DisplayTitle>
+              {m.contact_heading()}
+              <span style={{ color: 'var(--mantine-color-gold-filled)' }}>.</span>
+            </DisplayTitle>
+          }
+        />
 
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={80} verticalSpacing={60}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <Reveal delay={0.2}>
             <Text size="lg" lh={1.75} c="var(--app-text-secondary)" mb={40}>
               {m.contact_sub()}
             </Text>
@@ -89,82 +75,94 @@ function ContactPage() {
                 </Stack>
               ))}
             </Stack>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {status === 'success' ? (
-              <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
-                <AppCard p={48} ta="center">
-                  <ThemeIcon color="forest" size={56} radius="xl" mx="auto" mb={20}>
-                    <PaperPlaneTiltIcon size={28} weight="thin" />
-                  </ThemeIcon>
-                  <DisplayTitle order={3} size="1.8rem" mb={0}>
-                    {m.contact_success()}
-                  </DisplayTitle>
-                </AppCard>
-              </motion.div>
-            ) : (
-              <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack gap="md">
-                  <TextInput
-                    label={m.contact_name()}
-                    id="contact-name"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Gwydion"
-                    error={form.errors.name as string}
-                    {...form.getInputProps('name')}
-                  />
+          <Reveal delay={0.35}>
+            <AnimatePresence initial={false} mode="wait">
+              {status === 'success' ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={createRevealTransition(0.4)}
+                >
+                  <AppCard p={48} ta="center">
+                    <ThemeIcon color="forest" size={56} radius="xl" mx="auto" mb={20}>
+                      <PaperPlaneTiltIcon size={28} weight="thin" />
+                    </ThemeIcon>
+                    <DisplayTitle order={3} size="1.8rem" mb={0}>
+                      {m.contact_success()}
+                    </DisplayTitle>
+                  </AppCard>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={createRevealTransition(0.35)}
+                >
+                  <form onSubmit={form.onSubmit(handleSubmit)}>
+                    <Stack gap="md">
+                      <TextInput
+                        label={m.contact_name()}
+                        id="contact-name"
+                        type="text"
+                        autoComplete="name"
+                        placeholder="Gwydion"
+                        error={form.errors.name as string}
+                        {...form.getInputProps('name')}
+                      />
 
-                  <TextInput
-                    label={m.contact_email()}
-                    id="contact-email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="hello@example.com"
-                    error={form.errors.email as string}
-                    {...form.getInputProps('email')}
-                  />
+                      <TextInput
+                        label={m.contact_email()}
+                        id="contact-email"
+                        type="email"
+                        autoComplete="email"
+                        placeholder="hello@example.com"
+                        error={form.errors.email as string}
+                        {...form.getInputProps('email')}
+                      />
 
-                  <Textarea
-                    label={m.contact_message()}
-                    id="contact-message"
-                    minRows={6}
-                    autosize
-                    error={form.errors.message as string}
-                    {...form.getInputProps('message')}
-                  />
+                      <Textarea
+                        label={m.contact_message()}
+                        id="contact-message"
+                        minRows={6}
+                        autosize
+                        error={form.errors.message as string}
+                        {...form.getInputProps('message')}
+                      />
 
-                  <input
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    aria-hidden="true"
-                    {...form.getInputProps('website')}
-                    style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
-                  />
+                      <input
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        {...form.getInputProps('website')}
+                        style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+                      />
 
-                  {status === 'error' && (
-                    <Alert color="red" variant="light">
-                      {m.contact_error()}
-                    </Alert>
-                  )}
+                      {status === 'error' && (
+                        <Alert color="red" variant="light">
+                          {m.contact_error()}
+                        </Alert>
+                      )}
 
-                  <Button
-                    type="submit"
-                    loading={status === 'sending'}
-                    leftSection={<PaperPlaneTiltIcon size={16} weight="light" />}
-                  >
-                    {status === 'sending' ? m.contact_sending() : m.contact_send()}
-                  </Button>
-                </Stack>
-              </form>
-            )}
-          </motion.div>
+                      <Button
+                        type="submit"
+                        loading={status === 'sending'}
+                        leftSection={<PaperPlaneTiltIcon size={16} weight="light" />}
+                      >
+                        {status === 'sending' ? m.contact_sending() : m.contact_send()}
+                      </Button>
+                    </Stack>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Reveal>
         </SimpleGrid>
       </PageContainer>
     </PageMain>
