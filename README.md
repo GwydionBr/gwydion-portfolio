@@ -34,7 +34,7 @@ bun run preview
 ## Internationalization
 
 Source messages live in `messages/en.json` and `messages/de.json`.
-Generated Paraglide output is written to `src/paraglide`:
+Generated Paraglide output is written to `src/generated/paraglide`:
 
 ```bash
 bun run i18n
@@ -50,4 +50,4 @@ The contact endpoint uses Resend. Copy `.env.example` to `.env` and set:
 RESEND_API_KEY=re_...
 ```
 
-Validation is shared between the client and API route in `src/lib/contact.ts`.
+Validation is shared between the client and API route in `src/features/contact/model/contact.ts`.

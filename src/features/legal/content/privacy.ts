@@ -1,4 +1,4 @@
-import type { Locale } from '../../lib/LanguageContext'
+import type { Locale } from '#/app/i18n/LanguageContext'
 
 export interface PrivacySection {
   id: string

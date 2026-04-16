@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { setLocale, locales } from '../paraglide/runtime'
+import { setLocale, locales } from '#/generated/paraglide/runtime'
 
 export type Locale = 'en' | 'de'
 const STORAGE_KEY = 'PARAGLIDE_LOCALE'

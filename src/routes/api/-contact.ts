@@ -5,7 +5,7 @@ import {
   escapeHtml,
   normalizeEmailSubjectPart,
   type ContactPayload,
-} from '../../lib/contact'
+} from '#/features/contact/model/contact'
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 5

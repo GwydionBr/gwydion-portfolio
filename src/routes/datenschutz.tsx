@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Stack, Text, Title } from '@mantine/core'
 import { useEffect } from 'react'
-import { StaggerGroup, StaggerItem } from '../components/motion'
-import { LegalPageShell } from '../components/legal/LegalPageShell'
-import { LegalParagraph } from '../components/legal/LegalParagraph'
-import { PrivacyTableOfContents } from '../components/legal/PrivacyTableOfContents'
-import { getPrivacySections } from '../content/legal/privacy'
-import { useLanguage } from '../lib/LanguageContext'
-import { AppCard } from '../components/ui/Page'
-import * as m from '../paraglide/messages'
+import { useLanguage } from '#/app/i18n/LanguageContext'
+import { LegalPageShell } from '#/features/legal/components/LegalPageShell'
+import { LegalParagraph } from '#/features/legal/components/LegalParagraph'
+import { PrivacyTableOfContents } from '#/features/legal/components/PrivacyTableOfContents'
+import { getPrivacySections } from '#/features/legal/content/privacy'
+import * as m from '#/generated/paraglide/messages'
+import { StaggerGroup, StaggerItem } from '#/shared/motion'
+import { AppCard } from '#/shared/ui/Page'
 
 export const Route = createFileRoute('/datenschutz')({ component: DatenschutzPage })
 
@@ -26,7 +26,9 @@ function DatenschutzPage() {
       title={
         <>
           {m.legal_privacy_title()}
-          <Text component="span" c="gold">.</Text>
+          <Text component="span" c="gold">
+            .
+          </Text>
         </>
       }
     >

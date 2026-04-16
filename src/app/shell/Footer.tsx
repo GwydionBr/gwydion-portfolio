@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core'
 import { GithubLogoIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
-import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '../lib/githubUrls'
-import * as m from '../paraglide/messages'
-import { Eyebrow } from './ui/Page'
+import * as m from '#/generated/paraglide/messages'
+import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '#/shared/config/links'
+import { Eyebrow } from '#/shared/ui/Page'
 
 const FOOTER_COLUMNS = [
   {

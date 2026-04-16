@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import { DisplayTitle, Eyebrow, PageContainer, PageMain } from '../ui/Page'
-import { PageIntro } from '../motion'
+import { PageIntro } from '#/shared/motion'
+import { DisplayTitle, Eyebrow, PageContainer, PageMain } from '#/shared/ui/Page'
 
 interface LegalPageShellProps {
   monoLabel: string

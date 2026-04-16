@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Stack, Text, Title } from '@mantine/core'
 import { useEffect } from 'react'
-import { StaggerGroup, StaggerItem } from '../components/motion'
-import { LegalPageShell } from '../components/legal/LegalPageShell'
-import { LegalParagraph } from '../components/legal/LegalParagraph'
-import { getImpressumBlocks } from '../content/legal/impressum'
-import { useLanguage } from '../lib/LanguageContext'
-import * as m from '../paraglide/messages'
+import { useLanguage } from '#/app/i18n/LanguageContext'
+import { LegalPageShell } from '#/features/legal/components/LegalPageShell'
+import { LegalParagraph } from '#/features/legal/components/LegalParagraph'
+import { getImpressumBlocks } from '#/features/legal/content/impressum'
+import * as m from '#/generated/paraglide/messages'
+import { StaggerGroup, StaggerItem } from '#/shared/motion'
 
 export const Route = createFileRoute('/impressum')({ component: ImpressumPage })
 
@@ -24,7 +24,9 @@ function ImpressumPage() {
       title={
         <>
           {m.legal_imprint_title()}
-          <Text component="span" c="gold">.</Text>
+          <Text component="span" c="gold">
+            .
+          </Text>
         </>
       }
     >

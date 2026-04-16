@@ -9,9 +9,9 @@ import {
 } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import { ReactCountryFlag } from "react-country-flag";
-import type { Locale } from "../lib/LanguageContext";
-import { GITHUB_PROFILE_URL } from "../lib/githubUrls";
-import * as m from "../paraglide/messages";
+import type { Locale } from "#/app/i18n/LanguageContext";
+import * as m from "#/generated/paraglide/messages";
+import { GITHUB_PROFILE_URL } from "#/shared/config/links";
 
 const NAV_LINKS = [
   { href: "/", label: m.nav_home },

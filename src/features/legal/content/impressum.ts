@@ -1,4 +1,4 @@
-import type { Locale } from '../../lib/LanguageContext'
+import type { Locale } from '#/app/i18n/LanguageContext'
 
 /** Structured blocks for the legal notice (Impressum). */
 export interface ImpressumBlock {
