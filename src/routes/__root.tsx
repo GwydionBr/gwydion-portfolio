@@ -6,6 +6,7 @@ import { MotionConfig } from 'motion/react'
 import { LanguageProvider, useLanguage } from '#/app/i18n/LanguageContext'
 import { Footer } from '#/app/shell/Footer'
 import { Header } from '#/app/shell/Header'
+import { ThemeFaviconSync } from '#/app/shell/ThemeFaviconSync'
 import { cssVariablesResolver, theme } from '#/app/theme'
 
 import appCss from '../styles.css?url'
@@ -39,6 +40,31 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link data-app-favicon rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+        <meta name="theme-color" content="#f3efe4" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => {
+  try {
+    const stored = window.localStorage.getItem('mantine-color-scheme-value') ?? 'auto';
+    const scheme =
+      stored === 'auto'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : stored;
+    const favicon = document.querySelector('link[data-app-favicon]');
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+
+    if (favicon) {
+      favicon.setAttribute('href', scheme === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg');
+    }
+
+    if (themeColor) {
+      themeColor.setAttribute('content', scheme === 'dark' ? '#0f1612' : '#f3efe4');
+    }
+  } catch {}
+})();`,
+          }}
+        />
         <ColorSchemeScript defaultColorScheme="auto" />
         <HeadContent />
       </head>
@@ -49,6 +75,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             cssVariablesResolver={cssVariablesResolver}
             defaultColorScheme="auto"
           >
+            <ThemeFaviconSync />
             <LanguageProvider>
               <div className="grain-overlay" aria-hidden="true" />
               <ConnectedHeader />

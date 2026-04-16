@@ -76,7 +76,7 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
         to="/"
         className="site-logo"
       >
-        gwydion
+        Gwydion
         <span style={{ color: 'var(--mantine-color-gold-filled)', marginLeft: 1 }}>.</span>
       </Link>
 

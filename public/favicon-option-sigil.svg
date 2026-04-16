@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #f3efe4; }
+    .mark { stroke: #072014; }
+    .accent { fill: #a87810; }
+
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0f1612; }
+      .mark { stroke: #f3efe4; }
+      .accent { fill: #c8941a; }
+    }
+  </style>
+  <rect class="bg" x="4" y="4" width="56" height="56" rx="16" />
+  <path
+    class="mark"
+    d="M20 33c0-8.8 6.8-15 15.5-15S50 24.2 50 33"
+    fill="none"
+    stroke-linecap="round"
+    stroke-width="6"
+  />
+  <path
+    class="mark"
+    d="M35.5 18v21c0 7-4.7 11.5-11.5 11.5"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="6"
+  />
+  <circle class="accent" cx="45" cy="45" r="4" />
+</svg>
