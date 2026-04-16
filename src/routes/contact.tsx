@@ -48,7 +48,7 @@ function ContactPage() {
           <Eyebrow mb={16}>{m.contact_heading()}</Eyebrow>
           <DisplayTitle>
             {m.contact_heading()}
-            <span style={{ color: 'var(--app-accent-gold)' }}>.</span>
+            <span style={{ color: 'var(--mantine-color-gold-filled)' }}>.</span>
           </DisplayTitle>
         </motion.div>
 
@@ -76,13 +76,13 @@ function ContactPage() {
                 <Stack key={label} gap={6}>
                   <Eyebrow>{label}</Eyebrow>
                   {href ? (
-                    <Anchor href={href} target="_blank" rel="noopener noreferrer" c="var(--app-text-primary)" underline="never">
+                    <Anchor href={href} target="_blank" rel="noopener noreferrer" c="inherit" underline="never">
                       <Group component="span" gap={5}>
                         {value} <ArrowUpRightIcon size={13} />
                       </Group>
                     </Anchor>
                   ) : (
-                    <Text size="sm" c="var(--app-text-primary)">
+                    <Text size="sm">
                       {value}
                     </Text>
                   )}

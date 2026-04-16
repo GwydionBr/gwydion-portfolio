@@ -26,7 +26,7 @@ function DatenschutzPage() {
       title={
         <>
           {m.legal_privacy_title()}
-          <Text component="span" c="var(--app-accent-gold)">.</Text>
+          <Text component="span" c="gold">.</Text>
         </>
       }
     >
@@ -55,7 +55,6 @@ function DatenschutzPage() {
                     fontWeight: 400,
                     margin: '0 0 16px',
                     letterSpacing: '-0.01em',
-                    color: 'var(--app-text-primary)',
                   }}
                 >
                   {section.title}

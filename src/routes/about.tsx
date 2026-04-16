@@ -44,10 +44,9 @@ function AboutPage() {
           >
             <Text
               component="p"
-              ff="var(--font-display)"
+              ff="var(--mantine-font-family-headings)"
               size="xl"
               lh={1.6}
-              c="var(--app-text-primary)"
               mb={28}
             >
               "{m.about_p1()}"
@@ -80,7 +79,7 @@ function AboutPage() {
                         {icon}
                       </ThemeIcon>
                       <Stack gap={4}>
-                        <Text size="sm" fw={500} c="var(--app-text-primary)">
+                        <Text size="sm" fw={500}>
                           {title}
                         </Text>
                         <Text size="xs" lh={1.6} c="var(--app-text-muted)">
@@ -114,7 +113,7 @@ function AboutPage() {
               >
                 <AppCard p="lg" radius={0} h="100%">
                   <Eyebrow mb={10}>{label}</Eyebrow>
-                  <Text size="sm" lh={1.5} c="var(--app-text-primary)">
+                  <Text size="sm" lh={1.5}>
                     {value}
                   </Text>
                 </AppCard>

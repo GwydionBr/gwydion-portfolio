@@ -34,7 +34,15 @@ interface EyebrowProps {
 
 export function Eyebrow({ children, mb = 0 }: EyebrowProps) {
   return (
-    <Text component="span" className="mono-label" display="block" mb={mb}>
+    <Text
+      component="span"
+      display="block"
+      mb={mb}
+      ff="var(--mantine-font-family-monospace)"
+      fz="0.68rem"
+      c="var(--app-text-muted)"
+      style={{ letterSpacing: '0.18em', textTransform: 'uppercase' }}
+    >
       {children}
     </Text>
   )
@@ -78,7 +86,19 @@ interface AccentRuleProps {
 }
 
 export function AccentRule({ my = 40 }: AccentRuleProps) {
-  return <Box component="span" className="gold-rule" my={my} />
+  return (
+    <Box
+      component="span"
+      display="block"
+      my={my}
+      style={{
+        width: 40,
+        height: 1,
+        background: 'linear-gradient(90deg, var(--app-accent-gold), transparent)',
+        border: 'none',
+      }}
+    />
+  )
 }
 
 type AppCardProps = PaperProps & {

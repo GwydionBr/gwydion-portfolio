@@ -41,7 +41,7 @@ function SelfEnginePage() {
           <Group gap={12} mb={20}>
             <Eyebrow>{m.self_project_label()}</Eyebrow>
             <Box w={24} h={1} bg="var(--app-border)" />
-            <Badge color="gold" leftSection={<span className="status-dot" />}>
+            <Badge color="gold" leftSection={<span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 999, background: 'currentColor', boxShadow: '0 0 6px currentColor' }} />}>
               {m.self_active()}
             </Badge>
           </Group>
@@ -84,7 +84,7 @@ function SelfEnginePage() {
                     <ThemeIcon color="forest" size={40}>
                       {icon}
                     </ThemeIcon>
-                    <Text size="sm" fw={500} c="var(--app-text-primary)">
+                    <Text size="sm" fw={500}>
                       {title}
                     </Text>
                     <Text size="xs" lh={1.65} c="var(--app-text-muted)">
@@ -119,7 +119,7 @@ function SelfEnginePage() {
                     <ThemeIcon color={done ? 'forest' : 'gray'} variant={done ? 'light' : 'default'} size={34}>
                       <CheckCircleIcon size={18} weight={done ? 'fill' : 'light'} />
                     </ThemeIcon>
-                    <Text size="sm" c={done ? 'var(--app-text-primary)' : 'var(--app-text-muted)'}>
+                    <Text size="sm" c={done ? 'inherit' : 'var(--app-text-muted)'}>
                       {item}
                     </Text>
                     {done && (

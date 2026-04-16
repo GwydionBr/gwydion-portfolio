@@ -25,8 +25,10 @@ export function PrivacyTableOfContents({ heading, items }: PrivacyTableOfContent
       }}
     >
       <Text
-        className="mono-label"
-        style={{ marginBottom: 14, display: 'block' }}
+        ff="var(--mantine-font-family-monospace)"
+        fz="0.68rem"
+        c="var(--app-text-muted)"
+        style={{ letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 14, display: 'block' }}
       >
         {heading}
       </Text>

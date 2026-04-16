@@ -77,7 +77,7 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
         className="site-logo"
       >
         gwydion
-        <span style={{ color: "var(--app-accent-gold)", marginLeft: 1 }}>.</span>
+        <span style={{ color: 'var(--mantine-color-gold-filled)', marginLeft: 1 }}>.</span>
       </Link>
 
       {/* Nav + controls */}

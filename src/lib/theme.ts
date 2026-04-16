@@ -3,7 +3,7 @@ import { createTheme, rem, type CSSVariablesResolver } from '@mantine/core'
 export const theme = createTheme({
   // ── Typography ─────────────────────────────────────────────────────
   fontFamily: 'var(--font-body)',
-  fontFamilyMonospace: 'var(--font-mono)',
+  fontFamilyMonospace: 'var(--mantine-font-family-monospace)',
   headings: {
     fontFamily: 'var(--font-display)',
     fontWeight: '400',
@@ -118,7 +118,7 @@ export const theme = createTheme({
       defaultProps: { radius: 'sm', variant: 'light' },
       styles: {
         root: {
-          fontFamily: 'var(--font-mono)',
+          fontFamily: 'var(--mantine-font-family-monospace)',
           fontWeight: 400,
           letterSpacing: '0.04em',
           textTransform: 'none',
@@ -182,7 +182,7 @@ export const theme = createTheme({
         },
         label: {
           color: 'var(--app-text-muted)',
-          fontFamily: 'var(--font-mono)',
+          fontFamily: 'var(--mantine-font-family-monospace)',
           fontSize: rem(12),
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
@@ -199,7 +199,7 @@ export const theme = createTheme({
         },
         label: {
           color: 'var(--app-text-muted)',
-          fontFamily: 'var(--font-mono)',
+          fontFamily: 'var(--mantine-font-family-monospace)',
           fontSize: rem(12),
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
@@ -213,9 +213,7 @@ export const theme = createTheme({
 })
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
-  variables: {
-    '--app-font-display': 'var(--font-display)',
-  },
+  variables: {},
   light: {
     '--app-bg-base': theme.colors.paper[1],
     '--app-bg-elevated': theme.colors.paper[2],

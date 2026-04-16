@@ -117,7 +117,13 @@ function HeroSection() {
         }}
       >
         <Stack align="center" gap={8}>
-          <Text component="span" className="mono-label" style={{ fontSize: "0.6rem" }}>
+          <Text
+            component="span"
+            ff="var(--mantine-font-family-monospace)"
+            fz="0.6rem"
+            c="var(--app-text-muted)"
+            style={{ letterSpacing: '0.18em', textTransform: 'uppercase' }}
+          >
             scroll
           </Text>
           <motion.div
@@ -327,8 +333,12 @@ function AboutTeaser() {
                 </ThemeIcon>
                 <Text
                   component="span"
-                  className="mono-label"
+                  ff="var(--mantine-font-family-monospace)"
+                  fz="0.68rem"
+                  c="var(--app-text-muted)"
                   style={{
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
                     position: "absolute",
                     bottom: 20,
                     left: "50%",
@@ -349,7 +359,7 @@ function AboutTeaser() {
 
 function StatusBadge({ children }: { children: string }) {
   return (
-    <Badge color="gold" leftSection={<span className="status-dot" />} mb={24}>
+    <Badge color="gold" leftSection={<span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 999, background: 'currentColor', boxShadow: '0 0 6px currentColor' }} />} mb={24}>
       {children}
     </Badge>
   );

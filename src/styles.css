@@ -20,7 +20,6 @@ body {
   margin: 0;
   background-color: var(--app-bg-base);
   color: var(--app-text-primary);
-  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -52,16 +51,8 @@ body::before {
 }
 
 /* ── Typography ──────────────────────────────────────────────────────── */
-.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+.display { letter-spacing: -0.01em; }
 .display em { font-style: italic; color: var(--app-accent-green); }
-
-.mono-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--app-text-muted);
-}
 
 .app-card {
   background: var(--app-bg-elevated);
@@ -76,23 +67,6 @@ body::before {
 .project-card:hover {
   border-color: var(--app-accent-green);
   transform: translateY(-3px);
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: currentColor;
-  box-shadow: 0 0 6px currentColor;
-}
-
-/* ── Gold rule ───────────────────────────────────────────────────────── */
-.gold-rule {
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--app-accent-gold), transparent);
-  border: none;
 }
 
 /* ── Nav link ────────────────────────────────────────────────────────── */

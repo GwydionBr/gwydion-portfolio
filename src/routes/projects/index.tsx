@@ -105,7 +105,7 @@ function ProjectsPage() {
 
 function StatusBadge({ children }: { children: string }) {
   return (
-    <Badge color="gold" leftSection={<span className="status-dot" />} mb={24}>
+    <Badge color="gold" leftSection={<span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: 999, background: 'currentColor', boxShadow: '0 0 6px currentColor' }} />} mb={24}>
       {children}
     </Badge>
   )

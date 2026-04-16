@@ -24,7 +24,7 @@ function ImpressumPage() {
       title={
         <>
           {m.legal_imprint_title()}
-          <Text component="span" c="var(--app-accent-gold)">.</Text>
+          <Text component="span" c="gold">.</Text>
         </>
       }
     >
@@ -45,7 +45,6 @@ function ImpressumPage() {
                   fontWeight: 400,
                   margin: '0 0 18px',
                   letterSpacing: '-0.01em',
-                  color: 'var(--app-text-primary)',
                 }}
               >
                 {block.title}

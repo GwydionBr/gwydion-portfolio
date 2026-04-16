@@ -3,6 +3,7 @@ import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core
 import { GithubLogoIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '../lib/githubUrls'
 import * as m from '../paraglide/messages'
+import { Eyebrow } from './ui/Page'
 
 const FOOTER_COLUMNS = [
   {
@@ -52,15 +53,12 @@ export function Footer() {
               <Title
                 order={2}
                 className="display"
-                style={{
-                  fontSize: '1.35rem',
-                  color: 'var(--app-text-primary)',
-                }}
+                style={{ fontSize: '1.35rem' }}
               >
-                gwydion<span style={{ color: 'var(--app-accent-gold)' }}>.</span>
+                gwydion<Text component="span" c="gold">.</Text>
               </Title>
             </Link>
-            <Text size="xs" c="var(--app-text-muted)" ff="var(--font-mono)" style={{ letterSpacing: '0.05em' }}>
+            <Text size="xs" c="var(--app-text-muted)" ff="var(--mantine-font-family-monospace)" style={{ letterSpacing: '0.05em' }}>
               {m.footer_built()}
             </Text>
           </Stack>
@@ -68,9 +66,7 @@ export function Footer() {
           <Group component="nav" align="flex-start" gap={40} wrap="wrap">
             {FOOTER_COLUMNS.map(({ heading, links }) => (
               <Stack key={heading()} gap={12}>
-                <Text component="span" className="mono-label">
-                  {heading()}
-                </Text>
+                <Eyebrow>{heading()}</Eyebrow>
                 {links.map(({ href, label }) => (
                   <Link key={href} to={href} className="nav-link">
                     {label()}
@@ -103,7 +99,7 @@ export function Footer() {
           wrap="wrap"
           style={{ borderTop: '1px solid var(--app-border-subtle)' }}
         >
-          <Text size="xs" c="var(--app-text-muted)" ff="var(--font-mono)">
+          <Text size="xs" c="var(--app-text-muted)" ff="var(--mantine-font-family-monospace)">
             © {year} Gwydion Braunsdorf
           </Text>
           <Anchor
