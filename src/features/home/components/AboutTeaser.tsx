@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRightIcon, LeafIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon, HeartIcon } from '@phosphor-icons/react'
 import { Box, Button, Center, Container, SimpleGrid, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
 import { Reveal } from '#/shared/motion'
@@ -55,7 +55,7 @@ export function AboutTeaser() {
                   />
                 ))}
                 <ThemeIcon color="forest" size={56} radius="xl">
-                  <LeafIcon size={24} weight="thin" />
+                  <HeartIcon size={24} weight="thin" />
                 </ThemeIcon>
                 <Text
                   component="span"

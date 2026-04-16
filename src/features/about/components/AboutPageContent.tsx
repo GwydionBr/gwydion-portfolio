@@ -1,11 +1,12 @@
-import { ArrowUpRightIcon, BarbellIcon, CodeIcon, LeafIcon } from '@phosphor-icons/react'
+import { ArrowUpRightIcon, BarbellIcon, CodeIcon, HeartIcon } from '@phosphor-icons/react'
 import { Button, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
+import { GITHUB_PROFILE_URL } from '#/shared/config/links'
 import { PageIntro, Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'
 import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '#/shared/ui/Page'
 
 const LINKS = [
-  { label: 'GitHub', href: 'https://github.com/gwydion' },
+  { label: 'GitHub', href: GITHUB_PROFILE_URL },
   { label: 'Self-Engine', href: 'https://self-engine.app' },
 ]
 
@@ -17,7 +18,7 @@ function getFocusAreas() {
       desc: m.about_focus_software_desc(),
     },
     {
-      icon: <LeafIcon size={18} weight="light" />,
+      icon: <HeartIcon size={18} weight="light" />,
       title: m.about_focus_practice_title(),
       desc: m.about_focus_practice_desc(),
     },

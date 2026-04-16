@@ -1,4 +1,4 @@
-import { BarbellIcon, CodeIcon, LeafIcon } from '@phosphor-icons/react'
+import { BarbellIcon, CodeIcon, HeartIcon } from '@phosphor-icons/react'
 import { Box, Container, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
 import { Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'
@@ -12,7 +12,7 @@ export function CurrentlySection() {
       text: m.currently_building_desc(),
     },
     {
-      icon: <LeafIcon size={20} weight="light" />,
+      icon: <HeartIcon size={20} weight="light" />,
       label: m.currently_learning(),
       text: m.currently_learning_desc(),
     },
