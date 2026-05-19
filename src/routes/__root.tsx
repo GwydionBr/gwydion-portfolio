@@ -1,46 +1,53 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { MantineProvider, ColorSchemeScript } from '@mantine/core'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { MotionConfig } from 'motion/react'
-import { LanguageProvider, useLanguage } from '#/app/i18n/LanguageContext'
-import { Footer } from '#/app/shell/Footer'
-import { Header } from '#/app/shell/Header'
-import { ThemeFaviconSync } from '#/app/shell/ThemeFaviconSync'
-import { cssVariablesResolver, theme } from '#/app/theme'
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { MotionConfig } from "motion/react";
+import { LanguageProvider, useLanguage } from "#/app/i18n/LanguageContext";
+import { Footer } from "#/app/shell/Footer";
+import { Header } from "#/app/shell/Header";
+import { ThemeFaviconSync } from "#/app/shell/ThemeFaviconSync";
+import { cssVariablesResolver, theme } from "#/app/theme";
+import { Analytics } from "@vercel/analytics/react";
 
-import appCss from '../styles.css?url'
+import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Gwydion — Developer & Builder' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Gwydion — Developer & Builder" },
       {
-        name: 'description',
+        name: "description",
         content:
-          'Gwydion — developer and builder working on Self-Engine, a personal productivity system for intentional work.',
+          "Gwydion — developer and builder working on Self-Engine, a personal productivity system for intentional work.",
       },
     ],
     links: [
-      { rel: 'stylesheet', href: appCss },
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossOrigin: 'anonymous',
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
       },
     ],
   }),
   shellComponent: RootDocument,
-})
+});
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link data-app-favicon rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+        <link
+          data-app-favicon
+          rel="icon"
+          href="/favicon.svg"
+          sizes="any"
+          type="image/svg+xml"
+        />
         <meta name="theme-color" content="#f3efe4" />
         <script
           dangerouslySetInnerHTML={{
@@ -83,10 +90,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <ConnectedFooter />
             </LanguageProvider>
             <TanStackDevtools
-              config={{ position: 'middle-left' }}
+              config={{ position: "middle-left" }}
               plugins={[
                 {
-                  name: 'Tanstack Router',
+                  name: "Tanstack Router",
                   render: <TanStackRouterDevtoolsPanel />,
                 },
               ]}
@@ -94,26 +101,27 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           </MantineProvider>
         </MotionConfig>
         <Scripts />
+        <Analytics />
       </body>
     </html>
-  )
+  );
 }
 
 function ConnectedHeader() {
-  const { lang, setLang } = useLanguage()
-  return <Header lang={lang} onLangChange={setLang} />
+  const { lang, setLang } = useLanguage();
+  return <Header lang={lang} onLangChange={setLang} />;
 }
 
 function ConnectedFooter() {
-  useLanguage()
-  return <Footer />
+  useLanguage();
+  return <Footer />;
 }
 
 function LocalizedContent({ children }: { children: React.ReactNode }) {
-  const { lang } = useLanguage()
+  const { lang } = useLanguage();
   return (
-    <div key={lang} style={{ display: 'contents' }}>
+    <div key={lang} style={{ display: "contents" }}>
       {children}
     </div>
-  )
+  );
 }
