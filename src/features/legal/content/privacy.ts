@@ -37,7 +37,7 @@ const de: PrivacySection[] = [
     id: 'contact',
     title: 'Kontaktformular und E-Mail',
     paragraphs: [
-      'Wenn du das Kontaktformular nutzt, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachrichtentext) verarbeitet, um deine Anfrage zu bearbeiten und zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung bzw. Beantwortung deiner Anfrage) bzw. Art. 6 Abs. 1 lit. f DSGVO (Kommunikation mit Besucherinnen und Besuchern).',
+      'Wenn du das Kontaktformular nutzt, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachrichtentext) verarbeitet, um deine Anfrage zu bearbeiten und zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung eingehender Anfragen).',
       'Der Versand der Nachricht erfolgt über den Dienst Resend (Resend Inc., USA). Dabei werden die genannten Daten zur Zustellung der E-Mail an hello@gwydion.dev verarbeitet. Mit Resend kann ein Auftragsverarbeitungsvertrag bestehen; die Übermittlung in die USA erfolgt unter den jeweils geltenden Garantien (z. B. Standardvertragsklauseln). Weitere Informationen: https://resend.com/legal/privacy-policy',
       'Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks nicht mehr erforderlich sind, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.',
     ],
@@ -111,7 +111,7 @@ const en: PrivacySection[] = [
     id: 'contact',
     title: 'Contact form and email',
     paragraphs: [
-      'When you use the contact form, the data you enter (name, email address, message text) is processed to handle and respond to your request. The legal basis is Art. 6(1)(b) GDPR (pre-contractual communication or responding to your inquiry) or Art. 6(1)(f) GDPR (communication with visitors).',
+      'When you use the contact form, the data you enter (name, email address, message text) is processed to handle and respond to your request. The legal basis is Art. 6(1)(f) GDPR (legitimate interest in responding to incoming inquiries).',
       'Messages are sent via Resend (Resend Inc., USA). The data listed above is processed to deliver the email to hello@gwydion.dev. A data processing agreement may be in place with Resend; transfers to the United States rely on appropriate safeguards (for example standard contractual clauses). More information: https://resend.com/legal/privacy-policy',
       'Data is deleted when it is no longer needed for the purpose, unless statutory retention obligations apply.',
     ],
