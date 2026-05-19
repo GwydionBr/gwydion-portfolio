@@ -12,17 +12,26 @@ import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 
+const SITE_URL = "https://gwydion.dev";
+const SITE_TITLE = "Gwydion — Developer & Builder";
+const SITE_DESCRIPTION =
+  "Gwydion Braunsdorf — developer and builder working on Self-Engine, a personal productivity system for intentional work.";
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Gwydion — Developer & Builder" },
-      {
-        name: "description",
-        content:
-          "Gwydion — developer and builder working on Self-Engine, a personal productivity system for intentional work.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Gwydion" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { property: "og:url", content: SITE_URL },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -70,6 +79,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     }
   } catch {}
 })();`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Gwydion Braunsdorf",
+              url: "https://gwydion.dev",
+              jobTitle: "Developer & Builder",
+              sameAs: ["https://github.com/GwydionBr"],
+            }),
           }}
         />
         <ColorSchemeScript defaultColorScheme="auto" />
