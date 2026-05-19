@@ -11,7 +11,7 @@ const de: PrivacySection[] = [
     id: 'controller',
     title: 'Verantwortlicher',
     paragraphs: [
-      'Verantwortlich für die Datenverarbeitung auf dieser Website ist Gwydion Braunsdorf, Deutschland. Kontakt: hello@gwydion.dev',
+      'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Deutschland. Kontakt: hello@gwydion.dev',
       'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten im Zusammenhang mit dem Besuch von gwydion.dev und der Nutzung des Kontaktformulars.',
     ],
   },
@@ -22,6 +22,15 @@ const de: PrivacySection[] = [
       'Die Website wird bei Vercel Inc. (USA) gehostet. Beim Aufruf der Seite verarbeitet Vercel technisch notwendige Daten (z. B. IP-Adresse, Zeitpunkt des Zugriffs, angeforderte Ressource, übertragene Datenmenge, Referrer, User-Agent), um die Auslieferung und Sicherheit der Website zu gewährleisten.',
       'Die Verarbeitung erfolgt zur Bereitstellung des Onlineangebots (Art. 6 Abs. 1 lit. f DSGVO — berechtigtes Interesse an einem sicheren und stabilen Betrieb). Soweit ein Vertrag über Auftragsverarbeitung besteht, stützt sich die Übermittlung in Drittländer auf die von der EU-Kommission beschlossenen Standardvertragsklauseln, sofern kein Angemessenheitsbeschluss vorliegt.',
       'Weitere Informationen: https://vercel.com/legal/privacy-policy',
+    ],
+  },
+  {
+    id: 'analytics',
+    title: 'Webanalyse (Vercel Analytics)',
+    paragraphs: [
+      'Diese Website nutzt Vercel Analytics, einen datenschutzfreundlichen Analysedienst der Vercel Inc. (USA). Vercel Analytics erhebt aggregierte, nicht personenbezogene Nutzungsdaten (z. B. aufgerufene Seiten, Referrer, grobe geografische Herkunft auf Länderebene, Browser- und Gerätekategorie). Es werden keine Cookies gesetzt und keine individuellen Nutzungsprofile erstellt.',
+      'Die Verarbeitung dient der Analyse des anonymisierten Nutzungsverhaltens zur Verbesserung des Angebots. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Optimierung der Website). Da keine personenbezogenen Daten dauerhaft gespeichert oder profiliert werden, ist der Eingriff in das Recht auf informationelle Selbstbestimmung minimal.',
+      'Weitere Informationen: https://vercel.com/docs/analytics/privacy-policy',
     ],
   },
   {
@@ -42,9 +51,9 @@ const de: PrivacySection[] = [
   },
   {
     id: 'language',
-    title: 'Spracheinstellung (lokaler Speicher)',
+    title: 'Einstellungen im lokalen Speicher (localStorage)',
     paragraphs: [
-      'Deine gewählte Sprache (Deutsch/Englisch) kann im Browser mittels localStorage gespeichert werden, damit die Einstellung beim nächsten Besuch erhalten bleibt. Es werden keine Tracking-Cookies zu Werbezwecken gesetzt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst den Eintrag in den Einstellungen deines Browsers jederzeit löschen.',
+      'Deine gewählte Sprache (Deutsch/Englisch) sowie dein bevorzugtes Farbschema (Hell/Dunkel) werden im Browser mittels localStorage gespeichert, damit diese Einstellungen beim nächsten Besuch erhalten bleiben. Es werden keine Tracking-Cookies zu Werbezwecken gesetzt und keine Daten an Dritte übermittelt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst die Einträge in den Einstellungen deines Browsers jederzeit löschen.',
     ],
   },
   {
@@ -59,7 +68,7 @@ const de: PrivacySection[] = [
     id: 'complaint',
     title: 'Beschwerderecht',
     paragraphs: [
-      'Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung personenbezogener Daten zu beschweren (Art. 77 DSGVO).',
+      'Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung personenbezogener Daten zu beschweren (Art. 77 DSGVO). Die für den Verantwortlichen zuständige Aufsichtsbehörde ist: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 27, 91522 Ansbach, https://www.lda.bayern.de',
     ],
   },
   {
@@ -76,7 +85,7 @@ const en: PrivacySection[] = [
     id: 'controller',
     title: 'Controller',
     paragraphs: [
-      'The controller responsible for processing personal data on this website is Gwydion Braunsdorf, Germany. Contact: hello@gwydion.dev',
+      'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Germany. Contact: hello@gwydion.dev',
       'This privacy policy explains the nature, scope, and purpose of processing personal data in connection with visiting gwydion.dev and using the contact form.',
     ],
   },
@@ -87,6 +96,15 @@ const en: PrivacySection[] = [
       'This website is hosted by Vercel Inc. (United States). When you access the site, Vercel processes technically necessary data (for example IP address, time of access, requested resource, amount of data transferred, referrer, user agent) to deliver and secure the website.',
       'Processing is carried out to provide the online service (Art. 6(1)(f) GDPR — legitimate interest in secure and stable operation). Where a data processing agreement exists, transfers to third countries rely on standard contractual clauses adopted by the EU Commission where no adequacy decision applies.',
       'More information: https://vercel.com/legal/privacy-policy',
+    ],
+  },
+  {
+    id: 'analytics',
+    title: 'Web analytics (Vercel Analytics)',
+    paragraphs: [
+      'This website uses Vercel Analytics, a privacy-friendly analytics service provided by Vercel Inc. (United States). Vercel Analytics collects aggregated, non-personal usage data (such as pages visited, referrer, broad geographic origin at country level, browser and device category). No cookies are set and no individual user profiles are created.',
+      'Processing serves the purpose of analysing anonymised usage behaviour to improve the website. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in optimising the website). As no personal data is stored permanently or profiled, the impact on the right to informational self-determination is minimal.',
+      'More information: https://vercel.com/docs/analytics/privacy-policy',
     ],
   },
   {
@@ -107,9 +125,9 @@ const en: PrivacySection[] = [
   },
   {
     id: 'language',
-    title: 'Language preference (local storage)',
+    title: 'Preferences in local storage',
     paragraphs: [
-      'Your selected language (German/English) may be stored in the browser using localStorage so the setting persists on your next visit. No tracking cookies are used for advertising. Legal basis: Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entry in your browser settings at any time.',
+      'Your selected language (German/English) and colour scheme preference (light/dark) may be stored in the browser using localStorage so these settings persist on your next visit. No tracking cookies are used for advertising and no data is shared with third parties. Legal basis: Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entries in your browser settings at any time.',
     ],
   },
   {
@@ -124,7 +142,7 @@ const en: PrivacySection[] = [
     id: 'complaint',
     title: 'Right to lodge a complaint',
     paragraphs: [
-      'You have the right to lodge a complaint with a supervisory authority regarding the processing of personal data (Art. 77 GDPR).',
+      'You have the right to lodge a complaint with a supervisory authority regarding the processing of personal data (Art. 77 GDPR). The supervisory authority competent for the controller is: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 27, 91522 Ansbach, Germany, https://www.lda.bayern.de',
     ],
   },
   {

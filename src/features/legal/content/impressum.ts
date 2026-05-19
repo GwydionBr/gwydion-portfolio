@@ -11,12 +11,14 @@ const de: ImpressumBlock[] = [
     title: 'Angaben gemäß § 5 TMG',
     paragraphs: [
       'Gwydion Braunsdorf',
+      'Marktplatz 7',
+      '87724 Ottobeuren',
       'Deutschland',
       'E-Mail: hello@gwydion.dev',
     ],
   },
   {
-    title: 'Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV',
+    title: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
     paragraphs: ['Gwydion Braunsdorf'],
   },
   {
@@ -54,12 +56,14 @@ const en: ImpressumBlock[] = [
     title: 'Information pursuant to German law (§ 5 TMG)',
     paragraphs: [
       'Gwydion Braunsdorf',
+      'Marktplatz 7',
+      '87724 Ottobeuren',
       'Germany',
       'Email: hello@gwydion.dev',
     ],
   },
   {
-    title: 'Responsible for content (§ 55(2) RStV)',
+    title: 'Responsible for content (§ 18(2) MStV)',
     paragraphs: ['Gwydion Braunsdorf'],
   },
   {
