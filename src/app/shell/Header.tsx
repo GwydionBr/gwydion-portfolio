@@ -11,14 +11,15 @@ import { useState, useEffect } from "react";
 import { ReactCountryFlag } from "react-country-flag";
 import type { Locale } from "#/app/i18n/LanguageContext";
 import * as m from "#/generated/paraglide/messages";
+import { BLOG_ENABLED } from "#/shared/config/features";
 import { GITHUB_PROFILE_URL } from "#/shared/config/links";
 
 const NAV_LINKS = [
   { href: "/", label: m.nav_home },
   { href: "/about", label: m.nav_about },
   { href: "/projects", label: m.nav_projects },
-  { href: "/blog", label: m.nav_blog },
   { href: "/contact", label: m.nav_contact },
+  ...(BLOG_ENABLED ? [{ href: "/blog", label: m.nav_blog }] : []),
 ] as const;
 
 interface HeaderProps {

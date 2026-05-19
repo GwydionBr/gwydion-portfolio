@@ -1,13 +1,14 @@
+import { Link } from '@tanstack/react-router'
 import { ArrowUpRightIcon, BarbellIcon, CodeIcon, HeartIcon } from '@phosphor-icons/react'
 import { Button, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
-import { GITHUB_PROFILE_URL } from '#/shared/config/links'
+import { GITHUB_PROFILE_URL, SELF_ENGINE_URL } from '#/shared/config/links'
 import { PageIntro, Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'
 import { AppCard, DisplayTitle, Eyebrow, PageContainer, PageMain } from '#/shared/ui/Page'
 
 const LINKS = [
   { label: 'GitHub', href: GITHUB_PROFILE_URL },
-  { label: 'Self-Engine', href: 'https://self-engine.app' },
+  { label: 'Self-Engine', href: SELF_ENGINE_URL },
 ]
 
 function getFocusAreas() {
@@ -32,9 +33,8 @@ function getFocusAreas() {
 
 function getNowItems() {
   return [
-    { label: m.about_now_project(), value: m.se_title() },
+    { label: m.about_now_project(), value: m.se_title(), to: '/projects/self-engine' as const },
     { label: m.about_now_learning(), value: m.about_now_learning_value() },
-    { label: m.about_now_reading(), value: 'Dhammapada' },
     { label: m.about_now_location(), value: 'Germany' },
   ]
 }
@@ -105,14 +105,20 @@ export function AboutPageContent() {
             <Eyebrow mb={24}>{m.about_now_heading()}</Eyebrow>
           </Reveal>
           <StaggerGroup trigger="inView" stagger={0.07}>
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing={1}>
-              {nowItems.map(({ label, value }) => (
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={1}>
+              {nowItems.map(({ label, value, to }) => (
                 <StaggerItem key={label} preset="fade-in" duration={0.5}>
                   <AppCard p="lg" radius={0} h="100%">
                     <Eyebrow mb={10}>{label}</Eyebrow>
-                    <Text size="sm" lh={1.5}>
-                      {value}
-                    </Text>
+                    {to ? (
+                      <Text component={Link} to={to} size="sm" lh={1.5} c="var(--app-accent-green)" style={{ textDecoration: 'none' }}>
+                        {value}
+                      </Text>
+                    ) : (
+                      <Text size="sm" lh={1.5}>
+                        {value}
+                      </Text>
+                    )}
                   </AppCard>
                 </StaggerItem>
               ))}

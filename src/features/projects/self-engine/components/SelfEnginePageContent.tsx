@@ -1,7 +1,7 @@
 import * as m from '#/generated/paraglide/messages'
 import { ProjectPageShell } from '#/features/projects/components/ProjectPageShell'
 import { SelfEngineOpenSourceCard } from './SelfEngineOpenSourceCard'
-import { SelfEngineFeatures, SelfEngineRoadmap, SelfEngineTechStack } from './SelfEngineFeatures'
+import { SelfEngineFeatures, SelfEngineTechStack } from './SelfEngineFeatures'
 
 export function SelfEnginePageContent() {
   return (
@@ -13,7 +13,6 @@ export function SelfEnginePageContent() {
       description={m.self_intro()}
     >
       <SelfEngineFeatures />
-      <SelfEngineRoadmap />
       <SelfEngineTechStack />
       <SelfEngineOpenSourceCard />
     </ProjectPageShell>

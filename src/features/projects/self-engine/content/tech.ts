@@ -3,8 +3,10 @@ export const SELF_ENGINE_TECH = [
   'React',
   'TanStack',
   'Mantine',
+  'Phosphor Icons',
   'Bun',
   'SQLite',
-  'Drizzle ORM',
+  'Supabase',
+  'PowerSync',
   'Zod',
 ] as const

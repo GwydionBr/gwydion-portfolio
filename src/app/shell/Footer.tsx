@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core'
 import { GithubLogoIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import * as m from '#/generated/paraglide/messages'
+import { BLOG_ENABLED } from '#/shared/config/features'
 import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '#/shared/config/links'
 import { Eyebrow } from '#/shared/ui/Page'
 
@@ -17,8 +18,8 @@ const FOOTER_COLUMNS = [
   {
     heading: m.footer_more,
     links: [
-      { href: '/blog', label: m.nav_blog },
       { href: '/contact', label: m.nav_contact },
+      ...(BLOG_ENABLED ? [{ href: '/blog', label: m.nav_blog }] : []),
     ],
   },
   {

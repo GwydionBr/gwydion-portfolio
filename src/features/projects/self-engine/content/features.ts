@@ -1,4 +1,4 @@
-export type SelfEngineFeatureIcon = 'time' | 'finance' | 'calendar' | 'management'
+export type SelfEngineFeatureIcon = 'time' | 'finance' | 'calendar' | 'management' | 'habits' | 'mobile' | 'web'
 
 export interface SelfEngineFeature {
   icon: SelfEngineFeatureIcon
@@ -26,5 +26,20 @@ export const SELF_ENGINE_FEATURES: SelfEngineFeature[] = [
     icon: 'management',
     title: 'Project management',
     desc: 'Organize tasks and milestones. Keep projects moving without the overhead.',
+  },
+  {
+    icon: 'habits',
+    title: 'Habit tracker',
+    desc: 'Build routines that stick with a dedicated habit tracking system woven into daily work.',
+  },
+  {
+    icon: 'mobile',
+    title: 'Mobile app',
+    desc: 'Capture time, habits, and plans on the go with a native mobile experience.',
+  },
+  {
+    icon: 'web',
+    title: 'Web app',
+    desc: 'Review, plan, and manage the full system from a focused desktop-friendly web interface.',
   },
 ]

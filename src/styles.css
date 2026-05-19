@@ -339,6 +339,15 @@ a.icon-control {
   align-items: start;
 }
 
+.privacy-toc-link {
+  transition: color 0.2s ease;
+}
+
+.privacy-toc-link[data-active] {
+  color: var(--app-text-primary);
+  font-weight: 600;
+}
+
 @media (min-width: 900px) {
   .legal-privacy-layout {
     grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);

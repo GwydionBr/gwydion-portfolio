@@ -1,11 +1,10 @@
 import type { ReactElement } from 'react'
-import { CalendarDotsIcon, CheckCircleIcon, CodeIcon, CurrencyCircleDollarIcon, TimerIcon } from '@phosphor-icons/react'
+import { CalendarDotsIcon, CodeIcon, CurrencyCircleDollarIcon, DeviceMobileIcon, GlobeHemisphereWestIcon, CheckSquareOffsetIcon, TimerIcon } from '@phosphor-icons/react'
 import { Badge, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
 import { Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'
 import { AppCard, Eyebrow } from '#/shared/ui/Page'
 import { SELF_ENGINE_FEATURES, type SelfEngineFeatureIcon } from '../content/features'
-import { SELF_ENGINE_ROADMAP } from '../content/roadmap'
 import { SELF_ENGINE_TECH } from '../content/tech'
 
 const iconMap: Record<SelfEngineFeatureIcon, ReactElement> = {
@@ -13,6 +12,9 @@ const iconMap: Record<SelfEngineFeatureIcon, ReactElement> = {
   finance: <CurrencyCircleDollarIcon size={20} weight="light" />,
   calendar: <CalendarDotsIcon size={20} weight="light" />,
   management: <CodeIcon size={20} weight="light" />,
+  habits: <CheckSquareOffsetIcon size={20} weight="light" />,
+  mobile: <DeviceMobileIcon size={20} weight="light" />,
+  web: <GlobeHemisphereWestIcon size={20} weight="light" />,
 }
 
 export function SelfEngineFeatures() {
@@ -41,39 +43,6 @@ export function SelfEngineFeatures() {
             </StaggerItem>
           ))}
         </SimpleGrid>
-      </StaggerGroup>
-    </div>
-  )
-}
-
-export function SelfEngineRoadmap() {
-  return (
-    <div style={{ marginBottom: 72 }}>
-      <Reveal trigger="inView">
-        <Eyebrow mb={24}>{m.self_roadmap()}</Eyebrow>
-      </Reveal>
-      <StaggerGroup trigger="inView" stagger={0.07}>
-        <Stack gap="sm">
-          {SELF_ENGINE_ROADMAP.map(({ item, done }) => (
-            <StaggerItem key={item} preset="fade-left" distance={12} duration={0.5}>
-              <AppCard p="md">
-                <Group gap="md" wrap="nowrap">
-                  <ThemeIcon color={done ? 'forest' : 'gray'} variant={done ? 'light' : 'default'} size={34}>
-                    <CheckCircleIcon size={18} weight={done ? 'fill' : 'light'} />
-                  </ThemeIcon>
-                  <Text size="sm" c={done ? 'inherit' : 'var(--app-text-muted)'}>
-                    {item}
-                  </Text>
-                  {done && (
-                    <Badge color="forest" ml="auto">
-                      {m.status_done()}
-                    </Badge>
-                  )}
-                </Group>
-              </AppCard>
-            </StaggerItem>
-          ))}
-        </Stack>
       </StaggerGroup>
     </div>
   )

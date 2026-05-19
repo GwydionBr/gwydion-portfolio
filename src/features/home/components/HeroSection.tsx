@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRightIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import { Box, Button, Container, Group, Stack, Text } from '@mantine/core'
 import { motion, useReducedMotion } from 'motion/react'
 import * as m from '#/generated/paraglide/messages'
+import { SELF_ENGINE_URL } from '#/shared/config/links'
 import { AnimatedAccentRule, Reveal } from '#/shared/motion'
 import { DisplayTitle, Eyebrow } from '#/shared/ui/Page'
 
@@ -45,6 +46,9 @@ export function HeroSection() {
           <Group gap={14} mt={40}>
             <Button component={Link} to="/projects" rightSection={<ArrowRightIcon size={15} weight="bold" />}>
               {m.hero_cta_projects()}
+            </Button>
+            <Button component="a" href={SELF_ENGINE_URL} target="_blank" rel="noopener noreferrer" variant="default" rightSection={<ArrowUpRightIcon size={13} />}>
+              {m.self_visit_site()}
             </Button>
             <Button component={Link} to="/contact" variant="default">
               {m.hero_cta_contact()}

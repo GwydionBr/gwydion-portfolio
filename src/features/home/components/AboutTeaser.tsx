@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRightIcon, HeartIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon, ArrowUpRightIcon, HeartIcon } from '@phosphor-icons/react'
 import { Box, Button, Center, Container, SimpleGrid, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
+import { SELF_ENGINE_URL } from '#/shared/config/links'
 import { Reveal } from '#/shared/motion'
 import { AppCard, DisplayTitle, Eyebrow } from '#/shared/ui/Page'
 
@@ -20,9 +21,14 @@ export function AboutTeaser() {
             <Text lh={1.75} c="var(--app-text-secondary)" mb={32}>
               {m.about_p1()}
             </Text>
-            <Button component={Link} to="/about" variant="subtle" rightSection={<ArrowRightIcon size={15} weight="bold" />} px={0}>
-              {m.about_cta()}
-            </Button>
+            <Box style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+              <Button component={Link} to="/about" variant="subtle" rightSection={<ArrowRightIcon size={15} weight="bold" />} px={0}>
+                {m.about_cta()}
+              </Button>
+              <Button component="a" href={SELF_ENGINE_URL} target="_blank" rel="noopener noreferrer" variant="subtle" rightSection={<ArrowUpRightIcon size={13} />} px={0}>
+                {m.self_visit_site()}
+              </Button>
+            </Box>
           </Reveal>
 
           <Reveal
