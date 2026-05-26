@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { Link } from '@tanstack/react-router'
 import { useForm } from '@mantine/form'
 import { PaperPlaneTiltIcon } from '@phosphor-icons/react'
-import { Alert, Button, Stack, TextInput, Textarea, ThemeIcon } from '@mantine/core'
+import { Alert, Anchor, Button, Stack, Text, TextInput, Textarea, ThemeIcon } from '@mantine/core'
 import { AnimatePresence, motion } from 'motion/react'
 import * as m from '#/generated/paraglide/messages'
 import { createRevealTransition, Reveal } from '#/shared/motion'
@@ -116,6 +117,20 @@ export function ContactForm() {
                 >
                   {status === 'sending' ? m.contact_sending() : m.contact_send()}
                 </Button>
+
+                <Text size="xs" c="var(--app-text-muted)" style={{ lineHeight: 1.65 }}>
+                  {m.contact_privacy_before()}{' '}
+                  <Anchor
+                    component={Link}
+                    to="/datenschutz"
+                    size="xs"
+                    c="var(--app-accent-green)"
+                    underline="hover"
+                  >
+                    {m.legal_privacy_title()}
+                  </Anchor>{' '}
+                  {m.contact_privacy_after()}
+                </Text>
               </Stack>
             </form>
           </motion.div>

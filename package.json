@@ -18,6 +18,7 @@
     "format": "oxlint src --fix"
   },
   "dependencies": {
+    "@fontsource/cormorant": "^5.2.8",
     "@inlang/paraglide-js": "^2.16.0",
     "@mantine/core": "^9.0.2",
     "@mantine/form": "^9.0.2",

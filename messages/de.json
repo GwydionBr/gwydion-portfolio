@@ -41,6 +41,8 @@
   "contact_error_email": "Gib eine gültige E-Mail-Adresse ein.",
   "contact_error_message_short": "Die Nachricht ist zu kurz (mindestens {min} Zeichen).",
   "contact_error_message_long": "Die Nachricht ist zu lang (maximal {max} Zeichen).",
+  "contact_privacy_before": "Mit dem Absenden willigst du in die Verarbeitung deiner Angaben gemäß unserer",
+  "contact_privacy_after": "ein.",
   "blog_heading": "Schreiben",
   "blog_sub": "Gedanken zu Systemen, Open Source, ethischer Software und dem Handwerk des Software-Bauens.",
   "blog_coming_soon": "Beiträge folgen. Schau bald wieder vorbei.",

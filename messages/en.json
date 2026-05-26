@@ -41,6 +41,8 @@
   "contact_error_email": "Enter a valid email address.",
   "contact_error_message_short": "Message is too short (min {min} characters).",
   "contact_error_message_long": "Message is too long (max {max} characters).",
+  "contact_privacy_before": "By submitting, you agree to the processing of your details as described in our",
+  "contact_privacy_after": ".",
   "blog_heading": "Writing",
   "blog_sub": "Thoughts on systems, open source, intentional software, and the craft of building.",
   "blog_coming_soon": "Posts are coming. Check back soon.",
