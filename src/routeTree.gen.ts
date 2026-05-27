@@ -17,6 +17,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSelfEngineRouteImport } from './routes/projects/self-engine'
+import { Route as ApiContactRouteImport } from './routes/api/contact'
 
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
@@ -58,6 +59,11 @@ const ProjectsSelfEngineRoute = ProjectsSelfEngineRouteImport.update({
   path: '/projects/self-engine',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactRoute = ApiContactRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/api/contact': typeof ApiContactRoute
   '/projects/self-engine': typeof ProjectsSelfEngineRoute
   '/projects/': typeof ProjectsIndexRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/api/contact': typeof ApiContactRoute
   '/projects/self-engine': typeof ProjectsSelfEngineRoute
   '/projects': typeof ProjectsIndexRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/api/contact': typeof ApiContactRoute
   '/projects/self-engine': typeof ProjectsSelfEngineRoute
   '/projects/': typeof ProjectsIndexRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/api/contact'
     | '/projects/self-engine'
     | '/projects/'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/api/contact'
     | '/projects/self-engine'
     | '/projects'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/api/contact'
     | '/projects/self-engine'
     | '/projects/'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
+  ApiContactRoute: typeof ApiContactRoute
   ProjectsSelfEngineRoute: typeof ProjectsSelfEngineRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsSelfEngineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
+  ApiContactRoute: ApiContactRoute,
   ProjectsSelfEngineRoute: ProjectsSelfEngineRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
 }
