@@ -1,45 +1,33 @@
-export type SelfEngineFeatureIcon = 'time' | 'finance' | 'calendar' | 'management' | 'habits' | 'mobile' | 'web'
+export type SelfEngineFeatureIcon = 'time' | 'tasks' | 'finance' | 'calendar' | 'habits' | 'ai'
 
 export interface SelfEngineFeature {
   icon: SelfEngineFeatureIcon
-  title: string
-  desc: string
+  id: 1 | 2 | 3 | 4 | 5 | 6
 }
 
 export const SELF_ENGINE_FEATURES: SelfEngineFeature[] = [
   {
     icon: 'time',
-    title: 'Time tracking',
-    desc: 'Record and categorize time spent on any project or task with precision.',
+    id: 1,
+  },
+  {
+    icon: 'tasks',
+    id: 2,
   },
   {
     icon: 'finance',
-    title: 'Finance management',
-    desc: 'Link hourly rates to tracked time. Understand what your work is worth.',
+    id: 3,
   },
   {
     icon: 'calendar',
-    title: 'Calendar visualization',
-    desc: 'See your work, projects, and appointments in a unified calendar view.',
-  },
-  {
-    icon: 'management',
-    title: 'Project management',
-    desc: 'Organize tasks and milestones. Keep projects moving without the overhead.',
+    id: 4,
   },
   {
     icon: 'habits',
-    title: 'Habit tracker',
-    desc: 'Build routines that stick with a dedicated habit tracking system woven into daily work.',
+    id: 5,
   },
   {
-    icon: 'mobile',
-    title: 'Mobile app',
-    desc: 'Capture time, habits, and plans on the go with a native mobile experience.',
-  },
-  {
-    icon: 'web',
-    title: 'Web app',
-    desc: 'Review, plan, and manage the full system from a focused desktop-friendly web interface.',
+    icon: 'ai',
+    id: 6,
   },
 ]

@@ -9,16 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SelfEngineRouteImport } from './routes/self-engine'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
-import { Route as ProjectsSelfEngineRouteImport } from './routes/projects/self-engine'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
 
+const SelfEngineRoute = SelfEngineRouteImport.update({
+  id: '/self-engine',
+  path: '/self-engine',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
   path: '/impressum',
@@ -49,16 +53,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
-  id: '/projects/',
-  path: '/projects/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsSelfEngineRoute = ProjectsSelfEngineRouteImport.update({
-  id: '/projects/self-engine',
-  path: '/projects/self-engine',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiContactRoute = ApiContactRouteImport.update({
   id: '/api/contact',
   path: '/api/contact',
@@ -72,9 +66,8 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/self-engine': typeof SelfEngineRoute
   '/api/contact': typeof ApiContactRoute
-  '/projects/self-engine': typeof ProjectsSelfEngineRoute
-  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,9 +76,8 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/self-engine': typeof SelfEngineRoute
   '/api/contact': typeof ApiContactRoute
-  '/projects/self-engine': typeof ProjectsSelfEngineRoute
-  '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,9 +87,8 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/self-engine': typeof SelfEngineRoute
   '/api/contact': typeof ApiContactRoute
-  '/projects/self-engine': typeof ProjectsSelfEngineRoute
-  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,9 +99,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/self-engine'
     | '/api/contact'
-    | '/projects/self-engine'
-    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,9 +109,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/self-engine'
     | '/api/contact'
-    | '/projects/self-engine'
-    | '/projects'
   id:
     | '__root__'
     | '/'
@@ -130,9 +119,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/datenschutz'
     | '/impressum'
+    | '/self-engine'
     | '/api/contact'
-    | '/projects/self-engine'
-    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -142,13 +130,19 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
+  SelfEngineRoute: typeof SelfEngineRoute
   ApiContactRoute: typeof ApiContactRoute
-  ProjectsSelfEngineRoute: typeof ProjectsSelfEngineRoute
-  ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/self-engine': {
+      id: '/self-engine'
+      path: '/self-engine'
+      fullPath: '/self-engine'
+      preLoaderRoute: typeof SelfEngineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/impressum': {
       id: '/impressum'
       path: '/impressum'
@@ -191,20 +185,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects/': {
-      id: '/projects/'
-      path: '/projects'
-      fullPath: '/projects/'
-      preLoaderRoute: typeof ProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/self-engine': {
-      id: '/projects/self-engine'
-      path: '/projects/self-engine'
-      fullPath: '/projects/self-engine'
-      preLoaderRoute: typeof ProjectsSelfEngineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/contact': {
       id: '/api/contact'
       path: '/api/contact'
@@ -222,9 +202,8 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
+  SelfEngineRoute: SelfEngineRoute,
   ApiContactRoute: ApiContactRoute,
-  ProjectsSelfEngineRoute: ProjectsSelfEngineRoute,
-  ProjectsIndexRoute: ProjectsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

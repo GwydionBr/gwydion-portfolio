@@ -24,7 +24,7 @@ export function ProjectPageShell({
   projectLabel,
   statusLabel,
   children,
-  backTo = '/projects',
+  backTo = '/',
   titleSize = 'clamp(3rem, 8vw, 7rem)',
 }: ProjectPageShellProps) {
   return (

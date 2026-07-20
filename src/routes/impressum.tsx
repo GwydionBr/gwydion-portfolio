@@ -1,22 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Stack, Text, Title } from '@mantine/core'
-import { useEffect } from 'react'
-import { useLanguage } from '#/app/i18n/LanguageContext'
 import { LegalPageShell } from '#/features/legal/components/LegalPageShell'
 import { LegalParagraph } from '#/features/legal/components/LegalParagraph'
 import { getImpressumBlocks } from '#/features/legal/content/impressum'
 import * as m from '#/generated/paraglide/messages'
+import { getLocale } from '#/generated/paraglide/runtime'
 import { StaggerGroup, StaggerItem } from '#/shared/motion'
+import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
-export const Route = createFileRoute('/impressum')({ component: ImpressumPage })
+export const Route = createFileRoute('/impressum')({
+  head: () => buildRouteHead({ path: '/impressum', title: m.meta_imprint_title(), description: m.meta_imprint_description() }),
+  component: ImpressumPage,
+})
 
 function ImpressumPage() {
-  const { lang } = useLanguage()
-  const blocks = getImpressumBlocks(lang)
-
-  useEffect(() => {
-    document.title = `${m.legal_imprint_title()} · gwydion.dev`
-  }, [lang])
+  const blocks = getImpressumBlocks(getLocale())
 
   return (
     <LegalPageShell

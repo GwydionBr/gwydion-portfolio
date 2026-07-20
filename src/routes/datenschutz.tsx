@@ -1,24 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Stack, Text, Title } from '@mantine/core'
-import { useEffect } from 'react'
-import { useLanguage } from '#/app/i18n/LanguageContext'
 import { LegalPageShell } from '#/features/legal/components/LegalPageShell'
 import { LegalParagraph } from '#/features/legal/components/LegalParagraph'
 import { PrivacyTableOfContents } from '#/features/legal/components/PrivacyTableOfContents'
 import { getPrivacySections } from '#/features/legal/content/privacy'
 import * as m from '#/generated/paraglide/messages'
+import { getLocale } from '#/generated/paraglide/runtime'
 import { StaggerGroup, StaggerItem } from '#/shared/motion'
+import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 import { AppCard } from '#/shared/ui/Page'
 
-export const Route = createFileRoute('/datenschutz')({ component: DatenschutzPage })
+export const Route = createFileRoute('/datenschutz')({
+  head: () => buildRouteHead({ path: '/datenschutz', title: m.meta_privacy_title(), description: m.meta_privacy_description() }),
+  component: DatenschutzPage,
+})
 
 function DatenschutzPage() {
-  const { lang } = useLanguage()
-  const sections = getPrivacySections(lang)
-
-  useEffect(() => {
-    document.title = `${m.legal_privacy_title()} · gwydion.dev`
-  }, [lang])
+  const sections = getPrivacySections(getLocale())
 
   return (
     <LegalPageShell

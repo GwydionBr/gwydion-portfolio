@@ -23,7 +23,7 @@ export function FeaturedProjectSection() {
 
         <Reveal trigger="inView" distance={28} duration={0.8} delay={0.1}>
           <ProjectCard
-            to="/projects"
+            to="/self-engine"
             status={m.se_status()}
             title={m.se_title()}
             description={m.se_desc()}

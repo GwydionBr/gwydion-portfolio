@@ -12,7 +12,7 @@ const FOOTER_COLUMNS = [
     links: [
       { href: '/', label: m.nav_home },
       { href: '/about', label: m.nav_about },
-      { href: '/projects', label: m.nav_projects },
+      { href: '/self-engine', label: m.se_title },
     ],
   },
   {

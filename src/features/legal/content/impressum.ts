@@ -1,4 +1,4 @@
-import type { Locale } from '#/app/i18n/LanguageContext'
+import type { Locale } from '#/generated/paraglide/runtime'
 
 /** Structured blocks for the legal notice (Impressum). */
 export interface ImpressumBlock {

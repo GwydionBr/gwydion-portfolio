@@ -1,25 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ContactPageContent } from '#/features/contact/components/ContactPageContent'
+import * as m from '#/generated/paraglide/messages'
+import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/contact')({
-  head: () => ({
-    meta: [
-      { title: "Contact — Gwydion" },
-      {
-        name: "description",
-        content:
-          "Get in touch with Gwydion Braunsdorf for collaborations, questions, or project inquiries.",
-      },
-      { property: "og:title", content: "Contact — Gwydion" },
-      {
-        property: "og:description",
-        content:
-          "Get in touch with Gwydion Braunsdorf for collaborations, questions, or project inquiries.",
-      },
-      { property: "og:url", content: "https://gwydion.dev/contact" },
-    ],
-    links: [{ rel: "canonical", href: "https://gwydion.dev/contact" }],
-  }),
+  head: () => buildRouteHead({ path: '/contact', title: m.meta_contact_title(), description: m.meta_contact_description() }),
   component: ContactPage,
 })
 

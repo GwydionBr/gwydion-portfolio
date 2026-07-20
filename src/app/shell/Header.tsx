@@ -9,22 +9,22 @@ import {
 } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import { ReactCountryFlag } from "react-country-flag";
-import type { Locale } from "#/app/i18n/LanguageContext";
 import * as m from "#/generated/paraglide/messages";
+import { type Locale } from "#/generated/paraglide/runtime";
 import { BLOG_ENABLED } from "#/shared/config/features";
 import { GITHUB_PROFILE_URL } from "#/shared/config/links";
 
 const NAV_LINKS = [
   { href: "/", label: m.nav_home },
   { href: "/about", label: m.nav_about },
-  { href: "/projects", label: m.nav_projects },
+  { href: "/self-engine", label: m.se_title },
   { href: "/contact", label: m.nav_contact },
   ...(BLOG_ENABLED ? [{ href: "/blog", label: m.nav_blog }] : []),
 ] as const;
 
 interface HeaderProps {
-  lang?: Locale;
-  onLangChange?: (lang: Locale) => void;
+  lang: Locale;
+  onLangChange: (lang: Locale) => void;
 }
 
 const LANGUAGE_OPTIONS: Array<{ value: Locale; label: string; countryCode: string; name: string }> = [
@@ -34,7 +34,7 @@ const LANGUAGE_OPTIONS: Array<{ value: Locale; label: string; countryCode: strin
 
 type ThemeChoice = "auto" | "light" | "dark";
 
-export function Header({ lang = "en", onLangChange }: HeaderProps) {
+export function Header({ lang, onLangChange }: HeaderProps) {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
@@ -120,7 +120,7 @@ export function Header({ lang = "en", onLangChange }: HeaderProps) {
             comboboxProps={{ width: 126, position: "bottom-end" }}
             onChange={(value) => {
               if (value) {
-                onLangChange?.(value);
+                onLangChange(value);
               }
             }}
             renderOption={({ option }) => (
