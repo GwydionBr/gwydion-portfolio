@@ -1,25 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ProjectsPageContent } from '#/features/projects/components/ProjectsPageContent'
+import * as m from '#/generated/paraglide/messages'
+import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/projects/')({
-  head: () => ({
-    meta: [
-      { title: "Projects — Gwydion" },
-      {
-        name: "description",
-        content:
-          "Projects by Gwydion Braunsdorf, including Self-Engine — a personal productivity system for intentional work.",
-      },
-      { property: "og:title", content: "Projects — Gwydion" },
-      {
-        property: "og:description",
-        content:
-          "Projects by Gwydion Braunsdorf, including Self-Engine — a personal productivity system for intentional work.",
-      },
-      { property: "og:url", content: "https://gwydion.dev/projects" },
-    ],
-    links: [{ rel: "canonical", href: "https://gwydion.dev/projects" }],
-  }),
+  head: () => buildRouteHead({ path: '/projects', title: m.meta_projects_title(), description: m.meta_projects_description() }),
   component: ProjectsPage,
 })
 

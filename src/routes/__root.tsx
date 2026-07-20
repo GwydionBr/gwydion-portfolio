@@ -3,37 +3,20 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { MotionConfig } from "motion/react";
-import { LanguageProvider, useLanguage } from "#/app/i18n/LanguageContext";
 import { Footer } from "#/app/shell/Footer";
 import { Header } from "#/app/shell/Header";
 import { ThemeFaviconSync } from "#/app/shell/ThemeFaviconSync";
 import { cssVariablesResolver, theme } from "#/app/theme";
 import { Analytics } from "@vercel/analytics/react";
+import { getLocale, setLocale } from "#/generated/paraglide/runtime";
 
 import appCss from "../styles.css?url";
-
-const SITE_URL = "https://gwydion.dev";
-const SITE_TITLE = "Gwydion — Developer & Builder";
-const SITE_DESCRIPTION =
-  "Gwydion Braunsdorf — developer and builder working on Self-Engine, a personal productivity system for intentional work.";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SITE_TITLE },
-      { name: "description", content: SITE_DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Gwydion" },
-      { property: "og:title", content: SITE_TITLE },
-      { property: "og:description", content: SITE_DESCRIPTION },
-      { property: "og:url", content: SITE_URL },
-      { property: "og:image", content: `${SITE_URL}/og-image.png` },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: SITE_TITLE },
-      { name: "twitter:description", content: SITE_DESCRIPTION },
-      { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
@@ -42,7 +25,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={getLocale()} suppressHydrationWarning>
       <head>
         <link
           data-app-favicon
@@ -99,12 +82,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             defaultColorScheme="auto"
           >
             <ThemeFaviconSync />
-            <LanguageProvider>
-              <div className="grain-overlay" aria-hidden="true" />
-              <ConnectedHeader />
-              <LocalizedContent>{children}</LocalizedContent>
-              <ConnectedFooter />
-            </LanguageProvider>
+            <div className="grain-overlay" aria-hidden="true" />
+            <Header lang={getLocale()} onLangChange={(locale) => setLocale(locale)} />
+            {children}
+            <Footer />
             <TanStackDevtools
               config={{ position: "middle-left" }}
               plugins={[
@@ -120,24 +101,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Analytics />
       </body>
     </html>
-  );
-}
-
-function ConnectedHeader() {
-  const { lang, setLang } = useLanguage();
-  return <Header lang={lang} onLangChange={setLang} />;
-}
-
-function ConnectedFooter() {
-  useLanguage();
-  return <Footer />;
-}
-
-function LocalizedContent({ children }: { children: React.ReactNode }) {
-  const { lang } = useLanguage();
-  return (
-    <div key={lang} style={{ display: "contents" }}>
-      {children}
-    </div>
   );
 }

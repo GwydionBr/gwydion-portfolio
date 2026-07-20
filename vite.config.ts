@@ -3,6 +3,8 @@ import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { nitro } from 'nitro/vite'
 import viteReact from '@vitejs/plugin-react'
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
+import { paraglideConfig } from './paraglide.config'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -12,6 +14,7 @@ const config = defineConfig({
   plugins: [
     devtools(),
     tanstackStart(),
+    paraglideVitePlugin(paraglideConfig),
     nitro(),
     viteReact(),
   ],

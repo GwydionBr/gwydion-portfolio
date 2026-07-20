@@ -1,4 +1,4 @@
-import type { Locale } from '#/app/i18n/LanguageContext'
+import type { Locale } from '#/generated/paraglide/runtime'
 
 export interface PrivacySection {
   id: string
@@ -53,7 +53,7 @@ const de: PrivacySection[] = [
     id: 'language',
     title: 'Einstellungen im lokalen Speicher (localStorage)',
     paragraphs: [
-      'Deine gewählte Sprache (Deutsch/Englisch) sowie dein bevorzugtes Farbschema (Hell/Dunkel) werden im Browser mittels localStorage gespeichert, damit diese Einstellungen beim nächsten Besuch erhalten bleiben. Es werden keine Tracking-Cookies zu Werbezwecken gesetzt und keine Daten an Dritte übermittelt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst die Einträge in den Einstellungen deines Browsers jederzeit löschen.',
+      'Dein bevorzugtes Farbschema (Hell/Dunkel) wird im Browser mittels localStorage gespeichert, damit diese Einstellung beim nächsten Besuch erhalten bleibt. Die Sprache folgt der URL und wird nicht gespeichert. Es werden keine Tracking-Cookies zu Werbezwecken gesetzt und keine Daten an Dritte übermittelt. Rechtsgrundlage für die Speicherung des Farbschemas ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst den Eintrag in den Einstellungen deines Browsers jederzeit löschen.',
     ],
   },
   {
@@ -127,7 +127,7 @@ const en: PrivacySection[] = [
     id: 'language',
     title: 'Preferences in local storage',
     paragraphs: [
-      'Your selected language (German/English) and colour scheme preference (light/dark) may be stored in the browser using localStorage so these settings persist on your next visit. No tracking cookies are used for advertising and no data is shared with third parties. Legal basis: Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entries in your browser settings at any time.',
+      'Your colour scheme preference (light/dark) may be stored in the browser using localStorage so this setting persists on your next visit. The language follows the URL and is not stored. No tracking cookies are used for advertising and no data is shared with third parties. The legal basis for storing the colour scheme is Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entry in your browser settings at any time.',
     ],
   },
   {

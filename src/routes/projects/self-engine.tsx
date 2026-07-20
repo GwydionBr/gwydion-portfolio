@@ -1,28 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { SelfEnginePageContent } from '#/features/projects/self-engine/components/SelfEnginePageContent'
+import { createFileRoute } from "@tanstack/react-router";
+import { SelfEnginePageContent } from "#/features/projects/self-engine/components/SelfEnginePageContent";
+import * as m from "#/generated/paraglide/messages";
+import { buildRouteHead } from "#/shared/seo/buildRouteHead";
 
-export const Route = createFileRoute('/projects/self-engine')({
-  head: () => ({
-    meta: [
-      { title: "Self-Engine — Gwydion" },
-      {
-        name: "description",
-        content:
-          "Self-Engine is a personal productivity system for intentional work, built by Gwydion Braunsdorf.",
-      },
-      { property: "og:title", content: "Self-Engine — Gwydion" },
-      {
-        property: "og:description",
-        content:
-          "Self-Engine is a personal productivity system for intentional work, built by Gwydion Braunsdorf.",
-      },
-      { property: "og:url", content: "https://gwydion.dev/projects/self-engine" },
-    ],
-    links: [{ rel: "canonical", href: "https://gwydion.dev/projects/self-engine" }],
-  }),
+export const Route = createFileRoute("/projects/self-engine")({
+  head: () =>
+    buildRouteHead({
+      path: "/projects/self-engine",
+      title: m.meta_self_engine_title(),
+      description: m.meta_self_engine_description(),
+    }),
   component: SelfEnginePage,
-})
+});
 
 function SelfEnginePage() {
-  return <SelfEnginePageContent />
+  return <SelfEnginePageContent />;
 }

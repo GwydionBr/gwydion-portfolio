@@ -1,25 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AboutPageContent } from '#/features/about/components/AboutPageContent'
+import * as m from '#/generated/paraglide/messages'
+import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/about')({
-  head: () => ({
-    meta: [
-      { title: "About — Gwydion" },
-      {
-        name: "description",
-        content:
-          "Learn about Gwydion Braunsdorf, a developer focused on building tools for intentional work and personal productivity.",
-      },
-      { property: "og:title", content: "About — Gwydion" },
-      {
-        property: "og:description",
-        content:
-          "Learn about Gwydion Braunsdorf, a developer focused on building tools for intentional work and personal productivity.",
-      },
-      { property: "og:url", content: "https://gwydion.dev/about" },
-    ],
-    links: [{ rel: "canonical", href: "https://gwydion.dev/about" }],
-  }),
+  head: () => buildRouteHead({ path: '/about', title: m.meta_about_title(), description: m.meta_about_description() }),
   component: AboutPage,
 })
 
