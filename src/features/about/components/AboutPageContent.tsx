@@ -33,7 +33,7 @@ function getFocusAreas() {
 
 function getNowItems() {
   return [
-    { label: m.about_now_project(), value: m.se_title(), to: '/projects/self-engine' as const },
+    { label: m.about_now_project(), value: m.se_title(), to: '/self-engine' as const },
     { label: m.about_now_learning(), value: m.about_now_learning_value() },
     { label: m.about_now_location(), value: 'Germany' },
   ]
