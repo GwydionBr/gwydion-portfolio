@@ -4,7 +4,12 @@ import * as m from '#/generated/paraglide/messages'
 import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/about')({
-  head: () => buildRouteHead({ path: '/about', title: m.meta_about_title(), description: m.meta_about_description() }),
+  head: () =>
+    buildRouteHead({
+      path: '/about',
+      title: m.meta_about_title(),
+      description: m.meta_about_description(),
+    }),
   component: AboutPage,
 })
 

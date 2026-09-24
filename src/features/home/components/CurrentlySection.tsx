@@ -49,8 +49,15 @@ export function CurrentlySection() {
                       {text}
                     </Text>
                     {href && (
-                      <Anchor href={href} target="_blank" rel="noopener noreferrer" c="var(--app-accent-green)" underline="never">
-                        {m.self_visit_site()} <ArrowUpRightIcon size={13} style={{ verticalAlign: 'text-top' }} />
+                      <Anchor
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        c="var(--app-accent-green)"
+                        underline="never"
+                      >
+                        {m.self_visit_site()}{' '}
+                        <ArrowUpRightIcon size={13} style={{ verticalAlign: 'text-top' }} />
                       </Anchor>
                     )}
                   </Stack>

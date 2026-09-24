@@ -24,7 +24,10 @@ export type RevealPreset =
   | 'scale-in'
   | 'line'
 
-export function createRevealTransition(duration: number = motionDurations.base, delay = 0): Transition {
+export function createRevealTransition(
+  duration: number = motionDurations.base,
+  delay = 0,
+): Transition {
   return {
     duration,
     delay,

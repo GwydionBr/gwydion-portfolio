@@ -37,13 +37,17 @@ export function PrivacyTableOfContents({ heading, items }: PrivacyTableOfContent
 
     const updateActiveSection = () => {
       if (visibleSections.size > 0) {
-        const [nextActiveId] = [...visibleSections.entries()].sort((a, b) => Math.abs(a[1]) - Math.abs(b[1]))[0]
+        const [nextActiveId] = [...visibleSections.entries()].sort(
+          (a, b) => Math.abs(a[1]) - Math.abs(b[1]),
+        )[0]
         setActiveId(nextActiveId)
         return
       }
 
       const scrollOffset = 120
-      const passedSections = sections.filter((section) => section.getBoundingClientRect().top <= scrollOffset)
+      const passedSections = sections.filter(
+        (section) => section.getBoundingClientRect().top <= scrollOffset,
+      )
       setActiveId(passedSections.at(-1)?.id ?? sections[0].id)
     }
 
@@ -101,7 +105,12 @@ export function PrivacyTableOfContents({ heading, items }: PrivacyTableOfContent
         ff="var(--mantine-font-family-monospace)"
         fz="0.68rem"
         c="var(--app-text-muted)"
-        style={{ letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 14, display: 'block' }}
+        style={{
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          marginBottom: 14,
+          display: 'block',
+        }}
       >
         {heading}
       </Text>

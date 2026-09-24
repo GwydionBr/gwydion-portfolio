@@ -111,7 +111,14 @@ export function AboutPageContent() {
                   <AppCard p="lg" radius={0} h="100%">
                     <Eyebrow mb={10}>{label}</Eyebrow>
                     {to ? (
-                      <Text component={Link} to={to} size="sm" lh={1.5} c="var(--app-accent-green)" style={{ textDecoration: 'none' }}>
+                      <Text
+                        component={Link}
+                        to={to}
+                        size="sm"
+                        lh={1.5}
+                        c="var(--app-accent-green)"
+                        style={{ textDecoration: 'none' }}
+                      >
                         {value}
                       </Text>
                     ) : (

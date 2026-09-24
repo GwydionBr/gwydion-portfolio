@@ -11,7 +11,12 @@ import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 import { AppCard } from '#/shared/ui/Page'
 
 export const Route = createFileRoute('/datenschutz')({
-  head: () => buildRouteHead({ path: '/datenschutz', title: m.meta_privacy_title(), description: m.meta_privacy_description() }),
+  head: () =>
+    buildRouteHead({
+      path: '/datenschutz',
+      title: m.meta_privacy_title(),
+      description: m.meta_privacy_description(),
+    }),
   component: DatenschutzPage,
 })
 

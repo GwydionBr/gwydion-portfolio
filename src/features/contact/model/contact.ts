@@ -38,5 +38,8 @@ export function escapeHtml(value: string) {
 }
 
 export function normalizeEmailSubjectPart(value: string) {
-  return value.replace(/[\r\n]+/g, ' ').trim().slice(0, contactLimits.nameMax)
+  return value
+    .replace(/[\r\n]+/g, ' ')
+    .trim()
+    .slice(0, contactLimits.nameMax)
 }

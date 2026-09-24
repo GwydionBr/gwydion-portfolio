@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vite-plus/test'
 import { getLocale, overwriteGetLocale } from '#/generated/paraglide/runtime'
 import { buildRouteHead } from './buildRouteHead'
 
@@ -20,9 +20,9 @@ describe('buildRouteHead', () => {
 
     expect(head.links).toEqual([
       { rel: 'canonical', href: 'https://gwydion.dev/about' },
-      { rel: 'alternate', hreflang: 'en', href: 'https://gwydion.dev/about' },
-      { rel: 'alternate', hreflang: 'de', href: 'https://gwydion.dev/de/about' },
-      { rel: 'alternate', hreflang: 'x-default', href: 'https://gwydion.dev/about' },
+      { rel: 'alternate', hrefLang: 'en', href: 'https://gwydion.dev/about' },
+      { rel: 'alternate', hrefLang: 'de', href: 'https://gwydion.dev/de/about' },
+      { rel: 'alternate', hrefLang: 'x-default', href: 'https://gwydion.dev/about' },
     ])
     expect(head.meta).toEqual(
       expect.arrayContaining([
@@ -44,9 +44,9 @@ describe('buildRouteHead', () => {
 
     expect(head.links).toEqual([
       { rel: 'canonical', href: 'https://gwydion.dev/de/' },
-      { rel: 'alternate', hreflang: 'en', href: 'https://gwydion.dev/' },
-      { rel: 'alternate', hreflang: 'de', href: 'https://gwydion.dev/de/' },
-      { rel: 'alternate', hreflang: 'x-default', href: 'https://gwydion.dev/' },
+      { rel: 'alternate', hrefLang: 'en', href: 'https://gwydion.dev/' },
+      { rel: 'alternate', hrefLang: 'de', href: 'https://gwydion.dev/de/' },
+      { rel: 'alternate', hrefLang: 'x-default', href: 'https://gwydion.dev/' },
     ])
     expect(head.meta).toContainEqual({ property: 'og:locale', content: 'de_DE' })
   })

@@ -1,6 +1,7 @@
 # gwydion-portfolio
 
 Personal portfolio site built with TanStack Start, React, Mantine, Paraglide, and Bun.
+Tooling runs on [Vite+](https://viteplus.dev) (`vp`): Vite, Vitest, Oxlint, and Oxfmt configured together in `vite.config.ts`.
 
 ## Setup
 
@@ -14,15 +15,18 @@ bun install
 bun run dev
 ```
 
-The dev server runs on port `3000`.
+The dev server runs on port `3001`.
 
 ## Quality Checks
 
 ```bash
-bun run lint
-bun run typecheck
-bun run test
+bun run check      # format + lint + type-aware checks (vp check)
+bun run check:fix  # same, applying fixes
+bun run typecheck  # tsc --noEmit
+bun run test       # vp test
 ```
+
+A pre-commit hook (`.vite-hooks/pre-commit`, installed by `bun install` via `vp config`) runs `vp check --fix` on staged files.
 
 ## Production Build
 

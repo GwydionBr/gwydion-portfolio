@@ -16,9 +16,17 @@ function Screenshot({ shot }: { shot: (typeof SELF_ENGINE_SCREENSHOTS)[number] }
         src={shot.src}
         alt={getMessage(shot.altKey)}
         w="100%"
-        style={{ display: 'block', aspectRatio: shot.aspect === 'wide' ? '16/10' : '9/19', objectFit: 'cover', borderRadius: 2, border: '1px solid var(--app-border)' }}
+        style={{
+          display: 'block',
+          aspectRatio: shot.aspect === 'wide' ? '16/10' : '9/19',
+          objectFit: 'cover',
+          borderRadius: 2,
+          border: '1px solid var(--app-border)',
+        }}
       />
-      <Box px="xs" pt="md" pb={6}><Eyebrow>{getMessage(shot.captionKey)}</Eyebrow></Box>
+      <Box px="xs" pt="md" pb={6}>
+        <Eyebrow>{getMessage(shot.captionKey)}</Eyebrow>
+      </Box>
     </AppCard>
   )
 }
@@ -29,13 +37,23 @@ export function SelfEngineScreenshots() {
 
   return (
     <Box mb={104}>
-      <Reveal trigger="inView"><Eyebrow mb={24}>{m.cs_shots_heading()}</Eyebrow></Reveal>
+      <Reveal trigger="inView">
+        <Eyebrow mb={24}>{m.cs_shots_heading()}</Eyebrow>
+      </Reveal>
       <Stack gap={16} mb={16}>
-        {wide.map((shot) => <Reveal key={shot.src} trigger="inView"><Screenshot shot={shot} /></Reveal>)}
+        {wide.map((shot) => (
+          <Reveal key={shot.src} trigger="inView">
+            <Screenshot shot={shot} />
+          </Reveal>
+        ))}
       </Stack>
       <StaggerGroup trigger="inView" stagger={0.1}>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={16} maw={720} mx="auto">
-          {phone.map((shot) => <StaggerItem key={shot.src} preset="fade-in"><Screenshot shot={shot} /></StaggerItem>)}
+          {phone.map((shot) => (
+            <StaggerItem key={shot.src} preset="fade-in">
+              <Screenshot shot={shot} />
+            </StaggerItem>
+          ))}
         </SimpleGrid>
       </StaggerGroup>
     </Box>

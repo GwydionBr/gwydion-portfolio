@@ -1,5 +1,12 @@
 import type { ReactElement } from 'react'
-import { CalendarDotsIcon, CheckSquareOffsetIcon, CurrencyCircleDollarIcon, ListChecksIcon, SparkleIcon, TimerIcon } from '@phosphor-icons/react'
+import {
+  CalendarDotsIcon,
+  CheckSquareOffsetIcon,
+  CurrencyCircleDollarIcon,
+  ListChecksIcon,
+  SparkleIcon,
+  TimerIcon,
+} from '@phosphor-icons/react'
 import { Badge, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
 import { Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'

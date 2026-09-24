@@ -1,10 +1,12 @@
 ## Task Completion Requirements
 
-All of bun lint and bun typecheck must pass before considering tasks completed.
+All of bun run check and bun run typecheck must pass before considering tasks completed.
 
 ## Commands
 
 **Always use Bun** (never npm/yarn/pnpm).
+
+Tooling is Vite+ (`vp`). Lint, format, and test config all live in `vite.config.ts` — don't add separate `.oxlintrc.json`, `.prettierrc`, or `vitest.config.ts` files. Import test APIs from `vite-plus/test`, not `vitest`.
 
 ## Project Snapshot
 
@@ -20,4 +22,3 @@ Long term maintainability is a core priority. If you add new functionality, firs
 
 - use the context7 mcp to access documentations of libraries to get the current version
 - use the tanstack mcp to access all relevant tanstack docs and information
-

@@ -169,5 +169,9 @@
   "meta_imprint_title": "Legal notice — Gwydion",
   "meta_imprint_description": "Legal notice and provider information for gwydion.dev.",
   "meta_privacy_title": "Privacy policy — Gwydion",
-  "meta_privacy_description": "Privacy information for visitors to gwydion.dev."
+  "meta_privacy_description": "Privacy information for visitors to gwydion.dev.",
+  "not_found_label": "404",
+  "not_found_title": "Page not found",
+  "not_found_desc": "This page doesn't exist or has moved.",
+  "not_found_cta": "Back to home"
 }

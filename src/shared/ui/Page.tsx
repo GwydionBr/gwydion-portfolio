@@ -48,18 +48,19 @@ export function Eyebrow({ children, mb = 0 }: EyebrowProps) {
   )
 }
 
-interface DisplayTitleProps {
-  children: ReactNode
-  order?: 1 | 2 | 3
-  size?: 'hero' | 'page' | 'section' | 'card' | string
-  mb?: number | string
-}
-
 const titleSizes = {
   hero: 'clamp(3.5rem, 10vw, 9rem)',
   page: 'clamp(3rem, 7vw, 6rem)',
   section: 'clamp(2rem, 5vw, 3.5rem)',
   card: 'clamp(1.6rem, 3vw, 2.4rem)',
+}
+
+interface DisplayTitleProps {
+  children: ReactNode
+  order?: 1 | 2 | 3
+  /** A preset from `titleSizes` or any CSS font-size. `string & {}` keeps preset autocompletion. */
+  size?: keyof typeof titleSizes | (string & {})
+  mb?: number | string
 }
 
 export function DisplayTitle({ children, order = 1, size = 'page', mb = 0 }: DisplayTitleProps) {

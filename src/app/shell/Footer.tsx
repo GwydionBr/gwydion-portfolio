@@ -51,15 +51,19 @@ export function Footer() {
         <Group align="flex-start" justify="space-between" gap={40} wrap="wrap">
           <Stack gap={10}>
             <Link to="/" style={{ textDecoration: 'none' }}>
-              <Title
-                order={2}
-                className="display"
-                style={{ fontSize: '1.35rem' }}
-              >
-                gwydion<Text component="span" c="gold">.</Text>
+              <Title order={2} className="display" style={{ fontSize: '1.35rem' }}>
+                gwydion
+                <Text component="span" c="gold">
+                  .
+                </Text>
               </Title>
             </Link>
-            <Text size="xs" c="var(--app-text-muted)" ff="var(--mantine-font-family-monospace)" style={{ letterSpacing: '0.05em' }}>
+            <Text
+              size="xs"
+              c="var(--app-text-muted)"
+              ff="var(--mantine-font-family-monospace)"
+              style={{ letterSpacing: '0.05em' }}
+            >
               {m.footer_built()}
             </Text>
           </Stack>
