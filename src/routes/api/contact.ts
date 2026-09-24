@@ -1,47 +1,47 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Resend } from "resend";
+import { createFileRoute } from '@tanstack/react-router'
+import { Resend } from 'resend'
 import {
   contactSchema,
   escapeHtml,
   normalizeEmailSubjectPart,
   type ContactPayload,
-} from "#/features/contact/model/contact";
+} from '#/features/contact/model/contact'
 
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX = 5;
-const DEFAULT_FROM = "Portfolio Contact <onboarding@resend.dev>";
-const DEFAULT_TO = "gwydie@pm.me";
-const rateLimits = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+const RATE_LIMIT_MAX = 5
+const DEFAULT_FROM = 'Portfolio Contact <onboarding@resend.dev>'
+const DEFAULT_TO = 'gwydie@pm.me'
+const rateLimits = new Map<string, { count: number; resetAt: number }>()
 
-export const Route = createFileRoute("/api/contact")({
+export const Route = createFileRoute('/api/contact')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const body = await readJson(request);
-        const parsed = contactSchema.safeParse(body);
+        const body = await readJson(request)
+        const parsed = contactSchema.safeParse(body)
 
         if (!parsed.success) {
-          return json({ error: "Invalid input" }, 400);
+          return json({ error: 'Invalid input' }, 400)
         }
 
         if (parsed.data.website) {
-          return json({ success: true });
+          return json({ success: true })
         }
 
         if (isRateLimited(request)) {
-          return json({ error: "Too many requests" }, 429);
+          return json({ error: 'Too many requests' }, 429)
         }
 
-        const { name, email, message } = parsed.data;
-        const apiKey = process.env["RESEND_API_KEY"];
+        const { name, email, message } = parsed.data
+        const apiKey = process.env['RESEND_API_KEY']
 
         if (!apiKey) {
-          console.error("RESEND_API_KEY not set");
-          return json({ error: "Server configuration error" }, 500);
+          console.error('RESEND_API_KEY not set')
+          return json({ error: 'Server configuration error' }, 500)
         }
 
-        const resend = new Resend(apiKey);
-        const safe = createSafeEmailParts(parsed.data);
+        const resend = new Resend(apiKey)
+        const safe = createSafeEmailParts(parsed.data)
 
         const { error } = await resend.emails.send({
           from: DEFAULT_FROM,
@@ -66,32 +66,32 @@ export const Route = createFileRoute("/api/contact")({
           <p style="margin-top:24px;font-size:0.8rem;color:#7a9487">Sent via gwydion.dev</p>
         </div>
       `,
-        });
+        })
 
         if (error) {
-          console.error("Resend error:", error);
-          return json({ error: "Failed to send" }, 500);
+          console.error('Resend error:', error)
+          return json({ error: 'Failed to send' }, 500)
         }
 
-        return json({ success: true });
+        return json({ success: true })
       },
     },
   },
-});
+})
 
 async function readJson(request: Request) {
   try {
-    return await request.json();
+    return await request.json()
   } catch {
-    return null;
+    return null
   }
 }
 
 function json(body: Record<string, unknown>, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json" },
-  });
+    headers: { 'Content-Type': 'application/json' },
+  })
 }
 
 function createSafeEmailParts(payload: ContactPayload) {
@@ -99,28 +99,28 @@ function createSafeEmailParts(payload: ContactPayload) {
     name: escapeHtml(payload.name),
     email: escapeHtml(payload.email),
     message: escapeHtml(payload.message),
-  };
+  }
 }
 
 function isRateLimited(request: Request) {
-  const now = Date.now();
-  const key = getRateLimitKey(request);
-  const current = rateLimits.get(key);
+  const now = Date.now()
+  const key = getRateLimitKey(request)
+  const current = rateLimits.get(key)
 
   if (!current || current.resetAt <= now) {
-    rateLimits.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
+    rateLimits.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return false
   }
 
-  current.count += 1;
-  return current.count > RATE_LIMIT_MAX;
+  current.count += 1
+  return current.count > RATE_LIMIT_MAX
 }
 
 function getRateLimitKey(request: Request) {
   return (
-    request.headers.get("cf-connecting-ip") ??
-    request.headers.get("x-real-ip") ??
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    "unknown"
-  );
+    request.headers.get('cf-connecting-ip') ??
+    request.headers.get('x-real-ip') ??
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    'unknown'
+  )
 }

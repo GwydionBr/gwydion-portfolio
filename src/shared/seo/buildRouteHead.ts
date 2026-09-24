@@ -33,9 +33,9 @@ export function buildRouteHead({ path, title, description }: RouteHeadOptions) {
     ],
     links: [
       { rel: 'canonical', href: canonical },
-      { rel: 'alternate', hreflang: 'en', href: englishUrl },
-      { rel: 'alternate', hreflang: 'de', href: germanUrl },
-      { rel: 'alternate', hreflang: 'x-default', href: englishUrl },
+      { rel: 'alternate', hrefLang: 'en', href: englishUrl },
+      { rel: 'alternate', hrefLang: 'de', href: germanUrl },
+      { rel: 'alternate', hrefLang: 'x-default', href: englishUrl },
     ],
   }
 }

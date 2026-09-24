@@ -13,8 +13,12 @@ const nodes = [
 function Connector({ bidirectional = false }: { bidirectional?: boolean }) {
   return (
     <>
-      <Text visibleFrom="sm" ff="monospace" c="var(--app-text-muted)" aria-hidden>{bidirectional ? '⇄' : '→'}</Text>
-      <Text hiddenFrom="sm" ff="monospace" c="var(--app-text-muted)" aria-hidden>↓</Text>
+      <Text visibleFrom="sm" ff="monospace" c="var(--app-text-muted)" aria-hidden>
+        {bidirectional ? '⇄' : '→'}
+      </Text>
+      <Text hiddenFrom="sm" ff="monospace" c="var(--app-text-muted)" aria-hidden>
+        ↓
+      </Text>
     </>
   )
 }
@@ -28,19 +32,35 @@ export function SelfEngineArchitecture() {
           {m.cs_arch_heading()}
         </DisplayTitle>
         <Stack gap="md" maw={820} mb={40}>
-          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">{m.cs_arch_p1()}</Text>
-          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">{m.cs_arch_p2()}</Text>
-          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">{m.cs_arch_p3()}</Text>
+          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">
+            {m.cs_arch_p1()}
+          </Text>
+          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">
+            {m.cs_arch_p2()}
+          </Text>
+          <Text component="p" size="sm" lh={1.8} c="var(--app-text-secondary)">
+            {m.cs_arch_p3()}
+          </Text>
         </Stack>
       </Reveal>
 
       <Reveal trigger="inView" delay={0.15}>
         <Flex direction={{ base: 'column', sm: 'row' }} align="center" gap={{ base: 8, sm: 10 }}>
           {nodes.map(({ label, sublabel }, index) => (
-            <Flex key={label()} direction={{ base: 'column', sm: 'row' }} align="center" gap={{ base: 8, sm: 10 }} style={{ flex: index < nodes.length - 1 ? 1 : undefined, width: '100%' }}>
+            <Flex
+              key={label()}
+              direction={{ base: 'column', sm: 'row' }}
+              align="center"
+              gap={{ base: 8, sm: 10 }}
+              style={{ flex: index < nodes.length - 1 ? 1 : undefined, width: '100%' }}
+            >
               <AppCard radius={0} p="md" h="100%" style={{ flex: 1, width: '100%' }}>
-                <Text ff="monospace" size="xs" fw={600} mb={6}>{label()}</Text>
-                <Text ff="monospace" fz={10} lh={1.45} c="var(--app-text-muted)">{sublabel()}</Text>
+                <Text ff="monospace" size="xs" fw={600} mb={6}>
+                  {label()}
+                </Text>
+                <Text ff="monospace" fz={10} lh={1.45} c="var(--app-text-muted)">
+                  {sublabel()}
+                </Text>
               </AppCard>
               {index < nodes.length - 1 && <Connector bidirectional={index === 2} />}
             </Flex>

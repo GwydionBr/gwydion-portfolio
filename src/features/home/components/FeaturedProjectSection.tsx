@@ -1,4 +1,9 @@
-import { CalendarDotsIcon, CodeIcon, CurrencyCircleDollarIcon, TimerIcon } from '@phosphor-icons/react'
+import {
+  CalendarDotsIcon,
+  CodeIcon,
+  CurrencyCircleDollarIcon,
+  TimerIcon,
+} from '@phosphor-icons/react'
 import { Box, Container } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
 import { ProjectCard } from '#/features/projects/components/ProjectCard'

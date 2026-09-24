@@ -7,15 +7,18 @@
   },
   "scripts": {
     "i18n": "bun run scripts/compile-paraglide.ts",
-    "dev": "bun run i18n && vite dev",
-    "build": "bun run i18n && vite build",
-    "preview": "vite preview",
+    "dev": "bun run i18n && vp dev",
+    "build": "bun run i18n && vp build",
+    "preview": "vp preview",
     "start": "node .output/server/index.mjs",
-    "test": "bun run i18n && vitest run",
+    "test": "bun run i18n && vp test run",
     "typecheck": "bun run i18n && tsc --noEmit",
-    "lint": "oxlint src",
-    "lint:fix": "oxlint src --fix",
-    "format": "oxlint src --fix"
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "format": "vp fmt",
+    "prepare": "vp config",
+    "check": "bun run i18n && vp check",
+    "check:fix": "bun run i18n && vp check --fix"
   },
   "dependencies": {
     "@fontsource/cormorant": "^5.2.8",
@@ -49,18 +52,21 @@
     "@vitejs/plugin-react": "^6.0.1",
     "jsdom": "^28.1.0",
     "nitro": "^3.0.260429-beta",
-    "oxlint": "^1.60.0",
     "postcss": "^8.5.9",
     "postcss-preset-mantine": "^1.18.0",
     "postcss-simple-vars": "^7.0.1",
     "typescript": "^5.7.2",
-    "vite": "^8.0.0",
-    "vitest": "^3.0.5"
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0",
+    "vite-plus": "1.0.0-rc.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "bun",
+      "version": "1.4.2",
+      "onFail": "download"
+    }
   }
 }

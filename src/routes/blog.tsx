@@ -5,7 +5,12 @@ import * as m from '#/generated/paraglide/messages'
 import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/blog')({
-  head: () => buildRouteHead({ path: '/blog', title: m.meta_blog_title(), description: m.meta_blog_description() }),
+  head: () =>
+    buildRouteHead({
+      path: '/blog',
+      title: m.meta_blog_title(),
+      description: m.meta_blog_description(),
+    }),
   beforeLoad: () => {
     if (!BLOG_ENABLED) {
       throw redirect({ to: '/' })

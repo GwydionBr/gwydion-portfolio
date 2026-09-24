@@ -11,7 +11,13 @@ export function AboutTeaser() {
     <Box component="section" pt={120} px={28}>
       <Container size={1080} px={0}>
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing={60} verticalSpacing={48}>
-          <Reveal trigger="inView" preset="fade-left" distance={24} duration={0.8} viewport={{ margin: '-80px' }}>
+          <Reveal
+            trigger="inView"
+            preset="fade-left"
+            distance={24}
+            duration={0.8}
+            viewport={{ margin: '-80px' }}
+          >
             <Eyebrow mb={12}>{m.about_heading()}</Eyebrow>
             <DisplayTitle order={2} size="section" mb={24}>
               {m.home_about_title_a()}
@@ -22,10 +28,24 @@ export function AboutTeaser() {
               {m.about_p1()}
             </Text>
             <Box style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-              <Button component={Link} to="/about" variant="subtle" rightSection={<ArrowRightIcon size={15} weight="bold" />} px={0}>
+              <Button
+                component={Link}
+                to="/about"
+                variant="subtle"
+                rightSection={<ArrowRightIcon size={15} weight="bold" />}
+                px={0}
+              >
                 {m.about_cta()}
               </Button>
-              <Button component="a" href={SELF_ENGINE_URL} target="_blank" rel="noopener noreferrer" variant="subtle" rightSection={<ArrowUpRightIcon size={13} />} px={0}>
+              <Button
+                component="a"
+                href={SELF_ENGINE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="subtle"
+                rightSection={<ArrowUpRightIcon size={13} />}
+                px={0}
+              >
                 {m.self_visit_site()}
               </Button>
             </Box>

@@ -19,10 +19,17 @@ export function SelfEngineNumbers() {
         {numbers.map(({ value, label }) => (
           <StaggerItem key={label()} preset="fade-in" duration={0.45}>
             <AppCard p="lg" radius={0} h="100%">
-              <Text ff="var(--mantine-font-family-headings)" fz="clamp(1.75rem, 4vw, 2.5rem)" lh={1} mb={12}>
+              <Text
+                ff="var(--mantine-font-family-headings)"
+                fz="clamp(1.75rem, 4vw, 2.5rem)"
+                lh={1}
+                mb={12}
+              >
                 {value()}
               </Text>
-              <Box style={{ lineHeight: 1.5 }}><Eyebrow>{label()}</Eyebrow></Box>
+              <Box style={{ lineHeight: 1.5 }}>
+                <Eyebrow>{label()}</Eyebrow>
+              </Box>
             </AppCard>
           </StaggerItem>
         ))}

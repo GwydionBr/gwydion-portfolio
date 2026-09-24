@@ -44,10 +44,21 @@ export function HeroSection() {
 
         <Reveal distance={16} duration={0.7} delay={0.65}>
           <Group gap={14} mt={40}>
-            <Button component={Link} to="/self-engine" rightSection={<ArrowRightIcon size={15} weight="bold" />}>
+            <Button
+              component={Link}
+              to="/self-engine"
+              rightSection={<ArrowRightIcon size={15} weight="bold" />}
+            >
               {m.hero_cta_projects()}
             </Button>
-            <Button component="a" href={SELF_ENGINE_URL} target="_blank" rel="noopener noreferrer" variant="default" rightSection={<ArrowUpRightIcon size={13} />}>
+            <Button
+              component="a"
+              href={SELF_ENGINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="default"
+              rightSection={<ArrowUpRightIcon size={13} />}
+            >
               {m.self_visit_site()}
             </Button>
             <Button component={Link} to="/contact" variant="default">
@@ -80,7 +91,9 @@ export function HeroSection() {
           </Text>
           <motion.div
             animate={reducedMotion ? undefined : { y: [0, 6, 0] }}
-            transition={reducedMotion ? undefined : { repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+            transition={
+              reducedMotion ? undefined : { repeat: Infinity, duration: 2, ease: 'easeInOut' }
+            }
             style={{
               width: 1,
               height: 32,

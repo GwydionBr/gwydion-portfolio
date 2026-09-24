@@ -7,7 +7,11 @@ import { AnimatePresence, motion } from 'motion/react'
 import * as m from '#/generated/paraglide/messages'
 import { createRevealTransition, Reveal } from '#/shared/motion'
 import { AppCard, DisplayTitle } from '#/shared/ui/Page'
-import { contactLimits, contactSchema, type ContactForm as ContactFormValues } from '../model/contact'
+import {
+  contactLimits,
+  contactSchema,
+  type ContactForm as ContactFormValues,
+} from '../model/contact'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -101,7 +105,13 @@ export function ContactForm() {
                   autoComplete="off"
                   aria-hidden="true"
                   {...form.getInputProps('website')}
-                  style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }}
+                  style={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    width: 1,
+                    height: 1,
+                    opacity: 0,
+                  }}
                 />
 
                 {status === 'error' && (

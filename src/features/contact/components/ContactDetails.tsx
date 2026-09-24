@@ -17,7 +17,13 @@ export function ContactDetails() {
           <Stack key={label} gap={6}>
             <Eyebrow>{label}</Eyebrow>
             {href ? (
-              <Anchor href={href} target="_blank" rel="noopener noreferrer" c="inherit" underline="never">
+              <Anchor
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                c="inherit"
+                underline="never"
+              >
                 <Group component="span" gap={5}>
                   {value} <ArrowUpRightIcon size={13} />
                 </Group>

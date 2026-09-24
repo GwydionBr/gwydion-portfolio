@@ -9,7 +9,12 @@ import { StaggerGroup, StaggerItem } from '#/shared/motion'
 import { buildRouteHead } from '#/shared/seo/buildRouteHead'
 
 export const Route = createFileRoute('/impressum')({
-  head: () => buildRouteHead({ path: '/impressum', title: m.meta_imprint_title(), description: m.meta_imprint_description() }),
+  head: () =>
+    buildRouteHead({
+      path: '/impressum',
+      title: m.meta_imprint_title(),
+      description: m.meta_imprint_description(),
+    }),
   component: ImpressumPage,
 })
 
