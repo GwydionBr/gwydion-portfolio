@@ -125,6 +125,7 @@
   "not_found_desc": "Diese Seite existiert nicht oder wurde verschoben.",
   "not_found_cta": "Zur Startseite",
   "home_role": "Full-Stack-Entwickler",
+  "home_portrait_alt": "Porträt von Gwydion Braunsdorf",
   "home_tagline": "Ich baue Offline-First-Produkte von Grund auf — vom Postgres-Schema bis zur App in der Hosentasche.",
   "home_nav_about": "Über mich",
   "home_nav_highlights": "Highlights",

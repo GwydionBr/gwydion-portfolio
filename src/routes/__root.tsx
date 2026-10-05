@@ -10,6 +10,7 @@ import { ThemeFaviconSync } from '#/app/shell/ThemeFaviconSync'
 import { cssVariablesResolver, theme } from '#/app/theme'
 import { Analytics } from '@vercel/analytics/react'
 import { getLocale, setLocale } from '#/generated/paraglide/runtime'
+import { SITE_URL } from '#/shared/seo/buildRouteHead'
 
 import appCss from '../styles.css?url'
 
@@ -63,7 +64,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               '@context': 'https://schema.org',
               '@type': 'Person',
               name: 'Gwydion Braunsdorf',
-              url: 'https://gwydion.dev',
+              url: SITE_URL,
+              image: `${SITE_URL}/portrait.webp`,
               jobTitle: 'Full-stack developer',
               sameAs: ['https://github.com/GwydionBr'],
             }),
