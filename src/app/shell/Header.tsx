@@ -5,14 +5,12 @@ import { useState, useEffect } from 'react'
 import { ReactCountryFlag } from 'react-country-flag'
 import * as m from '#/generated/paraglide/messages'
 import { type Locale } from '#/generated/paraglide/runtime'
-import { BLOG_ENABLED } from '#/shared/config/features'
 import { GITHUB_PROFILE_URL } from '#/shared/config/links'
 
 const NAV_LINKS = [
   { href: '/', label: m.nav_home },
   { href: '/self-engine', label: m.se_title },
   { href: '/contact', label: m.nav_contact },
-  ...(BLOG_ENABLED ? [{ href: '/blog', label: m.nav_blog }] : []),
 ] as const
 
 interface HeaderProps {
