@@ -56,11 +56,15 @@ The main scripts run `i18n` before typechecking, tests, development, and product
 
 ## Contact Form
 
-The contact endpoint uses Resend. Copy `.env.example` to `.env` and set:
+The contact endpoint uses Resend. Copy `.env.example` to `.env.local` and set:
 
 ```bash
 RESEND_API_KEY=re_...
+CONTACT_FROM_EMAIL="Portfolio Contact <contact@gwydion.dev>"  # domain must be verified in Resend
+CONTACT_TO_EMAIL=you@example.com
 ```
+
+If any of them is unset, the endpoint responds with a 500 and logs the required variable names.
 
 Validation is shared between the client and API route in `src/features/contact/model/contact.ts`.
 
@@ -69,6 +73,6 @@ Validation is shared between the client and API route in `src/features/contact/m
 This repo is prepared for Vercel Git deployments following the current TanStack Start hosting guide:
 
 - connect the GitHub repository in Vercel
-- set `RESEND_API_KEY` in the Vercel project environment variables
+- set `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` in the Vercel project environment variables
 
 Vercel should detect the project from Git. If needed, set the build command to `bun run build`.

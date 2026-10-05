@@ -1,15 +1,6 @@
 import { useComputedColorScheme } from '@mantine/core'
 import { useEffect } from 'react'
-
-const FAVICON_BY_SCHEME = {
-  light: '/favicon-light.svg',
-  dark: '/favicon-dark.svg',
-} as const
-
-const THEME_COLOR_BY_SCHEME = {
-  light: '#f3efe4',
-  dark: '#0f1612',
-} as const
+import { FAVICON_BY_SCHEME, THEME_COLOR_BY_SCHEME } from './themeChrome'
 
 export function ThemeFaviconSync() {
   const scheme = useComputedColorScheme('light')

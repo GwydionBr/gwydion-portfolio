@@ -71,7 +71,7 @@ export function Header({ lang, onLangChange }: HeaderProps) {
       </Link>
 
       {/* Nav + controls */}
-      <nav id="site-navigation" className="site-nav" aria-label="Main navigation">
+      <nav id="site-navigation" className="site-nav" aria-label={m.nav_main_label()}>
         {/* Links */}
         <div className="site-nav-links">
           {NAV_LINKS.map(({ href, label }) => {

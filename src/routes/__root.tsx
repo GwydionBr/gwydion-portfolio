@@ -6,11 +6,13 @@ import { MotionConfig } from 'motion/react'
 import { Footer } from '#/app/shell/Footer'
 import { Header } from '#/app/shell/Header'
 import { NotFound } from '#/app/shell/NotFound'
+import { SkipLink } from '#/app/shell/SkipLink'
 import { ThemeFaviconSync } from '#/app/shell/ThemeFaviconSync'
+import { THEME_CHROME_BOOT_SCRIPT, THEME_COLOR_BY_SCHEME } from '#/app/shell/themeChrome'
 import { cssVariablesResolver, theme } from '#/app/theme'
 import { Analytics } from '@vercel/analytics/react'
 import { getLocale, setLocale } from '#/generated/paraglide/runtime'
-import { SITE_URL } from '#/shared/seo/buildRouteHead'
+import { SITE_URL } from '#/shared/seo/sitePages'
 
 import appCss from '../styles.css?url'
 
@@ -33,30 +35,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang={getLocale()} suppressHydrationWarning>
       <head>
         <link data-app-favicon rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
-        <meta name="theme-color" content="#f3efe4" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(() => {
-  try {
-    const stored = window.localStorage.getItem('mantine-color-scheme-value') ?? 'auto';
-    const scheme =
-      stored === 'auto'
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : stored;
-    const favicon = document.querySelector('link[data-app-favicon]');
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-
-    if (favicon) {
-      favicon.setAttribute('href', scheme === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg');
-    }
-
-    if (themeColor) {
-      themeColor.setAttribute('content', scheme === 'dark' ? '#0f1612' : '#f3efe4');
-    }
-  } catch {}
-})();`,
-          }}
-        />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <meta name="theme-color" content={THEME_COLOR_BY_SCHEME.light} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_CHROME_BOOT_SCRIPT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -82,6 +64,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             defaultColorScheme="auto"
           >
             <ThemeFaviconSync />
+            <SkipLink />
             <div className="grain-overlay" aria-hidden="true" />
             <Header lang={getLocale()} onLangChange={(locale) => setLocale(locale)} />
             {children}
