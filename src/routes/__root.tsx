@@ -64,7 +64,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               '@type': 'Person',
               name: 'Gwydion Braunsdorf',
               url: 'https://gwydion.dev',
-              jobTitle: 'Developer & Builder',
+              jobTitle: 'Full-stack developer',
               sameAs: ['https://github.com/GwydionBr'],
             }),
           }}

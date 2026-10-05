@@ -1,18 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { AboutPageContent } from '#/features/about/components/AboutPageContent'
-import * as m from '#/generated/paraglide/messages'
-import { buildRouteHead } from '#/shared/seo/buildRouteHead'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+// The about content now lives on the home one-pager; keep old links working.
 export const Route = createFileRoute('/about')({
-  head: () =>
-    buildRouteHead({
-      path: '/about',
-      title: m.meta_about_title(),
-      description: m.meta_about_description(),
-    }),
-  component: AboutPage,
+  beforeLoad: () => {
+    throw redirect({ to: '/', hash: 'about', statusCode: 301 })
+  },
 })
-
-function AboutPage() {
-  return <AboutPageContent />
-}
