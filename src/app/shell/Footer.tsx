@@ -11,7 +11,6 @@ const FOOTER_COLUMNS = [
     heading: m.footer_pages,
     links: [
       { href: '/', label: m.nav_home },
-      { href: '/about', label: m.nav_about },
       { href: '/self-engine', label: m.se_title },
     ],
   },

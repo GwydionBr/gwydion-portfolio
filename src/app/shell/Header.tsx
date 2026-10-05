@@ -10,7 +10,6 @@ import { GITHUB_PROFILE_URL } from '#/shared/config/links'
 
 const NAV_LINKS = [
   { href: '/', label: m.nav_home },
-  { href: '/about', label: m.nav_about },
   { href: '/self-engine', label: m.se_title },
   { href: '/contact', label: m.nav_contact },
   ...(BLOG_ENABLED ? [{ href: '/blog', label: m.nav_blog }] : []),
