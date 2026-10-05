@@ -379,6 +379,23 @@ a.icon-control {
   padding: 128px 0 56px;
 }
 
+.home-identity {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.home-portrait {
+  flex-shrink: 0;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: cover;
+  outline: 1px solid var(--app-accent-gold);
+  outline-offset: 4px;
+}
+
 .home-role {
   display: block;
   margin-bottom: 14px;

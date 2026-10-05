@@ -12,12 +12,24 @@ export function HomeSidebar() {
   return (
     <aside className="home-sidebar">
       <Reveal distance={20} duration={0.8}>
-        <span className="home-role">{m.home_role()}</span>
-        <DisplayTitle order={1} size="clamp(3.4rem, 6vw, 5.6rem)" mb={18}>
-          Gwydion
-          <br />
-          Braunsdorf
-        </DisplayTitle>
+        <div className="home-identity">
+          <img
+            className="home-portrait"
+            src="/portrait.webp"
+            alt={m.home_portrait_alt()}
+            width={104}
+            height={104}
+            fetchPriority="high"
+          />
+          <div>
+            <span className="home-role">{m.home_role()}</span>
+            <DisplayTitle order={1} size="clamp(2.4rem, 3.6vw, 3.4rem)">
+              Gwydion
+              <br />
+              Braunsdorf
+            </DisplayTitle>
+          </div>
+        </div>
         <p className="home-tagline">{m.home_tagline()}</p>
       </Reveal>
 

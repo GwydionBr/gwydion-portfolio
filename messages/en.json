@@ -125,6 +125,7 @@
   "not_found_desc": "This page doesn't exist or has moved.",
   "not_found_cta": "Back to home",
   "home_role": "Full-stack developer",
+  "home_portrait_alt": "Portrait of Gwydion Braunsdorf",
   "home_tagline": "I build offline-first products end to end — from the Postgres schema to the app in your pocket.",
   "home_nav_about": "About",
   "home_nav_highlights": "Highlights",
