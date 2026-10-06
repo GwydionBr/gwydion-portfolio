@@ -155,5 +155,7 @@
   "home_contact_title": "Let's talk.",
   "home_contact_desc": "Building a product that has to work everywhere — even offline? I'd like to hear about your team and what you're working on.",
   "home_contact_cta": "Write a message",
-  "home_nav_label": "On this page"
+  "home_nav_label": "On this page",
+  "nav_main_label": "Main navigation",
+  "skip_to_content": "Skip to content"
 }

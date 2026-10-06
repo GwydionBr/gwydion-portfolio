@@ -13,21 +13,21 @@ describe('buildRouteHead', () => {
     overwriteGetLocale(() => 'en')
 
     const head = buildRouteHead({
-      path: '/about',
-      title: 'About — Gwydion',
-      description: 'About Gwydion.',
+      path: '/contact',
+      title: 'Contact — Gwydion',
+      description: 'Contact Gwydion.',
     })
 
     expect(head.links).toEqual([
-      { rel: 'canonical', href: 'https://gwydion.dev/about' },
-      { rel: 'alternate', hrefLang: 'en', href: 'https://gwydion.dev/about' },
-      { rel: 'alternate', hrefLang: 'de', href: 'https://gwydion.dev/de/about' },
-      { rel: 'alternate', hrefLang: 'x-default', href: 'https://gwydion.dev/about' },
+      { rel: 'canonical', href: 'https://gwydion.dev/contact' },
+      { rel: 'alternate', hrefLang: 'en', href: 'https://gwydion.dev/contact' },
+      { rel: 'alternate', hrefLang: 'de', href: 'https://gwydion.dev/de/contact' },
+      { rel: 'alternate', hrefLang: 'x-default', href: 'https://gwydion.dev/contact' },
     ])
     expect(head.meta).toEqual(
       expect.arrayContaining([
-        { title: 'About — Gwydion' },
-        { name: 'description', content: 'About Gwydion.' },
+        { title: 'Contact — Gwydion' },
+        { name: 'description', content: 'Contact Gwydion.' },
         { property: 'og:locale', content: 'en_US' },
       ]),
     )

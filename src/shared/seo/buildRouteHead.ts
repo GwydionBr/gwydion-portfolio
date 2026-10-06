@@ -1,19 +1,15 @@
-import { getLocale, localizeHref } from '#/generated/paraglide/runtime'
-
-export const SITE_URL = 'https://gwydion.dev'
+import { getLocale } from '#/generated/paraglide/runtime'
+import { SITE_URL, getAlternateUrls, getLocalizedUrl, type SitePath } from './sitePages'
 
 interface RouteHeadOptions {
-  path: string
+  path: SitePath
   title: string
   description: string
 }
 
 export function buildRouteHead({ path, title, description }: RouteHeadOptions) {
   const locale = getLocale()
-  const localizedPath = localizeHref(path, { locale })
-  const canonical = new URL(localizedPath, SITE_URL).href
-  const englishUrl = new URL(localizeHref(path, { locale: 'en' }), SITE_URL).href
-  const germanUrl = new URL(localizeHref(path, { locale: 'de' }), SITE_URL).href
+  const canonical = getLocalizedUrl(path, locale)
 
   return {
     meta: [
@@ -33,9 +29,7 @@ export function buildRouteHead({ path, title, description }: RouteHeadOptions) {
     ],
     links: [
       { rel: 'canonical', href: canonical },
-      { rel: 'alternate', hrefLang: 'en', href: englishUrl },
-      { rel: 'alternate', hrefLang: 'de', href: germanUrl },
-      { rel: 'alternate', hrefLang: 'x-default', href: englishUrl },
+      ...getAlternateUrls(path).map(({ hrefLang, href }) => ({ rel: 'alternate', hrefLang, href })),
     ],
   }
 }

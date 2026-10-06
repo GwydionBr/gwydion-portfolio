@@ -9,8 +9,6 @@ import {
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 5
-const DEFAULT_FROM = 'Portfolio Contact <onboarding@resend.dev>'
-const DEFAULT_TO = 'gwydie@pm.me'
 const rateLimits = new Map<string, { count: number; resetAt: number }>()
 
 export const Route = createFileRoute('/api/contact')({
@@ -33,19 +31,18 @@ export const Route = createFileRoute('/api/contact')({
         }
 
         const { name, email, message } = parsed.data
-        const apiKey = process.env['RESEND_API_KEY']
+        const mailConfig = readMailConfig()
 
-        if (!apiKey) {
-          console.error('RESEND_API_KEY not set')
+        if (!mailConfig) {
           return json({ error: 'Server configuration error' }, 500)
         }
 
-        const resend = new Resend(apiKey)
+        const resend = new Resend(mailConfig.apiKey)
         const safe = createSafeEmailParts(parsed.data)
 
         const { error } = await resend.emails.send({
-          from: DEFAULT_FROM,
-          to: DEFAULT_TO,
+          from: mailConfig.from,
+          to: mailConfig.to,
           replyTo: email,
           subject: `New message from ${normalizeEmailSubjectPart(name)}`,
           text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
@@ -78,6 +75,19 @@ export const Route = createFileRoute('/api/contact')({
     },
   },
 })
+
+function readMailConfig() {
+  const apiKey = process.env['RESEND_API_KEY']
+  const from = process.env['CONTACT_FROM_EMAIL']
+  const to = process.env['CONTACT_TO_EMAIL']
+
+  if (!apiKey || !from || !to) {
+    console.error('Contact form needs RESEND_API_KEY, CONTACT_FROM_EMAIL and CONTACT_TO_EMAIL')
+    return null
+  }
+
+  return { apiKey, from, to }
+}
 
 async function readJson(request: Request) {
   try {

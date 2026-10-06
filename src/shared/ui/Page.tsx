@@ -1,6 +1,9 @@
 import type { ElementType, ReactNode } from 'react'
 import { Box, Container, Paper, Text, Title, type PaperProps } from '@mantine/core'
 
+/** Target of the skip link; every page's `<main>` must carry this id. */
+export const MAIN_CONTENT_ID = 'main-content'
+
 interface PageMainProps {
   children: ReactNode
   pt?: number | string
@@ -8,7 +11,13 @@ interface PageMainProps {
 
 export function PageMain({ children, pt = 100 }: PageMainProps) {
   return (
-    <Box component="main" pt={pt} style={{ position: 'relative', zIndex: 1 }}>
+    <Box
+      component="main"
+      id={MAIN_CONTENT_ID}
+      tabIndex={-1}
+      pt={pt}
+      style={{ position: 'relative', zIndex: 1 }}
+    >
       {children}
     </Box>
   )
