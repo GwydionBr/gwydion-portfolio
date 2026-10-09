@@ -16,7 +16,7 @@ function getProjects(): ProjectRowProps[] {
     {
       title: 'gwydion.dev',
       description: m.home_project_site_desc(),
-      image: { src: '/og-image.png', alt: 'gwydion.dev' },
+      image: { src: '/gwydion-dev-screenshot.png', alt: 'gwydion.dev' },
       primaryLink: { label: m.home_project_source(), href: GITHUB_SITE_REPO_URL },
       tags: [m.self_open_source(), 'TanStack Start', 'Mantine', 'Paraglide'],
     },
