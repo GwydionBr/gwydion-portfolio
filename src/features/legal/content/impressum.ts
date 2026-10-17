@@ -8,7 +8,7 @@ export interface ImpressumBlock {
 
 const de: ImpressumBlock[] = [
   {
-    title: 'Angaben gemäß § 5 TMG',
+    title: 'Angaben gemäß § 5 DDG',
     paragraphs: [
       'Gwydion Braunsdorf',
       'Marktplatz 7',
@@ -18,13 +18,9 @@ const de: ImpressumBlock[] = [
     ],
   },
   {
-    title: 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
-    paragraphs: ['Gwydion Braunsdorf'],
-  },
-  {
     title: 'Haftung für Inhalte',
     paragraphs: [
-      'Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.',
+      'Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.',
       'Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.',
     ],
   },
@@ -43,9 +39,8 @@ const de: ImpressumBlock[] = [
     ],
   },
   {
-    title: 'Online-Streitbeilegung',
+    title: 'Verbraucherstreitbeilegung',
     paragraphs: [
-      'Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/',
       'Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.',
     ],
   },
@@ -53,7 +48,7 @@ const de: ImpressumBlock[] = [
 
 const en: ImpressumBlock[] = [
   {
-    title: 'Information pursuant to German law (§ 5 TMG)',
+    title: 'Information pursuant to § 5 DDG (German Digital Services Act)',
     paragraphs: [
       'Gwydion Braunsdorf',
       'Marktplatz 7',
@@ -63,13 +58,9 @@ const en: ImpressumBlock[] = [
     ],
   },
   {
-    title: 'Responsible for content (§ 18(2) MStV)',
-    paragraphs: ['Gwydion Braunsdorf'],
-  },
-  {
     title: 'Liability for content',
     paragraphs: [
-      'As a service provider, I am responsible for my own content on these pages under general law pursuant to Section 7(1) TMG. However, pursuant to Sections 8 to 10 TMG, I am not obliged as a service provider to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.',
+      'As a service provider, I am responsible for my own content on these pages under general law pursuant to § 7(1) DDG. However, pursuant to §§ 8 to 10 DDG, I am not obliged as a service provider to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.',
       'Obligations to remove or block the use of information under general law remain unaffected. Liability in this regard is only possible from the time I become aware of a specific legal infringement. Upon becoming aware of such infringements, I will remove this content immediately.',
     ],
   },
@@ -88,9 +79,8 @@ const en: ImpressumBlock[] = [
     ],
   },
   {
-    title: 'Online dispute resolution',
+    title: 'Consumer dispute resolution',
     paragraphs: [
-      'The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/',
       'I am neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.',
     ],
   },
