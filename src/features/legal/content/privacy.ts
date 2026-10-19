@@ -12,7 +12,7 @@ const de: PrivacySection[] = [
     title: 'Verantwortlicher',
     paragraphs: [
       'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Deutschland. Kontakt: hello@gwydion.dev',
-      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten im Zusammenhang mit dem Besuch von gwydion.dev und der Nutzung des Kontaktformulars.',
+      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten im Zusammenhang mit dem Besuch von gwydion.dev, der Nutzung des Kontaktformulars und der Google-Drive-Anbindung „Terminanfragen“ für die von mir betreuten Studio-Websites.',
     ],
   },
   {
@@ -57,6 +57,17 @@ const de: PrivacySection[] = [
     ],
   },
   {
+    id: 'google-drive',
+    title: 'Google-Drive-Anbindung „Terminanfragen“',
+    paragraphs: [
+      'Für die von mir betreuten Websites von Tattoo-Studios betreibe ich die Google-App „Terminanfragen“. Damit verbindet ein Studio sein eigenes Google Drive mit seiner Website, und Terminanfragen aus dem Formular der Website werden als PDF mit den hochgeladenen Bildern in einem vom Studio gewählten Ordner abgelegt.',
+      'Die App fordert ausschließlich die Berechtigung „drive.file“ an. Sie sieht und bearbeitet damit nur Ordner, die das Studio in der Google-Ordnerauswahl ausdrücklich freigibt, und Dateien, die die App selbst angelegt hat. Auf andere Inhalte des Google Drive hat sie keinen Zugriff. Bei der Verbindung werden zusätzlich die E-Mail-Adresse des Google-Kontos sowie Name und ID des gewählten Ordners gespeichert, damit das Studio und ich sehen, wohin Anfragen gehen.',
+      'Das von Google ausgestellte Zugriffstoken wird pro Website verschlüsselt (AES-256-GCM) in einem privaten Speicher bei Vercel in Frankfurt abgelegt und nur verwendet, um Anfragen abzulegen und regelmäßig zu prüfen, ob der Ordner noch erreichbar ist. Daten aus Google Drive werden nicht an Dritte weitergegeben, nicht verkauft, nicht für Werbung und nicht zum Trainieren von KI-Modellen verwendet.',
+      'Die Nutzung und Übertragung von Informationen, die über Google-APIs empfangen werden, an andere Apps hält sich an die Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use).',
+      'Für die Terminanfragen selbst ist das jeweilige Studio verantwortlich; ich verarbeite sie in seinem Auftrag (Art. 28 DSGVO). Rechtsgrundlage für die Verbindung ist Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Vertrags mit dem Studio). Ein Studio kann den Zugriff jederzeit unter https://myaccount.google.com/permissions widerrufen. Auf Wunsch lösche ich die gespeicherte Verbindung sofort; eine Nachricht an hello@gwydion.dev genügt.',
+    ],
+  },
+  {
     id: 'rights',
     title: 'Deine Rechte',
     paragraphs: [
@@ -86,7 +97,7 @@ const en: PrivacySection[] = [
     title: 'Controller',
     paragraphs: [
       'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Germany. Contact: hello@gwydion.dev',
-      'This privacy policy explains the nature, scope, and purpose of processing personal data in connection with visiting gwydion.dev and using the contact form.',
+      'This privacy policy explains the nature, scope, and purpose of processing personal data in connection with visiting gwydion.dev, using the contact form, and the “Terminanfragen” Google Drive integration for the studio websites I build and maintain.',
     ],
   },
   {
@@ -128,6 +139,17 @@ const en: PrivacySection[] = [
     title: 'Preferences in local storage',
     paragraphs: [
       'Your colour scheme preference (light/dark) may be stored in the browser using localStorage so this setting persists on your next visit. The language follows the URL and is not stored. No tracking cookies are used for advertising and no data is shared with third parties. The legal basis for storing the colour scheme is Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entry in your browser settings at any time.',
+    ],
+  },
+  {
+    id: 'google-drive',
+    title: '“Terminanfragen” Google Drive integration',
+    paragraphs: [
+      'For the tattoo studio websites I build and maintain, I operate the Google app “Terminanfragen” (booking requests). It lets a studio connect its own Google Drive to its website, so booking requests submitted through the website form are saved as a PDF, together with the uploaded images, in a folder the studio chooses.',
+      'The app only requests the “drive.file” scope. It can therefore only see and edit folders the studio explicitly selects in the Google folder picker and files the app created itself. It has no access to any other content in Google Drive. When connecting, the Google account’s email address and the name and ID of the selected folder are also stored, so the studio and I can see where requests are delivered.',
+      'The token issued by Google is stored per website, encrypted (AES-256-GCM), in a private Vercel store in Frankfurt, and is only used to save requests and to check regularly that the folder is still reachable. Google Drive data is not shared with third parties, not sold, and not used for advertising or to train AI models.',
+      'The use and transfer of information received from Google APIs to any other app will adhere to the Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.',
+      'Each studio is the controller for its booking requests; I process them on its behalf (Art. 28 GDPR). The legal basis for the connection is Art. 6(1)(b) GDPR (performance of the contract with the studio). A studio can revoke access at any time at https://myaccount.google.com/permissions. On request I delete the stored connection immediately; an email to hello@gwydion.dev is enough.',
     ],
   },
   {
