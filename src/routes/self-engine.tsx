@@ -9,6 +9,12 @@ export const Route = createFileRoute('/self-engine')({
       path: '/self-engine',
       title: m.meta_self_engine_title(),
       description: m.meta_self_engine_description(),
+      image: {
+        path: '/og-self-engine.png',
+        alt: 'Self-Engine — a personal productivity system for intentional work.',
+        width: 1200,
+        height: 630,
+      },
     }),
   component: SelfEnginePage,
 })
