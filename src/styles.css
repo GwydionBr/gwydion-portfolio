@@ -641,8 +641,10 @@ a.icon-control {
   background: var(--app-bg-elevated);
   border-color: var(--app-border);
 }
-.project-row img {
+.project-row-image img {
+  vertical-align: bottom;
   width: 100%;
+  height: auto;
   border: 1px solid var(--app-border);
   border-radius: 8px;
 }

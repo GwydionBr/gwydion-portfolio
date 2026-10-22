@@ -7,7 +7,8 @@ type ProjectLink = { label: string } & ({ to: LinkProps['to'] } | { href: string
 export interface ProjectRowProps {
   title: string
   description: string
-  image: { src: string; alt: string }
+  /** Thumbnail shown beside the text. */
+  image: ReactNode
   /** The whole row links here; rendered as the title link. */
   primaryLink: ProjectLink
   secondaryLinks?: ProjectLink[]
@@ -24,7 +25,7 @@ export function ProjectRow({
 }: ProjectRowProps) {
   return (
     <article className="project-row">
-      <img src={image.src} alt={image.alt} loading="lazy" />
+      <div className="project-row-image">{image}</div>
       <div>
         <h3>
           <ProjectAnchor link={primaryLink} className="project-row-title">
