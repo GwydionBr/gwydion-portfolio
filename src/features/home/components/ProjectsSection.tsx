@@ -1,6 +1,7 @@
 import * as m from '#/generated/paraglide/messages'
 import { ProjectRow, type ProjectRowProps } from '#/features/projects/components/ProjectRow'
 import { GITHUB_SITE_REPO_URL, SELF_ENGINE_URL } from '#/shared/config/links'
+import { SelfEngineScreenshotImage } from '#/features/projects/self-engine/components/SelfEngineScreenshotImage'
 import { HomeSection } from './HomeSection'
 
 function getProjects(): ProjectRowProps[] {
@@ -8,7 +9,9 @@ function getProjects(): ProjectRowProps[] {
     {
       title: m.se_title(),
       description: m.se_desc(),
-      image: { src: '/self-engine/web-dashboard.svg', alt: m.cs_shot_web_dashboard_alt() },
+      image: (
+        <SelfEngineScreenshotImage view="dashboard" alt={m.cs_shot_dashboard_alt()} sizes="180px" />
+      ),
       primaryLink: { label: m.se_cta(), to: '/self-engine' },
       secondaryLinks: [{ label: m.self_visit_site(), href: SELF_ENGINE_URL }],
       tags: [m.se_status(), 'TanStack Start', 'Expo', 'Electron', 'PowerSync'],
@@ -16,7 +19,7 @@ function getProjects(): ProjectRowProps[] {
     {
       title: 'gwydion.dev',
       description: m.home_project_site_desc(),
-      image: { src: '/og-image.png', alt: 'gwydion.dev' },
+      image: <img src="/og-image.png" alt="gwydion.dev" loading="lazy" />,
       primaryLink: { label: m.home_project_source(), href: GITHUB_SITE_REPO_URL },
       tags: [m.self_open_source(), 'TanStack Start', 'Mantine', 'Paraglide'],
     },
