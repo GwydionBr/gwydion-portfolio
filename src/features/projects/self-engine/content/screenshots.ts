@@ -41,9 +41,12 @@ function screenshotUrl(file: string) {
 export function screenshotSource(view: View, locale: Locale, scheme: ScreenshotScheme) {
   const { oneX, twoX } = screenshotFileNames(view, locale, scheme)
   const { width } = SELF_ENGINE_SCREENSHOT_SIZE
+  const oneXUrl = screenshotUrl(oneX)
   const twoXUrl = screenshotUrl(twoX)
   return {
     src: twoXUrl,
-    srcSet: `${screenshotUrl(oneX)} ${width}w, ${twoXUrl} ${width * 2}w`,
+    srcSet: `${oneXUrl} ${width}w, ${twoXUrl} ${width * 2}w`,
+    /** The 1× file alone, for small previews like lightbox thumbnails. */
+    thumbSrc: oneXUrl,
   }
 }
