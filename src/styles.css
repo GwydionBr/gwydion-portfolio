@@ -1,5 +1,6 @@
 /* ── Mantine core styles ─────────────────────────────────────────────── */
 @import '@mantine/core/styles.css';
+@import '@mantine/lightbox/styles.css';
 
 /* ── Fonts (self-hosted via @fontsource — no third-party requests) ──── */
 @import '@fontsource/cormorant/400.css';
