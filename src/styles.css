@@ -431,12 +431,109 @@ a.icon-control {
   color: var(--app-accent-gold);
 }
 
-.home-tagline {
-  max-width: 360px;
+.home-name {
   margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.1;
+  color: var(--app-text-primary);
+}
+.home-hero-title {
+  margin: 24px 0 16px;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.home-hero-subline {
+  max-width: 42ch;
+  margin: 0 0 24px;
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--app-text-secondary);
+}
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.home-button-secondary {
+  background: transparent;
+  color: var(--app-text-primary);
+  border: 1px solid var(--app-border);
+}
+.home-button-secondary:hover {
+  background: var(--app-accent-green-dim);
+}
+.home-service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-service-card {
+  padding: 24px;
+  border: 1px solid var(--app-border);
+  border-radius: 16px;
+  background: var(--app-bg-elevated);
+}
+.home-service-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+.home-service-card p {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--app-text-secondary);
+}
+.home-service-price {
+  margin-top: 16px !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--app-text-primary) !important;
+}
+.home-process {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-process li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.home-process-step {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--app-border);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--app-text-muted);
+}
+.home-process h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+.home-process p {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--app-text-secondary);
+}
+.site-logo-footer {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
 }
 
 .home-nav {
@@ -791,8 +888,8 @@ a.icon-control {
   .home-content {
     padding-top: 48px;
   }
-  .home-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .home-service-cards {
+    grid-template-columns: 1fr;
   }
   .project-row {
     grid-template-columns: 1fr;

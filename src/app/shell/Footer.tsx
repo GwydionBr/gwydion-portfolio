@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core'
+import { Anchor, Box, Container, Group, Stack, Text } from '@mantine/core'
 import { GithubLogoIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 import * as m from '#/generated/paraglide/messages'
 import { GITHUB_PROFILE_URL, GITHUB_SITE_REPO_URL } from '#/shared/config/links'
@@ -45,13 +45,11 @@ export function Footer() {
       <Container size={1080} px={0}>
         <Group align="flex-start" justify="space-between" gap={40} wrap="wrap">
           <Stack gap={10}>
-            <Link to="/" style={{ textDecoration: 'none' }}>
-              <Title order={2} className="display" style={{ fontSize: '1.35rem' }}>
-                gwydion
-                <Text component="span" c="gold">
-                  .
-                </Text>
-              </Title>
+            <Link to="/" className="site-logo site-logo-footer" style={{ textDecoration: 'none' }}>
+              gwydion
+              <Text component="span" c="gold">
+                .
+              </Text>
             </Link>
             <Text
               size="xs"

@@ -12,7 +12,7 @@ import { THEME_CHROME_BOOT_SCRIPT, THEME_COLOR_BY_SCHEME } from '#/app/shell/the
 import { cssVariablesResolver, theme } from '#/app/theme'
 import { Analytics } from '@vercel/analytics/react'
 import { getLocale, setLocale } from '#/generated/paraglide/runtime'
-import { SITE_URL } from '#/shared/seo/sitePages'
+import { buildStructuredData } from '#/shared/seo/structuredData'
 
 import appCss from '../styles.css?url'
 
@@ -42,15 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: 'Gwydion Braunsdorf',
-              url: SITE_URL,
-              image: `${SITE_URL}/portrait.webp`,
-              jobTitle: 'Full-stack developer',
-              sameAs: ['https://github.com/GwydionBr'],
-            }),
+            __html: JSON.stringify(buildStructuredData()),
           }}
         />
         <ColorSchemeScript defaultColorScheme="auto" />

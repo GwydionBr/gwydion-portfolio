@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import {
   contactSchema,
   escapeHtml,
+  formatContactTopic,
   normalizeEmailSubjectPart,
   type ContactPayload,
 } from '#/features/contact/model/contact'
@@ -31,6 +32,7 @@ export const Route = createFileRoute('/api/contact')({
         }
 
         const { name, email, message } = parsed.data
+        const topicLabel = formatContactTopic(parsed.data)
         const mailConfig = readMailConfig()
 
         if (!mailConfig) {
@@ -39,13 +41,21 @@ export const Route = createFileRoute('/api/contact')({
 
         const resend = new Resend(mailConfig.apiKey)
         const safe = createSafeEmailParts(parsed.data)
+        const subjectSuffix = topicLabel ? ` — ${normalizeEmailSubjectPart(topicLabel)}` : ''
+        const topicLine = topicLabel ? `\nTopic: ${topicLabel}` : ''
+        const topicRow = topicLabel
+          ? `<tr>
+              <td style="padding:8px 0;color:#3a5244;font-size:0.85rem">Topic</td>
+              <td style="padding:8px 0">${escapeHtml(topicLabel)}</td>
+            </tr>`
+          : ''
 
         const { error } = await resend.emails.send({
           from: mailConfig.from,
           to: mailConfig.to,
           replyTo: email,
-          subject: `New message from ${normalizeEmailSubjectPart(name)}`,
-          text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+          subject: `New message from ${normalizeEmailSubjectPart(name)}${subjectSuffix}`,
+          text: `Name: ${name}\nEmail: ${email}${topicLine}\n\nMessage:\n${message}`,
           html: `
         <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;color:#101810">
           <h2 style="font-size:1.4rem;margin:0 0 20px">New message from ${safe.name}</h2>
@@ -58,6 +68,7 @@ export const Route = createFileRoute('/api/contact')({
               <td style="padding:8px 0;color:#3a5244;font-size:0.85rem">Email</td>
               <td style="padding:8px 0"><a href="mailto:${safe.email}">${safe.email}</a></td>
             </tr>
+            ${topicRow}
           </table>
           <div style="background:#f3efe4;border-radius:10px;padding:20px 24px;white-space:pre-wrap">${safe.message}</div>
           <p style="margin-top:24px;font-size:0.8rem;color:#7a9487">Sent via gwydion.dev</p>
@@ -105,10 +116,13 @@ function json(body: Record<string, unknown>, status = 200) {
 }
 
 function createSafeEmailParts(payload: ContactPayload) {
+  const topic = formatContactTopic(payload)
+
   return {
     name: escapeHtml(payload.name),
     email: escapeHtml(payload.email),
     message: escapeHtml(payload.message),
+    topic: topic ? escapeHtml(topic) : '',
   }
 }
 
