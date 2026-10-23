@@ -14,7 +14,13 @@ function getProjects(): ProjectRowProps[] {
       ),
       primaryLink: { label: m.se_cta(), to: '/self-engine' },
       secondaryLinks: [{ label: m.self_visit_site(), href: SELF_ENGINE_URL }],
-      tags: [m.se_status(), 'TanStack Start', 'Expo', 'Electron', 'PowerSync'],
+      tags: [
+        m.se_status(),
+        m.home_se_tag_web(),
+        m.home_se_tag_ios(),
+        m.home_se_tag_android(),
+        m.home_se_tag_offline(),
+      ],
     },
     {
       title: 'gwydion.dev',
