@@ -1,7 +1,7 @@
 import { ArrowUpRightIcon } from '@phosphor-icons/react'
 import { Anchor, Box, Group, Stack, Text } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
-import { GITHUB_PROFILE_URL } from '#/shared/config/links'
+import { SELF_ENGINE_URL } from '#/shared/config/links'
 import { Reveal } from '#/shared/motion'
 import { AppCard, Eyebrow } from '#/shared/ui/Page'
 
@@ -26,9 +26,9 @@ export function SelfEngineOpenSourceCard() {
           <Text size="sm" lh={1.7} c="var(--app-text-secondary)">
             {m.self_open_source_desc()}
           </Text>
-          <Anchor href={GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer" size="sm">
+          <Anchor href={SELF_ENGINE_URL} target="_blank" rel="noopener noreferrer" size="sm">
             <Group component="span" gap={6}>
-              {m.self_follow()} <ArrowUpRightIcon size={13} />
+              {m.self_try()} <ArrowUpRightIcon size={13} />
             </Group>
           </Anchor>
         </Stack>

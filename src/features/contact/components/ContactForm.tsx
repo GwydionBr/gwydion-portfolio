@@ -2,14 +2,26 @@ import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useForm } from '@mantine/form'
 import { PaperPlaneTiltIcon } from '@phosphor-icons/react'
-import { Alert, Anchor, Button, Stack, Text, TextInput, Textarea, ThemeIcon } from '@mantine/core'
+import {
+  Alert,
+  Anchor,
+  Button,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+  Textarea,
+  ThemeIcon,
+} from '@mantine/core'
 import { AnimatePresence, motion } from 'motion/react'
 import * as m from '#/generated/paraglide/messages'
 import { createRevealTransition, Reveal } from '#/shared/motion'
 import { AppCard, DisplayTitle } from '#/shared/ui/Page'
+import { getLocale } from '#/generated/paraglide/runtime'
 import {
   contactLimits,
   contactSchema,
+  contactTopicValues,
   type ContactForm as ContactFormValues,
 } from '../model/contact'
 
@@ -19,14 +31,21 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
 
   const form = useForm<ContactFormValues>({
-    initialValues: { name: '', email: '', message: '', website: '' },
+    initialValues: {
+      name: '',
+      email: '',
+      message: '',
+      topic: '',
+      locale: getLocale(),
+      website: '',
+    },
     validate: validateContactForm,
   })
 
   const handleSubmit = async (values: ContactFormValues) => {
     setStatus('sending')
     try {
-      const payload = contactSchema.parse(values)
+      const payload = contactSchema.parse({ ...values, locale: getLocale() })
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,6 +107,22 @@ export function ContactForm() {
                   placeholder="hello@example.com"
                   error={form.errors.email as string}
                   {...form.getInputProps('email')}
+                />
+
+                <Select
+                  label={m.contact_topic()}
+                  id="contact-topic"
+                  data={[
+                    { value: '', label: m.contact_topic_empty() },
+                    ...contactTopicValues.map((value) => ({
+                      value,
+                      label: getContactTopicLabel(value),
+                    })),
+                  ]}
+                  allowDeselect={false}
+                  searchable={false}
+                  error={form.errors.topic as string}
+                  {...form.getInputProps('topic')}
                 />
 
                 <Textarea
@@ -159,7 +194,12 @@ function validateContactForm(values: ContactFormValues) {
 
   return result.error.issues.reduce<Record<string, string>>((errors, issue) => {
     const field = String(issue.path[0] ?? '')
-    if (field in errors || field === 'website') {
+    if (field in errors || field === 'website' || field === 'locale') {
+      return errors
+    }
+
+    if (field === 'topic') {
+      errors[field] = m.contact_error_topic()
       return errors
     }
 
@@ -176,4 +216,17 @@ function validateContactForm(values: ContactFormValues) {
 
     return errors
   }, {})
+}
+
+function getContactTopicLabel(value: (typeof contactTopicValues)[number]) {
+  switch (value) {
+    case 'website':
+      return m.contact_topic_website()
+    case 'app':
+      return m.contact_topic_app()
+    case 'self_engine':
+      return m.contact_topic_self_engine()
+    case 'other':
+      return m.contact_topic_other()
+  }
 }

@@ -13,8 +13,22 @@ describe('contact helpers', () => {
       name: 'Gwydion',
       email: 'hello@gwydion.dev',
       message: 'This is a long enough message for the form.',
+      topic: '',
+      locale: 'en',
       website: '',
     })
+  })
+
+  it('accepts an optional contact topic', () => {
+    const parsed = contactSchema.parse({
+      name: 'Ada Lovelace',
+      email: 'ada@example.com',
+      message: 'This is a long enough message for the form.',
+      topic: 'website',
+      locale: 'de',
+    })
+
+    expect(parsed.topic).toBe('website')
   })
 
   it('escapes HTML interpolated into email templates', () => {

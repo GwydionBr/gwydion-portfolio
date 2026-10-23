@@ -2,10 +2,10 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { ActionIcon, Burger, Menu, Select, useMantineColorScheme } from '@mantine/core'
 import { CheckIcon, DesktopIcon, GithubLogoIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
-import { ReactCountryFlag } from 'react-country-flag'
 import * as m from '#/generated/paraglide/messages'
 import { type Locale } from '#/generated/paraglide/runtime'
 import { GITHUB_PROFILE_URL } from '#/shared/config/links'
+import { getLanguageName, LanguageFlag } from '#/app/shell/LanguageFlag'
 
 const NAV_LINKS = [
   { href: '/', label: m.nav_home },
@@ -113,7 +113,7 @@ export function Header({ lang, onLangChange }: HeaderProps) {
             renderOption={({ option }) => (
               <span className="language-select-option-content">
                 <LanguageFlag locale={option.value as Locale} />
-                <span>{getLanguageOption(option.value as Locale).name}</span>
+                <span>{getLanguageName(option.value as Locale)}</span>
               </span>
             )}
           />
@@ -199,22 +199,4 @@ function ThemeTriggerIcon({ scheme }: { scheme: ThemeChoice }) {
     return <SunIcon {...iconProps} />
   }
   return <MoonIcon {...iconProps} />
-}
-
-function LanguageFlag({ locale }: { locale: Locale }) {
-  const option = getLanguageOption(locale)
-
-  return (
-    <ReactCountryFlag
-      countryCode={option.countryCode}
-      svg
-      title={option.name}
-      aria-label={option.name}
-      className="language-flag"
-    />
-  )
-}
-
-function getLanguageOption(locale: Locale) {
-  return LANGUAGE_OPTIONS.find((option) => option.value === locale) ?? LANGUAGE_OPTIONS[0]
 }
