@@ -30,7 +30,7 @@
   "contact_error_email": "Enter a valid email address.",
   "contact_error_message_short": "Message is too short (min {min} characters).",
   "contact_error_message_long": "Message is too long (max {max} characters).",
-  "contact_privacy_before": "By submitting, you agree to the processing of your details as described in our",
+  "contact_privacy_before": "I only use your details to handle your enquiry. More in the",
   "contact_privacy_after": ".",
   "footer_built": "Built with intention.",
   "footer_source": "Source",
