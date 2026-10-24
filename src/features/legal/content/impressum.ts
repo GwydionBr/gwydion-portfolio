@@ -9,39 +9,40 @@ export interface ImpressumBlock {
 const de: ImpressumBlock[] = [
   {
     title: 'Angaben gemäß § 5 DDG',
+    paragraphs: ['Gwydion Braunsdorf', 'Schwangauer Str. 3', '87645 Schwangau', 'Deutschland'],
+  },
+  {
+    title: 'Kontakt',
     paragraphs: [
-      'Gwydion Braunsdorf',
-      'Marktplatz 7',
-      '87724 Ottobeuren',
-      'Deutschland',
       'E-Mail: hello@gwydion.dev',
+      'Kontaktformular: https://gwydion.dev/de/contact',
+      'Telefon: [Telefon]',
     ],
   },
   {
-    title: 'Haftung für Inhalte',
+    title: 'Umsatzsteuer',
     paragraphs: [
-      'Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.',
-      'Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.',
+      'Kleinunternehmer im Sinne von § 19 UStG. Es wird keine Umsatzsteuer berechnet und ausgewiesen; eine Umsatzsteuer-Identifikationsnummer ist nicht vorhanden.',
     ],
   },
   {
-    title: 'Haftung für Links',
+    title: 'Haftung für Inhalte und Links',
     paragraphs: [
-      'Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft; rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.',
-      'Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.',
+      'Für eigene Inhalte auf dieser Website bin ich nach den allgemeinen Gesetzen verantwortlich (§ 7 Abs. 1 DDG). Für fremde Informationen, die ich nur übermittle oder speichere, gelten die §§ 8 bis 10 DDG; eine allgemeine Pflicht, sie zu überwachen, besteht nicht. Sobald ich von einer konkreten Rechtsverletzung erfahre, entferne ich den betreffenden Inhalt umgehend.',
+      'Diese Website verlinkt auf Seiten Dritter, zum Beispiel GitHub und self-engine.com. Für deren Inhalte sind die jeweiligen Betreiber verantwortlich. Bei der Verlinkung waren keine Rechtsverstöße erkennbar. Wenn ich von einem Rechtsverstoß auf einer verlinkten Seite erfahre, entferne ich den Link.',
     ],
   },
   {
-    title: 'Urheberrecht',
+    title: 'Urheberrecht und Quellcode',
     paragraphs: [
-      'Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.',
-      'Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Solltest du trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte umgehend entfernen.',
+      'Der Quellcode dieser Website ist öffentlich auf GitHub einsehbar: https://github.com/GwydionBr/gwydion-portfolio [Variante A, Lizenz vorhanden: Er steht unter der Lizenz [LIZENZ, z. B. MIT]; es gelten deren Bedingungen.] [Variante B, keine Lizenz: Einsehbarkeit bedeutet keine Nutzungserlaubnis; wer den Code verwenden möchte, fragt bitte kurz bei mir an.]',
+      'Texte, Fotos (insbesondere das Porträt), Grafiken und Projektbeschreibungen auf dieser Website sind urheberrechtlich geschützt. Sofern sie nicht ausdrücklich unter einer offenen Lizenz stehen, dürfen sie nur mit meiner Zustimmung verwendet werden. Inhalte Dritter sind als solche gekennzeichnet. Wenn dir trotzdem eine Urheberrechtsverletzung auffällt, gib mir bitte Bescheid.',
     ],
   },
   {
     title: 'Verbraucherstreitbeilegung',
     paragraphs: [
-      'Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.',
+      'Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.',
     ],
   },
 ]
@@ -49,39 +50,40 @@ const de: ImpressumBlock[] = [
 const en: ImpressumBlock[] = [
   {
     title: 'Information pursuant to § 5 DDG (German Digital Services Act)',
+    paragraphs: ['Gwydion Braunsdorf', 'Schwangauer Str. 3', '87645 Schwangau', 'Germany'],
+  },
+  {
+    title: 'Contact',
     paragraphs: [
-      'Gwydion Braunsdorf',
-      'Marktplatz 7',
-      '87724 Ottobeuren',
-      'Germany',
       'Email: hello@gwydion.dev',
+      'Contact form: https://gwydion.dev/contact',
+      'Phone: [Telefon]',
     ],
   },
   {
-    title: 'Liability for content',
+    title: 'VAT',
     paragraphs: [
-      'As a service provider, I am responsible for my own content on these pages under general law pursuant to § 7(1) DDG. However, pursuant to §§ 8 to 10 DDG, I am not obliged as a service provider to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.',
-      'Obligations to remove or block the use of information under general law remain unaffected. Liability in this regard is only possible from the time I become aware of a specific legal infringement. Upon becoming aware of such infringements, I will remove this content immediately.',
+      'Small business within the meaning of § 19 UStG (German VAT Act). No VAT is charged or shown; there is no VAT identification number.',
     ],
   },
   {
-    title: 'Liability for links',
+    title: 'Liability for content and links',
     paragraphs: [
-      'This site contains links to external third-party websites whose content I cannot influence. I therefore cannot assume any liability for this external content. The respective provider or operator of the linked pages is always responsible for their content. The linked pages were checked for possible legal violations at the time the links were created; unlawful content was not recognizable at that time.',
-      'Permanent monitoring of linked pages without concrete evidence of a legal infringement is not reasonable. If I become aware of legal infringements, I will remove such links immediately.',
+      'I am responsible for my own content on this website under general law (§ 7(1) DDG). Third-party information that I merely transmit or store is governed by §§ 8 to 10 DDG; there is no general obligation to monitor it. As soon as I become aware of a specific legal infringement, I will remove the content concerned without delay.',
+      'This website links to third-party sites, for example GitHub and self-engine.com. Their operators are responsible for their content. No legal violations were apparent when the links were set. If I become aware of a legal violation on a linked page, I will remove the link.',
     ],
   },
   {
-    title: 'Copyright',
+    title: 'Copyright and source code',
     paragraphs: [
-      'Content and works created by the site operator on these pages are subject to German copyright law. Duplication, processing, distribution, or any form of commercialization beyond the scope of copyright law requires the written consent of the respective author or creator. Downloads and copies of this site are permitted only for private, non-commercial use.',
-      'Where content on this site was not created by the operator, third-party copyrights are respected. Third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please notify me. Upon becoming aware of infringements, I will remove such content immediately.',
+      'The source code of this website is publicly available on GitHub: https://github.com/GwydionBr/gwydion-portfolio [Option A, licence exists: It is licensed under [LICENCE, e.g. MIT]; its terms apply.] [Option B, no licence: Being publicly visible does not grant permission to use it; if you would like to use the code, please ask me first.]',
+      'Texts, photos (in particular the portrait), graphics and project descriptions on this website are protected by copyright. Unless they are expressly published under an open licence, they may only be used with my permission. Third-party content is marked as such. If you nevertheless notice a copyright infringement, please let me know.',
     ],
   },
   {
     title: 'Consumer dispute resolution',
     paragraphs: [
-      'I am neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.',
+      'I am neither willing nor obliged to participate in dispute resolution proceedings before a consumer arbitration board.',
     ],
   },
 ]
