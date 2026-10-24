@@ -1,0 +1,996 @@
+/* The Self-Engine showcase wears the app's own look instead of the portfolio's: the
+   stage of its public site (self-engine apps/web/src/marketing/stage) — a white or
+   near-black surface, a beam of the brand terracotta, glass cards with hairline
+   borders, and each Module in its app color. */
+.stage {
+  --se-surface: #ffffff;
+  --se-band: #faf6f3;
+  --se-heading: #1b1411;
+  --se-body: #5d534d;
+  --se-muted: #8c817a;
+  --se-accent: var(--mantine-color-engine-6);
+  --se-hairline: rgb(0 0 0 / 9%);
+  --se-hairline-strong: rgb(0 0 0 / 16%);
+  --se-glass: rgb(255 255 255 / 75%);
+  --se-glass-hover: #ffffff;
+  --se-card-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+  --se-window-shadow: 0 30px 80px -30px rgb(60 30 10 / 35%);
+  /* What Module-colored accents read; a Module's element sets its own. */
+  --module-color: var(--se-accent);
+  /* The Northstar mark's colors (self-engine assets/brand/tokens.json). */
+  --ns-leaves: #d97440;
+  --ns-leaves-front: #9e4e20;
+  --ns-border: #713514;
+  --ns-center: #f8ceb8;
+
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background: var(--se-surface);
+  color: var(--se-body);
+
+  @mixin dark {
+    --se-surface: #131110;
+    --se-band: #1a1715;
+    --se-heading: #ffffff;
+    --se-body: #bdb3ac;
+    --se-muted: #8a7f78;
+    --se-accent: var(--mantine-color-engine-4);
+    --se-hairline: rgb(255 255 255 / 9%);
+    --se-hairline-strong: rgb(255 255 255 / 16%);
+    --se-glass: rgb(255 255 255 / 3.5%);
+    --se-glass-hover: rgb(255 255 255 / 6%);
+    --se-card-shadow: none;
+    --se-window-shadow: 0 40px 120px -40px rgb(0 0 0 / 80%);
+    --ns-leaves: #e99a70;
+    --ns-leaves-front: #ffd8c2;
+    --ns-border: #a94f27;
+    --ns-center: #d97440;
+  }
+}
+
+/* ── Light ─────────────────────────────────────────────────────────────── */
+
+/* A beam of the brand color falling from the top edge of its section. */
+.beam {
+  position: absolute;
+  z-index: -1;
+  top: -120px;
+  left: 50%;
+  width: min(1400px, 140vw);
+  height: 980px;
+  transform: translateX(-50%);
+  background: conic-gradient(
+    from 148deg at 50% 0%,
+    transparent 0deg,
+    color-mix(in oklab, var(--mantine-color-engine-5) 70%, transparent) 22deg,
+    var(--mantine-color-engine-3) 32deg,
+    color-mix(in oklab, var(--mantine-color-engine-5) 70%, transparent) 42deg,
+    transparent 64deg
+  );
+  mask-image: linear-gradient(#000 10%, transparent 80%);
+  filter: blur(56px);
+  opacity: 0.4;
+  pointer-events: none;
+
+  @mixin dark {
+    opacity: 0.7;
+  }
+}
+
+.beam[data-strength='soft'] {
+  height: 640px;
+  opacity: 0.22;
+
+  @mixin dark {
+    opacity: 0.4;
+  }
+}
+
+/* A faint grid under the beam. */
+.grid {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--se-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--se-hairline) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(55% 45% at 50% 0%, #000 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* ── Sections ──────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(72px, 10vw, 128px);
+}
+
+/* A section one step off the stage, to set it apart from its neighbours. */
+.band {
+  border-block: 1px solid var(--se-hairline);
+  background: var(--se-band);
+}
+
+.sectionHead {
+  max-width: 720px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.sectionHead[data-align='center'] {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.label {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--se-accent);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.headline {
+  margin: 0;
+  color: var(--se-heading);
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 18px 0 0;
+  color: var(--se-body);
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  line-height: 1.65;
+}
+
+.sectionHead[data-align='center'] .lead {
+  margin-inline: auto;
+}
+
+.prose {
+  display: grid;
+  gap: 16px;
+  max-width: 760px;
+}
+
+.prose p {
+  margin: 0;
+  color: var(--se-body);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+
+/* The stage's card: a glass pane with a hairline border. */
+.card {
+  border: 1px solid var(--se-hairline);
+  border-radius: var(--mantine-radius-xl);
+  background: var(--se-glass);
+  box-shadow: var(--se-card-shadow);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.card:hover {
+  border-color: var(--se-hairline-strong);
+  background: var(--se-glass-hover);
+}
+
+/* A card lit from its top corner in its Module color. */
+.lit {
+  position: relative;
+  overflow: hidden;
+}
+
+.lit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    90% 55% at 100% 0%,
+    color-mix(in oklab, var(--module-color) 22%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.lit > * {
+  position: relative;
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--se-heading);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.cardBody {
+  margin: 0;
+  color: var(--se-body);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* A Module's icon on a tile tinted in its color. */
+.iconTile {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in oklab, var(--module-color) 28%, transparent);
+  border-radius: var(--mantine-radius-lg);
+  background: color-mix(in oklab, var(--module-color) 12%, transparent);
+  box-shadow: 0 0 32px -8px color-mix(in oklab, var(--module-color) 55%, transparent);
+  color: var(--module-color);
+}
+
+/* A quiet list, a dot in the Module color before each point. */
+.points {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.points li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.points li::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--module-color);
+  transform: translateY(-1px);
+}
+
+/* ── Screenshots ───────────────────────────────────────────────────────── */
+
+.shot {
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+}
+
+.shot:focus-visible {
+  outline: 2px solid var(--se-accent);
+  outline-offset: 4px;
+}
+
+/* A screenshot shown like a window: a glass frame, a hairline and a soft shadow. */
+.window {
+  padding: 6px;
+  border: 1px solid var(--se-hairline);
+  border-radius: 18px;
+  background: var(--se-glass);
+  box-shadow:
+    var(--se-window-shadow),
+    0 0 0 1px color-mix(in oklab, var(--mantine-color-engine-5) 6%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.window img {
+  display: block;
+  border-radius: 12px;
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-top: clamp(24px, 4vw, 48px);
+  padding-bottom: clamp(64px, 9vw, 112px);
+}
+
+.back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-sm);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.back:hover {
+  color: var(--se-heading);
+}
+
+.heroHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 860px;
+  margin: clamp(32px, 6vw, 64px) auto 0;
+  text-align: center;
+}
+
+.brand {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+/* The Northstar mark on a round chip lit in the brand color, as in the app header. */
+.logoChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid color-mix(in oklab, var(--mantine-color-engine-5) 18%, transparent);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 35%,
+    color-mix(in oklab, var(--mantine-color-engine-3) 28%, transparent),
+    transparent 70%
+  );
+}
+
+.logoChip[data-size='lg'] {
+  width: 72px;
+  height: 72px;
+}
+
+.logoChip svg {
+  width: 62%;
+  height: 62%;
+}
+
+/* Self-Engine's wordmark: Fraunces in the brand gradient. */
+.wordmark {
+  background: linear-gradient(135deg, var(--mantine-color-engine-5), var(--mantine-color-engine-7));
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-engine);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+
+  @mixin dark {
+    background-image: linear-gradient(
+      135deg,
+      var(--mantine-color-engine-3),
+      var(--mantine-color-engine-5)
+    );
+  }
+}
+
+.pill {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 6px 14px;
+  border: 1px solid var(--se-hairline);
+  border-radius: 999px;
+  background: var(--se-glass);
+  color: var(--se-body);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+}
+
+.pillStatus {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--mantine-color-teal-filled);
+}
+
+.pillStatus::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.pillDivider {
+  display: none;
+  width: 1px;
+  height: 12px;
+  background: var(--se-hairline-strong);
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    display: block;
+  }
+}
+
+.heroTitle {
+  margin: 0;
+  color: var(--se-heading);
+  font-family: var(--font-body);
+  font-size: clamp(2.6rem, 7vw, 5.25rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.accent {
+  display: block;
+  background: linear-gradient(120deg, var(--mantine-color-engine-5), var(--mantine-color-engine-7));
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-engine);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+
+  @mixin dark {
+    background-image: linear-gradient(
+      120deg,
+      var(--mantine-color-engine-3),
+      var(--mantine-color-engine-5)
+    );
+  }
+}
+
+.heroLead {
+  max-width: 660px;
+  margin: 28px 0 0;
+  color: var(--se-body);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  justify-content: center;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.platforms li {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+}
+
+/* The dashboard, with two close-ups floating off its corners from md up. */
+.showcase {
+  position: relative;
+  max-width: 1040px;
+  margin: clamp(48px, 7vw, 80px) auto 0;
+}
+
+.showcase::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 12% 8% -6%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--mantine-color-engine-5) 45%, transparent),
+    transparent
+  );
+  filter: blur(60px);
+  opacity: 0.5;
+}
+
+.float {
+  position: absolute;
+  display: none;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    display: block;
+  }
+}
+
+.float[data-side='left'] {
+  bottom: -48px;
+  left: -56px;
+  width: 280px;
+}
+
+.float[data-side='right'] {
+  top: 26%;
+  right: -60px;
+  width: 236px;
+}
+
+/* ── Numbers ───────────────────────────────────────────────────────────── */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+  margin: 0;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: $mantine-breakpoint-lg) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  padding: 26px 24px;
+  border-top: 1px solid var(--se-hairline);
+  border-left: 1px solid var(--se-hairline);
+  /* The grid's outer edges belong to the card. */
+  margin: -1px 0 0 -1px;
+}
+
+.stat dd {
+  margin: 0;
+  color: var(--se-heading);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.stat dt {
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.4;
+}
+
+/* ── Flow ──────────────────────────────────────────────────────────────── */
+
+.flowIntro {
+  display: grid;
+  gap: 32px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 56px;
+    align-items: end;
+  }
+}
+
+.flowIntro .sectionHead {
+  margin-bottom: 0;
+}
+
+.chain {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 2px 16px;
+  align-content: start;
+  padding: 22px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+/* On phones the icon sits beside the step's text. */
+.step .iconTile {
+  grid-row: span 3;
+}
+
+/* The link to the next step: down on phones, right from md up. */
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 43px;
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(var(--module-color), transparent);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    top: 43px;
+    left: 100%;
+    width: 14px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--module-color), transparent);
+  }
+}
+
+.stepIndex {
+  color: var(--se-muted);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.flowNote {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 16px 20px;
+}
+
+.flowNote p {
+  margin: 0;
+  color: var(--se-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ── Modules bento ─────────────────────────────────────────────────────── */
+
+/* Six columns from md up: the featured Module spans four, its neighbour two, and
+   the remaining three share the second row. */
+.bento {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.module {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 28px 0;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-column: span 2;
+  }
+}
+
+.featured {
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-column: span 4;
+  }
+}
+
+.moduleHead {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.moduleTitle {
+  margin: 0;
+  color: var(--se-heading);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+/* The screenshot, cut to the Module's content and bleeding off the card's right and
+   bottom edges. */
+.crop {
+  position: relative;
+  flex: 1;
+  min-height: 230px;
+  margin: 14px -28px 0 0;
+  overflow: hidden;
+  border-top-left-radius: var(--mantine-radius-lg);
+  box-shadow:
+    0 0 0 1px var(--se-hairline),
+    -24px -16px 60px -24px color-mix(in oklab, var(--module-color) 55%, transparent);
+}
+
+.crop .shot {
+  position: absolute;
+  inset: 0;
+}
+
+/* A whole window: past the App rail, scaled so the Module's content fills the crop. */
+.cropImage {
+  position: absolute;
+  top: 0;
+  left: -6.5%;
+  width: 170%;
+  max-width: none;
+  height: auto;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* A close-up already shows only its element. */
+.cropImage[data-fit='close-up'] {
+  left: 0;
+  width: 112%;
+}
+
+.module:hover .cropImage {
+  transform: translate(-2px, -4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module:hover .cropImage {
+    transform: none;
+  }
+}
+
+/* ── AI ────────────────────────────────────────────────────────────────── */
+
+.split {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 72px;
+  }
+}
+
+.split .sectionHead {
+  margin-bottom: 24px;
+}
+
+.approval {
+  display: grid;
+  gap: 10px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.approval li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+}
+
+.approvalTitle {
+  color: var(--se-heading);
+  font-weight: 600;
+}
+
+.approvalBody {
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.45;
+}
+
+.panel {
+  position: relative;
+  max-width: 380px;
+  margin-inline: auto;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 10% -20%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--mantine-color-engine-5) 40%, transparent),
+    transparent
+  );
+  filter: blur(50px);
+  opacity: 0.6;
+}
+
+/* ── Architecture ──────────────────────────────────────────────────────── */
+
+.diagram {
+  display: grid;
+  gap: 10px;
+  margin-top: clamp(36px, 5vw, 56px);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+  }
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+}
+
+.nodeTitle {
+  color: var(--se-heading);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.nodeSub {
+  color: var(--se-muted);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--se-accent);
+  transform: rotate(90deg);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    transform: none;
+  }
+}
+
+.port {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 14px 20px;
+  border: 1px dashed color-mix(in oklab, var(--se-accent) 45%, transparent);
+  border-radius: var(--mantine-radius-xl);
+  background: color-mix(in oklab, var(--se-accent) 6%, transparent);
+  color: var(--se-body);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.78rem;
+  line-height: 1.5;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-column: 1 / -1;
+  }
+}
+
+.port svg {
+  flex: none;
+  color: var(--se-accent);
+}
+
+/* ── Learnings & stack ─────────────────────────────────────────────────── */
+
+.learnings {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.learning {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px;
+}
+
+.learningIndex {
+  color: var(--se-accent);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.stack {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.stackGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
+}
+
+.stackTitle {
+  color: var(--se-muted);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 4px 10px;
+  border: 1px solid var(--se-hairline);
+  border-radius: 999px;
+  color: var(--se-body);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+}
+
+/* ── Closing call to action ────────────────────────────────────────────── */
+
+.closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.closing .logoChip {
+  margin-bottom: 28px;
+}
+
+.closingNote {
+  max-width: 520px;
+  margin: 28px auto 0;
+  color: var(--se-muted);
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.6;
+}
+
+/* The quiet call to action beside a filled one: a glass pill with a hairline. */
+.ghostButton {
+  border: 1px solid var(--se-hairline-strong);
+  background: var(--se-glass);
+  color: var(--se-heading);
+}
+
+.ghostButton:hover {
+  background: var(--se-glass-hover);
+}

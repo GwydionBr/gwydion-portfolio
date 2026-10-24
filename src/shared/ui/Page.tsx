@@ -7,15 +7,17 @@ export const MAIN_CONTENT_ID = 'main-content'
 interface PageMainProps {
   children: ReactNode
   pt?: number | string
+  className?: string
 }
 
-export function PageMain({ children, pt = 100 }: PageMainProps) {
+export function PageMain({ children, pt = 100, className }: PageMainProps) {
   return (
     <Box
       component="main"
       id={MAIN_CONTENT_ID}
       tabIndex={-1}
       pt={pt}
+      className={className}
       style={{ position: 'relative', zIndex: 1 }}
     >
       {children}
@@ -26,11 +28,12 @@ export function PageMain({ children, pt = 100 }: PageMainProps) {
 interface PageContainerProps {
   children: ReactNode
   pb?: number | string
+  size?: number
 }
 
-export function PageContainer({ children, pb }: PageContainerProps) {
+export function PageContainer({ children, pb, size = 1080 }: PageContainerProps) {
   return (
-    <Container size={1080} px={28} pb={pb}>
+    <Container size={size} px={28} pb={pb}>
       {children}
     </Container>
   )

@@ -1,38 +1,33 @@
-import { Box, SimpleGrid, Stack, Text } from '@mantine/core'
 import * as m from '#/generated/paraglide/messages'
-import { Reveal, StaggerGroup, StaggerItem } from '#/shared/motion'
-import { AppCard, Eyebrow } from '#/shared/ui/Page'
+import { StaggerGroup, StaggerItem } from '#/shared/motion'
+import { SelfEngineSection, SelfEngineSectionHead } from './SelfEngineSection'
+import classes from './SelfEngineStage.module.css'
 
 const learnings = [
-  { title: () => m.cs_learn1_title(), body: () => m.cs_learn1_body() },
-  { title: () => m.cs_learn2_title(), body: () => m.cs_learn2_body() },
-  { title: () => m.cs_learn3_title(), body: () => m.cs_learn3_body() },
+  { title: m.cs_learn1_title, body: m.cs_learn1_body },
+  { title: m.cs_learn2_title, body: m.cs_learn2_body },
+  { title: m.cs_learn3_title, body: m.cs_learn3_body },
+  { title: m.cs_learn4_title, body: m.cs_learn4_body },
 ]
 
 export function SelfEngineLearnings() {
   return (
-    <Box mb={96}>
-      <Reveal trigger="inView">
-        <Eyebrow mb={24}>{m.cs_learn_heading()}</Eyebrow>
-      </Reveal>
-      <StaggerGroup trigger="inView" stagger={0.08}>
-        <SimpleGrid cols={{ base: 1, md: 3 }} spacing={1}>
-          {learnings.map(({ title, body }) => (
-            <StaggerItem key={title()} preset="fade-in">
-              <AppCard p="xl" radius={0} h="100%">
-                <Stack gap="sm">
-                  <Text ff="var(--mantine-font-family-headings)" size="lg" lh={1.3}>
-                    {title()}
-                  </Text>
-                  <Text size="xs" lh={1.7} c="var(--app-text-muted)">
-                    {body()}
-                  </Text>
-                </Stack>
-              </AppCard>
-            </StaggerItem>
-          ))}
-        </SimpleGrid>
+    <SelfEngineSection>
+      <SelfEngineSectionHead label={m.cs_learn_label()} title={m.cs_learn_heading()} />
+      <StaggerGroup trigger="inView" stagger={0.08} className={classes.learnings}>
+        {learnings.map(({ title, body }, index) => (
+          <StaggerItem
+            key={title()}
+            preset="fade-up"
+            distance={16}
+            className={`${classes.card} ${classes.learning}`}
+          >
+            <span className={classes.learningIndex}>{String(index + 1).padStart(2, '0')}</span>
+            <h3 className={classes.cardTitle}>{title()}</h3>
+            <p className={classes.cardBody}>{body()}</p>
+          </StaggerItem>
+        ))}
       </StaggerGroup>
-    </Box>
+    </SelfEngineSection>
   )
 }
