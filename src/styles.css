@@ -7,12 +7,15 @@
 @import '@fontsource/cormorant/400-italic.css';
 @import '@fontsource/cormorant/500.css';
 @import '@fontsource/cormorant/600.css';
+@import '@fontsource-variable/fraunces/wght.css';
 
 /* ── CSS custom properties ───────────────────────────────────────────── */
 :root {
   --font-display: 'Cormorant', Georgia, serif;
   --font-body: var(--font-geist-sans, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, 'Courier New', monospace);
+  /* Self-Engine's wordmark serif, used on its showcase page only. */
+  --font-engine: 'Fraunces Variable', Georgia, serif;
 }
 
 /* ── Base reset ──────────────────────────────────────────────────────── */

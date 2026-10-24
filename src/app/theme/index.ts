@@ -52,6 +52,20 @@ export const theme = createTheme({
       '#634506', // 8
       '#3d2b03', // 9
     ],
+    // Self-Engine's brand terracotta, the app's own OKLCH scale (self-engine
+    // packages/ui/src/theme.ts). Only its showcase page uses it.
+    engine: [
+      'oklch(0.97 0.015 55)',
+      'oklch(0.93 0.03 54)',
+      'oklch(0.86 0.05 52)',
+      'oklch(0.79 0.07 50)',
+      'oklch(0.71 0.09 48)',
+      'oklch(0.63 0.10 47)',
+      'oklch(0.56 0.10 46)',
+      'oklch(0.47 0.09 45)',
+      'oklch(0.38 0.08 44)',
+      'oklch(0.28 0.07 43)',
+    ],
     dark: [
       '#e6ede9', // 0 – text primary dark mode
       '#8da896', // 1 – text secondary

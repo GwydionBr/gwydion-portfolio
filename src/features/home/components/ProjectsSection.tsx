@@ -17,8 +17,8 @@ function getProjects(): ProjectRowProps[] {
       tags: [
         m.se_status(),
         m.home_se_tag_web(),
+        m.home_se_tag_mac(),
         m.home_se_tag_ios(),
-        m.home_se_tag_android(),
         m.home_se_tag_offline(),
       ],
     },

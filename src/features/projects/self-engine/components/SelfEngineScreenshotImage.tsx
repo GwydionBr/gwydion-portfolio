@@ -1,20 +1,24 @@
 import { Box } from '@mantine/core'
-import type { CSSProperties } from 'react'
 import { getLocale } from '#/generated/paraglide/runtime'
 import {
   SELF_ENGINE_SCREENSHOT_SCHEMES,
-  SELF_ENGINE_SCREENSHOT_SIZE,
+  screenshotSize,
   screenshotSource,
-  type SelfEngineScreenshot,
+  type SelfEngineScreenshotView,
 } from '../content/screenshots'
 
 interface SelfEngineScreenshotImageProps {
-  view: SelfEngineScreenshot['view']
+  view: SelfEngineScreenshotView
   alt: string
   /** The `sizes` attribute: how wide the image renders, so small slots pick the 1× file. */
   sizes: string
-  /** Must not set `display`: an inline one overrides the class that hides the other scheme. */
-  style?: CSSProperties
+  /**
+   * Replaces the default full-width sizing, so it must set the width itself. Must not set
+   * `display`: the class that hides the other scheme sets it.
+   */
+  className?: string
+  /** Read by the stage's crops: a whole window or a close-up of one element. */
+  'data-fit'?: 'window' | 'close-up'
 }
 
 /**
@@ -29,9 +33,11 @@ export function SelfEngineScreenshotImage({
   view,
   alt,
   sizes,
-  style,
+  className,
+  'data-fit': fit,
 }: SelfEngineScreenshotImageProps) {
   const locale = getLocale()
+  const { width, height } = screenshotSize(view)
 
   return SELF_ENGINE_SCREENSHOT_SCHEMES.map((scheme) => {
     const { src, srcSet } = screenshotSource(view, locale, scheme)
@@ -42,16 +48,18 @@ export function SelfEngineScreenshotImage({
         src={src}
         srcSet={srcSet}
         sizes={sizes}
-        width={SELF_ENGINE_SCREENSHOT_SIZE.width}
-        height={SELF_ENGINE_SCREENSHOT_SIZE.height}
+        width={width}
+        height={height}
         alt={alt}
         loading="lazy"
         decoding="async"
         lightHidden={scheme === 'dark'}
         darkHidden={scheme === 'light'}
-        w="100%"
-        h="auto"
-        style={style}
+        className={className}
+        data-fit={fit}
+        // Inline sizing would beat the class, so it only applies without one.
+        w={className ? undefined : '100%'}
+        h={className ? undefined : 'auto'}
       />
     )
   })
