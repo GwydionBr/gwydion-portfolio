@@ -7,7 +7,10 @@ Tooling runs on [Vite+](https://viteplus.dev) (`vp`): Vite, Vitest, Oxlint, and 
 
 ```bash
 bun install
+infisical login   # once per machine (EU instance: https://eu.infisical.com)
 ```
+
+Secrets are managed in [Infisical](https://eu.infisical.com). The repo is linked to the Infisical project via `.infisical.yaml`; there is no `.env` file to maintain.
 
 ## Development
 
@@ -15,7 +18,7 @@ bun install
 bun run dev
 ```
 
-The dev server runs on port `3001`.
+`bun run dev` injects the `dev` secrets from Infisical (`infisical run --env=dev`). The dev server runs on port `3001`.
 
 ## Quality Checks
 
@@ -56,13 +59,11 @@ The main scripts run `i18n` before typechecking, tests, development, and product
 
 ## Contact Form
 
-The contact endpoint uses Resend. Copy `.env.example` to `.env.local` and set:
+The contact endpoint uses Resend and needs these secrets (see `.env.example`), stored in Infisical for both `dev` and `prod`:
 
-```bash
-RESEND_API_KEY=re_...
-CONTACT_FROM_EMAIL="Portfolio Contact <contact@gwydion.dev>"  # domain must be verified in Resend
-CONTACT_TO_EMAIL=you@example.com
-```
+- `RESEND_API_KEY`
+- `CONTACT_FROM_EMAIL` – e.g. `Portfolio Contact <contact@mail.gwydion.dev>`; the domain must be verified in Resend. Enter the value in Infisical without quotes.
+- `CONTACT_TO_EMAIL` – inbox that receives contact form messages
 
 If any of them is unset, the endpoint responds with a 500 and logs the required variable names.
 
@@ -73,6 +74,6 @@ Validation is shared between the client and API route in `src/features/contact/m
 This repo is prepared for Vercel Git deployments following the current TanStack Start hosting guide:
 
 - connect the GitHub repository in Vercel
-- set `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` in the Vercel project environment variables
+- environment variables are synced from Infisical via a Vercel Secret Sync (Infisical `prod` → Vercel Production). Change secrets in Infisical, not in the Vercel dashboard, then redeploy.
 
 Vercel should detect the project from Git. If needed, set the build command to `bun run build`.
