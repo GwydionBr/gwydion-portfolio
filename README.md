@@ -59,7 +59,7 @@ The main scripts run `i18n` before typechecking, tests, development, and product
 
 ## Contact Form
 
-The contact endpoint uses Resend and needs these secrets (see `.env.example`), stored in Infisical for both `dev` and `prod`:
+The contact endpoint uses Resend and needs these secrets (see `.env.example`), stored in Infisical in every environment (`dev`, `staging`, `prod`):
 
 - `RESEND_API_KEY`
 - `CONTACT_FROM_EMAIL` – e.g. `Portfolio Contact <contact@mail.gwydion.dev>`; the domain must be verified in Resend. Enter the value in Infisical without quotes.
@@ -74,6 +74,11 @@ Validation is shared between the client and API route in `src/features/contact/m
 This repo is prepared for Vercel Git deployments following the current TanStack Start hosting guide:
 
 - connect the GitHub repository in Vercel
-- environment variables are synced from Infisical via a Vercel Secret Sync (Infisical `prod` → Vercel Production). Change secrets in Infisical, not in the Vercel dashboard, then redeploy.
+- environment variables are synced from Infisical via Vercel Secret Syncs:
+  - Infisical `prod` → Vercel Production
+  - Infisical `staging` → Vercel Preview
+- change secrets in Infisical, not in the Vercel dashboard. Vercel only picks up new values on the next deployment, so redeploy afterwards (existing deployments keep their old values).
+
+Local development does not use Vercel env vars; `bun run dev` reads Infisical `dev` directly.
 
 Vercel should detect the project from Git. If needed, set the build command to `bun run build`.
