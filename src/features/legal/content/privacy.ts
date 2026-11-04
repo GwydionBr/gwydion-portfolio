@@ -19,8 +19,8 @@ const de: PrivacySection[] = [
     id: 'hosting',
     title: 'Hosting',
     paragraphs: [
-      'Die Website wird bei Vercel Inc. (USA) gehostet. Beim Aufruf der Seite verarbeitet Vercel technisch notwendige Daten (z. B. IP-Adresse, Zeitpunkt des Zugriffs, angeforderte Ressource, übertragene Datenmenge, Referrer, User-Agent), um die Auslieferung und Sicherheit der Website zu gewährleisten.',
-      'Die Verarbeitung erfolgt zur Bereitstellung des Onlineangebots (Art. 6 Abs. 1 lit. f DSGVO — berechtigtes Interesse an einem sicheren und stabilen Betrieb). Soweit ein Vertrag über Auftragsverarbeitung besteht, stützt sich die Übermittlung in Drittländer auf die von der EU-Kommission beschlossenen Standardvertragsklauseln, sofern kein Angemessenheitsbeschluss vorliegt.',
+      'Die Website wird bei Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, USA, gehostet. Beim Aufruf der Seite verarbeitet Vercel technisch notwendige Daten (z. B. IP-Adresse, Zeitpunkt des Zugriffs, angeforderte Ressource, übertragene Datenmenge, Referrer, User-Agent), um die Auslieferung und Sicherheit der Website zu gewährleisten. Einige Bilder (Screenshots der Projektseiten) werden aus dem Dateispeicher Vercel Blob (*.public.blob.vercel-storage.com) geladen; dabei fallen dieselben technischen Daten bei Vercel an.',
+      'Die Verarbeitung erfolgt zur Bereitstellung des Onlineangebots (Art. 6 Abs. 1 lit. f DSGVO — berechtigtes Interesse an einem sicheren und stabilen Betrieb). Mit Vercel besteht ein Vertrag über Auftragsverarbeitung nach Art. 28 DSGVO. Vercel ist unter dem EU-US Data Privacy Framework zertifiziert; die Übermittlung in die USA stützt sich auf den entsprechenden Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO).',
       'Weitere Informationen: https://vercel.com/legal/privacy-policy',
     ],
   },
@@ -28,17 +28,17 @@ const de: PrivacySection[] = [
     id: 'analytics',
     title: 'Webanalyse (Vercel Analytics)',
     paragraphs: [
-      'Diese Website nutzt Vercel Analytics, einen datenschutzfreundlichen Analysedienst der Vercel Inc. (USA). Vercel Analytics erhebt aggregierte, nicht personenbezogene Nutzungsdaten (z. B. aufgerufene Seiten, Referrer, grobe geografische Herkunft auf Länderebene, Browser- und Gerätekategorie). Es werden keine Cookies gesetzt und keine individuellen Nutzungsprofile erstellt.',
+      'Diese Website nutzt Vercel Web Analytics, einen Analysedienst der Vercel Inc. (Anschrift siehe Hosting). Erfasst werden pro Seitenaufruf u. a. Zeitpunkt, aufgerufene Seite, Referrer, ungefähre Herkunft (Land, Region, Stadt), Betriebssystem, Browser und Gerätetyp. Besucher:innen werden nicht über Cookies, sondern über einen aus der Anfrage gebildeten Hash-Wert unterschieden, der nach 24 Stunden verworfen wird. Ausgewertet werden nur aggregierte Statistiken; es werden keine individuellen Nutzungsprofile erstellt und keine seitenübergreifende Verfolgung durchgeführt.',
       'Die Verarbeitung dient der Analyse des anonymisierten Nutzungsverhaltens zur Verbesserung des Angebots. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Optimierung der Website). Da keine personenbezogenen Daten dauerhaft gespeichert oder profiliert werden, ist der Eingriff in das Recht auf informationelle Selbstbestimmung minimal.',
-      'Weitere Informationen: https://vercel.com/docs/analytics/privacy-policy',
+      'Die Übermittlung in die USA stützt sich wie beim Hosting auf den Angemessenheitsbeschluss zum EU-US Data Privacy Framework. Weitere Informationen: https://vercel.com/docs/analytics/privacy-policy',
     ],
   },
   {
     id: 'contact',
     title: 'Kontaktformular und E-Mail',
     paragraphs: [
-      'Wenn du das Kontaktformular nutzt, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachrichtentext) verarbeitet, um deine Anfrage zu bearbeiten und zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung eingehender Anfragen).',
-      'Der Versand der Nachricht erfolgt über den Dienst Resend (Resend Inc., USA). Dabei werden die genannten Daten zur Zustellung der E-Mail an hello@gwydion.dev verarbeitet. Mit Resend kann ein Auftragsverarbeitungsvertrag bestehen; die Übermittlung in die USA erfolgt unter den jeweils geltenden Garantien (z. B. Standardvertragsklauseln). Weitere Informationen: https://resend.com/legal/privacy-policy',
+      'Wenn du das Kontaktformular nutzt, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachrichtentext und, falls gewählt, das Thema deiner Anfrage) verarbeitet, um deine Anfrage zu bearbeiten und zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung eingehender Anfragen).',
+      'Der Versand der Nachricht erfolgt über den E-Mail-Dienst Resend der Plus Five Five, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA. Dabei werden die genannten Daten zur Zustellung der E-Mail an hello@gwydion.dev verarbeitet. Mit Resend besteht ein Vertrag über Auftragsverarbeitung nach Art. 28 DSGVO. Resend ist unter dem EU-US Data Privacy Framework zertifiziert; die Übermittlung in die USA stützt sich auf den entsprechenden Angemessenheitsbeschluss (Art. 45 DSGVO), ergänzend auf die EU-Standardvertragsklauseln. Weitere Informationen: https://resend.com/legal/privacy-policy',
       'Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks nicht mehr erforderlich sind, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.',
     ],
   },
@@ -79,7 +79,7 @@ const de: PrivacySection[] = [
     id: 'complaint',
     title: 'Beschwerderecht',
     paragraphs: [
-      'Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung personenbezogener Daten zu beschweren (Art. 77 DSGVO). Die für den Verantwortlichen zuständige Aufsichtsbehörde ist: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 27, 91522 Ansbach, https://www.lda.bayern.de',
+      'Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung personenbezogener Daten zu beschweren (Art. 77 DSGVO). Die für den Verantwortlichen zuständige Aufsichtsbehörde ist: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 18, 91522 Ansbach, https://www.lda.bayern.de',
     ],
   },
   {
@@ -87,6 +87,7 @@ const de: PrivacySection[] = [
     title: 'Änderungen',
     paragraphs: [
       'Diese Erklärung wird bei rechtlichen oder technischen Anpassungen der Website aktualisiert. Es gilt die jeweils auf gwydion.dev veröffentlichte Fassung.',
+      'Stand: 4. November 2026',
     ],
   },
 ]
@@ -104,8 +105,8 @@ const en: PrivacySection[] = [
     id: 'hosting',
     title: 'Hosting',
     paragraphs: [
-      'This website is hosted by Vercel Inc. (United States). When you access the site, Vercel processes technically necessary data (for example IP address, time of access, requested resource, amount of data transferred, referrer, user agent) to deliver and secure the website.',
-      'Processing is carried out to provide the online service (Art. 6(1)(f) GDPR — legitimate interest in secure and stable operation). Where a data processing agreement exists, transfers to third countries rely on standard contractual clauses adopted by the EU Commission where no adequacy decision applies.',
+      'This website is hosted by Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, United States. When you access the site, Vercel processes technically necessary data (for example IP address, time of access, requested resource, amount of data transferred, referrer, user agent) to deliver and secure the website. Some images (screenshots on the project pages) are loaded from Vercel Blob file storage (*.public.blob.vercel-storage.com); the same technical data is processed by Vercel in that case.',
+      'Processing is carried out to provide the online service (Art. 6(1)(f) GDPR — legitimate interest in secure and stable operation). A data processing agreement under Art. 28 GDPR is in place with Vercel. Vercel is certified under the EU-U.S. Data Privacy Framework; transfers to the United States rely on the corresponding adequacy decision of the EU Commission (Art. 45 GDPR).',
       'More information: https://vercel.com/legal/privacy-policy',
     ],
   },
@@ -113,17 +114,17 @@ const en: PrivacySection[] = [
     id: 'analytics',
     title: 'Web analytics (Vercel Analytics)',
     paragraphs: [
-      'This website uses Vercel Analytics, a privacy-friendly analytics service provided by Vercel Inc. (United States). Vercel Analytics collects aggregated, non-personal usage data (such as pages visited, referrer, broad geographic origin at country level, browser and device category). No cookies are set and no individual user profiles are created.',
+      'This website uses Vercel Web Analytics, an analytics service provided by Vercel Inc. (address see Hosting). For each page view it records, among other things, the time, the page visited, the referrer, approximate location (country, region, city), operating system, browser and device type. Visitors are not distinguished by cookies but by a hash derived from the request, which is discarded after 24 hours. Only aggregated statistics are evaluated; no individual user profiles are created and no cross-site tracking takes place.',
       'Processing serves the purpose of analysing anonymised usage behaviour to improve the website. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in optimising the website). As no personal data is stored permanently or profiled, the impact on the right to informational self-determination is minimal.',
-      'More information: https://vercel.com/docs/analytics/privacy-policy',
+      'As with hosting, transfers to the United States rely on the adequacy decision for the EU-U.S. Data Privacy Framework. More information: https://vercel.com/docs/analytics/privacy-policy',
     ],
   },
   {
     id: 'contact',
     title: 'Contact form and email',
     paragraphs: [
-      'When you use the contact form, the data you enter (name, email address, message text) is processed to handle and respond to your request. The legal basis is Art. 6(1)(f) GDPR (legitimate interest in responding to incoming inquiries).',
-      'Messages are sent via Resend (Resend Inc., USA). The data listed above is processed to deliver the email to hello@gwydion.dev. A data processing agreement may be in place with Resend; transfers to the United States rely on appropriate safeguards (for example standard contractual clauses). More information: https://resend.com/legal/privacy-policy',
+      'When you use the contact form, the data you enter (name, email address, message text and, if selected, the topic of your request) is processed to handle and respond to your request. The legal basis is Art. 6(1)(f) GDPR (legitimate interest in responding to incoming inquiries).',
+      'Messages are sent via the email service Resend, operated by Plus Five Five, Inc., 2261 Market Street #5039, San Francisco, CA 94114, United States. The data listed above is processed to deliver the email to hello@gwydion.dev. A data processing agreement under Art. 28 GDPR is in place with Resend. Resend is certified under the EU-U.S. Data Privacy Framework; transfers to the United States rely on the corresponding adequacy decision (Art. 45 GDPR) and, in addition, on the EU standard contractual clauses. More information: https://resend.com/legal/privacy-policy',
       'Data is deleted when it is no longer needed for the purpose, unless statutory retention obligations apply.',
     ],
   },
@@ -164,7 +165,7 @@ const en: PrivacySection[] = [
     id: 'complaint',
     title: 'Right to lodge a complaint',
     paragraphs: [
-      'You have the right to lodge a complaint with a supervisory authority regarding the processing of personal data (Art. 77 GDPR). The supervisory authority competent for the controller is: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 27, 91522 Ansbach, Germany, https://www.lda.bayern.de',
+      'You have the right to lodge a complaint with a supervisory authority regarding the processing of personal data (Art. 77 GDPR). The supervisory authority competent for the controller is: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA), Promenade 18, 91522 Ansbach, Germany, https://www.lda.bayern.de',
     ],
   },
   {
@@ -172,6 +173,7 @@ const en: PrivacySection[] = [
     title: 'Changes',
     paragraphs: [
       'This policy will be updated when legal or technical aspects of the website change. The version published on gwydion.dev applies.',
+      'Last updated: 4 November 2026',
     ],
   },
 ]
