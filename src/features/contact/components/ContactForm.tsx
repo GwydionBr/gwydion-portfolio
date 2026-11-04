@@ -173,7 +173,7 @@ export function ContactForm() {
                     underline="hover"
                   >
                     {m.legal_privacy_title()}
-                  </Anchor>{' '}
+                  </Anchor>
                   {m.contact_privacy_after()}
                 </Text>
               </Stack>

@@ -19,7 +19,8 @@ const config = defineConfig({
     tanstackStart(),
     paraglideVitePlugin(paraglideConfig),
     // Nitro's dev server keeps Vitest from exiting; tests don't need a server runtime.
-    ...(process.env.VITEST ? [] : [nitro()]),
+    // Functions run in Frankfurt so contact-form data stays in the EU, as the privacy policy states.
+    ...(process.env.VITEST ? [] : [nitro({ vercel: { functions: { regions: ['fra1'] } } })]),
     viteReact(),
   ]),
   test: {
