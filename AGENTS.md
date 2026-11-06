@@ -22,3 +22,17 @@ Long term maintainability is a core priority. If you add new functionality, firs
 
 - use the context7 mcp to access documentations of libraries to get the current version
 - use the tanstack mcp to access all relevant tanstack docs and information
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues (`GwydionBr/gwydion-portfolio`) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default triage vocabulary, except the human role maps to the existing `needs-human` label. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
