@@ -23,8 +23,9 @@ export function EmailLink({ className = '' }: { className?: string }) {
 /**
  * How to reach Gwydion directly: the Profile's email, LinkedIn and GitHub
  * links. A placeholder link is named, dimmed, and not a working link.
+ * The Contact view lists them, and the shell offers them on every page.
  */
-export function ProfileLinks() {
+export function ProfileLinks({ className = 'mt-2 space-y-2' }: { className?: string }) {
   const { t } = useLingui()
   const profile = useProfile()
   const labels: Record<ProfileLink['kind'], string> = {
@@ -33,7 +34,7 @@ export function ProfileLinks() {
     github: 'GitHub',
   }
   return (
-    <ul className="mt-2 space-y-2">
+    <ul className={className}>
       {profile.links.map((link) => {
         const Icon = ICONS[link.kind]
         return (

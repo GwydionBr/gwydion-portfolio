@@ -1,5 +1,6 @@
 import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
+import { ProfileLinks } from '#/components/ProfileLinks'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 import { LegalLinks } from './LegalLinks'
@@ -9,7 +10,7 @@ import { PinnedProjects } from './PinnedProjects'
 import { SearchPlaceholder } from './SearchPlaceholder'
 import { ThemeToggle } from './ThemeToggle'
 
-/** The desktop sidebar: identity, search, navigation, pinned Projects and, at the bottom, the Availability, the Site language switch, the theme toggle and the legal links. */
+/** The desktop sidebar: identity, search, navigation, pinned Projects and, at the bottom, the Availability, the Profile links, the Site language switch, the theme toggle and the legal links. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -41,6 +42,7 @@ export function Sidebar() {
       </nav>
       <PinnedProjects />
       <AvailabilityTile compact className="mt-auto" />
+      <ProfileLinks className="space-y-1.5 px-3 pt-3 text-xs" />
       <div className="flex items-center justify-between px-3 pt-3">
         <LanguageSwitch />
         <ThemeToggle />

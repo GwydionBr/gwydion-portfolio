@@ -1,6 +1,7 @@
 import { nativeNameOf } from '#/i18n/language'
 import {
   escapeHtml,
+  isHoneypotFilled,
   normalizeEmailSubjectPart,
   validateContactMessage,
   type ContactFieldErrors,
@@ -30,8 +31,8 @@ const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 5
 
 /**
- * The contact endpoint: validates a contact message (field messages in its
- * Site language), drops it silently when the honeypot is filled, limits each
+ * The contact endpoint: drops a message silently when the honeypot is filled,
+ * validates the rest (field messages in its Site language), limits each
  * sender, and hands the email to `mailer`. `mailer` is null when the mail
  * configuration is missing.
  */
@@ -42,9 +43,9 @@ export function createContactEndpoint({ mailer }: { mailer: ContactMailer | null
     const body = await readJson(request)
     if (body === undefined) return json({ error: 'invalid' }, 400)
 
+    if (isHoneypotFilled(body)) return json({ ok: true })
     const validation = validateContactMessage(body)
     if (!validation.ok) return json({ fieldErrors: validation.fieldErrors }, 400)
-    if (validation.message.website) return json({ ok: true })
     if (isRateLimited(senderOf(request))) return json({ error: 'rate-limited' }, 429)
     if (!mailer) return json({ error: 'not-configured' }, 500)
 

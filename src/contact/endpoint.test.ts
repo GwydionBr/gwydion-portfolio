@@ -74,6 +74,21 @@ describe('The contact endpoint', () => {
     expect(mailer.sent).toEqual([])
   })
 
+  it('silently accepts a filled honeypot even when the rest of the message is invalid', async () => {
+    const mailer = fakeMailer()
+    const endpoint = createContactEndpoint({ mailer })
+
+    for (const body of [
+      { ...VALID, email: 'nope', website: 'https://spam.example' },
+      { ...VALID, website: 'x'.repeat(500) },
+    ]) {
+      const response = await endpoint(post(body))
+      expect(response.status).toBe(200)
+      expect(await response.json()).toEqual({ ok: true })
+    }
+    expect(mailer.sent).toEqual([])
+  })
+
   it('reports a failed delivery', async () => {
     const response = await createContactEndpoint({ mailer: fakeMailer({ fails: true }) })(
       post(VALID),

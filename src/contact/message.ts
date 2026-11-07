@@ -24,8 +24,8 @@ const contactMessageSchema = z.object({
   message: z.string().trim().min(CONTACT_LIMITS.messageMin).max(CONTACT_LIMITS.messageMax),
   /** The Site language the visitor wrote in; Gwydion answers in it. */
   language: z.enum(LANGUAGES).catch(BASE_LANGUAGE),
-  /** The honeypot: hidden from people, filled in by bots. */
-  website: z.string().trim().max(200).optional().default(''),
+  /** The honeypot (see `isHoneypotFilled`); the endpoint checks it before validating. */
+  website: z.string().optional().default(''),
 })
 
 export type ContactMessage = z.output<typeof contactMessageSchema>
@@ -37,6 +37,17 @@ export type ContactValidation =
   | { ok: false; language: Language; fieldErrors: ContactFieldErrors }
 
 const FIELDS: readonly ContactField[] = ['name', 'email', 'message']
+
+/**
+ * Whether untrusted input filled in the honeypot field `website`: hidden from
+ * people, filled in by bots. Such a message is accepted silently and dropped,
+ * whatever else it contains.
+ */
+export function isHoneypotFilled(input: unknown): boolean {
+  const website =
+    typeof input === 'object' && input !== null && 'website' in input ? input.website : undefined
+  return typeof website === 'string' ? website.trim() !== '' : website != null
+}
 
 /** Validates untrusted input (form values or a request body) into a contact message. */
 export function validateContactMessage(input: unknown): ContactValidation {

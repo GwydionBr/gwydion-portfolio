@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
+import { ProfileLinks } from '#/components/ProfileLinks'
 import { LegalLinks } from './LegalLinks'
 import { Sidebar } from './Sidebar'
 import { TabBar } from './TabBar'
@@ -11,8 +12,8 @@ const MAIN_ID = 'main'
 /**
  * The app shell (ADR 0003, prototype J): a sidebar from the `md` breakpoint
  * up; below it a top bar (identity, Site language switch) and a bottom tab
- * bar, and the main pane ends with the legal links the sidebar holds on
- * desktop. Views render into the main pane through `View`.
+ * bar, and the main pane ends with the Profile links and the legal links the
+ * sidebar holds on desktop. Views render into the main pane through `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
@@ -33,7 +34,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           className="flex-1 p-4 pb-24 outline-none sm:p-6 sm:pb-24 md:pb-6 lg:p-10"
         >
           {children}
-          <LegalLinks className="mt-10 md:hidden" />
+          <div className="mt-10 space-y-4 md:hidden">
+            <ProfileLinks />
+            <LegalLinks />
+          </div>
         </main>
       </div>
       <TabBar />

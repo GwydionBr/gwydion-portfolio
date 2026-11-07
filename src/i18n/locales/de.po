@@ -99,6 +99,11 @@ msgstr "Gwydions Beiträge darüber, wie man Software baut."
 msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
 msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Kontaktformular und auf deinem Gerät gespeicherte Einstellungen."
 
+#. placeholder {0}: i18n._(PRIVACY_PAGE.title)
+#: src/contact/ContactForm.tsx
+msgid "How I handle your details is explained in the <0>{0}</0>."
+msgstr "Wie ich deine Angaben verarbeite, erfährst du in der <0>{0}</0>."
+
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
 msgstr "Neueste Beiträge"

@@ -16,16 +16,17 @@ async function openContact(url: string, mailer = fakeMailer()) {
 describe('The Contact view', () => {
   it('offers email, LinkedIn and GitHub and restates the Availability', async () => {
     const { main } = await openContact('/en/contact')
+    const directly = within(main.getByRole('region', { name: 'Directly' }))
 
-    expect(main.getByRole('link', { name: 'ada@example.com' }).getAttribute('href')).toBe(
+    expect(directly.getByRole('link', { name: 'ada@example.com' }).getAttribute('href')).toBe(
       'mailto:ada@example.com',
     )
-    expect(main.getByRole('link', { name: 'GitHub' }).getAttribute('href')).toBe(
+    expect(directly.getByRole('link', { name: 'GitHub' }).getAttribute('href')).toBe(
       'https://github.com/ada-example',
     )
     // The LinkedIn URL is still a placeholder: named, but not a working link.
-    expect(main.queryByRole('link', { name: 'LinkedIn' })).toBeNull()
-    expect(main.getByText('LinkedIn')).toBeTruthy()
+    expect(directly.queryByRole('link', { name: 'LinkedIn' })).toBeNull()
+    expect(directly.getByText('LinkedIn')).toBeTruthy()
     const availability = main.getByRole('region', { name: 'Availability' })
     expect(availability.textContent).toContain('Open to fixtures')
     expect(availability.textContent).toContain('Also fixtures on the side')
@@ -85,6 +86,17 @@ describe('The Contact view', () => {
     expect(main.getByText('Gib eine gültige E-Mail-Adresse ein.')).toBeTruthy()
     expect(main.getByText('Die Nachricht ist zu kurz (mindestens 20 Zeichen).')).toBeTruthy()
     expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    ['/en/contact', 'Send message', 'Privacy policy', '/en/datenschutz'],
+    ['/de/contact', 'Nachricht senden', 'Datenschutzerklärung', '/de/datenschutz'],
+  ])('%s links to the privacy policy under the form', async (url, send, privacy, href) => {
+    const { main } = await openContact(url)
+
+    const form = main.getByRole('button', { name: send }).closest('form')
+    if (!form) throw new Error('The send button is not in a form')
+    expect(within(form).getByRole('link', { name: privacy }).getAttribute('href')).toBe(href)
   })
 
   it('silently accepts a filled honeypot and delivers nothing', async () => {

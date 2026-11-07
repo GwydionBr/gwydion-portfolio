@@ -1,6 +1,8 @@
 import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { useLingui } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { Link } from '@tanstack/react-router'
 import { EmailLink } from '#/components/ProfileLinks'
+import { PRIVACY_PAGE } from '#/legal/pages'
 import { useSiteLanguage } from '#/i18n/react'
 import type { ContactResponse } from './endpoint'
 import {
@@ -20,7 +22,7 @@ const EMPTY = { name: '', email: '', message: '', website: '' }
  * `/api/contact` in the Site language, which validates again.
  */
 export function ContactForm() {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const language = useSiteLanguage()
   const id = useId()
   const formRef = useRef<HTMLFormElement>(null)
@@ -137,6 +139,15 @@ export function ContactForm() {
       >
         {status === 'sending' ? t`Sending…` : t`Send message`}
       </button>
+      <p className="text-xs text-muted">
+        <Trans>
+          How I handle your details is explained in the{' '}
+          <Link to={PRIVACY_PAGE.to} params={{ lang: language }} className="text-ink underline">
+            {i18n._(PRIVACY_PAGE.title)}
+          </Link>
+          .
+        </Trans>
+      </p>
     </form>
   )
 }
