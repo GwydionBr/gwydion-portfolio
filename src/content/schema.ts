@@ -178,6 +178,8 @@ export interface CareerEntrySource extends Period {
   /** Where it took place; localized only where the name itself differs ("Self-employed"). */
   organisation: string | Localized<string>
   summary: Localized<string>
+  /** The slug of the Project this stage was about, if any; the entry links to its page. */
+  project?: string
   /** Stands in for an entry Gwydion has not supplied yet; shown dimmed. */
   placeholder?: true
 }

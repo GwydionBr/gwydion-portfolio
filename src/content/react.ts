@@ -47,6 +47,11 @@ export function useCv() {
   return useContent().getCv(language)
 }
 
+/** Every CV file, in the order of the Site languages. */
+export function useCvs() {
+  return useContent().getCvs()
+}
+
 /** The screenshots of the Project at `slug`, in the Site language of the page shown. */
 export function useScreenshots(slug: string) {
   const language = useSiteLanguage()

@@ -1,4 +1,4 @@
-import { BASE_LANGUAGE, type Language } from '#/i18n/language'
+import { BASE_LANGUAGE, LANGUAGES, type Language } from '#/i18n/language'
 import { newestFirst } from './period'
 import { careerEntries } from './data/careerEntries'
 import { cv } from './data/cv'
@@ -78,6 +78,8 @@ export interface Content {
    * the Base language, otherwise any. Its `language` says which it is.
    */
   getCv(language: Language): CvFile
+  /** Every CV file, in the order of the Site languages. */
+  getCvs(): CvFile[]
   /** Every Post, newest first; none yet, which hides Writing. */
   getPosts(): readonly Post[]
   /**
@@ -121,6 +123,8 @@ export function createContent(source: ContentSource): Content {
       if (!file) throw new Error('The content has no CV; it needs at least one CV file.')
       return file
     },
+    getCvs: () =>
+      LANGUAGES.flatMap((language) => source.cv.filter((file) => file.language === language)),
     getPosts: () => posts,
     hasWriting: () => posts.length > 0,
   }

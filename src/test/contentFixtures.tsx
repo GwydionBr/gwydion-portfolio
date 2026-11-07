@@ -171,6 +171,7 @@ export function fixtureSource({ posts = [] }: { posts?: Post[] } = {}): ContentS
         end: '2024',
         title: { en: 'Freelance fixture maker', de: 'Freiberufliche Fixture-Bauerin' },
         organisation: 'Self-employed',
+        project: 'fixture-studio',
         summary: { en: 'Built fixtures.', de: 'Baute Fixtures.' },
       },
       {

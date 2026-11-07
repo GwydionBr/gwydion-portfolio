@@ -19,7 +19,7 @@ describe('The About view', () => {
     expect(page.title()).toBe('About')
     expect(careerEntries(page, 'Career')).toEqual([
       'Jun 2024 – nowLead fixture · Example GmbHLeads fixtures.',
-      'Mar 2022 – 2024Freelance fixture maker · Self-employedBuilt fixtures.',
+      'Mar 2022 – 2024Freelance fixture maker · Self-employedBuilt fixtures.Project →',
       '2018–2022Degree in fixtures · Example UniversityStudied fixtures.',
     ])
   })
@@ -30,9 +30,22 @@ describe('The About view', () => {
     expect(page.title()).toBe('Über mich')
     expect(careerEntries(page, 'Werdegang')).toEqual([
       'Juni 2024 – heuteLeitendes Fixture · Example GmbHLeitet Fixtures.',
-      'März 2022 – 2024Freiberufliche Fixture-Bauerin · Self-employedBaute Fixtures.',
+      'März 2022 – 2024Freiberufliche Fixture-Bauerin · Self-employedBaute Fixtures.Projekt →',
       '2018–2022Studium der Fixtures · Example UniversityStudierte Fixtures.',
     ])
+  })
+
+  it('links a Career entry to the Project it was about', async () => {
+    const page = await visit('/en/about', { content: fixtureContent() })
+
+    const career = within(region(page.main(), 'Career'))
+    expect(career.getAllByRole('link').map((link) => link.getAttribute('aria-label'))).toEqual([
+      'Project: Fixture Studio',
+    ])
+    await page.click(career.getByRole('link', { name: 'Project: Fixture Studio' }))
+
+    expect(page.path()).toBe('/en/projects/fixture-studio')
+    expect(page.title()).toBe('Fixture Studio')
   })
 
   it('lists the skills', async () => {
@@ -42,10 +55,12 @@ describe('The About view', () => {
     expect(skills.textContent).toBe('Testing')
   })
 
-  it('offers the CV as a download', async () => {
+  it('offers the CV as the view\'s action, in place of "Get in touch"', async () => {
     const page = await visit('/en/about', { content: fixtureContent() })
 
-    const download = within(page.main()).getByRole('link', { name: 'Download CV' })
+    const header = within(page.main().querySelector('header')!)
+    expect(header.queryByRole('link', { name: 'Get in touch' })).toBeNull()
+    const download = header.getByRole('link', { name: 'Download CV' })
     expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
     expect(download.hasAttribute('download')).toBe(true)
   })
@@ -57,6 +72,21 @@ describe('The About view', () => {
     expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
     expect(download.getAttribute('hreflang')).toBe('en')
     expect(download.textContent).toContain('English')
+  })
+})
+
+describe('The CV tile on About', () => {
+  it('offers the CV in every language it exists in', async () => {
+    const page = await visit('/de/about')
+
+    const tile = within(region(page.main(), 'Lebenslauf'))
+    expect(tile.getByText('1 Seite · PDF')).toBeTruthy()
+    expect(
+      tile.getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['English', '/cv/gwydion-braunsdorf-cv-en.pdf'],
+      ['Deutsch', '/cv/gwydion-braunsdorf-cv-de.pdf'],
+    ])
   })
 })
 

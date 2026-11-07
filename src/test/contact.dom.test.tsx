@@ -149,7 +149,7 @@ describe('The Contact view', () => {
 })
 
 describe('"Get in touch"', () => {
-  it.each(['/en', '/en/projects', '/en/about', '/en/nowhere', '/de', '/de/about'])(
+  it.each(['/en', '/en/projects', '/en/nowhere', '/de', '/de/projects/fixture-studio'])(
     'leads from %s to the Contact view',
     async (url) => {
       const page = await visit(url, { content: fixtureContent() })

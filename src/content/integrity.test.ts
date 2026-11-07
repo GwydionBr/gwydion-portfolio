@@ -143,6 +143,15 @@ describe('Career entries', () => {
     expect(problems).toContain(problem.replace('en:', 'de:'))
   })
 
+  it('a Career entry linking to a Project that does not exist is reported', () => {
+    const source = fixtureSource()
+    source.careerEntries.find((entry) => entry.kind === 'freelance')!.project = 'nowhere'
+
+    const problems = integrityProblems(createContent(source))
+    expect(problems).toContain('en: careerEntries.1 links to no Project "nowhere"')
+    expect(problems).toContain('de: careerEntries.1 links to no Project "nowhere"')
+  })
+
   it('a period that starts and ends in the same year is fine', () => {
     const source = fixtureSource()
     Object.assign(

@@ -11,6 +11,7 @@ export const careerEntries: CareerEntrySource[] = [
     end: null,
     title: { en: 'Founder & sole developer', de: 'Gründer & alleiniger Entwickler' },
     organisation: 'Self-Engine',
+    project: 'self-engine',
     summary: {
       en: 'Product, architecture, sync engine, web, desktop and mobile apps, operations.',
       de: 'Produkt, Architektur, Sync-Engine, Web-, Desktop- und Mobil-Apps, Betrieb.',
@@ -22,6 +23,7 @@ export const careerEntries: CareerEntrySource[] = [
     end: null,
     title: { en: 'Freelance full-stack developer', de: 'Freiberuflicher Full-Stack-Entwickler' },
     organisation: { en: 'Self-employed', de: 'Selbstständig' },
+    project: 'endstation-tattoo',
     summary: {
       en: 'Websites and web apps for studios and small businesses.',
       de: 'Websites und Web-Apps für Studios und kleine Unternehmen.',

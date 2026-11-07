@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: de\n"
 
+#: src/components/CvDownload.tsx
+msgid "1 page · PDF"
+msgstr "1 Seite · PDF"
+
 #: src/routes/$lang/about.tsx
 #: src/shell/navigation.ts
 msgid "About"
@@ -50,7 +54,7 @@ msgstr "Kontakt"
 msgid "Contents"
 msgstr "Inhalt"
 
-#: src/routes/$lang/about.tsx
+#: src/components/CvDownload.tsx
 msgid "CV"
 msgstr "Lebenslauf"
 
@@ -205,6 +209,14 @@ msgstr "Vorheriger Screenshot"
 #: src/legal/pages.ts
 msgid "Privacy policy"
 msgstr "Datenschutzerklärung"
+
+#: src/components/CareerList.tsx
+msgid "Project"
+msgstr "Projekt"
+
+#: src/components/CareerList.tsx
+msgid "Project: {title}"
+msgstr "Projekt: {title}"
 
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx

@@ -48,7 +48,10 @@ function projectProblems(content: Content): string[] {
   return problems
 }
 
-/** Each Career entry's period must be well-formed, and the entries newest first. */
+/**
+ * Each Career entry's period must be well-formed, the entries newest first,
+ * and a Project an entry links to must exist.
+ */
 function careerProblems(content: Content, language: Language): string[] {
   const entries = content.getCareerEntries(language)
   return entries.flatMap((entry, index) => {
@@ -58,6 +61,8 @@ function careerProblems(content: Content, language: Language): string[] {
     const previous = entries[index - 1]
     if (previous && newestFirst(previous, entry) > 0)
       problems.push(`${language}: careerEntries.${index} is newer than the entry before it`)
+    if (entry.project !== undefined && !content.getProject(entry.project, language))
+      problems.push(`${language}: careerEntries.${index} links to no Project "${entry.project}"`)
     return problems
   })
 }
