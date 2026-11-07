@@ -5,8 +5,9 @@ import { LanguageSwitch } from './LanguageSwitch'
 import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
 import { SearchPlaceholder } from './SearchPlaceholder'
+import { ThemeToggle } from './ThemeToggle'
 
-/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability and the Site language switch. */
+/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability, the Site language switch and the theme toggle. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -37,8 +38,9 @@ export function Sidebar() {
         </ul>
       </nav>
       <AvailabilityTile compact className="mt-auto" />
-      <div className="px-3 pt-3">
+      <div className="flex items-center justify-between px-3 pt-3">
         <LanguageSwitch />
+        <ThemeToggle />
       </div>
     </aside>
   )

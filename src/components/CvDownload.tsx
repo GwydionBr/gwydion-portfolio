@@ -17,7 +17,7 @@ export function CvDownload({ className = '' }: { className?: string }) {
       download
       hrefLang={cv.language}
       type="application/pdf"
-      className={`block rounded-md bg-available px-3 py-1.5 text-center font-medium text-canvas hover:opacity-90 ${className}`}
+      className={`block rounded-md bg-available px-3 py-1.5 text-center font-medium text-available-surface hover:opacity-90 ${className}`}
     >
       {t`Download CV`}
       {cv.language !== siteLanguage && (

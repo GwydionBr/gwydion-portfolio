@@ -33,6 +33,10 @@ msgstr "Contact"
 msgid "CV"
 msgstr "CV"
 
+#: src/shell/ThemeToggle.tsx
+msgid "Dark theme"
+msgstr "Dark theme"
+
 #: src/components/CvDownload.tsx
 msgid "Download CV"
 msgstr "Download CV"
