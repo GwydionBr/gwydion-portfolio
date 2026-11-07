@@ -45,4 +45,15 @@ describe('The privacy policy', () => {
     const text = JSON.stringify(PRIVACY[language])
     expect(text).not.toMatch(/paraglide/i)
   })
+
+  it.each(LANGUAGES)(
+    'describes the booking request portal but not the retired Google Drive delivery (%s)',
+    (language) => {
+      expect(textOf(language, 'portal')).toContain('Supabase')
+      // Studio sites deliver booking requests only through the portal since tattoo-sites #188.
+      expect(JSON.stringify(PRIVACY[language])).not.toMatch(
+        /google.?drive|drive\.file|Terminanfragen“? \(/i,
+      )
+    },
+  )
 })

@@ -7,7 +7,7 @@ const de: LegalSection[] = [
     title: 'Verantwortlicher',
     paragraphs: [
       'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Deutschland. Kontakt: hello@gwydion.dev',
-      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch von gwydion.dev und bei der Nutzung des Kontaktformulars. Außerdem beschreibt sie, wie ich als technischer Dienstleister Daten für die von mir betreuten Tattoo-Studio-Websites verarbeite (Anfragen-Portal und Google-Drive-Anbindung „Terminanfragen“).',
+      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch von gwydion.dev und bei der Nutzung des Kontaktformulars. Außerdem beschreibt sie, wie ich als technischer Dienstleister Daten für die von mir betreuten Tattoo-Studio-Websites verarbeite (Anfragen-Portal).',
     ],
   },
   {
@@ -67,16 +67,6 @@ const de: LegalSection[] = [
     ],
   },
   {
-    id: 'google-drive',
-    title: 'Google-Drive-Anbindung „Terminanfragen“ (wird abgelöst)',
-    paragraphs: [
-      'Bis zur vollständigen Umstellung auf das Anfragen-Portal betreibe ich für einzelne Studio-Websites noch die Google-App „Terminanfragen“. Damit verbindet ein Studio sein eigenes Google Drive mit seiner Website, und Terminanfragen aus dem Formular werden als PDF mit den hochgeladenen Bildern in einem vom Studio gewählten Ordner abgelegt.',
-      'Die App fordert ausschließlich die Berechtigung „drive.file“ an. Sie sieht und bearbeitet damit nur Ordner, die das Studio in der Google-Ordnerauswahl ausdrücklich freigibt, und Dateien, die die App selbst angelegt hat. Gespeichert werden die E-Mail-Adresse des Google-Kontos, Name und ID des gewählten Ordners sowie das von Google ausgestellte Zugriffstoken, pro Website verschlüsselt (AES-256-GCM) in einem privaten Speicher bei Vercel in Frankfurt. Daten aus Google Drive werden nicht an Dritte weitergegeben, nicht verkauft, nicht für Werbung und nicht zum Trainieren von KI-Modellen verwendet.',
-      'Die Nutzung und Übertragung von Informationen, die über Google-APIs empfangen werden, an andere Apps hält sich an die Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use).',
-      'Auch hier ist das jeweilige Studio verantwortlich; ich verarbeite die Daten in seinem Auftrag (Art. 28 DSGVO). Ein Studio kann den Zugriff jederzeit unter https://myaccount.google.com/permissions widerrufen. Gespeicherte Verbindungen lösche ich auf Wunsch sofort, spätestens mit Abschluss der Umstellung; eine Nachricht an hello@gwydion.dev genügt.',
-    ],
-  },
-  {
     id: 'rights',
     title: 'Deine Rechte',
     paragraphs: [
@@ -115,7 +105,7 @@ const en: LegalSection[] = [
     title: 'Controller',
     paragraphs: [
       'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Germany. Contact: hello@gwydion.dev',
-      'This privacy policy explains the nature, scope, and purpose of processing personal data when you visit gwydion.dev and use the contact form. It also describes how I, as a technical service provider, process data for the tattoo studio websites I build and maintain (the booking request portal and the “Terminanfragen” Google Drive integration).',
+      'This privacy policy explains the nature, scope, and purpose of processing personal data when you visit gwydion.dev and use the contact form. It also describes how I, as a technical service provider, process data for the tattoo studio websites I build and maintain (the booking request portal).',
     ],
   },
   {
@@ -172,16 +162,6 @@ const en: LegalSection[] = [
       'Each studio is the controller for its booking requests; details are provided in the privacy policy of the respective studio website. I process the data solely on the studio’s behalf (Art. 28 GDPR). Health information is a special category of personal data (Art. 9 GDPR); the studio obtains the required consent through its website. Only the responsible artist or the studio coordination can access a request. As the technical administrator, I have no insight into the content of requests.',
       'As a sub-processor I use Supabase Pte. Ltd., 65 Chulia Street #38-02/03, OCBC Centre, Singapore 049513 (database, file storage and sign-in for the portal). Data is stored in the EU (AWS region eu-west-3, Paris). Access from third countries, for example for maintenance and support, is safeguarded by the EU standard contractual clauses under Art. 46(2)(c) GDPR, which are part of Supabase’s data processing agreement. More information: https://supabase.com/privacy',
       'Further sub-processors are Vercel Inc. (address see Hosting) for running the portal application with server functions in Frankfurt, and Resend / Plus Five Five, Inc. (address see Contact form) for invitation and notification emails, which contain no request content.',
-    ],
-  },
-  {
-    id: 'google-drive',
-    title: '“Terminanfragen” Google Drive integration (being phased out)',
-    paragraphs: [
-      'Until the move to the booking request portal is complete, I still operate the Google app “Terminanfragen” (booking requests) for some studio websites. It lets a studio connect its own Google Drive to its website, so booking requests submitted through the form are saved as a PDF, together with the uploaded images, in a folder the studio chooses.',
-      'The app only requests the “drive.file” scope. It can therefore only see and edit folders the studio explicitly selects in the Google folder picker and files the app created itself. The Google account’s email address, the name and ID of the selected folder, and the token issued by Google are stored per website, encrypted (AES-256-GCM), in a private Vercel store in Frankfurt. Google Drive data is not shared with third parties, not sold, and not used for advertising or to train AI models.',
-      'The use and transfer of information received from Google APIs to any other app will adhere to the Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.',
-      'Here too, each studio is the controller; I process the data on its behalf (Art. 28 GDPR). A studio can revoke access at any time at https://myaccount.google.com/permissions. I delete stored connections immediately on request, and at the latest once the move is complete; an email to hello@gwydion.dev is enough.',
     ],
   },
   {
