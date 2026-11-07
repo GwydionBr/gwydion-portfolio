@@ -25,6 +25,10 @@ msgstr "Back to the Overview"
 msgid "Contact"
 msgstr "Contact"
 
+#: src/legal/LegalPage.tsx
+msgid "Contents"
+msgstr "Contents"
+
 #: src/shell/ThemeToggle.tsx
 msgid "Dark theme"
 msgstr "Dark theme"
@@ -36,6 +40,14 @@ msgstr "Get in touch"
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
 msgstr "Latest Posts"
+
+#: src/shell/LegalLinks.tsx
+msgid "Legal"
+msgstr "Legal"
+
+#: src/legal/pages.ts
+msgid "Legal notice"
+msgstr "Legal notice"
 
 #: src/shell/Sidebar.tsx
 msgid "Main navigation"
@@ -54,6 +66,10 @@ msgstr "Overview"
 msgid "Page not found"
 msgstr "Page not found"
 
+#: src/legal/pages.ts
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
 #: src/routes/$lang/index.tsx
 msgid "Profile"
 msgstr "Profile"
@@ -62,6 +78,10 @@ msgstr "Profile"
 #: src/shell/navigation.ts
 msgid "Projects"
 msgstr "Projects"
+
+#: src/legal/LegalPage.tsx
+msgid "Read the German version"
+msgstr "Read the German version"
 
 #: src/shell/SearchPlaceholder.tsx
 msgid "Search"
@@ -106,6 +126,10 @@ msgstr "The Projects are being rebuilt."
 #: src/shell/NotFoundView.tsx
 msgid "There is nothing at this address."
 msgstr "There is nothing at this address."
+
+#: src/legal/LegalPage.tsx
+msgid "This English version is a courtesy translation. Only the German version is legally binding."
+msgstr "This English version is a courtesy translation. Only the German version is legally binding."
 
 #: src/routes/$lang/index.tsx
 msgid "View all"

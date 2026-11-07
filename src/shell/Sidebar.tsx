@@ -2,12 +2,13 @@ import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
+import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
 import { SearchPlaceholder } from './SearchPlaceholder'
 import { ThemeToggle } from './ThemeToggle'
 
-/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability, the Site language switch and the theme toggle. */
+/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability, the Site language switch, the theme toggle and the legal links. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -42,6 +43,7 @@ export function Sidebar() {
         <LanguageSwitch />
         <ThemeToggle />
       </div>
+      <LegalLinks className="px-3 pt-2" />
     </aside>
   )
 }
