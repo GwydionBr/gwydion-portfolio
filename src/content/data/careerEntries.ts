@@ -48,8 +48,22 @@ export const careerEntries: CareerEntrySource[] = [
     title: { en: 'Customer service', de: 'Kundenservice' },
     organisation: 'Ticket-Center Hohenschwangau (Neuschwanstein)',
     summary: {
-      en: 'Ticket sales and visitor service for Neuschwanstein Castle, with a break for two semesters of mechanical engineering (2017–2018). Winters spent travelling.',
-      de: 'Ticketverkauf und Besucherservice für Schloss Neuschwanstein, unterbrochen von zwei Semestern Maschinenbau (2017–2018). Die Winter über war ich auf Reisen.',
+      en: 'Ticket sales and visitor service for Neuschwanstein Castle, interrupted by two semesters of mechanical engineering. Winters spent travelling.',
+      de: 'Ticketverkauf und Besucherservice für Schloss Neuschwanstein, unterbrochen von zwei Semestern Maschinenbau. Die Winter über war ich auf Reisen.',
+    },
+  },
+  {
+    kind: 'education',
+    start: '2017',
+    end: '2018',
+    title: {
+      en: 'Mechanical engineering studies (2 semesters, no degree)',
+      de: 'Studium Maschinenbau (2 Semester, ohne Abschluss)',
+    },
+    organisation: 'Hochschule Kempten',
+    summary: {
+      en: 'Two semesters of mechanical engineering, then back to the ticket centre.',
+      de: 'Zwei Semester Maschinenbau, danach zurück ins Ticket-Center.',
     },
   },
   {
