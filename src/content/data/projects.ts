@@ -53,21 +53,6 @@ export const projects: ProjectSource[] = [
     accent: '#8a3b2e',
   },
   {
-    slug: 'kawana',
-    title: 'KaWAna',
-    kind: 'client-work',
-    period: { start: '2026', end: '2026' },
-    summary: {
-      en: 'Website for women’s circles and cooking classes, with sign-up forms and a CMS.',
-      de: 'Website für Frauenkreise und Kochkurse, mit Anmeldeformularen und CMS.',
-    },
-    stack: ['TanStack Start', 'Sanity', 'Resend'],
-    featured: true,
-    pinned: true,
-    order: 3,
-    accent: '#a07a2c',
-  },
-  {
     slug: 'gwydion-dev',
     title: 'gwydion.dev',
     kind: 'open-source',
@@ -79,7 +64,7 @@ export const projects: ProjectSource[] = [
     stack: ['TanStack Start', 'Tailwind CSS', 'Base UI', 'Lingui', 'MDX'],
     featured: false,
     pinned: false,
-    order: 4,
+    order: 3,
     accent: '#3b4a7a',
   },
 ]

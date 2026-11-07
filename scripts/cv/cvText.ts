@@ -68,16 +68,12 @@ export const cvText = {
       stack: ['TanStack Start', 'Sanity', 'Supabase', 'Resend', 'Vercel'],
       highlights: [
         {
-          en: '<b>Endstation Tattoo:</b> studio website with artist portfolios and booking requests, which the studio edits itself in Sanity.',
-          de: '<b>Endstation Tattoo:</b> Studio-Website mit Künstler-Portfolios und Terminanfragen, die das Studio selbst in Sanity pflegt.',
+          en: '<b>Endstation Tattoo:</b> studio website with artist portfolios and booking requests, which the studio edits itself in Sanity; launching in the coming weeks.',
+          de: '<b>Endstation Tattoo:</b> Studio-Website mit Künstler-Portfolios und Terminanfragen, die das Studio selbst in Sanity pflegt; geht in den nächsten Wochen live.',
         },
         {
           en: 'Built in one monorepo with the sites of further tattoo studios and a portal for their booking requests; each site has its own CMS project and deployment.',
           de: 'Entstanden in einem Monorepo mit den Websites weiterer Tattoo-Studios und einem Portal für deren Terminanfragen; jede Website hat ein eigenes CMS-Projekt und Deployment.',
-        },
-        {
-          en: '<b>KaWAna:</b> website for women’s circles and cooking classes, with sign-up forms and a CMS.',
-          de: '<b>KaWAna:</b> Website für Frauenkreise und Kochkurse, mit Anmeldeformularen und CMS.',
         },
       ],
     },
