@@ -1,5 +1,5 @@
 import { BASE_LANGUAGE, LANGUAGES, type Language } from '#/i18n/language'
-import { newestFirst, periodProblem } from './career'
+import { newestFirst, periodProblem } from './period'
 import type { Content } from './index'
 
 /**
@@ -29,12 +29,17 @@ function everythingIn(content: Content, language: Language) {
   }
 }
 
-/** What the Projects as a whole must satisfy: unique slugs, and something to feature and pin. */
+/**
+ * What the Projects must satisfy: well-formed periods, unique slugs, and
+ * something to feature and pin.
+ */
 function projectProblems(content: Content): string[] {
   const problems: string[] = []
   const projects = content.getProjects(BASE_LANGUAGE)
   const seen = new Set<string>()
-  for (const { slug } of projects) {
+  for (const { slug, period } of projects) {
+    const problem = periodProblem(period)
+    if (problem) problems.push(`projects: "${slug}" ${problem}`)
     if (seen.has(slug)) problems.push(`projects: slug "${slug}" is not unique`)
     seen.add(slug)
   }

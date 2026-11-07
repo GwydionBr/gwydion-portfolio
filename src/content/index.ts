@@ -1,5 +1,5 @@
 import { BASE_LANGUAGE, type Language } from '#/i18n/language'
-import { newestFirst } from './career'
+import { newestFirst } from './period'
 import { careerEntries } from './data/careerEntries'
 import { cv } from './data/cv'
 import { posts } from './data/posts'
@@ -22,11 +22,12 @@ import type {
 
 export type { Localized } from './localized'
 export type {
-  CareerDate,
   CareerEntry,
   CareerEntrySource,
   ContentSource,
   CvFile,
+  Period,
+  PeriodDate,
   Post,
   Profile,
   ProfileLink,

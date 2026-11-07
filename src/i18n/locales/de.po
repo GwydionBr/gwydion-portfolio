@@ -136,7 +136,7 @@ msgstr "Name"
 msgid "Next screenshot"
 msgstr "Nächster Screenshot"
 
-#: src/components/CareerList.tsx
+#: src/components/PeriodText.tsx
 msgid "now"
 msgstr "heute"
 

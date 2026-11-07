@@ -20,7 +20,7 @@ describe('The About view', () => {
     expect(careerEntries(page, 'Career')).toEqual([
       'Jun 2024 – nowLead fixture · Example GmbHLeads fixtures.',
       'Mar 2022 – 2024Freelance fixture maker · Self-employedBuilt fixtures.',
-      '2018 – 2022Degree in fixtures · Example UniversityStudied fixtures.',
+      '2018–2022Degree in fixtures · Example UniversityStudied fixtures.',
     ])
   })
 
@@ -31,7 +31,7 @@ describe('The About view', () => {
     expect(careerEntries(page, 'Werdegang')).toEqual([
       'Juni 2024 – heuteLeitendes Fixture · Example GmbHLeitet Fixtures.',
       'März 2022 – 2024Freiberufliche Fixture-Bauerin · Self-employedBaute Fixtures.',
-      '2018 – 2022Studium der Fixtures · Example UniversityStudierte Fixtures.',
+      '2018–2022Studium der Fixtures · Example UniversityStudierte Fixtures.',
     ])
   })
 

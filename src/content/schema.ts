@@ -48,6 +48,20 @@ export interface Post {
   publishedAt: string
 }
 
+/** A month (`YYYY-MM`) or, when the month does not matter, a year (`YYYY`). */
+export type PeriodDate = string
+
+/**
+ * When something happened: Career entries and Projects. Stored without
+ * words, so each Site language shows it in its own words ("2025–now",
+ * "2025–heute"). A single year is `start` and `end` the same.
+ */
+export interface Period {
+  start: PeriodDate
+  /** `null` while it is ongoing. */
+  end: PeriodDate | null
+}
+
 /** What kind of work a Project is. */
 export type ProjectKind = 'own-product' | 'client-work' | 'open-source'
 
@@ -57,8 +71,8 @@ export interface ProjectSource {
   slug: string
   title: string
   kind: ProjectKind
-  /** When he worked on it, as shown: `"2026"`, `"2025–now"`. */
-  years: string
+  /** When he worked on it. */
+  period: Period
   /** One line, for lists. */
   summary: Localized<string>
   stack: string[]
@@ -143,18 +157,9 @@ export interface Screenshot {
   images: Record<Theme, ScreenshotImage | undefined>
 }
 
-/**
- * A month (`YYYY-MM`) or, when the month does not matter, a year (`YYYY`).
- * Career entry periods use it.
- */
-export type CareerDate = string
-
 /** One stage of Gwydion's path (glossary: Career entry). */
-export interface CareerEntrySource {
+export interface CareerEntrySource extends Period {
   kind: 'job' | 'freelance' | 'education'
-  start: CareerDate
-  /** `null` while the entry is ongoing. */
-  end: CareerDate | null
   title: Localized<string>
   organisation: string
   summary: Localized<string>

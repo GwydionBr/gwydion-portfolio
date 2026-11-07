@@ -51,6 +51,15 @@ describe('Content integrity', () => {
     ])
   })
 
+  it('a Project period that ends before it starts is reported', () => {
+    const source = fixtureSource()
+    source.projects[0]!.period = { start: '2024', end: '2023' }
+
+    expect(integrityProblems(createContent(source))).toContain(
+      'projects: "fixture-kit" ends before it starts',
+    )
+  })
+
   it('two Projects with the same slug are reported', () => {
     const source = fixtureSource()
     source.projects[2]!.slug = 'fixture-kit'

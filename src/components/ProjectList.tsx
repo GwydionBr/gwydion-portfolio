@@ -6,7 +6,7 @@ import { ProjectSwatch } from './ProjectSwatch'
 
 /**
  * Projects as an ordered list of rows, each linking to its Project page:
- * title, kind, years and summary. The Projects view and the Overview's
+ * title, kind, period and summary. The Projects view and the Overview's
  * featured-Projects tile both use it.
  */
 export function ProjectList({

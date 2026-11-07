@@ -10,7 +10,7 @@ export const projects: ProjectSource[] = [
     slug: 'self-engine',
     title: 'Self-Engine',
     kind: 'own-product',
-    years: '2025–now',
+    period: { start: '2025', end: null },
     summary: {
       en: 'Time tracking, tasks, calendar, finance and habits on one data model. Offline-first sync across web, macOS and iOS.',
       de: 'Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten auf einem Datenmodell. Offline-first-Sync über Web, macOS und iOS.',
@@ -41,7 +41,7 @@ export const projects: ProjectSource[] = [
     slug: 'endstation-tattoo',
     title: 'Endstation Tattoo',
     kind: 'client-work',
-    years: '2026',
+    period: { start: '2026', end: '2026' },
     summary: {
       en: 'Studio website with artist portfolios and booking requests, editable by the studio through Sanity.',
       de: 'Studio-Website mit Künstler-Portfolios und Terminanfragen, vom Studio selbst über Sanity pflegbar.',
@@ -56,7 +56,7 @@ export const projects: ProjectSource[] = [
     slug: 'kawana',
     title: 'KaWAna',
     kind: 'client-work',
-    years: '2026',
+    period: { start: '2026', end: '2026' },
     summary: {
       en: 'Website for women’s circles and cooking classes, with sign-up forms and a CMS.',
       de: 'Website für Frauenkreise und Kochkurse, mit Anmeldeformularen und CMS.',
@@ -71,7 +71,7 @@ export const projects: ProjectSource[] = [
     slug: 'gwydion-dev',
     title: 'gwydion.dev',
     kind: 'open-source',
-    years: '2026',
+    period: { start: '2026', end: '2026' },
     summary: {
       en: 'This site: a bilingual, server-rendered portfolio built like an app.',
       de: 'Diese Website: ein zweisprachiges, serverseitig gerendertes Portfolio im Stil einer App.',

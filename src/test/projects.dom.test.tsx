@@ -7,7 +7,7 @@ const projectList = (page: { main(): HTMLElement }, name: string) =>
   within(within(page.main()).getByRole('list', { name })).getAllByRole('listitem')
 
 describe('The Projects view', () => {
-  it('lists every Project in the configured order, with kind, years and summary', async () => {
+  it('lists every Project in the configured order, with kind, period and summary', async () => {
     const page = await visit('/en/projects', { content: fixtureContent() })
 
     const items = projectList(page, 'Projects')
@@ -31,6 +31,10 @@ describe('The Projects view', () => {
     expect(items[1]!.textContent).toContain('Kundenprojekt')
     expect(items[1]!.textContent).toContain('Ein Studio für Fixtures.')
     expect(items[2]!.textContent).toContain('Open Source')
+    expect(items[0]!.textContent).toContain('2025–heute')
+    expect(items[0]!.textContent).not.toContain('now')
+    expect(items[2]!.textContent).toContain('2024')
+    expect(items[2]!.textContent).not.toContain('2024–')
   })
 })
 
@@ -55,7 +59,7 @@ describe('A Project page', () => {
 
     expect(page.main().textContent).toContain('Die Geschichte von Fixture Engine.')
     expect(page.main().textContent).not.toContain('The story of')
-    expect(page.main().textContent).toContain('Eigenes Produkt · 2025–now')
+    expect(page.main().textContent).toContain('Eigenes Produkt · 2025–heute')
   })
 
   it('is opened from the Projects view', async () => {
