@@ -20,6 +20,7 @@
     "i18n:check": "bun scripts/check-catalogs.ts",
     "screenshots:sync": "bun scripts/sync-self-engine-screenshots.ts",
     "cv:build": "bun scripts/build-cv.ts",
+    "og:build": "bun scripts/build-og-image.ts",
     "check": "bun run i18n:check && vp check",
     "check:fix": "vp check --fix && bun run i18n:check"
   },

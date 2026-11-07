@@ -66,7 +66,15 @@ The CV PDFs in `public/cv/` are generated from the content data, not edited by h
 bun run cv:build
 ```
 
-It renders `scripts/cv/` (layout and CV-only wording) to HTML and prints it with a local Chromium browser (Helium by default; set `CHROME` to use another) to one PDF per language. The build fails unless each PDF has exactly one page. Rebuild and commit the PDFs after changing Career entries, Projects, or the portrait (`public/portrait.webp`, shown in the German CV only).
+It renders `scripts/cv/` (layout and CV-only wording) to HTML and prints it with a local Chromium browser (Helium by default; set `CHROME` to use another; see `scripts/lib/headlessBrowser.ts`) to one PDF per language. The build fails unless each PDF has exactly one page. Rebuild and commit the PDFs after changing Career entries, Projects, or the portrait (`public/portrait.webp`, shown in the German CV only).
+
+## Share Image
+
+`public/og-image.png` (the Open Graph and Twitter image of every page) is generated the same way, from the Profile and the pinned Projects:
+
+```bash
+bun run og:build
+```
 
 ## Self-Engine Screenshots
 
