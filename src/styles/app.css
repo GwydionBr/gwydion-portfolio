@@ -23,6 +23,10 @@
   --hover: light-dark(rgb(0 0 0 / 0.03), rgb(255 255 255 / 0.04));
   --selected: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
   --focus: light-dark(#2563eb, #60a5fa);
+  /* The Availability card: Gwydion is open to work. */
+  --available: light-dark(#047857, #34d399);
+  --available-surface: light-dark(#ecfdf5, #062a1e);
+  --available-line: light-dark(#d1fae5, #0b4a35);
 }
 
 :root[data-theme='light'] {
@@ -59,6 +63,9 @@
   --color-line: var(--line);
   --color-hover: var(--hover);
   --color-selected: var(--selected);
+  --color-available: var(--available);
+  --color-available-surface: var(--available-surface);
+  --color-available-line: var(--available-line);
 }
 
 @layer base {

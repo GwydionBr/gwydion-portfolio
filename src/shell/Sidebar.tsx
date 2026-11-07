@@ -1,14 +1,16 @@
 import { useLingui } from '@lingui/react/macro'
+import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
-import { NAVIGATION_ENTRIES } from './navigation'
+import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
 import { SearchPlaceholder } from './SearchPlaceholder'
 import { ThemeToggle } from './ThemeToggle'
 
-/** The desktop sidebar: identity, search, navigation and, at the bottom, the Site language switch and the theme toggle. */
+/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability, the Site language switch and the theme toggle. */
 export function Sidebar() {
   const { t } = useLingui()
+  const entries = useNavigationEntries()
   return (
     <aside
       aria-label={t`Sidebar`}
@@ -18,7 +20,7 @@ export function Sidebar() {
       <SearchPlaceholder />
       <nav aria-label={t`Main navigation`}>
         <ul className="space-y-0.5">
-          {NAVIGATION_ENTRIES.map((entry) => (
+          {entries.map((entry) => (
             <li key={entry.to}>
               <NavigationLink
                 entry={entry}
@@ -35,7 +37,8 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
-      <div className="mt-auto flex items-center justify-between px-3 pt-3">
+      <AvailabilityTile compact className="mt-auto" />
+      <div className="flex items-center justify-between px-3 pt-3">
         <LanguageSwitch />
         <ThemeToggle />
       </div>

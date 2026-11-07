@@ -62,7 +62,20 @@ const config = defineConfig({
       'no-unused-vars': 'warn',
       'no-console': 'off',
       'vite-plus/prefer-vite-plus-imports': 'error',
+      // Pages and components read content only through the content module (ADR 0004).
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/content/data', '**/content/data/**', '#/content/data/**'],
+              message: 'Read content through the content module (#/content), not its files.',
+            },
+          ],
+        },
+      ],
     },
+    overrides: [{ files: ['src/content/**'], rules: { 'no-restricted-imports': 'off' } }],
     env: {
       browser: true,
       es2022: true,

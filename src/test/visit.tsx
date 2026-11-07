@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
 import { getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
+import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
 import type { Theme } from '#/theme/theme'
 import { emulateSystemTheme } from './systemTheme'
@@ -26,6 +27,8 @@ afterEach(async () => {
 interface VisitOptions {
   /** The visitor's browser languages, most preferred first (`navigator.languages`). */
   browserLanguages?: readonly string[]
+  /** The content the site serves; the site's own content files by default. */
+  content?: Content
   /** The visitor's system appearance setting (`prefers-color-scheme`). */
   systemTheme?: Theme
 }
@@ -39,7 +42,7 @@ interface VisitOptions {
  */
 export async function visit(
   url: string,
-  { browserLanguages = ['en-US', 'en'], systemTheme = 'light' }: VisitOptions = {},
+  { browserLanguages = ['en-US', 'en'], content, systemTheme = 'light' }: VisitOptions = {},
 ) {
   const system = emulateSystemTheme(systemTheme)
   globalThis.IS_REACT_ACT_ENVIRONMENT = true
@@ -47,7 +50,10 @@ export async function visit(
   // jsdom does not implement scrolling; the router restores scroll positions.
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 
-  const router = createAppRouter({ history: createMemoryHistory({ initialEntries: [url] }) })
+  const router = createAppRouter({
+    history: createMemoryHistory({ initialEntries: [url] }),
+    content,
+  })
   await act(async () => {
     await router.load()
   })
