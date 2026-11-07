@@ -1,0 +1,45 @@
+{/* Facts from the old case study (main: messages/en.json, cs_*). PLACEHOLDER until Gwydion updates the story (spec #31). */}
+
+## The idea
+
+Time trackers don't know what an hour is worth. Finance apps don't know which work earned the money. And calendars show what was planned, never what actually happened. The connections between them only existed in my head.
+
+In Self-Engine, those connections are the product: an appointment starts a timer, the timer becomes a time entry, and a payout marks the entries as paid and books the money in Finance. Habits fill themselves in from the time tracked on a linked project.
+
+## One data model, five modules
+
+- **Projects & time tracking:** one timer per project, running in parallel, pausable, with Pomodoro. Every hour knows its project, its hourly rate and its time class.
+- **Tasks:** Inbox, Today, Upcoming and a Kanban board, with your own statuses in fixed categories.
+- **Calendar:** appointments and tracked time side by side, with two-way sync with Google and Apple (iCloud) that runs on the server, even with the app closed.
+- **Finance:** accounts in one currency each, one-off and recurring payments, transfers and currency conversions, reported strictly per currency.
+- **Habits:** daily, on chosen weekdays, or as a flexible quota per week or month; streaks are always computed from history.
+
+## Offline-first, for real
+
+Every app writes to a local SQLite database first; a write never waits for the cloud. PowerSync queues the change and uploads it in order to Supabase, where Postgres, with row-level security on every table, stays the source of truth. Changes from other devices flow back into the local database, and the UI updates through live queries.
+
+The domain lives in shared packages: synced tables, Zod schemas and typed collections that web and mobile consume identically. Business rules are pure functions behind a persistence port, so the same rule guards a tap in the mobile app, a click on the web and an AI agent's tool call on the server.
+
+<NumberTiles>
+  <NumberTile value="137" label="database migrations" />
+  <NumberTile value="37" label="synced tables" />
+  <NumberTile value="38" label="architecture decisions (ADRs)" />
+</NumberTiles>
+
+## An assistant with guardrails
+
+The built-in assistant knows 39 typed capabilities across every module. It works pull-first: the model gets counts and hints instead of user data and has to ask through typed read tools. Every write is prepared as a preview from live data, approved once, and executed as the same domain mutation as a click.
+
+If you'd rather use your own agent, connect Claude, Claude Code or Cursor to Self-Engine's MCP server over OAuth. Permissions apply per data type, and every call lands in the agent log.
+
+## Hard-won lessons
+
+- **One broken write must not block the rest.** Offline queues upload in strict order, so fatal Postgres errors are classified and dropped, and writes that belong together are sent atomically.
+- **Calendar sync is about identity.** Deterministic IDs make creates idempotent, ETags catch concurrent edits, and expired sync tokens trigger a full resync.
+- **Swapping the identity provider in production.** Moving every user from Supabase Auth to Clerk meant rewriting every row-level security policy in one migration, without losing a single offline queue.
+
+<Callout title="Try it yourself">
+  Self-Engine runs in the browser and on the Mac, free for 30 days:
+  [self-engine.com](https://self-engine.com). It is a commercial product; its source code is not
+  public.
+</Callout>

@@ -4,9 +4,10 @@ import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
+import { PinnedProjects } from './PinnedProjects'
 import { SearchPlaceholder } from './SearchPlaceholder'
 
-/** The desktop sidebar: identity, search, navigation and, at the bottom, the Availability and the Site language switch. */
+/** The desktop sidebar: identity, search, navigation, pinned Projects and, at the bottom, the Availability and the Site language switch. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -36,6 +37,7 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
+      <PinnedProjects />
       <AvailabilityTile compact className="mt-auto" />
       <div className="px-3 pt-3">
         <LanguageSwitch />

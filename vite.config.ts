@@ -1,5 +1,6 @@
 import { defineConfig, lazyPlugins } from 'vite-plus'
 import { lingui } from '@lingui/vite-plugin'
+import mdx from '@mdx-js/rollup'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { nitro } from 'nitro/vite'
@@ -17,6 +18,8 @@ const config = defineConfig({
     // Compiles the Lingui macros (`useLingui`, `<Trans>`, `msg`) to message ids
     // and `.po` catalogs to modules on import (lingui.config.ts).
     lingui({ macroTransform: true, failOnCompileError: true }),
+    // Project stories are MDX (src/content/data/projects); compiled before React sees them.
+    { enforce: 'pre', ...mdx() },
     tailwindcss(),
     tanstackStart(),
     // Nitro's dev server keeps Vitest from exiting; tests don't need a server runtime.

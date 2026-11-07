@@ -1,3 +1,4 @@
+import type { MDXContent } from 'mdx/types'
 import type { Language } from '#/i18n/language'
 import type { InLanguage, Localized } from './localized'
 
@@ -46,8 +47,58 @@ export interface Post {
   publishedAt: string
 }
 
+/** What kind of work a Project is. */
+export type ProjectKind = 'own-product' | 'client-work' | 'open-source'
+
+/** A piece of Gwydion's work presented as evidence (glossary: Project), without its story. */
+export interface ProjectSource {
+  /** Its address: `/$lang/projects/$slug`. Unique. */
+  slug: string
+  title: string
+  kind: ProjectKind
+  /** When he worked on it, as shown: `"2026"`, `"2025–now"`. */
+  years: string
+  /** One line, for lists. */
+  summary: Localized<string>
+  stack: string[]
+  /** Its numbers, if any; Self-Engine's also become Overview tiles. */
+  stats?: { value: string; label: Localized<string> }[]
+  /** Shown on the Overview. */
+  featured: boolean
+  /** Shown in the sidebar. */
+  pinned: boolean
+  /** Position in every list, ascending. */
+  order: number
+  /** Its colour (a CSS colour), for its swatch. */
+  accent: string
+}
+
+/** A Project in one Site language, as lists receive it. */
+export type Project = InLanguage<ProjectSource>
+
+/**
+ * A Project's story: one MDX document, rendered with the story components
+ * (`#/components/story`) passed as `components`.
+ */
+export type Story = MDXContent
+
+/**
+ * Every Project's story, by slug, then by Site language. Stories are MDX
+ * files (`data/projects/<slug>.<language>.mdx`), so one can be missing; the
+ * content-integrity check reports it.
+ */
+export type StorySource = Partial<Record<string, Partial<Record<Language, Story>>>>
+
+/** A Project with its story in one Site language, as its page receives it. */
+export interface ProjectWithStory extends Project {
+  /** Undefined only when the story is missing, which the content-integrity check reports. */
+  story: Story | undefined
+}
+
 /** Everything the content module serves, as stored. */
 export interface ContentSource {
   profile: ProfileSource
+  projects: ProjectSource[]
+  stories: StorySource
   posts: Post[]
 }

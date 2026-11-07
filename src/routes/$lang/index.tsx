@@ -2,8 +2,11 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { PostList } from '#/components/PostList'
+import { ProjectList } from '#/components/ProjectList'
+import { TagList } from '#/components/TagList'
 import { Tile } from '#/components/Tile'
-import { usePosts, useProfile } from '#/content/react'
+import { SELF_ENGINE_SLUG } from '#/content'
+import { usePosts, useProfile, useProject, useProjects } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
 import { View } from '#/shell/View'
 
@@ -12,24 +15,23 @@ export const Route = createFileRoute('/$lang/')({ component: Overview })
 /** How many Posts the "latest Posts" tile shows. */
 const LATEST_POSTS = 3
 
-/** The Overview: tiles summarising the Profile, its Availability and the latest Posts. */
+/**
+ * The Overview: tiles summarising the Profile, Self-Engine's numbers, the
+ * featured Projects, the Availability and the latest Posts.
+ */
 function Overview() {
   const { t } = useLingui()
   const lang = useSiteLanguage()
   const { pitch, skills, now } = useProfile()
+  const selfEngine = useProject(SELF_ENGINE_SLUG)
+  const featured = useProjects({ featured: true })
   const posts = usePosts()
   return (
     <View title={t`Overview`} location={[]}>
       <div className="grid gap-4 lg:grid-cols-3">
         <Tile title={t`Profile`} className="lg:col-span-2">
           <p className="mt-2 text-base leading-relaxed text-ink">{pitch}</p>
-          <ul aria-label={t`Skills`} className="mt-4 flex flex-wrap gap-1.5">
-            {skills.map((skill) => (
-              <li key={skill} className="rounded-md bg-selected px-2 py-0.5 text-xs">
-                {skill}
-              </li>
-            ))}
-          </ul>
+          <TagList label={t`Skills`} tags={skills} className="mt-4" />
         </Tile>
         <Tile title={t`Now`}>
           <ul className="mt-2 space-y-2">
@@ -40,6 +42,32 @@ function Overview() {
             ))}
           </ul>
         </Tile>
+        {selfEngine?.stats?.map((stat) => (
+          <Tile key={stat.label} title={`${selfEngine.title} · ${stat.label}`}>
+            <p className="mt-2 text-3xl font-semibold tracking-tight text-ink tabular-nums">
+              {stat.value}
+            </p>
+          </Tile>
+        ))}
+        {featured.length > 0 && (
+          <Tile
+            title={t`Featured Projects`}
+            className="lg:col-span-2"
+            action={
+              <Link
+                to="/$lang/projects"
+                params={{ lang }}
+                className="text-xs text-subtle hover:text-ink"
+              >
+                {t`View all`}
+              </Link>
+            }
+          >
+            <div className="mt-1">
+              <ProjectList projects={featured} label={t`Featured Projects`} headingLevel={3} />
+            </div>
+          </Tile>
+        )}
         <AvailabilityTile />
         {posts.length > 0 && (
           <Tile

@@ -1,14 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
-import { Placeholder, View } from '#/shell/View'
+import { ProjectList } from '#/components/ProjectList'
+import { useProjects } from '#/content/react'
+import { View } from '#/shell/View'
 
 export const Route = createFileRoute('/$lang/projects/')({ component: Projects })
 
+/** Every Project, in the configured order; each row opens its Project page. */
 function Projects() {
   const { t } = useLingui()
   return (
     <View title={t`Projects`}>
-      <Placeholder>{t`The Projects are being rebuilt.`}</Placeholder>
+      <div className="max-w-3xl rounded-2xl bg-surface px-5 py-2 ring-1 ring-line">
+        <ProjectList projects={useProjects()} label={t`Projects`} headingLevel={2} />
+      </div>
     </View>
   )
 }

@@ -29,4 +29,45 @@ describe('Content integrity', () => {
 
     expect(integrityProblems(createContent(source))).toEqual([])
   })
+
+  it('a Project without a German story is reported', () => {
+    const source = fixtureSource()
+    delete source.stories['fixture-studio']!.de
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: project.fixture-studio.story is missing',
+    ])
+  })
+
+  it('a Project summary missing in English is reported', () => {
+    const source = fixtureSource()
+    source.projects[0]!.summary.en = ' '
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'en: projects.2.summary is empty',
+      'en: project.fixture-kit.summary is empty',
+    ])
+  })
+
+  it('two Projects with the same slug are reported', () => {
+    const source = fixtureSource()
+    source.projects[2]!.slug = 'fixture-kit'
+
+    expect(integrityProblems(createContent(source))).toContain(
+      'projects: slug "fixture-kit" is not unique',
+    )
+  })
+
+  it('no featured or no pinned Project is reported', () => {
+    const source = fixtureSource()
+    for (const project of source.projects) {
+      project.featured = false
+      project.pinned = false
+    }
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'projects: none is featured',
+      'projects: none is pinned',
+    ])
+  })
 })
