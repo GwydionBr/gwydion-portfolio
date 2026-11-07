@@ -210,14 +210,6 @@ msgstr "Previous screenshot"
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: src/components/CareerList.tsx
-msgid "Project"
-msgstr "Project"
-
-#: src/components/CareerList.tsx
-msgid "Project: {title}"
-msgstr "Project: {title}"
-
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts

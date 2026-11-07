@@ -1,4 +1,3 @@
-import { useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import type { CareerEntry } from '#/content'
 import { useContent } from '#/content/react'
@@ -33,9 +32,8 @@ export function CareerList({ entries }: { entries: readonly CareerEntry[] }) {
   )
 }
 
-/** "Project →", to the page of the Project at `slug`; named after it for assistive tech. */
+/** "<Project title> →", to the page of the Project at `slug`. */
 function ProjectLink({ slug }: { slug: string }) {
-  const { t } = useLingui()
   const lang = useSiteLanguage()
   const project = useContent().getProject(slug, lang)
   if (!project) return null
@@ -44,10 +42,9 @@ function ProjectLink({ slug }: { slug: string }) {
     <Link
       to="/$lang/projects/$slug"
       params={{ lang, slug }}
-      aria-label={t`Project: ${title}`}
       className="mt-1 inline-block text-xs font-medium text-ink underline-offset-2 hover:underline"
     >
-      {t`Project`} <span aria-hidden>→</span>
+      {title} <span aria-hidden>→</span>
     </Link>
   )
 }

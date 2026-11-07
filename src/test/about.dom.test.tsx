@@ -19,7 +19,7 @@ describe('The About view', () => {
     expect(page.title()).toBe('About')
     expect(careerEntries(page, 'Career')).toEqual([
       'Jun 2024 – nowLead fixture · Example GmbHLeads fixtures.',
-      'Mar 2022 – 2024Freelance fixture maker · Self-employedBuilt fixtures.Project →',
+      'Mar 2022 – 2024Freelance fixture maker · Self-employedBuilt fixtures.Fixture Studio →',
       '2018–2022Degree in fixtures · Example UniversityStudied fixtures.',
     ])
   })
@@ -30,7 +30,7 @@ describe('The About view', () => {
     expect(page.title()).toBe('Über mich')
     expect(careerEntries(page, 'Werdegang')).toEqual([
       'Juni 2024 – heuteLeitendes Fixture · Example GmbHLeitet Fixtures.',
-      'März 2022 – 2024Freiberufliche Fixture-Bauerin · Self-employedBaute Fixtures.Projekt →',
+      'März 2022 – 2024Freiberufliche Fixture-Bauerin · Self-employedBaute Fixtures.Fixture Studio →',
       '2018–2022Studium der Fixtures · Example UniversityStudierte Fixtures.',
     ])
   })
@@ -39,10 +39,10 @@ describe('The About view', () => {
     const page = await visit('/en/about', { content: fixtureContent() })
 
     const career = within(region(page.main(), 'Career'))
-    expect(career.getAllByRole('link').map((link) => link.getAttribute('aria-label'))).toEqual([
-      'Project: Fixture Studio',
+    expect(career.getAllByRole('link').map((link) => link.textContent)).toEqual([
+      'Fixture Studio →',
     ])
-    await page.click(career.getByRole('link', { name: 'Project: Fixture Studio' }))
+    await page.click(career.getByRole('link', { name: 'Fixture Studio' }))
 
     expect(page.path()).toBe('/en/projects/fixture-studio')
     expect(page.title()).toBe('Fixture Studio')

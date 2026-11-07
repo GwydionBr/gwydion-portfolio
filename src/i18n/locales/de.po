@@ -210,14 +210,6 @@ msgstr "Vorheriger Screenshot"
 msgid "Privacy policy"
 msgstr "Datenschutzerklärung"
 
-#: src/components/CareerList.tsx
-msgid "Project"
-msgstr "Projekt"
-
-#: src/components/CareerList.tsx
-msgid "Project: {title}"
-msgstr "Projekt: {title}"
-
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts
