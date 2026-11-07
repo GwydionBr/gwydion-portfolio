@@ -1,20 +1,40 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router'
+import { createRouter, type RouterHistory } from '@tanstack/react-router'
+import { siteContent, type Content } from './content'
 import { routeTree } from './routeTree.gen'
-import { deLocalizeUrl, localizeUrl } from '#/generated/paraglide/runtime'
 
-export function getRouter() {
-  const router = createTanStackRouter({
+/** What every route can read from its context: the content module (ADR 0004). */
+export interface RouterContext {
+  content: Content
+}
+
+/**
+ * The site's router. Tests pass a memory history and fixture content
+ * (src/test/visit.tsx); the site uses its own content files.
+ */
+export function createAppRouter({
+  history,
+  content = siteContent,
+  isServer,
+}: {
+  history?: RouterHistory
+  content?: Content
+  /** Load as the server does per request (tests of redirects and response headers). */
+  isServer?: boolean
+} = {}) {
+  return createRouter({
     routeTree,
-    rewrite: {
-      input: ({ url }) => deLocalizeUrl(url),
-      output: ({ url }) => localizeUrl(url),
-    },
+    history,
+    isServer,
+    context: { content } satisfies RouterContext,
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
   })
+}
 
-  return router
+/** Called by TanStack Start once per server request and once in the browser. */
+export function getRouter() {
+  return createAppRouter()
 }
 
 declare module '@tanstack/react-router' {

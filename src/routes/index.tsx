@@ -1,18 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { HomePageContent } from '#/features/home/components/HomePageContent'
-import * as m from '#/generated/paraglide/messages'
-import { buildRouteHead } from '#/shared/seo/buildRouteHead'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { preferredSiteLanguage } from '#/i18n/request'
 
+// The bare domain opens the Overview in the visitor's preferred Site language.
+// Temporary, and varying by Accept-Language, so no cache hands one visitor's
+// language to the next. Its pages name it as their `x-default` alternate.
 export const Route = createFileRoute('/')({
-  head: () =>
-    buildRouteHead({
-      path: '/',
-      title: m.meta_home_title(),
-      description: m.meta_home_description(),
-    }),
-  component: HomePage,
+  beforeLoad: () => {
+    throw redirect({
+      to: '/$lang',
+      params: { lang: preferredSiteLanguage() },
+      headers: { Vary: 'Accept-Language' },
+    })
+  },
 })
-
-function HomePage() {
-  return <HomePageContent />
-}

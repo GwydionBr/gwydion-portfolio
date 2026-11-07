@@ -1,0 +1,32 @@
+{/* DRAFT by Claude from the tattoo-sites repo (November 2026). Gwydion reviews it before the cutover (#41). */}
+
+## The brief
+
+Endstation Tattoo is a studio with several artists in Ottobeuren. Its old website ran on WordPress and Elementor: hard for the studio to change, and booking requests arrived as loose emails. I rebuilt it so the studio edits everything itself, and so every booking request lands in one place where the team can work through it.
+
+## A site the studio runs itself
+
+The site has the artists and their work, a tattoo gallery, FAQ, aftercare, a shop and a guided booking form. Every page is content in Sanity: the studio edits it in its own hosted Studio, and a published change is live without a deploy. Drafts can be previewed on the real site, with click-to-edit through Sanity's Presentation tool. The GROQ queries are typed with Sanity TypeGen, so a schema change that breaks a page fails the build instead of the page.
+
+Moving off WordPress without losing search rankings meant 301 redirects for every old URL that still matters, `410 Gone` for the WordPress leftovers (`wp-admin`, `wp-content`, tag pages), a sitemap and structured data for the studio.
+
+## Booking requests, not emails
+
+The booking form asks for what an artist needs to quote a tattoo: the artist (picked from Sanity), placement, size, a deposit option and reference images, which the browser shrinks to 2 MB before upload. One Zod schema checks the form in the browser and on the server.
+
+Requests first went to Nextcloud as PDFs. That broke down once requests needed a status, someone to claim them, handover between artists and protection against duplicates, so I replaced it with a request portal of my own on Supabase:
+
+- A request counts as received only once it is saved; a retry reuses the same submission ID, so a flaky connection never creates a duplicate.
+- Artists get at most one summary email a day, with no customer data in it.
+- Requests are deleted automatically six months after they are closed.
+- The form data stays in the EU: the site runs in Vercel's Frankfurt region.
+
+<NumberTiles>
+  <NumberTile value="10" label="Sanity document types" />
+  <NumberTile value="5" label="architecture decisions (ADRs)" />
+  <NumberTile value="100+" label="test files across the repo" />
+</NumberTiles>
+
+## One codebase, several studios
+
+Endstation is the main site of a small monorepo that also runs websites for solo tattoo artists. The sites share packages for the artist pages, the Sanity Studio and preview, but each one has its own Sanity project, Vercel project and credentials, because each belongs to a different owner. Only the code is shared.

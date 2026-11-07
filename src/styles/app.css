@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+/*
+ * Colour tokens. Components use only these (`bg-canvas`, `text-ink`, …), never
+ * raw palette colours, so every view supports both themes for free.
+ *
+ * Each token is `light-dark(<light>, <dark>)`. `color-scheme` picks the side:
+ * the system setting by default, or the visitor's choice, which the theme
+ * module (src/theme/theme.ts) puts on `<html data-theme>`. Text tokens
+ * (ink, muted, subtle) reach WCAG AA on every background (canvas, sidebar,
+ * surface) in both themes; src/styles/contrast.test.ts checks that.
+ */
+:root {
+  color-scheme: light dark;
+  --canvas: light-dark(#f3f3f1, #111110);
+  --sidebar: light-dark(#fafaf9, #171716);
+  --surface: light-dark(#ffffff, #1e1e1d);
+  --ink: light-dark(#171717, #ededec);
+  --muted: light-dark(#525252, #b4b4b2);
+  --subtle: light-dark(#666666, #8f8f8d);
+  --line: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+  --hover: light-dark(rgb(0 0 0 / 0.03), rgb(255 255 255 / 0.04));
+  --selected: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+  --focus: light-dark(#2563eb, #60a5fa);
+  /* The Availability card: Gwydion is open to work. */
+  --available: light-dark(#047857, #34d399);
+  --available-surface: light-dark(#ecfdf5, #062a1e);
+  --available-line: light-dark(#d1fae5, #0b4a35);
+  /* Field messages and the contact form's error state. */
+  --danger: light-dark(#b91c1c, #f87171);
+  --danger-surface: light-dark(#fef2f2, #2a1212);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/*
+ * `dark:` for the rare case a token is not enough (e.g. swapping an icon):
+ * the visitor's dark choice, or a dark system setting without a choice.
+ */
+@custom-variant dark {
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
+      @slot;
+    }
+  }
+}
+
+/*
+ * Content marked `placeholder: true` (it stands in for content still to be
+ * written): every place shows it dimmed the same way.
+ */
+@utility stand-in {
+  opacity: 0.6;
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --color-canvas: var(--canvas);
+  --color-sidebar: var(--sidebar);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-available: var(--available);
+  --color-available-surface: var(--available-surface);
+  --color-available-line: var(--available-line);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
+}
+
+@layer base {
+  html {
+    background-color: var(--canvas);
+  }
+
+  /* Visible keyboard focus everywhere, never on pointer clicks. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}

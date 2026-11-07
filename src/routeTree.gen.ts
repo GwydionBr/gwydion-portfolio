@@ -10,42 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as DatenschutzRouteImport } from './routes/datenschutz'
-import { Route as ImpressumRouteImport } from './routes/impressum'
-import { Route as SelfEngineRouteImport } from './routes/self-engine'
+import { Route as LangRouteImport } from './routes/$lang'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LangIndexRouteImport } from './routes/$lang/index'
+import { Route as LangAboutRouteImport } from './routes/$lang/about'
+import { Route as LangContactRouteImport } from './routes/$lang/contact'
+import { Route as LangDatenschutzRouteImport } from './routes/$lang/datenschutz'
+import { Route as LangImpressumRouteImport } from './routes/$lang/impressum'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
+import { Route as LangProjectsIndexRouteImport } from './routes/$lang/projects/index'
+import { Route as LangProjectsSlugRouteImport } from './routes/$lang/projects/$slug'
+import { Route as LangWritingIndexRouteImport } from './routes/$lang/writing/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DatenschutzRoute = DatenschutzRouteImport.update({
-  id: '/datenschutz',
-  path: '/datenschutz',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ImpressumRoute = ImpressumRouteImport.update({
-  id: '/impressum',
-  path: '/impressum',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SelfEngineRoute = SelfEngineRouteImport.update({
-  id: '/self-engine',
-  path: '/self-engine',
+const LangRoute = LangRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -53,83 +37,141 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangAboutRoute = LangAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangContactRoute = LangContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangDatenschutzRoute = LangDatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangImpressumRoute = LangImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => LangRoute,
+} as any)
 const ApiContactRoute = ApiContactRouteImport.update({
   id: '/api/contact',
   path: '/api/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangProjectsIndexRoute = LangProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangProjectsSlugRoute = LangProjectsSlugRouteImport.update({
+  id: '/projects/$slug',
+  path: '/projects/$slug',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangWritingIndexRoute = LangWritingIndexRouteImport.update({
+  id: '/writing/',
+  path: '/writing/',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/datenschutz': typeof DatenschutzRoute
-  '/impressum': typeof ImpressumRoute
-  '/self-engine': typeof SelfEngineRoute
+  '/$lang': typeof LangRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/projects/$slug': typeof LangProjectsSlugRoute
+  '/$lang/projects/': typeof LangProjectsIndexRoute
+  '/$lang/writing/': typeof LangWritingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/datenschutz': typeof DatenschutzRoute
-  '/impressum': typeof ImpressumRoute
-  '/self-engine': typeof SelfEngineRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
+  '/$lang': typeof LangIndexRoute
+  '/$lang/projects/$slug': typeof LangProjectsSlugRoute
+  '/$lang/projects': typeof LangProjectsIndexRoute
+  '/$lang/writing': typeof LangWritingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/datenschutz': typeof DatenschutzRoute
-  '/impressum': typeof ImpressumRoute
-  '/self-engine': typeof SelfEngineRoute
+  '/$lang': typeof LangRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/about': typeof LangAboutRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
+  '/$lang/': typeof LangIndexRoute
+  '/$lang/projects/$slug': typeof LangProjectsSlugRoute
+  '/$lang/projects/': typeof LangProjectsIndexRoute
+  '/$lang/writing/': typeof LangWritingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/contact'
-    | '/datenschutz'
-    | '/impressum'
-    | '/self-engine'
+    | '/$lang'
     | '/sitemap.xml'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
+    | '/$lang/'
+    | '/$lang/projects/$slug'
+    | '/$lang/projects/'
+    | '/$lang/writing/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/contact'
-    | '/datenschutz'
-    | '/impressum'
-    | '/self-engine'
     | '/sitemap.xml'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
+    | '/$lang'
+    | '/$lang/projects/$slug'
+    | '/$lang/projects'
+    | '/$lang/writing'
   id:
     | '__root__'
     | '/'
-    | '/about'
-    | '/contact'
-    | '/datenschutz'
-    | '/impressum'
-    | '/self-engine'
+    | '/$lang'
     | '/sitemap.xml'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
+    | '/$lang/'
+    | '/$lang/projects/$slug'
+    | '/$lang/projects/'
+    | '/$lang/writing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  ContactRoute: typeof ContactRoute
-  DatenschutzRoute: typeof DatenschutzRoute
-  ImpressumRoute: typeof ImpressumRoute
-  SelfEngineRoute: typeof SelfEngineRoute
+  LangRoute: typeof LangRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiContactRoute: typeof ApiContactRoute
 }
@@ -143,39 +185,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/datenschutz': {
-      id: '/datenschutz'
-      path: '/datenschutz'
-      fullPath: '/datenschutz'
-      preLoaderRoute: typeof DatenschutzRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/impressum': {
-      id: '/impressum'
-      path: '/impressum'
-      fullPath: '/impressum'
-      preLoaderRoute: typeof ImpressumRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/self-engine': {
-      id: '/self-engine'
-      path: '/self-engine'
-      fullPath: '/self-engine'
-      preLoaderRoute: typeof SelfEngineRouteImport
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -185,6 +199,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/about': {
+      id: '/$lang/about'
+      path: '/about'
+      fullPath: '/$lang/about'
+      preLoaderRoute: typeof LangAboutRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/contact': {
+      id: '/$lang/contact'
+      path: '/contact'
+      fullPath: '/$lang/contact'
+      preLoaderRoute: typeof LangContactRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/datenschutz': {
+      id: '/$lang/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/$lang/datenschutz'
+      preLoaderRoute: typeof LangDatenschutzRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/impressum': {
+      id: '/$lang/impressum'
+      path: '/impressum'
+      fullPath: '/$lang/impressum'
+      preLoaderRoute: typeof LangImpressumRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/api/contact': {
       id: '/api/contact'
       path: '/api/contact'
@@ -192,16 +241,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang/projects/': {
+      id: '/$lang/projects/'
+      path: '/projects'
+      fullPath: '/$lang/projects/'
+      preLoaderRoute: typeof LangProjectsIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/projects/$slug': {
+      id: '/$lang/projects/$slug'
+      path: '/projects/$slug'
+      fullPath: '/$lang/projects/$slug'
+      preLoaderRoute: typeof LangProjectsSlugRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/writing/': {
+      id: '/$lang/writing/'
+      path: '/writing'
+      fullPath: '/$lang/writing/'
+      preLoaderRoute: typeof LangWritingIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
+interface LangRouteChildren {
+  LangAboutRoute: typeof LangAboutRoute
+  LangContactRoute: typeof LangContactRoute
+  LangDatenschutzRoute: typeof LangDatenschutzRoute
+  LangImpressumRoute: typeof LangImpressumRoute
+  LangIndexRoute: typeof LangIndexRoute
+  LangProjectsSlugRoute: typeof LangProjectsSlugRoute
+  LangProjectsIndexRoute: typeof LangProjectsIndexRoute
+  LangWritingIndexRoute: typeof LangWritingIndexRoute
+}
+
+const LangRouteChildren: LangRouteChildren = {
+  LangAboutRoute: LangAboutRoute,
+  LangContactRoute: LangContactRoute,
+  LangDatenschutzRoute: LangDatenschutzRoute,
+  LangImpressumRoute: LangImpressumRoute,
+  LangIndexRoute: LangIndexRoute,
+  LangProjectsSlugRoute: LangProjectsSlugRoute,
+  LangProjectsIndexRoute: LangProjectsIndexRoute,
+  LangWritingIndexRoute: LangWritingIndexRoute,
+}
+
+const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  ContactRoute: ContactRoute,
-  DatenschutzRoute: DatenschutzRoute,
-  ImpressumRoute: ImpressumRoute,
-  SelfEngineRoute: SelfEngineRoute,
+  LangRoute: LangRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiContactRoute: ApiContactRoute,
 }

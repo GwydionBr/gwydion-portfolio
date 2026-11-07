@@ -1,0 +1,3 @@
+# The site is an app shell over real routes
+
+The site looks and behaves like a productivity app: a persistent sidebar, an Overview dashboard of tiles as the home page, and views for Projects, Writing, CV and Contact; on phones it becomes list → detail with a bottom tab bar. Every item still has its own server-rendered URL (the shell is a router layout, a click is a real navigation), so Recruiters can share links, Posts are indexable, and deep links open the shell on the right item. We chose this over a classic scrolling portfolio because it shows that Gwydion builds apps, and over purely client-side shells (launcher, desktop-with-windows) because those break links and SEO. Chosen from a round of prototypes on the `prototype/home-directions` branch (variant J).

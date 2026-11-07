@@ -1,0 +1,333 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-07 14:13+0700\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/components/CvDownload.tsx
+msgid "1 page · PDF"
+msgstr "1 page · PDF"
+
+#: src/routes/$lang/about.tsx
+#: src/shell/navigation.ts
+msgid "About"
+msgstr "About"
+
+#: src/components/AvailabilityTile.tsx
+#: src/routes/$lang/index.tsx
+msgid "Availability"
+msgstr "Availability"
+
+#: src/routes/$lang/projects/$slug.tsx
+msgid "Back to Projects"
+msgstr "Back to Projects"
+
+#: src/shell/NotFoundView.tsx
+msgid "Back to the Overview"
+msgstr "Back to the Overview"
+
+#: src/routes/$lang/about.tsx
+msgid "Career"
+msgstr "Career"
+
+#: src/components/ProjectMeta.tsx
+msgid "Client work"
+msgstr "Client work"
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Close"
+msgstr "Close"
+
+#: src/components/ProfileLinks.tsx
+msgid "coming soon"
+msgstr "coming soon"
+
+#: src/routes/$lang/contact.tsx
+#: src/shell/navigation.ts
+msgid "Contact"
+msgstr "Contact"
+
+#: src/legal/LegalPage.tsx
+msgid "Contents"
+msgstr "Contents"
+
+#: src/components/CvDownload.tsx
+msgid "CV"
+msgstr "CV"
+
+#: src/shell/ThemeToggle.tsx
+msgid "Dark theme"
+msgstr "Dark theme"
+
+#: src/routes/$lang/contact.tsx
+msgid "Directly"
+msgstr "Directly"
+
+#: src/components/CvDownload.tsx
+msgid "Download CV"
+msgstr "Download CV"
+
+#: src/components/ProfileLinks.tsx
+#: src/contact/ContactForm.tsx
+msgid "Email"
+msgstr "Email"
+
+#. placeholder {0}: shot.caption
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Enlarge screenshot: {0}"
+msgstr "Enlarge screenshot: {0}"
+
+#: src/contact/message.ts
+msgid "Enter a valid email address."
+msgstr "Enter a valid email address."
+
+#: src/components/ProjectFacts.tsx
+msgid "Facts"
+msgstr "Facts"
+
+#: src/routes/$lang/index.tsx
+msgid "Featured Projects"
+msgstr "Featured Projects"
+
+#: src/shell/View.tsx
+msgid "Get in touch"
+msgstr "Get in touch"
+
+#: src/routes/$lang/about.tsx
+msgid "Gwydion's path as a developer: his Career entries, his skills and his CV to download."
+msgstr "Gwydion's path as a developer: his Career entries, his skills and his CV to download."
+
+#: src/routes/$lang/writing/index.tsx
+msgid "Gwydion's Posts on building software."
+msgstr "Gwydion's Posts on building software."
+
+#: src/legal/pages.ts
+msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
+msgstr "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
+
+#. placeholder {0}: i18n._(PRIVACY_PAGE.title)
+#: src/contact/ContactForm.tsx
+msgid "How I handle your details is explained in the <0>{0}</0>."
+msgstr "How I handle your details is explained in the <0>{0}</0>."
+
+#: src/components/ProjectFacts.tsx
+msgid "Kind"
+msgstr "Kind"
+
+#: src/routes/$lang/index.tsx
+msgid "Latest Posts"
+msgstr "Latest Posts"
+
+#: src/shell/LegalLinks.tsx
+msgid "Legal"
+msgstr "Legal"
+
+#: src/legal/pages.ts
+msgid "Legal notice"
+msgstr "Legal notice"
+
+#: src/shell/Sidebar.tsx
+msgid "Main navigation"
+msgstr "Main navigation"
+
+#: src/contact/ContactForm.tsx
+msgid "Message"
+msgstr "Message"
+
+#: src/contact/ContactForm.tsx
+msgid "Message sent. I'll get back to you."
+msgstr "Message sent. I'll get back to you."
+
+#: src/contact/ContactForm.tsx
+msgid "Name"
+msgstr "Name"
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Next screenshot"
+msgstr "Next screenshot"
+
+#: src/components/ProjectFacts.tsx
+msgid "Not public"
+msgstr "Not public"
+
+#: src/components/PeriodText.tsx
+msgid "now"
+msgstr "now"
+
+#: src/routes/$lang/index.tsx
+msgid "Now"
+msgstr "Now"
+
+#: src/components/ProjectCards.tsx
+#: src/routes/$lang/projects/$slug.tsx
+msgid "Numbers"
+msgstr "Numbers"
+
+#: src/components/ProjectMeta.tsx
+msgid "Open source"
+msgstr "Open source"
+
+#: src/shell/navigation.ts
+msgid "Overview"
+msgstr "Overview"
+
+#: src/components/ProjectMeta.tsx
+msgid "Own product"
+msgstr "Own product"
+
+#: src/routes/$lang/projects/index.tsx
+msgid "Own products, client work and open source: the Projects Gwydion built and the story behind each."
+msgstr "Own products, client work and open source: the Projects Gwydion built and the story behind each."
+
+#: src/shell/NotFoundView.tsx
+msgid "Page not found"
+msgstr "Page not found"
+
+#: src/components/ProjectFacts.tsx
+msgid "Period"
+msgstr "Period"
+
+#: src/shell/PinnedProjects.tsx
+msgid "Pinned"
+msgstr "Pinned"
+
+#: src/shell/PinnedProjects.tsx
+msgid "Pinned Projects"
+msgstr "Pinned Projects"
+
+#: src/contact/message.ts
+msgid "Please enter your name ({nameMin} to {nameMax} characters)."
+msgstr "Please enter your name ({nameMin} to {nameMax} characters)."
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Previous screenshot"
+msgstr "Previous screenshot"
+
+#: src/legal/pages.ts
+msgid "Privacy policy"
+msgstr "Privacy policy"
+
+#: src/routes/$lang/projects/$slug.tsx
+#: src/routes/$lang/projects/index.tsx
+#: src/shell/navigation.ts
+msgid "Projects"
+msgstr "Projects"
+
+#: src/components/ProjectFacts.tsx
+msgid "Public on GitHub"
+msgstr "Public on GitHub"
+
+#: src/legal/LegalPage.tsx
+msgid "Read the German version"
+msgstr "Read the German version"
+
+#: src/components/ProjectFacts.tsx
+msgid "Role"
+msgstr "Role"
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Screenshots"
+msgstr "Screenshots"
+
+#: src/shell/SearchPlaceholder.tsx
+msgid "Search"
+msgstr "Search"
+
+#: src/shell/SearchPlaceholder.tsx
+msgid "Search is coming soon"
+msgstr "Search is coming soon"
+
+#: src/contact/ContactForm.tsx
+msgid "Send message"
+msgstr "Send message"
+
+#: src/contact/ContactForm.tsx
+msgid "Sending…"
+msgstr "Sending…"
+
+#: src/shell/Sidebar.tsx
+msgid "Sidebar"
+msgstr "Sidebar"
+
+#: src/shell/LanguageSwitch.tsx
+msgid "Site language"
+msgstr "Site language"
+
+#: src/components/SkillList.tsx
+#: src/routes/$lang/about.tsx
+#: src/routes/$lang/index.tsx
+msgid "Skills"
+msgstr "Skills"
+
+#: src/shell/AppShell.tsx
+msgid "Skip to content"
+msgstr "Skip to content"
+
+#: src/components/ProjectFacts.tsx
+msgid "Source code"
+msgstr "Source code"
+
+#: src/components/ProjectCards.tsx
+#: src/components/ProjectFacts.tsx
+msgid "Stack"
+msgstr "Stack"
+
+#: src/components/ProjectFacts.tsx
+msgid "Status"
+msgstr "Status"
+
+#: src/shell/TabBar.tsx
+msgid "Tab bar"
+msgstr "Tab bar"
+
+#: src/contact/message.ts
+msgid "The message is too long (at most {messageMax} characters)."
+msgstr "The message is too long (at most {messageMax} characters)."
+
+#: src/contact/message.ts
+msgid "The message is too short (at least {messageMin} characters)."
+msgstr "The message is too short (at least {messageMin} characters)."
+
+#: src/shell/NotFoundView.tsx
+msgid "There is nothing at this address."
+msgstr "There is nothing at this address."
+
+#: src/legal/LegalPage.tsx
+msgid "This English version is a courtesy translation. Only the German version is legally binding."
+msgstr "This English version is a courtesy translation. Only the German version is legally binding."
+
+#: src/routes/$lang/index.tsx
+msgid "View all"
+msgstr "View all"
+
+#: src/components/ProjectFacts.tsx
+msgid "Visit website"
+msgstr "Visit website"
+
+#: src/legal/pages.ts
+msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."
+msgstr "Who is responsible for gwydion.dev and how to reach him (Impressum)."
+
+#: src/routes/$lang/contact.tsx
+msgid "Write a message"
+msgstr "Write a message"
+
+#: src/contact/ContactForm.tsx
+msgid "Write another message"
+msgstr "Write another message"
+
+#: src/routes/$lang/contact.tsx
+msgid "Write to Gwydion about a full-time role or a freelance project, or reach him by email, LinkedIn or GitHub."
+msgstr "Write to Gwydion about a full-time role or a freelance project, or reach him by email, LinkedIn or GitHub."
+
+#: src/routes/$lang/writing/index.tsx
+#: src/shell/navigation.ts
+msgid "Writing"
+msgstr "Writing"
+
+#: src/contact/ContactForm.tsx
+msgid "Your message could not be sent. Please try again, or write to me directly:"
+msgstr "Your message could not be sent. Please try again, or write to me directly:"

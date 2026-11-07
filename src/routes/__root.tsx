@@ -1,77 +1,61 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { MantineProvider, ColorSchemeScript } from '@mantine/core'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { MotionConfig } from 'motion/react'
-import { Footer } from '#/app/shell/Footer'
-import { Header } from '#/app/shell/Header'
-import { NotFound } from '#/app/shell/NotFound'
-import { SkipLink } from '#/app/shell/SkipLink'
-import { ThemeFaviconSync } from '#/app/shell/ThemeFaviconSync'
-import { THEME_CHROME_BOOT_SCRIPT, THEME_COLOR_BY_SCHEME } from '#/app/shell/themeChrome'
-import { cssVariablesResolver, theme } from '#/app/theme'
+import type { ReactNode } from 'react'
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
+  redirect,
+} from '@tanstack/react-router'
 import { Analytics } from '@vercel/analytics/react'
-import { getLocale, setLocale } from '#/generated/paraglide/runtime'
-import { buildStructuredData } from '#/shared/seo/structuredData'
+import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
+import { AppShell } from '#/shell/AppShell'
+import { NotFoundView } from '#/shell/NotFoundView'
+import type { RouterContext } from '#/router'
+import { legacyRedirectTarget } from '#/seo/legacyRedirects'
+import { ThemeHeadTags } from '#/theme/ThemeHeadTags'
 
-import appCss from '../styles.css?url'
+import appCss from '../styles/app.css?url'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
+  // Every URL of the old site that moved leads permanently to its new address.
+  beforeLoad: ({ location }) => {
+    const target = legacyRedirectTarget(location.pathname)
+    if (target) throw redirect({ href: `${target}${location.searchStr}`, statusCode: 301 })
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      // Fallback for routes without their own head (e.g. 404); child routes override it.
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
+      // Fallback for pages without their own head (the not-found view); every page sets one (src/seo).
       { title: 'Gwydion' },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: 'stylesheet', href: appCss },
+      { rel: 'manifest', href: '/manifest.json' },
+      { rel: 'apple-touch-icon', href: '/logo192.png' },
+    ],
   }),
   shellComponent: RootDocument,
-  notFoundComponent: NotFound,
+  // Every page, the not-found view included, sits inside the app shell (ADR 0003).
+  component: () => (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  ),
+  notFoundComponent: NotFoundView,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: ReactNode }) {
+  const language = useSiteLanguage()
   return (
-    <html lang={getLocale()} suppressHydrationWarning>
+    // The pre-paint script sets `data-theme` before React hydrates.
+    <html lang={language} suppressHydrationWarning>
       <head>
-        <link data-app-favicon rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <meta name="theme-color" content={THEME_COLOR_BY_SCHEME.light} />
-        <script dangerouslySetInnerHTML={{ __html: THEME_CHROME_BOOT_SCRIPT }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(buildStructuredData()),
-          }}
-        />
-        <ColorSchemeScript defaultColorScheme="auto" />
         <HeadContent />
+        <ThemeHeadTags />
       </head>
       <body>
-        <MotionConfig reducedMotion="user">
-          <MantineProvider
-            theme={theme}
-            cssVariablesResolver={cssVariablesResolver}
-            defaultColorScheme="auto"
-          >
-            <ThemeFaviconSync />
-            <SkipLink />
-            <div className="grain-overlay" aria-hidden="true" />
-            <Header lang={getLocale()} onLangChange={(locale) => setLocale(locale)} />
-            {children}
-            <Footer />
-            <TanStackDevtools
-              config={{ position: 'middle-left' }}
-              plugins={[
-                {
-                  name: 'Tanstack Router',
-                  render: <TanStackRouterDevtoolsPanel />,
-                },
-              ]}
-            />
-          </MantineProvider>
-        </MotionConfig>
+        <SiteLanguageProvider>{children}</SiteLanguageProvider>
         <Scripts />
         <Analytics />
       </body>

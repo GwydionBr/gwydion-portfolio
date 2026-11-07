@@ -1,0 +1,33 @@
+{/* ENTWURF von Claude aus diesem Repo (November 2026). Gwydion prüft ihn vor der Umstellung (#41). */}
+
+## Warum es wie eine App aussieht
+
+Ich baue Apps, also ist auch mein Portfolio eine: eine Seitenleiste, eine Übersicht aus Kacheln als Startseite und Ansichten für Projekte, Lebenslauf und Kontakt. Auf dem Handy wird daraus Liste und Detail mit einer Tab-Leiste. Darunter ist es trotzdem eine Website. Jedes Projekt und jede Ansicht hat eine eigene, serverseitig gerenderte URL, sodass ein Link, den ein Recruiter teilt, die richtige Seite öffnet und Suchmaschinen echtes HTML sehen.
+
+Die Richtung entstand aus einer Runde Wegwerf-Prototypen: mehrere Startseiten nebeneinander auf einer Route, per URL umschaltbar, bis eine davon überzeugt hat. Ein klassisches Scroll-Portfolio sagte zu wenig über meine Arbeit, und reine Client-Shells machten Links und Suche kaputt.
+
+## Inhalte als typisierte Daten
+
+Alles auf der Seite, vom Pitch bis zum Werdegang, sind typisierte Daten im Repo, mit einer MDX-Geschichte pro Projekt und Sprache. Ein CMS wäre naheliegend gewesen, schließlich baue ich Sanity-Seiten für Kunden. Für einen einzigen Autor, dessen Inhalte sich selten ändern, sind versionierte Dateien aber einfacher, prüfbar und typgeprüft. Die Entscheidung steht in einem ADR, und die Seiten lesen Inhalte über eine schmale Schnittstelle, die sich später auf Sanity umziehen ließe.
+
+Ein Integritätstest geht alles durch, was die Seite zeigen kann, in beiden Sprachen, und schlägt bei fehlenden oder leeren Texten, falschen Datumsangaben oder falsch sortierten Stationen fehl. Ein fehlender deutscher Satz lässt den Build scheitern, nicht die Seite.
+
+## Zwei Sprachen, richtig gemacht
+
+Englisch und Deutsch haben eigene URLs (`/en/…`, `/de/…`), mit hreflang-Verweisen und einer Sitemap für beide. Oberflächentexte laufen über Lingui-Kataloge, und ein Check schlägt fehl, sobald einer Nachricht die deutsche Übersetzung fehlt oder ihre Platzhalter nicht passen.
+
+## Eine Quelle, mehrere Ergebnisse
+
+- **Der Lebenslauf** entsteht aus denselben Daten zu Werdegang und Projekten: als HTML gerendert, in beiden Sprachen als PDF gedruckt und abgelehnt, wenn er nicht auf eine Seite passt. Lebenslauf und Website widersprechen sich nie.
+- **Die Self-Engine-Screenshots** kommen aus Self-Engine selbst, das sie in jeder Sprache und jedem Theme aufnimmt; ein Skript übernimmt ihre URLs.
+- **Das Kontaktformular** sendet über Resend aus einer Server-Route, geprüft vom selben Schema auf beiden Seiten.
+
+<NumberTiles>
+  <NumberTile value="2" label="Sprachen, durchgängig" />
+  <NumberTile value="4" label="Architektur-Entscheidungen (ADRs)" />
+  <NumberTile value="239" label="Tests" />
+</NumberTiles>
+
+## Wie sie gebaut wurde
+
+Ich habe den Neubau als Spezifikation in einem GitHub-Issue geschrieben, in Tickets mit ihren Abhängigkeiten zerlegt und mit KI-Coding-Agenten auf einem Integrations-Branch umgesetzt, jedes Ticket testgetrieben und vor dem Merge gegen die Spezifikation geprüft. Die Fachbegriffe (Projekt, Station, Recruiter) stehen in einem Glossar, sodass Issues, Code und Commits dieselbe Sprache sprechen.
