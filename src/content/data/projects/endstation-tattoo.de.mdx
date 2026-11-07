@@ -1,9 +1,38 @@
-{/* PLATZHALTER: Gwydions Geschichte zu diesem Projekt fehlt noch (Spec #31, "real content still needed"). */}
+{/* ENTWURF von Claude aus dem tattoo-sites-Repo (November 2026). Gwydion prüft ihn vor der Umstellung (#41). */}
 
-<Callout tone="placeholder" title="Platzhalter">
-  Die ausführliche Geschichte von Endstation Tattoo wird noch geschrieben.
+## Der Auftrag
+
+Endstation Tattoo ist ein Studio mit mehreren Künstlern in Ottobeuren. Die alte Website lief auf WordPress und Elementor: für das Studio schwer zu ändern, und Terminanfragen kamen als lose E-Mails. Ich habe sie neu gebaut, damit das Studio alles selbst pflegt und jede Terminanfrage an einem Ort landet, an dem das Team sie abarbeiten kann.
+
+## Eine Website, die das Studio selbst pflegt
+
+Die Seite zeigt die Künstler und ihre Arbeiten, eine Tattoo-Galerie, FAQ, Pflegehinweise, einen Shop und ein geführtes Buchungsformular. Jede Seite ist Inhalt in Sanity: Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen, mit Klick-zum-Bearbeiten über das Presentation-Tool von Sanity. Die GROQ-Abfragen sind mit Sanity TypeGen typisiert, sodass eine Schemaänderung, die eine Seite bricht, den Build scheitern lässt und nicht die Seite.
+
+Der Umzug weg von WordPress, ohne Suchplatzierungen zu verlieren, hieß: 301-Weiterleitungen für jede alte URL, die noch zählt, `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten), eine Sitemap und strukturierte Daten für das Studio.
+
+## Terminanfragen statt E-Mails
+
+Das Buchungsformular fragt ab, was ein Künstler für ein Angebot braucht: den Künstler (aus Sanity gewählt), Körperstelle, Größe, eine Anzahlungsoption und Referenzbilder, die der Browser vor dem Upload auf 2 MB verkleinert. Ein einziges Zod-Schema prüft das Formular im Browser und auf dem Server.
+
+Anfragen gingen zuerst als PDFs in eine Nextcloud. Das stieß an Grenzen, sobald Anfragen einen Status brauchten, jemanden, der sie übernimmt, Übergaben zwischen Künstlern und Schutz vor Duplikaten. Darum habe ich es durch ein eigenes Anfrage-Portal auf Supabase ersetzt:
+
+- Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist; ein erneuter Versuch nutzt dieselbe Submission-ID, sodass eine wackelige Verbindung nie ein Duplikat erzeugt.
+- Künstler bekommen höchstens eine Zusammenfassung pro Tag per E-Mail, ohne Kundendaten darin.
+- Anfragen werden sechs Monate nach dem Abschluss automatisch gelöscht.
+- Die Formulardaten bleiben in der EU: Die Seite läuft in Vercels Region Frankfurt.
+
+<NumberTiles>
+  <NumberTile value="10" label="Sanity-Dokumenttypen" />
+  <NumberTile value="5" label="Architektur-Entscheidungen (ADRs)" />
+  <NumberTile value="100+" label="Testdateien im Repo" />
+</NumberTiles>
+
+## Eine Codebasis, mehrere Studios
+
+Endstation ist die Hauptseite eines kleinen Monorepos, das auch Websites für einzelne Tattoo-Künstler betreibt. Die Seiten teilen Packages für die Künstlerseiten, das Sanity Studio und die Vorschau, aber jede hat ihr eigenes Sanity-Projekt, eigenes Vercel-Projekt und eigene Zugangsdaten, weil jede einem anderen Inhaber gehört. Geteilt wird nur der Code.
+
+<Callout title="Status">
+  Die neue Seite geht in den nächsten Wochen live, unter
+  [endstation-tattoo.com](https://endstation-tattoo.com). Es ist Kundenarbeit; der Quellcode ist
+  nicht öffentlich.
 </Callout>
-
-## Kurz gesagt
-
-Eine Website für ein Tattoo-Studio: Künstler-Portfolios und Terminanfragen. Das Studio pflegt seine Inhalte selbst über Sanity.

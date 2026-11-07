@@ -20,8 +20,8 @@ export const profile: ProfileSource = {
     {
       label: { en: 'Building', de: 'Bauen' },
       text: {
-        en: 'Self-Engine: new features across web, mobile and desktop.',
-        de: 'Self-Engine: neue Funktionen für Web, Mobil und Desktop.',
+        en: 'Self-Engine, now with a paid Pro plan. And the new Endstation Tattoo website is about to launch.',
+        de: 'Self-Engine, jetzt mit bezahltem Pro-Tarif. Dazu geht bald die neue Website von Endstation Tattoo online.',
       },
     },
     {

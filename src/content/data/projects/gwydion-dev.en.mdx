@@ -1,9 +1,38 @@
-{/* PLACEHOLDER: Gwydion's story for this Project is still missing (spec #31, "real content still needed"). */}
+{/* DRAFT by Claude from this repo (November 2026). Gwydion reviews it before the cutover (#41). */}
 
-<Callout tone="placeholder" title="Placeholder">
-  The full story of this site is still being written.
+## Why it looks like an app
+
+I build apps, so my portfolio is one: a sidebar, an Overview of tiles as the home page, and views for Projects, CV and Contact. On a phone it turns into list and detail with a tab bar. It is still a website underneath. Every Project and every view has its own server-rendered URL, so a link a recruiter shares opens the right page, and search engines see real HTML.
+
+The direction came out of a round of throwaway prototypes: several home pages side by side on one route, switchable by URL, until one of them held up. A classic scrolling portfolio said too little about what I do, and fully client-side shells broke links and search.
+
+## Content as typed data
+
+Everything on the site, from the pitch to the Career, is typed data in the repo, with one MDX story per Project and language. A CMS would have been the obvious choice, since I build Sanity sites for clients, but for one author whose content rarely changes, files under version control are simpler, reviewable and type-checked. The decision is recorded as an ADR, and the pages read content through a narrow interface shaped so it could move to Sanity later.
+
+A content-integrity test walks everything the site can show, in both languages, and fails on any missing or empty text, malformed dates or Career entries out of order. A missing German sentence fails the build, not the page.
+
+## Two languages, done properly
+
+English and German each have their own URLs (`/en/…`, `/de/…`), with hreflang links and a sitemap covering both. Interface text goes through Lingui catalogs, and a check fails on any message without a German translation or with mismatched placeholders.
+
+## One source, several outputs
+
+- **The CV** is generated from the same Career and Project data: rendered to HTML, printed to PDF in both languages, and rejected unless each fits on one page. The CV and the site never disagree.
+- **The Self-Engine screenshots** come from Self-Engine itself, which captures them in every language and theme; a script copies over their URLs.
+- **The contact form** sends through Resend from a server route, checked by the same schema on both sides.
+
+<NumberTiles>
+  <NumberTile value="2" label="languages, end to end" />
+  <NumberTile value="4" label="architecture decisions (ADRs)" />
+  <NumberTile value="239" label="tests" />
+</NumberTiles>
+
+## How it was built
+
+I wrote the rebuild as a spec in a GitHub issue, broke it into tickets with their dependencies, and implemented them with AI coding agents on an integration branch, each ticket test-first and reviewed against the spec before merging. The domain words (Project, Career entry, Recruiter) live in a glossary, so issues, code and commits use the same language.
+
+<Callout title="Source code">
+  The site is open source:
+  [github.com/GwydionBr/gwydion-portfolio](https://github.com/GwydionBr/gwydion-portfolio).
 </Callout>
-
-## In short
-
-A bilingual portfolio built like a productivity app: real server-rendered URLs, Lingui for the interface, and typed content files with MDX stories. Its source is public on [GitHub](https://github.com/GwydionBr/gwydion-portfolio).

@@ -1,4 +1,4 @@
-{/* Facts from the old case study (main: messages/en.json, cs_*). PLACEHOLDER until Gwydion updates the story (spec #31). */}
+{/* Numbers checked against the Self-Engine repo on 2026-11-07. Update them by hand. */}
 
 ## The idea
 
@@ -25,16 +25,16 @@ Every app writes to a local SQLite database first; a write never waits for the c
 The domain lives in shared packages: synced tables, Zod schemas and typed collections that web and mobile consume identically. Business rules are pure functions behind a persistence port, so the same rule guards a tap in the mobile app, a click on the web and an AI agent's tool call on the server.
 
 <NumberTiles>
-  <NumberTile value="137" label="database migrations" />
-  <NumberTile value="37" label="synced tables" />
-  <NumberTile value="38" label="architecture decisions (ADRs)" />
+  <NumberTile value="169" label="database migrations" />
+  <NumberTile value="40" label="synced tables" />
+  <NumberTile value="51" label="architecture decisions (ADRs)" />
 </NumberTiles>
 
 ## An assistant with guardrails
 
-The built-in assistant knows 39 typed capabilities across every module. It works pull-first: the model gets counts and hints instead of user data and has to ask through typed read tools. Every write is prepared as a preview from live data, approved once, and executed as the same domain mutation as a click.
+The built-in assistant knows more than 50 typed capabilities across every module. It works pull-first: the model gets counts and hints instead of user data and has to ask through typed read tools. Every write is prepared as a preview from live data, approved once, and executed as the same domain mutation as a click. It remembers things about you only once you turn memory on.
 
-If you'd rather use your own agent, connect Claude, Claude Code or Cursor to Self-Engine's MCP server over OAuth. Permissions apply per data type, and every call lands in the agent log.
+If you'd rather use your own agent, connect Claude, Cursor or any other MCP client to Self-Engine's MCP server over OAuth. Permissions are set per data type and access level, agents can move a task to the trash but never delete it, and every call lands in the agent log.
 
 <ScreenshotGallery views={['ai-assistant-panel']} />
 
@@ -45,7 +45,7 @@ If you'd rather use your own agent, connect Claude, Claude Code or Cursor to Sel
 - **Swapping the identity provider in production.** Moving every user from Supabase Auth to Clerk meant rewriting every row-level security policy in one migration, without losing a single offline queue.
 
 <Callout title="Try it yourself">
-  Self-Engine runs in the browser and on the Mac, free for 30 days:
+  Self-Engine runs in the browser, on the Mac and on the iPhone:
   [self-engine.com](https://self-engine.com). It is a commercial product; its source code is not
   public.
 </Callout>

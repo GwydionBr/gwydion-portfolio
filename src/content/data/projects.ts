@@ -26,11 +26,11 @@ export const projects: ProjectSource[] = [
       'Postgres',
       'Clerk',
     ],
-    // As of the old case study (November 2026); maintained by hand (spec #31).
+    // Checked against the Self-Engine repo on 2026-11-07; maintained by hand.
     stats: [
-      { value: '2,100+', label: { en: 'commits', de: 'Commits' } },
-      { value: '79', label: { en: 'releases', de: 'Releases' } },
-      { value: '~5,900', label: { en: 'tests', de: 'Tests' } },
+      { value: '2,200+', label: { en: 'commits', de: 'Commits' } },
+      { value: '88', label: { en: 'releases', de: 'Releases' } },
+      { value: '~7,400', label: { en: 'tests', de: 'Tests' } },
     ],
     featured: true,
     pinned: true,
@@ -46,7 +46,7 @@ export const projects: ProjectSource[] = [
       en: 'Studio website with artist portfolios and booking requests, editable by the studio through Sanity.',
       de: 'Studio-Website mit Künstler-Portfolios und Terminanfragen, vom Studio selbst über Sanity pflegbar.',
     },
-    stack: ['TanStack Start', 'Sanity', 'Vercel'],
+    stack: ['TanStack Start', 'Sanity', 'Supabase', 'Mantine', 'Vercel'],
     featured: true,
     pinned: true,
     order: 2,

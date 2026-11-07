@@ -1,4 +1,4 @@
-{/* Fakten aus der alten Case Study (main: messages/de.json, cs_*). PLATZHALTER, bis Gwydion die Geschichte aktualisiert (Spec #31). */}
+{/* Zahlen am 2026-11-07 gegen das Self-Engine-Repo geprüft. Von Hand aktualisieren. */}
 
 ## Die Idee
 
@@ -25,16 +25,16 @@ Jede App schreibt zuerst in eine lokale SQLite-Datenbank; ein Schreibvorgang war
 Die Domäne lebt in geteilten Packages: synchronisierte Tabellen, Zod-Schemas und typisierte Collections, die Web und Mobile identisch nutzen. Geschäftsregeln sind pure Funktionen hinter einem Persistence-Port, sodass dieselbe Regel einen Tap in der Mobile-App, einen Klick im Web und den Tool-Aufruf eines KI-Agenten auf dem Server schützt.
 
 <NumberTiles>
-  <NumberTile value="137" label="Datenbank-Migrationen" />
-  <NumberTile value="37" label="synchronisierte Tabellen" />
-  <NumberTile value="38" label="Architektur-Entscheidungen (ADRs)" />
+  <NumberTile value="169" label="Datenbank-Migrationen" />
+  <NumberTile value="40" label="synchronisierte Tabellen" />
+  <NumberTile value="51" label="Architektur-Entscheidungen (ADRs)" />
 </NumberTiles>
 
 ## Ein Assistent mit Leitplanken
 
-Der eingebaute Assistent kennt 39 typisierte Capabilities über alle Module. Er arbeitet pull-first: Das Modell bekommt Zähler und Hinweise statt Nutzerdaten und muss über typisierte Read-Tools nachfragen. Jeder Schreibzugriff wird als Vorschau aus Live-Daten vorbereitet, einmal freigegeben und als dieselbe Domain-Mutation ausgeführt wie ein Klick.
+Der eingebaute Assistent kennt mehr als 50 typisierte Capabilities über alle Module. Er arbeitet pull-first: Das Modell bekommt Zähler und Hinweise statt Nutzerdaten und muss über typisierte Read-Tools nachfragen. Jeder Schreibzugriff wird als Vorschau aus Live-Daten vorbereitet, einmal freigegeben und als dieselbe Domain-Mutation ausgeführt wie ein Klick. Er merkt sich nur dann etwas über dich, wenn du das Gedächtnis einschaltest.
 
-Wer lieber den eigenen Agenten nutzt, verbindet Claude, Claude Code oder Cursor per OAuth mit dem MCP-Server von Self-Engine. Berechtigungen gelten pro Datentyp, und jeder Aufruf landet im Agenten-Protokoll.
+Wer lieber den eigenen Agenten nutzt, verbindet Claude, Cursor oder einen anderen MCP-Client per OAuth mit dem MCP-Server von Self-Engine. Berechtigungen gelten pro Datentyp und Zugriffsstufe, Agenten dürfen Aufgaben in den Papierkorb legen, aber nie löschen, und jeder Aufruf landet im Agenten-Protokoll.
 
 <ScreenshotGallery views={['ai-assistant-panel']} />
 
@@ -45,7 +45,7 @@ Wer lieber den eigenen Agenten nutzt, verbindet Claude, Claude Code oder Cursor 
 - **Den Identity-Provider im laufenden Betrieb tauschen.** Alle Nutzer von Supabase Auth zu Clerk zu migrieren hieß, jede Row-Level-Security-Policy in einer einzigen Migration neu zu schreiben, ohne eine einzige Offline-Warteschlange zu verlieren.
 
 <Callout title="Probier es selbst aus">
-  Self-Engine läuft im Browser und auf dem Mac, 30 Tage kostenlos:
+  Self-Engine läuft im Browser, auf dem Mac und auf dem iPhone:
   [self-engine.com](https://self-engine.com). Es ist ein kommerzielles Produkt; der Quellcode ist
   nicht öffentlich.
 </Callout>
