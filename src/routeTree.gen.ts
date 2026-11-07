@@ -14,6 +14,8 @@ import { Route as LangRouteImport } from './routes/$lang'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as LangAboutRouteImport } from './routes/$lang/about'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
+import { Route as LangDatenschutzRouteImport } from './routes/$lang/datenschutz'
+import { Route as LangImpressumRouteImport } from './routes/$lang/impressum'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
 import { Route as LangProjectsIndexRouteImport } from './routes/$lang/projects/index'
 import { Route as LangWritingIndexRouteImport } from './routes/$lang/writing/index'
@@ -43,6 +45,16 @@ const LangContactRoute = LangContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => LangRoute,
 } as any)
+const LangDatenschutzRoute = LangDatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => LangRoute,
+} as any)
+const LangImpressumRoute = LangImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => LangRoute,
+} as any)
 const ApiContactRoute = ApiContactRouteImport.update({
   id: '/api/contact',
   path: '/api/contact',
@@ -64,6 +76,8 @@ export interface FileRoutesByFullPath {
   '/$lang': typeof LangRouteWithChildren
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/projects/': typeof LangProjectsIndexRoute
@@ -73,6 +87,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/projects': typeof LangProjectsIndexRoute
@@ -84,6 +100,8 @@ export interface FileRoutesById {
   '/$lang': typeof LangRouteWithChildren
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/datenschutz': typeof LangDatenschutzRoute
+  '/$lang/impressum': typeof LangImpressumRoute
   '/api/contact': typeof ApiContactRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/projects/': typeof LangProjectsIndexRoute
@@ -96,6 +114,8 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/about'
     | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
     | '/$lang/'
     | '/$lang/projects/'
@@ -105,6 +125,8 @@ export interface FileRouteTypes {
     | '/'
     | '/$lang/about'
     | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
     | '/$lang'
     | '/$lang/projects'
@@ -115,6 +137,8 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/about'
     | '/$lang/contact'
+    | '/$lang/datenschutz'
+    | '/$lang/impressum'
     | '/api/contact'
     | '/$lang/'
     | '/$lang/projects/'
@@ -164,6 +188,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangContactRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/datenschutz': {
+      id: '/$lang/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/$lang/datenschutz'
+      preLoaderRoute: typeof LangDatenschutzRouteImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/impressum': {
+      id: '/$lang/impressum'
+      path: '/impressum'
+      fullPath: '/$lang/impressum'
+      preLoaderRoute: typeof LangImpressumRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/api/contact': {
       id: '/api/contact'
       path: '/api/contact'
@@ -191,6 +229,8 @@ declare module '@tanstack/react-router' {
 interface LangRouteChildren {
   LangAboutRoute: typeof LangAboutRoute
   LangContactRoute: typeof LangContactRoute
+  LangDatenschutzRoute: typeof LangDatenschutzRoute
+  LangImpressumRoute: typeof LangImpressumRoute
   LangIndexRoute: typeof LangIndexRoute
   LangProjectsIndexRoute: typeof LangProjectsIndexRoute
   LangWritingIndexRoute: typeof LangWritingIndexRoute
@@ -199,6 +239,8 @@ interface LangRouteChildren {
 const LangRouteChildren: LangRouteChildren = {
   LangAboutRoute: LangAboutRoute,
   LangContactRoute: LangContactRoute,
+  LangDatenschutzRoute: LangDatenschutzRoute,
+  LangImpressumRoute: LangImpressumRoute,
   LangIndexRoute: LangIndexRoute,
   LangProjectsIndexRoute: LangProjectsIndexRoute,
   LangWritingIndexRoute: LangWritingIndexRoute,
