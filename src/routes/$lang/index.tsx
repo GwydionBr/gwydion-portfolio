@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { PostList } from '#/components/PostList'
+import { SkillList } from '#/components/SkillList'
 import { Tile } from '#/components/Tile'
 import { usePosts, useProfile } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
@@ -16,20 +17,14 @@ const LATEST_POSTS = 3
 function Overview() {
   const { t } = useLingui()
   const lang = useSiteLanguage()
-  const { pitch, skills, now } = useProfile()
+  const { pitch, now } = useProfile()
   const posts = usePosts()
   return (
     <View title={t`Overview`} location={[]}>
       <div className="grid gap-4 lg:grid-cols-3">
         <Tile title={t`Profile`} className="lg:col-span-2">
           <p className="mt-2 text-base leading-relaxed text-ink">{pitch}</p>
-          <ul aria-label={t`Skills`} className="mt-4 flex flex-wrap gap-1.5">
-            {skills.map((skill) => (
-              <li key={skill} className="rounded-md bg-selected px-2 py-0.5 text-xs">
-                {skill}
-              </li>
-            ))}
-          </ul>
+          <SkillList />
         </Tile>
         <Tile title={t`Now`}>
           <ul className="mt-2 space-y-2">

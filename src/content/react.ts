@@ -17,3 +17,15 @@ export function useProfile() {
 export function usePosts() {
   return useContent().getPosts()
 }
+
+/** The Career entries, newest first, in the Site language of the page shown. */
+export function useCareerEntries() {
+  const language = useSiteLanguage()
+  return useContent().getCareerEntries(language)
+}
+
+/** The CV the Site language of the page shown offers. */
+export function useCv() {
+  const language = useSiteLanguage()
+  return useContent().getCv(language)
+}
