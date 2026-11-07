@@ -45,11 +45,14 @@ describe('Theme colours', () => {
     expect(contrast(token(text, theme), token(background, theme))).toBeGreaterThanOrEqual(4.5)
   })
 
-  it.each(THEMES)('%s: the Availability text reaches AA on its card', (theme) => {
-    expect(
-      contrast(token('available', theme), token('available-surface', theme)),
-    ).toBeGreaterThanOrEqual(4.5)
-  })
+  it.each(THEMES)(
+    '%s: the Availability text reaches AA on its card (and the CV button, inverted)',
+    (theme) => {
+      expect(
+        contrast(token('available', theme), token('available-surface', theme)),
+      ).toBeGreaterThanOrEqual(4.5)
+    },
+  )
 })
 
 describe('Browser chrome colour', () => {
