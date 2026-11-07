@@ -1,6 +1,7 @@
 # gwydion-portfolio
 
-Personal portfolio site built with TanStack Start, React, Tailwind CSS, Base UI, Lingui, and Bun.
+The source of [gwydion.dev](https://gwydion.dev), Gwydion Braunsdorf's portfolio: Projects with their stories, the Career, the CV as PDF, writing, and a contact form, in English and German.
+It is built like an app (an app shell over real, server-rendered routes, see `docs/adr/0003`) with TanStack Start, React, Tailwind CSS, Base UI, Lingui, MDX, and Bun.
 Tooling runs on [Vite+](https://viteplus.dev) (`vp`): Vite, Vitest, Oxlint, and Oxfmt configured together in `vite.config.ts`.
 
 ## Setup
@@ -44,6 +45,35 @@ To run the built server directly:
 
 ```bash
 bun run start
+```
+
+## Content
+
+All content lives in the repo as typed data (`src/content/data/`), decided in `docs/adr/0004`:
+
+- `profile.ts`: pitch, Availability, "Now", skills, links
+- `projects.ts` plus one MDX story per Project and language in `projects/<slug>.<language>.mdx`
+- `careerEntries.ts` and `cv.ts`: the Career and the CV
+- `posts.ts`: writing
+
+Every text is given in both languages. The content-integrity test (`src/content/integrity.test.ts`, part of `bun run test`) fails on any missing or empty text, malformed periods, and Career entries out of order. Domain terms are defined in `GLOSSARY.md`.
+
+## CV
+
+The CV PDFs in `public/cv/` are generated from the content data, not edited by hand:
+
+```bash
+bun run cv:build
+```
+
+It renders `scripts/cv/` (layout and CV-only wording) to HTML and prints it with a local Chromium browser (Helium by default; set `CHROME` to use another) to one PDF per language. The build fails unless each PDF has exactly one page. Rebuild and commit the PDFs after changing Career entries, Projects, or the portrait (`public/portrait.webp`, shown in the German CV only).
+
+## Self-Engine Screenshots
+
+The Self-Engine Project shows screenshots that the Self-Engine repo captures and uploads. After they are regenerated there:
+
+```bash
+bun run screenshots:sync [path/to/self-engine]   # default: ../self-engine
 ```
 
 ## Internationalization

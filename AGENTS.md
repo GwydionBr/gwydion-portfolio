@@ -10,9 +10,12 @@ Tooling is Vite+ (`vp`). Lint, format, and test config all live in `vite.config.
 
 ## Project Snapshot
 
-Offline-first personal productivity platform (work tracking, finance, calendar, habits). Monorepo with Bun Workspaces: web app (TanStack Start), mobile app (Expo), shared packages, db package.
+gwydion.dev: Gwydion's bilingual (English, German) portfolio. TanStack Start with server-rendered routes under `/$lang`, framed as an app shell (ADR 0003). Recruiters are the primary audience; see `GLOSSARY.md` for the domain terms used in code, issues and commits.
 
-This repository is a VERY EARLY WIP. Proposing sweeping changes that improve long-term maintainability is encouraged.
+- **Content** (Profile, Projects, Career entries, CV, Posts) is typed data in `src/content/data/`, with one MDX story per Project and Site language. Read it only through the content module (`#/content`). The content-integrity test fails on any missing or empty text in either language, so add both languages together.
+- **Interface text** goes through Lingui macros; `bun run check` fails on a missing German translation. The README covers the extract workflow.
+- **CV PDFs** in `public/cv/` are generated from the content data by `bun run cv:build`. Rebuild and commit them whenever Career entries, Projects or `scripts/cv/` change; the build fails unless each CV fits one page.
+- **Self-Engine screenshots** come from the Self-Engine repo via `bun run screenshots:sync`. Never edit Self-Engine's code from here.
 
 ## Maintainability
 
