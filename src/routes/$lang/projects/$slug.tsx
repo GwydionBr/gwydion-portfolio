@@ -40,7 +40,9 @@ function ProjectPage() {
         <article className="max-w-2xl">
           <p className="flex items-center gap-2 text-xs text-subtle">
             <ProjectSwatch accent={project.accent} />
-            <ProjectMeta project={project} />
+            <span>
+              <ProjectMeta project={project} />
+            </span>
           </p>
           <p className="mt-2 text-base leading-relaxed text-ink">{project.summary}</p>
           {project.stats && (

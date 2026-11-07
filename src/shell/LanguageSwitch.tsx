@@ -20,7 +20,7 @@ export function LanguageSwitch() {
               lang={language}
               aria-current={language === current ? 'true' : undefined}
               aria-label={nativeNameOf(language)}
-              className="rounded-md px-2 py-1 uppercase text-subtle hover:bg-hover aria-[current=true]:bg-selected aria-[current=true]:font-medium aria-[current=true]:text-ink"
+              className="rounded-md px-2 py-1 uppercase text-subtle hover:bg-hover aria-[current]:bg-selected aria-[current]:font-medium aria-[current]:text-ink"
             >
               {language}
             </Link>
