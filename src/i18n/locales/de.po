@@ -41,6 +41,10 @@ msgstr "folgt bald"
 msgid "Contact"
 msgstr "Kontakt"
 
+#: src/legal/LegalPage.tsx
+msgid "Contents"
+msgstr "Inhalt"
+
 #: src/routes/$lang/about.tsx
 msgid "CV"
 msgstr "Lebenslauf"
@@ -77,6 +81,14 @@ msgstr "Kontakt aufnehmen"
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
 msgstr "Neueste Beiträge"
+
+#: src/shell/LegalLinks.tsx
+msgid "Legal"
+msgstr "Rechtliches"
+
+#: src/legal/pages.ts
+msgid "Legal notice"
+msgstr "Impressum"
 
 #: src/shell/Sidebar.tsx
 msgid "Main navigation"
@@ -135,6 +147,10 @@ msgstr "Angeheftete Projekte"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Bitte gib deinen Namen ein ({nameMin} bis {nameMax} Zeichen)."
 
+#: src/legal/pages.ts
+msgid "Privacy policy"
+msgstr "Datenschutzerklärung"
+
 #: src/routes/$lang/index.tsx
 msgid "Profile"
 msgstr "Profil"
@@ -144,6 +160,10 @@ msgstr "Profil"
 #: src/shell/navigation.ts
 msgid "Projects"
 msgstr "Projekte"
+
+#: src/legal/LegalPage.tsx
+msgid "Read the German version"
+msgstr "Zur deutschen Fassung"
 
 #: src/shell/SearchPlaceholder.tsx
 msgid "Search"
@@ -197,6 +217,10 @@ msgstr "Die Nachricht ist zu kurz (mindestens {messageMin} Zeichen)."
 #: src/shell/NotFoundView.tsx
 msgid "There is nothing at this address."
 msgstr "Unter dieser Adresse gibt es nichts."
+
+#: src/legal/LegalPage.tsx
+msgid "This English version is a courtesy translation. Only the German version is legally binding."
+msgstr "Diese englische Fassung ist eine unverbindliche Übersetzung. Rechtsverbindlich ist nur die deutsche Fassung."
 
 #: src/routes/$lang/index.tsx
 msgid "View all"
