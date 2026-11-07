@@ -1,7 +1,7 @@
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
-import { getByRole, within } from '@testing-library/dom'
+import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
@@ -66,14 +66,32 @@ export async function visit(
     sidebar: (name = 'Sidebar') => landmark('complementary', name),
     /** The view's title: the one `h1` in the main pane. */
     title: () => within(landmark('main')).getByRole('heading', { level: 1 }).textContent,
-    /** Follows `link` like a visitor's click and waits for the new page. */
-    async click(link: HTMLElement) {
+    /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
+    async click(element: HTMLElement) {
       await act(async () => {
-        link.click()
-        await new Promise((resolve) => setTimeout(resolve, 0))
+        element.click()
+        await settled()
+      })
+    },
+    /** Runs `action` (an answer the test held back) and waits for the page to follow. */
+    async settle(action: () => void) {
+      await act(async () => {
+        action()
+        await settled()
+      })
+    },
+    /** Types `value` into a form field, replacing what it held. */
+    async fill(field: HTMLElement, value: string) {
+      await act(async () => {
+        fireEvent.change(field, { target: { value } })
       })
     },
   }
+}
+
+/** Lets pending work (navigation, a `fetch` answered in the test) run to its end. */
+async function settled() {
+  for (let turn = 0; turn < 10; turn++) await new Promise((resolve) => setTimeout(resolve, 0))
 }
 
 /** The names of the links in the navigation landmark `name`, and the one marked current. */

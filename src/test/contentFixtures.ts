@@ -25,7 +25,11 @@ export function fixtureSource({ posts = [] }: { posts?: Post[] } = {}): ContentS
         { label: { en: 'Learning', de: 'Lernen' }, text: { en: 'More tests.', de: 'Mehr Tests.' } },
       ],
       skills: ['Testing'],
-      links: [{ kind: 'email', href: 'mailto:ada@example.com' }],
+      links: [
+        { kind: 'email', href: 'mailto:ada@example.com' },
+        { kind: 'github', href: 'https://github.com/ada-example' },
+        { kind: 'linkedin', href: 'https://www.linkedin.com/', placeholder: true },
+      ],
     },
     posts,
   }

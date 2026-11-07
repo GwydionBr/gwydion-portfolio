@@ -20,6 +20,9 @@
   --available: #047857;
   --available-surface: #ecfdf5;
   --available-line: #d1fae5;
+  /* Field messages and the contact form's error state. */
+  --danger: #b91c1c;
+  --danger-surface: #fef2f2;
 }
 
 @theme inline {
@@ -36,6 +39,8 @@
   --color-available: var(--available);
   --color-available-surface: var(--available-surface);
   --color-available-line: var(--available-line);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
 }
 
 @layer base {
