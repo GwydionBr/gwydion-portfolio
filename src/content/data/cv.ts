@@ -5,5 +5,4 @@ import type { CvFile } from '../schema'
  * the old one; to offer a German CV, add it here. A Site language without its
  * own CV is offered the English one.
  */
-// PLACEHOLDER: the PDF is a stand-in until Gwydion supplies his CV (spec #31, "real content still needed").
 export const cv: CvFile[] = [{ language: 'en', href: '/cv/gwydion-braunsdorf-cv-en.pdf' }]

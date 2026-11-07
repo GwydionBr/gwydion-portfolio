@@ -50,7 +50,6 @@ export const profile: ProfileSource = {
   links: [
     { kind: 'email', href: 'mailto:hello@gwydion.dev' },
     { kind: 'github', href: 'https://github.com/GwydionBr' },
-    // PLACEHOLDER: the LinkedIn URL is still missing (spec #31, "real content still needed").
-    { kind: 'linkedin', href: 'https://www.linkedin.com/', placeholder: true },
+    { kind: 'linkedin', href: 'https://www.linkedin.com/in/gwydion-braunsdorf-860027399/' },
   ],
 }
