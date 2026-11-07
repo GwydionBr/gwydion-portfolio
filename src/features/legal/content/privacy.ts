@@ -11,8 +11,8 @@ const de: PrivacySection[] = [
     id: 'controller',
     title: 'Verantwortlicher',
     paragraphs: [
-      'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Deutschland. Kontakt: hello@gwydion.dev',
-      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch von gwydion.dev und bei der Nutzung des Kontaktformulars. Außerdem beschreibt sie, wie ich als technischer Dienstleister Daten für die von mir betreuten Tattoo-Studio-Websites verarbeite (Anfragen-Portal und Google-Drive-Anbindung „Terminanfragen“).',
+      'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Schwangauer Str. 3, 87645 Schwangau, Deutschland. Kontakt: hello@gwydion.dev',
+      'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch von gwydion.dev und bei der Nutzung des Kontaktformulars. Außerdem beschreibt sie, wie ich als technischer Dienstleister Daten für die von mir betreuten Tattoo-Studio-Websites verarbeite (Anfragen-Portal).',
     ],
   },
   {
@@ -71,16 +71,6 @@ const de: PrivacySection[] = [
     ],
   },
   {
-    id: 'google-drive',
-    title: 'Google-Drive-Anbindung „Terminanfragen“ (wird abgelöst)',
-    paragraphs: [
-      'Bis zur vollständigen Umstellung auf das Anfragen-Portal betreibe ich für einzelne Studio-Websites noch die Google-App „Terminanfragen“. Damit verbindet ein Studio sein eigenes Google Drive mit seiner Website, und Terminanfragen aus dem Formular werden als PDF mit den hochgeladenen Bildern in einem vom Studio gewählten Ordner abgelegt.',
-      'Die App fordert ausschließlich die Berechtigung „drive.file“ an. Sie sieht und bearbeitet damit nur Ordner, die das Studio in der Google-Ordnerauswahl ausdrücklich freigibt, und Dateien, die die App selbst angelegt hat. Gespeichert werden die E-Mail-Adresse des Google-Kontos, Name und ID des gewählten Ordners sowie das von Google ausgestellte Zugriffstoken, pro Website verschlüsselt (AES-256-GCM) in einem privaten Speicher bei Vercel in Frankfurt. Daten aus Google Drive werden nicht an Dritte weitergegeben, nicht verkauft, nicht für Werbung und nicht zum Trainieren von KI-Modellen verwendet.',
-      'Die Nutzung und Übertragung von Informationen, die über Google-APIs empfangen werden, an andere Apps hält sich an die Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use).',
-      'Auch hier ist das jeweilige Studio verantwortlich; ich verarbeite die Daten in seinem Auftrag (Art. 28 DSGVO). Ein Studio kann den Zugriff jederzeit unter https://myaccount.google.com/permissions widerrufen. Gespeicherte Verbindungen lösche ich auf Wunsch sofort, spätestens mit Abschluss der Umstellung; eine Nachricht an hello@gwydion.dev genügt.',
-    ],
-  },
-  {
     id: 'rights',
     title: 'Deine Rechte',
     paragraphs: [
@@ -108,7 +98,7 @@ const de: PrivacySection[] = [
     title: 'Änderungen',
     paragraphs: [
       'Diese Erklärung wird bei rechtlichen oder technischen Anpassungen der Website aktualisiert. Es gilt die jeweils auf gwydion.dev veröffentlichte Fassung.',
-      'Stand: 4. November 2026',
+      'Stand: 7. November 2026',
     ],
   },
 ]
@@ -118,8 +108,8 @@ const en: PrivacySection[] = [
     id: 'controller',
     title: 'Controller',
     paragraphs: [
-      'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Germany. Contact: hello@gwydion.dev',
-      'This privacy policy explains the nature, scope, and purpose of processing personal data when you visit gwydion.dev and use the contact form. It also describes how I, as a technical service provider, process data for the tattoo studio websites I build and maintain (the booking request portal and the “Terminanfragen” Google Drive integration).',
+      'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Schwangauer Str. 3, 87645 Schwangau, Germany. Contact: hello@gwydion.dev',
+      'This privacy policy explains the nature, scope, and purpose of processing personal data when you visit gwydion.dev and use the contact form. It also describes how I, as a technical service provider, process data for the tattoo studio websites I build and maintain (the booking request portal).',
     ],
   },
   {
@@ -178,16 +168,6 @@ const en: PrivacySection[] = [
     ],
   },
   {
-    id: 'google-drive',
-    title: '“Terminanfragen” Google Drive integration (being phased out)',
-    paragraphs: [
-      'Until the move to the booking request portal is complete, I still operate the Google app “Terminanfragen” (booking requests) for some studio websites. It lets a studio connect its own Google Drive to its website, so booking requests submitted through the form are saved as a PDF, together with the uploaded images, in a folder the studio chooses.',
-      'The app only requests the “drive.file” scope. It can therefore only see and edit folders the studio explicitly selects in the Google folder picker and files the app created itself. The Google account’s email address, the name and ID of the selected folder, and the token issued by Google are stored per website, encrypted (AES-256-GCM), in a private Vercel store in Frankfurt. Google Drive data is not shared with third parties, not sold, and not used for advertising or to train AI models.',
-      'The use and transfer of information received from Google APIs to any other app will adhere to the Google API Services User Data Policy (https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.',
-      'Here too, each studio is the controller; I process the data on its behalf (Art. 28 GDPR). A studio can revoke access at any time at https://myaccount.google.com/permissions. I delete stored connections immediately on request, and at the latest once the move is complete; an email to hello@gwydion.dev is enough.',
-    ],
-  },
-  {
     id: 'rights',
     title: 'Your rights',
     paragraphs: [
@@ -215,7 +195,7 @@ const en: PrivacySection[] = [
     title: 'Changes',
     paragraphs: [
       'This policy will be updated when legal or technical aspects of the website change. The version published on gwydion.dev applies.',
-      'Last updated: 4 November 2026',
+      'Last updated: 7 November 2026',
     ],
   },
 ]
