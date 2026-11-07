@@ -17,11 +17,12 @@ export const Route = createFileRoute('/$lang/contact')({
   component: Contact,
 })
 
-/** Contact: a short message, or email, LinkedIn and GitHub directly; the Availability restated. */
+/** Contact: a short message, or email, LinkedIn and GitHub directly; on phones the Availability restated. */
 function Contact() {
   const { t } = useLingui()
   return (
-    <View title={t`Contact`}>
+    // No "Get in touch" action: this is where it leads.
+    <View title={t`Contact`} action={null}>
       <div className="grid gap-4 lg:grid-cols-3">
         <Tile title={t`Write a message`} className="lg:col-span-2 lg:row-span-2">
           <ContactForm />
@@ -29,7 +30,8 @@ function Contact() {
         <Tile title={t`Directly`}>
           <ProfileLinks />
         </Tile>
-        <AvailabilityTile />
+        {/* Phones only: from md up the sidebar shows the Availability. */}
+        <AvailabilityTile className="md:hidden" />
       </div>
     </View>
   )

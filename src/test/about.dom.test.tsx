@@ -71,8 +71,8 @@ describe('The CV download', () => {
     expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
   })
 
-  it('sits in the Overview Availability tile, which phones show', async () => {
-    const page = await visit('/en', { content: fixtureContent() })
+  it("sits in the Contact view's Availability tile, which phones show", async () => {
+    const page = await visit('/en/contact', { content: fixtureContent() })
 
     const download = within(region(page.main(), 'Availability')).getByRole('link', {
       name: 'Download CV',

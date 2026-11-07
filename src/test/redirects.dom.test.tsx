@@ -18,7 +18,7 @@ const OLD_SITE = [
 
 /** Old German URLs whose address the new site keeps: they open their page directly. */
 const KEPT = [
-  ['/de', 'Übersicht'],
+  ['/de', 'Gwydion Braunsdorf'],
   ['/de/about', 'Über mich'],
   ['/de/contact', 'Kontakt'],
   ['/de/impressum', 'Impressum'],

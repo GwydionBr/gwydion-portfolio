@@ -100,33 +100,44 @@ describe('The site’s own Projects', () => {
 })
 
 describe('Projects on the Overview and in the sidebar', () => {
-  it('the Overview shows the featured Projects and one tile per Self-Engine number', async () => {
+  it('the Overview shows the featured Projects as cards, linking to their pages', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
     const featured = within(page.main()).getByRole('region', { name: 'Featured Projects' })
+    const cards = within(featured).getAllByRole('article')
     expect(
-      within(featured)
-        .getAllByRole('heading', { level: 3 })
-        .map((heading) => heading.textContent),
+      cards.map((card) => within(card).getByRole('heading', { level: 3 }).textContent),
     ).toEqual(['Fixture Engine', 'Fixture Studio'])
+    expect(
+      within(cards[1]!).getByRole('link', { name: 'Fixture Studio' }).getAttribute('href'),
+    ).toBe('/en/projects/fixture-studio')
     expect(within(featured).getByRole('link', { name: 'View all' }).getAttribute('href')).toBe(
       '/en/projects',
     )
-    expect(
-      within(page.main()).getByRole('region', { name: 'Fixture Engine · commits' }).textContent,
-    ).toContain('1,234')
-    expect(
-      within(page.main()).getByRole('region', { name: 'Fixture Engine · releases' }).textContent,
-    ).toContain('56')
+  })
+
+  it('a featured Project with numbers shows them and its stack on its card', async () => {
+    const page = await visit('/en', { content: fixtureContent() })
+
+    const [engine, studio] = within(
+      within(page.main()).getByRole('region', { name: 'Featured Projects' }),
+    ).getAllByRole('article')
+    expect(within(engine!).getByRole('list', { name: 'Numbers' }).textContent).toBe(
+      '1,234commits56releases',
+    )
+    expect(within(engine!).getByRole('list', { name: 'Stack' }).textContent).toBe(
+      'TypeScriptPostgres',
+    )
+    expect(within(studio!).queryByRole('list', { name: 'Numbers' })).toBeNull()
   })
 
   it('the German Overview names them in German', async () => {
     const page = await visit('/de', { content: fixtureContent() })
 
-    expect(within(page.main()).getByRole('region', { name: 'Ausgewählte Projekte' })).toBeTruthy()
-    expect(
-      within(page.main()).getByRole('region', { name: 'Fixture Engine · Commits' }),
-    ).toBeTruthy()
+    const featured = within(page.main()).getByRole('region', { name: 'Ausgewählte Projekte' })
+    expect(within(featured).getByRole('list', { name: 'Zahlen' }).textContent).toContain(
+      '1,234Commits',
+    )
   })
 
   it('the sidebar shows the pinned Projects, linking to their pages', async () => {

@@ -13,6 +13,7 @@ msgid "About"
 msgstr "About"
 
 #: src/components/AvailabilityTile.tsx
+#: src/routes/$lang/index.tsx
 msgid "Availability"
 msgstr "Availability"
 
@@ -144,6 +145,7 @@ msgstr "now"
 msgid "Now"
 msgstr "Now"
 
+#: src/components/ProjectCards.tsx
 #: src/routes/$lang/projects/$slug.tsx
 msgid "Numbers"
 msgstr "Numbers"
@@ -152,7 +154,6 @@ msgstr "Numbers"
 msgid "Open source"
 msgstr "Open source"
 
-#: src/routes/$lang/index.tsx
 #: src/shell/navigation.ts
 msgid "Overview"
 msgstr "Overview"
@@ -188,10 +189,6 @@ msgstr "Previous screenshot"
 #: src/legal/pages.ts
 msgid "Privacy policy"
 msgstr "Privacy policy"
-
-#: src/routes/$lang/index.tsx
-msgid "Profile"
-msgstr "Profile"
 
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx
@@ -233,6 +230,7 @@ msgstr "Site language"
 
 #: src/components/SkillList.tsx
 #: src/routes/$lang/about.tsx
+#: src/routes/$lang/index.tsx
 msgid "Skills"
 msgstr "Skills"
 
@@ -240,6 +238,7 @@ msgstr "Skills"
 msgid "Skip to content"
 msgstr "Skip to content"
 
+#: src/components/ProjectCards.tsx
 #: src/routes/$lang/projects/$slug.tsx
 msgid "Stack"
 msgstr "Stack"

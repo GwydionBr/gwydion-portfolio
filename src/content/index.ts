@@ -46,9 +46,6 @@ export type {
   StorySource,
 } from './schema'
 
-/** The slug of Self-Engine, the Project whose numbers the Overview shows. */
-export const SELF_ENGINE_SLUG = 'self-engine'
-
 /** Which Projects `getProjects` returns; every Project by default. */
 export interface ProjectFilter {
   featured?: boolean

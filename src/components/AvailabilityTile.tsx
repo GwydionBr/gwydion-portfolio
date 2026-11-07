@@ -3,7 +3,7 @@ import { useProfile } from '#/content/react'
 import { CvDownload } from './CvDownload'
 import { Tile } from './Tile'
 
-/** Gwydion's Availability and the CV download: the sidebar card on desktop, an Overview tile on every screen. */
+/** Gwydion's Availability and the CV download: the sidebar card on desktop, a Contact tile on phones. */
 export function AvailabilityTile({
   compact,
   className,

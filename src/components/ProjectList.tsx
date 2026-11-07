@@ -6,22 +6,17 @@ import { ProjectSwatch } from './ProjectSwatch'
 
 /**
  * Projects as an ordered list of rows, each linking to its Project page:
- * title, kind, period and summary. The Projects view and the Overview's
- * featured-Projects tile both use it.
+ * title, kind, period and summary. The Projects view uses it.
  */
 export function ProjectList({
   projects,
   label,
-  headingLevel,
 }: {
   projects: readonly Project[]
   /** The list's accessible name. */
   label: string
-  /** The rank of each Project's title: 2 in a view, 3 inside a tile. */
-  headingLevel: 2 | 3
 }) {
   const lang = useSiteLanguage()
-  const Heading = `h${headingLevel}` as const
   return (
     <ol aria-label={label} className="divide-y divide-line">
       {projects.map((project) => (
@@ -34,7 +29,7 @@ export function ProjectList({
             <ProjectSwatch accent={project.accent} className="mt-1.5" />
             <span className="min-w-0 flex-1">
               <span className="flex flex-wrap items-baseline justify-between gap-x-3">
-                <Heading className="font-medium text-ink">{project.title}</Heading>
+                <h2 className="font-medium text-ink">{project.title}</h2>
                 <span className="text-xs text-subtle">
                   <ProjectMeta project={project} />
                 </span>

@@ -149,7 +149,7 @@ describe('The Contact view', () => {
 })
 
 describe('"Get in touch"', () => {
-  it.each(['/en', '/en/projects', '/en/about', '/en/contact', '/en/nowhere', '/de', '/de/about'])(
+  it.each(['/en', '/en/projects', '/en/about', '/en/nowhere', '/de', '/de/about'])(
     'leads from %s to the Contact view',
     async (url) => {
       const page = await visit(url, { content: fixtureContent() })
@@ -162,4 +162,10 @@ describe('"Get in touch"', () => {
       expect(page.title()).toBe(lang === 'de' ? 'Kontakt' : 'Contact')
     },
   )
+
+  it('is not offered on the Contact view itself', async () => {
+    const page = await visit('/en/contact', { content: fixtureContent() })
+
+    expect(within(page.main()).queryByRole('link', { name: 'Get in touch' })).toBeNull()
+  })
 })

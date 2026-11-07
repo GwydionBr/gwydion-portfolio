@@ -37,7 +37,7 @@ function fixtureProjects(): ProjectSource[] {
       accent: '#3b4a7a',
     },
     {
-      // Self-Engine's slug, so the Overview shows its numbers.
+      // Self-Engine's slug, so its story's screenshot gallery finds the screenshots.
       slug: 'self-engine',
       title: 'Fixture Engine',
       kind: 'own-product',

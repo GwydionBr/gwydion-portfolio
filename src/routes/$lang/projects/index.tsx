@@ -21,7 +21,7 @@ function Projects() {
   return (
     <View title={t`Projects`}>
       <div className="max-w-3xl rounded-2xl bg-surface px-5 py-2 ring-1 ring-line">
-        <ProjectList projects={useProjects()} label={t`Projects`} headingLevel={2} />
+        <ProjectList projects={useProjects()} label={t`Projects`} />
       </div>
     </View>
   )

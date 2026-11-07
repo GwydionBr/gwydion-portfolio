@@ -7,7 +7,8 @@ describe('Overview', () => {
     const page = await visit('/en')
 
     expect(page.path()).toBe('/en')
-    expect(page.title()).toBe('Overview')
+    // The Overview's title is Gwydion himself; its navigation entry is "Overview".
+    expect(page.title()).toBe('Gwydion Braunsdorf')
     expect(document.documentElement.lang).toBe('en')
     expect(navigationOf('Main navigation')).toEqual({
       entries: ['Overview', 'Projects', 'About', 'Contact'],
@@ -21,7 +22,7 @@ describe('Overview', () => {
   it('opens under /de with every interface text in German', async () => {
     const page = await visit('/de')
 
-    expect(page.title()).toBe('Übersicht')
+    expect(page.title()).toBe('Gwydion Braunsdorf')
     expect(document.documentElement.lang).toBe('de')
     expect(
       within(page.sidebar('Seitenleiste')).getByRole('heading', { name: 'Verfügbarkeit' }),
@@ -58,7 +59,7 @@ describe('The bare domain', () => {
     const page = await visit('/', { browserLanguages: ['de-DE', 'en'] })
 
     expect(page.path()).toBe('/de')
-    expect(page.title()).toBe('Übersicht')
+    expect(document.documentElement.lang).toBe('de')
   })
 
   it('redirects any other browser to /en', async () => {
@@ -92,6 +93,20 @@ describe('Language switch', () => {
     expect(page.path()).toBe('/de/about')
     expect(page.title()).toBe('Über mich')
     expect(document.documentElement.lang).toBe('de')
+  })
+
+  it('marks the Site language shown as current', async () => {
+    const page = await visit('/de/projects')
+
+    const switcher = within(page.sidebar('Seitenleiste')).getByRole('navigation', {
+      name: 'Seitensprache',
+    })
+    expect(
+      within(switcher).getByRole('link', { name: 'Deutsch' }).hasAttribute('aria-current'),
+    ).toBe(true)
+    expect(
+      within(switcher).getByRole('link', { name: 'English' }).hasAttribute('aria-current'),
+    ).toBe(false)
   })
 })
 

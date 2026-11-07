@@ -7,22 +7,44 @@ const tile = (page: { main(): HTMLElement }, name: string) =>
   within(page.main()).getByRole('region', { name })
 
 describe('The Profile on the Overview', () => {
-  it('shows pitch with skills, "Now" and the Availability in English under /en', async () => {
+  it('is titled with the name, and leads with role, location, pitch and the Availability', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    const profile = tile(page, 'Profile')
-    expect(profile.textContent).toContain('I am a fixture.')
-    expect(within(profile).getByRole('list', { name: 'Skills' }).textContent).toBe('Testing')
-    expect(tile(page, 'Now').textContent).toContain('Learning · More tests.')
+    expect(page.title()).toBe('Ada Example')
+    const hero = page.main().querySelector('header')!
+    expect(hero.textContent).toContain('Fixture developer · Testland')
+    expect(hero.textContent).toContain('I am a fixture.')
     const availability = tile(page, 'Availability')
     expect(availability.textContent).toContain('Open to fixtures')
     expect(availability.textContent).toContain('Also fixtures on the side')
   })
 
-  it('shows the same tiles in German under /de', async () => {
+  it('offers the CV and "Get in touch" right under the pitch', async () => {
+    const page = await visit('/en', { content: fixtureContent() })
+
+    const hero = within(page.main().querySelector('header')!)
+    expect(hero.getByRole('link', { name: 'Download CV' }).getAttribute('href')).toBe(
+      '/cv/ada-example-cv-en.pdf',
+    )
+    expect(hero.getByRole('link', { name: 'Get in touch' }).getAttribute('href')).toBe(
+      '/en/contact',
+    )
+  })
+
+  it('shows skills and "Now" below the Projects', async () => {
+    const page = await visit('/en', { content: fixtureContent() })
+
+    expect(within(tile(page, 'Skills')).getByRole('list', { name: 'Skills' }).textContent).toBe(
+      'Testing',
+    )
+    expect(tile(page, 'Now').textContent).toContain('Learning · More tests.')
+  })
+
+  it('shows the same in German under /de', async () => {
     const page = await visit('/de', { content: fixtureContent() })
 
-    expect(tile(page, 'Profil').textContent).toContain('Ich bin ein Fixture.')
+    expect(page.main().querySelector('header')!.textContent).toContain('Ich bin ein Fixture.')
+    expect(tile(page, 'Kenntnisse')).toBeTruthy()
     expect(tile(page, 'Aktuell').textContent).toContain('Lernen · Mehr Tests.')
     const availability = tile(page, 'Verfügbarkeit')
     expect(availability.textContent).toContain('Offen für Fixtures')
