@@ -6,7 +6,7 @@ const de: LegalSection[] = [
     id: 'controller',
     title: 'Verantwortlicher',
     paragraphs: [
-      'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Deutschland. Kontakt: hello@gwydion.dev',
+      'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Gwydion Braunsdorf, Schwangauer Str. 3, 87645 Schwangau, Deutschland. Kontakt: hello@gwydion.dev',
       'Diese Datenschutzerklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten beim Besuch von gwydion.dev und bei der Nutzung des Kontaktformulars. Außerdem beschreibt sie, wie ich als technischer Dienstleister Daten für die von mir betreuten Tattoo-Studio-Websites verarbeite (Anfragen-Portal).',
     ],
   },
@@ -104,7 +104,7 @@ const en: LegalSection[] = [
     id: 'controller',
     title: 'Controller',
     paragraphs: [
-      'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Marktplatz 7, 87724 Ottobeuren, Germany. Contact: hello@gwydion.dev',
+      'The controller responsible for processing personal data on this website is: Gwydion Braunsdorf, Schwangauer Str. 3, 87645 Schwangau, Germany. Contact: hello@gwydion.dev',
       'This privacy policy explains the nature, scope, and purpose of processing personal data when you visit gwydion.dev and use the contact form. It also describes how I, as a technical service provider, process data for the tattoo studio websites I build and maintain (the booking request portal).',
     ],
   },

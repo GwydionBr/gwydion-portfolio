@@ -27,29 +27,43 @@ export const careerEntries: CareerEntrySource[] = [
       de: 'Websites und Web-Apps für Studios und kleine Unternehmen.',
     },
   },
-  // PLACEHOLDER: earlier positions and education are still missing (spec #31, "real content still needed").
   {
-    kind: 'job',
+    kind: 'education',
     start: '2021',
     end: '2024',
-    title: { en: 'Earlier position (placeholder)', de: 'Frühere Station (Platzhalter)' },
-    organisation: 'To be supplied',
-    summary: {
-      en: 'Placeholder: an earlier position goes here.',
-      de: 'Platzhalter: Hier steht eine frühere Station.',
+    title: {
+      en: 'Wood engineering studies (5 semesters, no degree)',
+      de: 'Studium Holzingenieurwesen (5 Semester, ohne Abschluss)',
     },
-    placeholder: true,
+    organisation: 'Hochschule für nachhaltige Entwicklung Eberswalde',
+    summary: {
+      en: 'First contact with programming during my studies. I left to build software full-time.',
+      de: 'Im Studium kam ich zum ersten Mal mit Programmieren in Berührung. Ich habe abgebrochen, um ganz Software zu bauen.',
+    },
+  },
+  {
+    kind: 'job',
+    start: '2016',
+    end: '2020',
+    title: { en: 'Customer service', de: 'Kundenservice' },
+    organisation: 'Ticket-Center Hohenschwangau (Neuschwanstein)',
+    summary: {
+      en: 'Ticket sales and visitor service for Neuschwanstein Castle, with a break for two semesters of mechanical engineering (2017–2018). Winters spent travelling.',
+      de: 'Ticketverkauf und Besucherservice für Schloss Neuschwanstein, unterbrochen von zwei Semestern Maschinenbau (2017–2018). Die Winter über war ich auf Reisen.',
+    },
   },
   {
     kind: 'education',
-    start: '2017',
-    end: '2021',
-    title: { en: 'Education (placeholder)', de: 'Ausbildung (Platzhalter)' },
-    organisation: 'To be supplied',
-    summary: {
-      en: 'Placeholder: education goes here.',
-      de: 'Platzhalter: Hier steht die Ausbildung.',
+    start: '2014',
+    end: '2016-07',
+    title: {
+      en: 'Advanced technical college entrance qualification (Fachabitur), business',
+      de: 'Fachabitur, Zweig Wirtschaft und Verwaltung',
     },
-    placeholder: true,
+    organisation: 'FOS Kempten',
+    summary: {
+      en: 'Two years at the Fachoberschule after Realschule.',
+      de: 'Zwei Jahre Fachoberschule nach der Realschule.',
+    },
   },
 ]

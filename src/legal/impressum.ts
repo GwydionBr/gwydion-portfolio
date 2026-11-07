@@ -6,8 +6,8 @@ const de: LegalSection[] = [
     title: 'Angaben gemäß § 5 DDG',
     paragraphs: [
       'Gwydion Braunsdorf',
-      'Marktplatz 7',
-      '87724 Ottobeuren',
+      'Schwangauer Str. 3',
+      '87645 Schwangau',
       'Deutschland',
       'E-Mail: hello@gwydion.dev',
     ],
@@ -51,8 +51,8 @@ const en: LegalSection[] = [
     title: 'Information pursuant to § 5 DDG (German Digital Services Act)',
     paragraphs: [
       'Gwydion Braunsdorf',
-      'Marktplatz 7',
-      '87724 Ottobeuren',
+      'Schwangauer Str. 3',
+      '87645 Schwangau',
       'Germany',
       'Email: hello@gwydion.dev',
     ],
