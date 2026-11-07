@@ -11,14 +11,19 @@ export const cvText = {
     en: ['Full-Stack Developer', 'React & TypeScript'],
     de: ['Full-Stack-Entwickler', 'React & TypeScript'],
   },
+  /**
+   * Whether the CV shows Gwydion's photo: customary in German applications,
+   * left out of English ones (UK, US and international employers expect none).
+   */
+  photo: { en: false, de: true },
   location: { en: 'Schwangau, Germany', de: 'Schwangau, Deutschland' },
   availability: {
     en: ['Open to full-time roles.', 'On-site, hybrid or remote.', 'Available immediately.'],
     de: ['Offen für Festanstellungen.', 'Vor Ort, hybrid oder remote.', 'Ab sofort verfügbar.'],
   },
   intro: {
-    en: 'Self-taught full-stack developer. I take products from the data model to the deployed app on my own: offline-first sync, web, mobile and desktop clients, content that non-technical owners edit themselves, and hosting. Freelancing since 2024; since December 2025 I have been building my own product, Self-Engine. I work with AI coding tools every day and built an MCP server that lets AI assistants work with an app’s data.',
-    de: 'Autodidaktischer Full-Stack-Entwickler. Ich bringe Produkte allein vom Datenmodell bis zur ausgelieferten App: Offline-first-Sync, Web-, Mobil- und Desktop-Clients, Inhalte, die Nicht-Techniker selbst pflegen, und Hosting. Seit 2024 arbeite ich freiberuflich, seit Dezember 2025 baue ich mein eigenes Produkt Self-Engine. Ich arbeite täglich mit KI-Coding-Tools und habe einen MCP-Server gebaut, über den KI-Assistenten mit den Daten einer App arbeiten.',
+    en: 'Self-taught full-stack developer focused on React and TypeScript. I take products from the data model to the deployed app on my own: web, mobile and desktop, offline-capable. Freelancing since 2024; since December 2025 I have been building my own product, Self-Engine.',
+    de: 'Autodidaktischer Full-Stack-Entwickler mit Schwerpunkt React und TypeScript. Ich bringe Produkte allein vom Datenmodell bis zur ausgelieferten App: Web, Mobil und Desktop, offline-fähig. Seit 2024 arbeite ich freiberuflich, seit Dezember 2025 baue ich mein eigenes Produkt Self-Engine.',
   },
   sections: {
     contact: { en: 'Contact', de: 'Kontakt' },
@@ -26,41 +31,31 @@ export const cvText = {
     languages: { en: 'Languages', de: 'Sprachen' },
     profile: { en: 'Profile', de: 'Profil' },
     experience: { en: 'Experience', de: 'Berufserfahrung' },
-    projects: { en: 'Side projects', de: 'Weitere Projekte' },
+    otherWork: { en: 'Other work', de: 'Weitere Tätigkeiten' },
+    projects: { en: 'Projects', de: 'Projekte' },
     education: { en: 'Education', de: 'Ausbildung' },
-  },
-  contactLabels: {
-    location: { en: 'Location', de: 'Wohnort' },
-    email: { en: 'Email', de: 'E-Mail' },
-    website: { en: 'Portfolio', de: 'Portfolio' },
-    github: { en: 'GitHub', de: 'GitHub' },
-    linkedin: { en: 'LinkedIn', de: 'LinkedIn' },
   },
   now: { en: 'present', de: 'heute' },
   /**
-   * The highlights of a Career entry, by its organisation (in English); the entry's own
-   * summary stands in for entries without any. `stackOf` names the Project
-   * whose stack the entry lists.
+   * The development work, by organisation (in English): the Career entries listed
+   * under Experience, with their highlights. Every other job goes under Other
+   * work, as a single line. `stackOf` names the Project whose stack the entry lists.
    */
   experience: {
     'Self-Engine': {
       stackOf: 'self-engine',
       highlights: [
         {
-          en: 'Offline-first productivity platform: time tracking, tasks, calendar, finances and habits on one data model, synced across web, macOS and iOS.',
-          de: 'Offline-first-Produktivitätsplattform: Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten auf einem Datenmodell, synchron über Web, macOS und iOS.',
+          en: 'Offline-first productivity platform for the self-employed: time tracking, tasks, calendar, finances and habits, synced across web, macOS and iOS.',
+          de: 'Offline-first-Produktivitätsplattform für Selbstständige: Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten, synchron über Web, macOS und iOS.',
         },
         {
-          en: 'Bun monorepo: TanStack Start web app, Expo / React Native mobile app and Electron desktop app sharing one domain layer (schemas, workflows, UI kit, i18n).',
-          de: 'Bun-Monorepo: TanStack-Start-Web-App, Expo-/React-Native-App und Electron-Desktop-App auf einer gemeinsamen Domänenschicht (Schemas, Workflows, UI-Kit, i18n).',
+          en: 'One monorepo, three apps: TanStack Start (web), Expo / React Native (iOS) and Electron (macOS) on a shared domain layer.',
+          de: 'Ein Monorepo, drei Apps: TanStack Start (Web), Expo / React Native (iOS) und Electron (macOS) auf einer gemeinsamen Domänenschicht.',
         },
         {
-          en: 'MCP server through which AI assistants read and write projects, tasks, time entries and finances; in-app AI features via TanStack AI.',
-          de: 'MCP-Server, über den KI-Assistenten Projekte, Aufgaben, Zeiteinträge und Finanzen lesen und schreiben; KI-Funktionen in der App über TanStack AI.',
-        },
-        {
-          en: '2,200+ commits, ~5,900 tests (Vitest), 50+ architecture decisions recorded as ADRs.',
-          de: '2.200+ Commits, ~5.900 Tests (Vitest), 50+ Architekturentscheidungen als ADRs dokumentiert.',
+          en: 'MCP server through which AI assistants work with the app’s data. Around 5,900 tests and more than 50 recorded architecture decisions.',
+          de: 'MCP-Server, über den KI-Assistenten mit den Daten der App arbeiten. Rund 5.900 Tests, über 50 dokumentierte Architekturentscheidungen.',
         },
       ],
     },
@@ -68,12 +63,12 @@ export const cvText = {
       stack: ['TanStack Start', 'Sanity', 'Supabase', 'Resend', 'Vercel'],
       highlights: [
         {
-          en: '<b>Endstation Tattoo:</b> studio website with artist portfolios and booking requests, which the studio edits itself in Sanity; launching in the coming weeks.',
-          de: '<b>Endstation Tattoo:</b> Studio-Website mit Künstler-Portfolios und Terminanfragen, die das Studio selbst in Sanity pflegt; geht in den nächsten Wochen live.',
+          en: '<b>Endstation Tattoo:</b> studio website with artist portfolios and booking requests; the studio edits its content itself in Sanity. Launching in the coming weeks.',
+          de: '<b>Endstation Tattoo:</b> Studio-Website mit Künstler-Portfolios und Terminanfragen; die Inhalte pflegt das Studio selbst in Sanity. Geht in den nächsten Wochen live.',
         },
         {
-          en: 'Built in one monorepo with the sites of further tattoo studios and a portal for their booking requests; each site has its own CMS project and deployment.',
-          de: 'Entstanden in einem Monorepo mit den Websites weiterer Tattoo-Studios und einem Portal für deren Terminanfragen; jede Website hat ein eigenes CMS-Projekt und Deployment.',
+          en: 'Built in one monorepo with further studio sites and a portal for their booking requests; each site with its own CMS and deployment.',
+          de: 'Gebaut in einem Monorepo mit weiteren Studio-Websites und einem Portal für deren Terminanfragen; jede Website mit eigenem CMS und Deployment.',
         },
       ],
     },
@@ -86,52 +81,36 @@ export const cvText = {
       title: 'gwydion.dev',
       period: '2026',
       text: {
-        en: 'Bilingual, server-rendered portfolio: TanStack Start, Tailwind CSS, Lingui, MDX.',
-        de: 'Zweisprachiges, serverseitig gerendertes Portfolio: TanStack Start, Tailwind CSS, Lingui, MDX.',
+        en: 'Bilingual portfolio with TanStack Start, Tailwind CSS and MDX.',
+        de: 'Zweisprachiges Portfolio mit TanStack Start, Tailwind CSS und MDX.',
       },
     },
     {
       title: 'Burgwacht',
       period: '2026',
       text: {
-        en: 'Castle-building strategy game in Godot 4 (GDScript), built solo; 400+ commits.',
-        de: 'Burgenbau-Strategiespiel in Godot 4 (GDScript), allein entwickelt; 400+ Commits.',
+        en: 'Castle-building strategy game in Godot 4, built solo.',
+        de: 'Burgenbau-Strategiespiel in Godot 4, allein entwickelt.',
       },
     },
     {
       title: 'Work Manager',
       period: '2025',
       text: {
-        en: 'Work and time management app with Next.js, Mantine and Supabase; predecessor of Self-Engine.',
-        de: 'App für Arbeits- und Zeitmanagement mit Next.js, Mantine und Supabase; Vorgänger von Self-Engine.',
+        en: 'Work and time management with Next.js and Supabase; predecessor of Self-Engine.',
+        de: 'Zeit- und Arbeitsmanagement mit Next.js und Supabase; Vorgänger von Self-Engine.',
       },
     },
   ],
   courses: {
-    en: 'Online courses in software development (Udemy, Zero To Mastery).',
-    de: 'Online-Kurse in Softwareentwicklung (Udemy, Zero To Mastery).',
+    en: 'Online courses in software development (Udemy, Zero To Mastery)',
+    de: 'Online-Kurse in Softwareentwicklung (Udemy, Zero To Mastery)',
   },
   skills: [
-    {
-      label: { en: 'Languages', de: 'Sprachen' },
-      items: [
-        'TypeScript',
-        'JavaScript',
-        'SQL',
-        { en: 'Python (basic)', de: 'Python (Grundlagen)' },
-        'GDScript',
-      ],
-    },
+    { label: { en: 'Languages', de: 'Sprachen' }, items: ['TypeScript', 'JavaScript', 'SQL'] },
     {
       label: { en: 'Frontend', de: 'Frontend' },
-      items: [
-        'React',
-        'Next.js',
-        'TanStack Start',
-        'TanStack Query / DB',
-        'Tailwind CSS',
-        'Mantine',
-      ],
+      items: ['React', 'Next.js', 'TanStack Start & Query', 'Tailwind CSS'],
     },
     {
       label: { en: 'Mobile & desktop', de: 'Mobil & Desktop' },
@@ -139,7 +118,7 @@ export const cvText = {
     },
     {
       label: { en: 'Backend & data', de: 'Backend & Daten' },
-      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Sanity CMS', 'Resend', 'Zod'],
+      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Sanity'],
     },
     {
       label: { en: 'AI', de: 'KI' },
@@ -147,7 +126,7 @@ export const cvText = {
     },
     {
       label: { en: 'Tooling', de: 'Werkzeuge' },
-      items: ['Git & GitHub', 'Bun', 'Vite', 'Vitest', 'Vercel'],
+      items: ['Git', 'Bun', 'Vite', 'Vitest', 'Vercel'],
     },
   ],
   spokenLanguages: [

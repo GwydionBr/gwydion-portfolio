@@ -15,15 +15,21 @@ import { renderCv } from './cv/renderCv'
 
 const rootDir = path.resolve(import.meta.dirname, '..')
 const chrome = process.env.CHROME ?? '/Applications/Helium.app/Contents/MacOS/Helium'
-const font = pathToFileURL(
-  path.join(rootDir, 'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'),
-).href
+const assets = {
+  font: pathToFileURL(
+    path.join(
+      rootDir,
+      'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
+    ),
+  ).href,
+  photo: pathToFileURL(path.join(rootDir, 'public/portrait.webp')).href,
+}
 const workDir = await mkdtemp(path.join(tmpdir(), 'cv-'))
 
 for (const language of LANGUAGES) {
   const htmlPath = path.join(workDir, `cv-${language}.html`)
   const pdfPath = path.join(rootDir, `public/cv/gwydion-braunsdorf-cv-${language}.pdf`)
-  await writeFile(htmlPath, renderCv(language, font))
+  await writeFile(htmlPath, renderCv(language, assets))
   const browser = spawnSync(chrome, [
     '--headless',
     '--disable-gpu',
