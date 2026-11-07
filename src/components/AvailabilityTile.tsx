@@ -1,8 +1,9 @@
 import { useLingui } from '@lingui/react/macro'
 import { useProfile } from '#/content/react'
+import { CvDownload } from './CvDownload'
 import { Tile } from './Tile'
 
-/** Gwydion's Availability: the sidebar card on desktop, an Overview tile on every screen. */
+/** Gwydion's Availability and the CV download: the sidebar card on desktop, an Overview tile on every screen. */
 export function AvailabilityTile({
   compact,
   className,
@@ -19,6 +20,7 @@ export function AvailabilityTile({
         {availability.headline}
       </p>
       {availability.freelance && <p className="mt-1 text-muted">{availability.freelance}</p>}
+      <CvDownload className="mt-3" />
     </Tile>
   )
 }

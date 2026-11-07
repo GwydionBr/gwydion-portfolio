@@ -95,10 +95,49 @@ export interface ProjectWithStory extends Project {
   story: Story | undefined
 }
 
+/**
+ * A month (`YYYY-MM`) or, when the month does not matter, a year (`YYYY`).
+ * Career entry periods use it.
+ */
+export type CareerDate = string
+
+/** One stage of Gwydion's path (glossary: Career entry). */
+export interface CareerEntrySource {
+  kind: 'job' | 'freelance' | 'education'
+  start: CareerDate
+  /** `null` while the entry is ongoing. */
+  end: CareerDate | null
+  title: Localized<string>
+  organisation: string
+  summary: Localized<string>
+  /** Stands in for an entry Gwydion has not supplied yet; shown dimmed. */
+  placeholder?: true
+}
+
+/** A Career entry in one Site language, as pages receive it. */
+export type CareerEntry = InLanguage<CareerEntrySource>
+
+/**
+ * One CV file (glossary: CV): a PDF under `public/`, written in `language`.
+ * A Site language without its own CV is offered another one.
+ */
+export interface CvFile {
+  language: Language
+  /** The asset's URL path, for example `/cv/gwydion-braunsdorf-cv-en.pdf`. */
+  href: string
+}
+
+/** The CV a Site language offers: the file to download and the language it is written in. */
+export type Cv = CvFile
+
 /** Everything the content module serves, as stored. */
 export interface ContentSource {
   profile: ProfileSource
   projects: ProjectSource[]
   stories: StorySource
+  /** In any order; the content module sorts them newest first. */
+  careerEntries: CareerEntrySource[]
+  /** At least one; at most one per Site language. */
+  cv: CvFile[]
   posts: Post[]
 }

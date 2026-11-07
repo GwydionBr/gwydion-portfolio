@@ -1,10 +1,12 @@
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
-import { getByRole, within } from '@testing-library/dom'
+import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
+import type { Theme } from '#/theme/theme'
+import { emulateSystemTheme } from './systemTheme'
 
 declare global {
   var IS_REACT_ACT_ENVIRONMENT: boolean
@@ -17,6 +19,9 @@ afterEach(async () => {
   mounted = undefined
   if (root) await act(async () => root.unmount())
   vi.restoreAllMocks()
+  // The device forgets the visit: no stored choices, no theme left on `<html>`.
+  localStorage.clear()
+  delete document.documentElement.dataset.theme
 })
 
 interface VisitOptions {
@@ -24,6 +29,8 @@ interface VisitOptions {
   browserLanguages?: readonly string[]
   /** The content the site serves; the site's own content files by default. */
   content?: Content
+  /** The visitor's system appearance setting (`prefers-color-scheme`). */
+  systemTheme?: Theme
 }
 
 /**
@@ -35,8 +42,9 @@ interface VisitOptions {
  */
 export async function visit(
   url: string,
-  { browserLanguages = ['en-US', 'en'], content }: VisitOptions = {},
+  { browserLanguages = ['en-US', 'en'], content, systemTheme = 'light' }: VisitOptions = {},
 ) {
+  const system = emulateSystemTheme(systemTheme)
   globalThis.IS_REACT_ACT_ENVIRONMENT = true
   vi.spyOn(navigator, 'languages', 'get').mockReturnValue(browserLanguages)
   // jsdom does not implement scrolling; the router restores scroll positions.
@@ -53,6 +61,7 @@ export async function visit(
   mounted = root
   await act(async () => root.render(<RouterProvider router={router} />))
 
+  const applies = (element: Element) => matchMedia(element.getAttribute('media') ?? 'all').matches
   const landmark = (role: 'main' | 'complementary', name?: string) =>
     getByRole(document.body, role, name ? { name } : {})
 
@@ -66,14 +75,64 @@ export async function visit(
     sidebar: (name = 'Sidebar') => landmark('complementary', name),
     /** The view's title: the one `h1` in the main pane. */
     title: () => within(landmark('main')).getByRole('heading', { level: 1 }).textContent,
-    /** Follows `link` like a visitor's click and waits for the new page. */
-    async click(link: HTMLElement) {
+    /** Changes the visitor's system appearance setting while the page is open. */
+    async setSystemTheme(theme: Theme) {
+      await act(async () => system.set(theme))
+    },
+    /**
+     * The theme the page is painted in. The stylesheet paints `<html
+     * data-theme>` when set, else the system setting (src/styles/app.css).
+     */
+    theme: (): Theme =>
+      (document.documentElement.dataset.theme as Theme | undefined) ??
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+    /** The browser chrome colour in effect: the `theme-color` whose media applies. */
+    chromeColor: () =>
+      [...document.head.querySelectorAll('meta[name="theme-color"]')]
+        .filter(applies)
+        .map((meta) => meta.getAttribute('content')),
+    /** The favicon in effect: the icon links whose media applies. */
+    favicon: () =>
+      [...document.head.querySelectorAll('link[rel="icon"]')]
+        .filter(applies)
+        .map((link) => link.getAttribute('href')),
+    /**
+     * Runs the document's inline head scripts the way a browser does while
+     * parsing, before anything is painted: on a fresh `<html>`, as on a reload.
+     */
+    paintFirstFrame() {
+      delete document.documentElement.dataset.theme
+      for (const script of document.head.querySelectorAll('script:not([src])')) {
+        // oxlint-disable-next-line typescript/no-implied-eval -- executing the page's own inline script is the point
+        new Function(script.textContent ?? '')()
+      }
+    },
+    /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
+    async click(element: HTMLElement) {
       await act(async () => {
-        link.click()
-        await new Promise((resolve) => setTimeout(resolve, 0))
+        element.click()
+        await settled()
+      })
+    },
+    /** Runs `action` (an answer the test held back) and waits for the page to follow. */
+    async settle(action: () => void) {
+      await act(async () => {
+        action()
+        await settled()
+      })
+    },
+    /** Types `value` into a form field, replacing what it held. */
+    async fill(field: HTMLElement, value: string) {
+      await act(async () => {
+        fireEvent.change(field, { target: { value } })
       })
     },
   }
+}
+
+/** Lets pending work (navigation, a `fetch` answered in the test) run to its end. */
+async function settled() {
+  for (let turn = 0; turn < 10; turn++) await new Promise((resolve) => setTimeout(resolve, 0))
 }
 
 /** The names of the links in the navigation landmark `name`, and the one marked current. */

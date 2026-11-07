@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { PostList } from '#/components/PostList'
 import { ProjectList } from '#/components/ProjectList'
-import { TagList } from '#/components/TagList'
+import { SkillList } from '#/components/SkillList'
 import { Tile } from '#/components/Tile'
 import { SELF_ENGINE_SLUG } from '#/content'
 import { usePosts, useProfile, useProject, useProjects } from '#/content/react'
@@ -22,7 +22,7 @@ const LATEST_POSTS = 3
 function Overview() {
   const { t } = useLingui()
   const lang = useSiteLanguage()
-  const { pitch, skills, now } = useProfile()
+  const { pitch, now } = useProfile()
   const selfEngine = useProject(SELF_ENGINE_SLUG)
   const featured = useProjects({ featured: true })
   const posts = usePosts()
@@ -31,7 +31,7 @@ function Overview() {
       <div className="grid gap-4 lg:grid-cols-3">
         <Tile title={t`Profile`} className="lg:col-span-2">
           <p className="mt-2 text-base leading-relaxed text-ink">{pitch}</p>
-          <TagList label={t`Skills`} tags={skills} className="mt-4" />
+          <SkillList />
         </Tile>
         <Tile title={t`Now`}>
           <ul className="mt-2 space-y-2">

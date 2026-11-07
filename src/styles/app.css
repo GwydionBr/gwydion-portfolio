@@ -3,23 +3,56 @@
 
 /*
  * Colour tokens. Components use only these (`bg-canvas`, `text-ink`, …), never
- * raw palette colours, so the dark theme (#33) only redefines the variables.
+ * raw palette colours, so every view supports both themes for free.
+ *
+ * Each token is `light-dark(<light>, <dark>)`. `color-scheme` picks the side:
+ * the system setting by default, or the visitor's choice, which the theme
+ * module (src/theme/theme.ts) puts on `<html data-theme>`. Text tokens
+ * (ink, muted, subtle) reach WCAG AA on every background (canvas, sidebar,
+ * surface) in both themes; src/styles/contrast.test.ts checks that.
  */
 :root {
-  --canvas: #f3f3f1;
-  --sidebar: #fafaf9;
-  --surface: #ffffff;
-  --ink: #171717;
-  --muted: #525252;
-  --subtle: #737373;
-  --line: rgb(0 0 0 / 0.06);
-  --hover: rgb(0 0 0 / 0.03);
-  --selected: rgb(0 0 0 / 0.06);
-  --focus: #2563eb;
+  color-scheme: light dark;
+  --canvas: light-dark(#f3f3f1, #111110);
+  --sidebar: light-dark(#fafaf9, #171716);
+  --surface: light-dark(#ffffff, #1e1e1d);
+  --ink: light-dark(#171717, #ededec);
+  --muted: light-dark(#525252, #b4b4b2);
+  --subtle: light-dark(#666666, #8f8f8d);
+  --line: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+  --hover: light-dark(rgb(0 0 0 / 0.03), rgb(255 255 255 / 0.04));
+  --selected: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+  --focus: light-dark(#2563eb, #60a5fa);
   /* The Availability card: Gwydion is open to work. */
-  --available: #047857;
-  --available-surface: #ecfdf5;
-  --available-line: #d1fae5;
+  --available: light-dark(#047857, #34d399);
+  --available-surface: light-dark(#ecfdf5, #062a1e);
+  --available-line: light-dark(#d1fae5, #0b4a35);
+  /* Field messages and the contact form's error state. */
+  --danger: light-dark(#b91c1c, #f87171);
+  --danger-surface: light-dark(#fef2f2, #2a1212);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/*
+ * `dark:` for the rare case a token is not enough (e.g. swapping an icon):
+ * the visitor's dark choice, or a dark system setting without a choice.
+ */
+@custom-variant dark {
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
+      @slot;
+    }
+  }
 }
 
 @theme inline {
@@ -36,6 +69,8 @@
   --color-available: var(--available);
   --color-available-surface: var(--available-surface);
   --color-available-line: var(--available-line);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
 }
 
 @layer base {

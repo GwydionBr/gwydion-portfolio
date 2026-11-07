@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { createContent, siteContent, type ContentSource } from '#/content'
-import { integrityProblems } from './integrity'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+import { assetProblems, integrityProblems } from './integrity'
 import { fixtureSource } from '#/test/contentFixtures'
 
 describe('Content integrity', () => {
@@ -68,6 +70,67 @@ describe('Content integrity', () => {
     expect(integrityProblems(createContent(source))).toEqual([
       'projects: none is featured',
       'projects: none is pinned',
+    ])
+  })
+})
+
+describe('Career entries', () => {
+  it('a Career entry missing a German text is reported', () => {
+    const source = fixtureSource()
+    // The newest entry, first in what the content module returns.
+    const newest = source.careerEntries.find((entry) => entry.end === null)!
+    newest.summary = { en: 'Leads fixtures.', de: '' }
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: careerEntries.0.summary is empty',
+    ])
+  })
+
+  it.each([
+    ['2024-13', null, 'en: careerEntries.0 has a malformed start "2024-13"'],
+    ['2024-06', 'soon', 'en: careerEntries.0 has a malformed end "soon"'],
+    ['2024-06', '2024-05', 'en: careerEntries.0 ends before it starts'],
+    ['2024-06', '2023', 'en: careerEntries.0 ends before it starts'],
+  ])('a period from %s to %s is reported', (start, end, problem) => {
+    const source = fixtureSource()
+    Object.assign(
+      source.careerEntries.find((entry) => entry.kind === 'job')!,
+      { start, end },
+    )
+
+    const problems = integrityProblems(createContent(source))
+    expect(problems).toContain(problem)
+    expect(problems).toContain(problem.replace('en:', 'de:'))
+  })
+
+  it('a period that starts and ends in the same year is fine', () => {
+    const source = fixtureSource()
+    Object.assign(
+      source.careerEntries.find((entry) => entry.kind === 'job')!,
+      {
+        start: '2024-06',
+        end: '2024',
+      },
+    )
+
+    expect(integrityProblems(createContent(source))).toEqual([])
+  })
+})
+
+describe('The CV', () => {
+  /** Whether the static asset at URL path `href` is in `public/`. */
+  const inPublic = (href: string) => existsSync(join(process.cwd(), 'public', href))
+
+  it('the site CV exists as a static asset for every Site language', () => {
+    expect(assetProblems(siteContent, inPublic)).toEqual([])
+  })
+
+  it('a CV file that is not in public/ is reported, for each Site language offering it', () => {
+    const content = createContent(fixtureSource())
+
+    expect(assetProblems(content, inPublic)).toEqual([
+      'en: cv /cv/ada-example-cv-en.pdf does not exist',
+      'de: cv /cv/ada-example-cv-en.pdf does not exist',
     ])
   })
 })
