@@ -21,6 +21,7 @@ import type {
 } from './schema'
 
 export type { Localized } from './localized'
+export { periodDash } from './period'
 export type {
   CareerEntry,
   CareerEntrySource,

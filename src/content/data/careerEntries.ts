@@ -21,7 +21,7 @@ export const careerEntries: CareerEntrySource[] = [
     start: '2024',
     end: null,
     title: { en: 'Freelance full-stack developer', de: 'Freiberuflicher Full-Stack-Entwickler' },
-    organisation: 'Self-employed',
+    organisation: { en: 'Self-employed', de: 'Selbstständig' },
     summary: {
       en: 'Websites and web apps for studios and small businesses.',
       de: 'Websites und Web-Apps für Studios und kleine Unternehmen.',

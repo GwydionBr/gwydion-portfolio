@@ -21,3 +21,13 @@ export function periodProblem({ start, end }: Period): string | undefined {
   if (end.localeCompare(start.slice(0, end.length)) < 0) return 'ends before it starts'
   return undefined
 }
+
+/**
+ * The dash a period is written with between its sides: spaced only when a
+ * side has a month ("Jun 2024 – now"), since those sides contain spaces
+ * themselves ("2018–2022"); none when it starts and ends on the same date.
+ */
+export function periodDash({ start, end }: Period): '–' | ' – ' | null {
+  if (end === start) return null
+  return start.length > 4 || (end !== null && end.length > 4) ? ' – ' : '–'
+}

@@ -161,7 +161,8 @@ export interface Screenshot {
 export interface CareerEntrySource extends Period {
   kind: 'job' | 'freelance' | 'education'
   title: Localized<string>
-  organisation: string
+  /** Where it took place; localized only where the name itself differs ("Self-employed"). */
+  organisation: string | Localized<string>
   summary: Localized<string>
   /** Stands in for an entry Gwydion has not supplied yet; shown dimmed. */
   placeholder?: true
