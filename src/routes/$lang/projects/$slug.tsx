@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
 import { PROJECT_KIND_LABELS } from '#/components/projectKind'
 import { ProjectSwatch } from '#/components/ProjectSwatch'
-import { NumberTile, NumberTiles, storyComponents } from '#/components/story'
+import { NumberTile, NumberTiles, StoryProject, storyComponents } from '#/components/story'
 import { TagList } from '#/components/TagList'
 import { Tile } from '#/components/Tile'
 import { useProject } from '#/content/react'
@@ -50,7 +50,9 @@ function ProjectPage() {
           )}
           {Story && (
             <div className="mt-8">
-              <Story components={storyComponents} />
+              <StoryProject slug={project.slug}>
+                <Story components={storyComponents} />
+              </StoryProject>
             </div>
           )}
         </article>

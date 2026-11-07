@@ -4,7 +4,9 @@ import type { Content } from './index'
 
 /**
  * Everything `content` returns in `language`, keyed by getter; each Project
- * page as `project.<slug>`, so a missing story is reported by slug. New
+ * page as `project.<slug>`, so a missing story is reported by slug, and its
+ * screenshots as `screenshots.<slug>.<view>`, so a missing image file is
+ * reported by view and theme. New
  * content types join here.
  */
 function everythingIn(content: Content, language: Language) {
@@ -14,6 +16,12 @@ function everythingIn(content: Content, language: Language) {
     projects,
     ...Object.fromEntries(
       projects.map(({ slug }) => [`project.${slug}`, content.getProject(slug, language)]),
+    ),
+    ...Object.fromEntries(
+      projects.map(({ slug }) => [
+        `screenshots.${slug}`,
+        Object.fromEntries(content.getScreenshots(slug, language).map((shot) => [shot.view, shot])),
+      ]),
     ),
     careerEntries: content.getCareerEntries(language),
     cv: content.getCv(language),

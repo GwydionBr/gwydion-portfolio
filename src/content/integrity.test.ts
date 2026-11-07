@@ -74,6 +74,27 @@ describe('Content integrity', () => {
   })
 })
 
+describe('Screenshots', () => {
+  it('a screenshot image file without a URL is reported by view, language and theme', () => {
+    const source = fixtureSource()
+    const set = source.screenshots['self-engine']!
+    set.urls = { ...set.urls, 'timer-de-dark-440w.webp': undefined }
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: screenshots.self-engine.timer.images.dark is missing',
+    ])
+  })
+
+  it('a screenshot without German alt text is reported', () => {
+    const source = fixtureSource()
+    source.screenshots['self-engine']!.shots[0]!.alt.de = ''
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: screenshots.self-engine.dashboard.alt is empty',
+    ])
+  })
+})
+
 describe('Career entries', () => {
   it('a Career entry missing a German text is reported', () => {
     const source = fixtureSource()

@@ -32,6 +32,10 @@ msgstr "Career"
 msgid "Client work"
 msgstr "Client work"
 
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Close"
+msgstr "Close"
+
 #: src/components/ProfileLinks.tsx
 msgid "coming soon"
 msgstr "coming soon"
@@ -65,6 +69,11 @@ msgstr "Download CV"
 #: src/contact/ContactForm.tsx
 msgid "Email"
 msgstr "Email"
+
+#. placeholder {0}: shot.caption
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Enlarge screenshot: {0}"
+msgstr "Enlarge screenshot: {0}"
 
 #: src/contact/message.ts
 msgid "Enter a valid email address."
@@ -105,6 +114,10 @@ msgstr "Message sent. I'll get back to you."
 #: src/contact/ContactForm.tsx
 msgid "Name"
 msgstr "Name"
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Next screenshot"
+msgstr "Next screenshot"
 
 #: src/components/CareerList.tsx
 msgid "now"
@@ -147,6 +160,10 @@ msgstr "Pinned Projects"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Please enter your name ({nameMin} to {nameMax} characters)."
 
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Previous screenshot"
+msgstr "Previous screenshot"
+
 #: src/legal/pages.ts
 msgid "Privacy policy"
 msgstr "Privacy policy"
@@ -164,6 +181,10 @@ msgstr "Projects"
 #: src/legal/LegalPage.tsx
 msgid "Read the German version"
 msgstr "Read the German version"
+
+#: src/components/story/ScreenshotGallery.tsx
+msgid "Screenshots"
+msgstr "Screenshots"
 
 #: src/shell/SearchPlaceholder.tsx
 msgid "Search"

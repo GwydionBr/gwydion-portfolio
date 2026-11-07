@@ -1,5 +1,6 @@
 import type { MDXContent } from 'mdx/types'
 import type { Language } from '#/i18n/language'
+import type { Theme } from '#/theme/theme'
 import type { InLanguage, Localized } from './localized'
 
 /**
@@ -96,6 +97,53 @@ export interface ProjectWithStory extends Project {
 }
 
 /**
+ * One screenshot of a Project's app, as stored: which view it shows, its
+ * size, and the texts that go with it. Its image files live elsewhere (for
+ * Self-Engine: Vercel Blob, captured by the Self-Engine repo); the set's
+ * `urls` say where.
+ */
+export interface ScreenshotSource {
+  /** The view's name in the file names (`<view>-<language>-<theme>.webp`). */
+  view: string
+  /** CSS-pixel size: a whole app window, or a close-up of one element. */
+  size: { width: number; height: number }
+  /** A short title, shown under the image and in the enlarged view. */
+  caption: Localized<string>
+  /** What the image shows, for visitors who cannot see it. */
+  alt: Localized<string>
+}
+
+/**
+ * A Project's screenshots, in gallery order, and the URL of each image file
+ * by file name. `urls` is written by `bun run screenshots:sync`, never by hand.
+ */
+export interface ScreenshotSetSource {
+  shots: ScreenshotSource[]
+  urls: Readonly<Partial<Record<string, string>>>
+}
+
+/** Every Project's screenshots, by slug; most Projects have none. */
+export type ScreenshotsSource = Partial<Record<string, ScreenshotSetSource>>
+
+/** One image file of a screenshot at both resolutions: `src` is the 2× file. */
+export interface ScreenshotImage {
+  src: string
+  /** The 1× and the 2× file, by width. */
+  srcSet: string
+}
+
+/** A screenshot in one Site language, with its image in each theme. */
+export interface Screenshot {
+  view: string
+  width: number
+  height: number
+  caption: string
+  alt: string
+  /** Undefined only when a file's URL is missing, which the content-integrity check reports. */
+  images: Record<Theme, ScreenshotImage | undefined>
+}
+
+/**
  * A month (`YYYY-MM`) or, when the month does not matter, a year (`YYYY`).
  * Career entry periods use it.
  */
@@ -135,6 +183,7 @@ export interface ContentSource {
   profile: ProfileSource
   projects: ProjectSource[]
   stories: StorySource
+  screenshots: ScreenshotsSource
   /** In any order; the content module sorts them newest first. */
   careerEntries: CareerEntrySource[]
   /** At least one; at most one per Site language. */

@@ -6,6 +6,8 @@ Time trackers don't know what an hour is worth. Finance apps don't know which wo
 
 In Self-Engine, those connections are the product: an appointment starts a timer, the timer becomes a time entry, and a payout marks the entries as paid and books the money in Finance. Habits fill themselves in from the time tracked on a linked project.
 
+<ScreenshotGallery views={['work-dashboard', 'time-tracking-cockpit', 'work-payout']} />
+
 ## One data model, five modules
 
 - **Projects & time tracking:** one timer per project, running in parallel, pausable, with Pomodoro. Every hour knows its project, its hourly rate and its time class.
@@ -13,6 +15,8 @@ In Self-Engine, those connections are the product: an appointment starts a timer
 - **Calendar:** appointments and tracked time side by side, with two-way sync with Google and Apple (iCloud) that runs on the server, even with the app closed.
 - **Finance:** accounts in one currency each, one-off and recurring payments, transfers and currency conversions, reported strictly per currency.
 - **Habits:** daily, on chosen weekdays, or as a flexible quota per week or month; streaks are always computed from history.
+
+<ScreenshotGallery views={['dashboard', 'tasks-board', 'calendar', 'finance', 'habits']} />
 
 ## Offline-first, for real
 
@@ -31,6 +35,8 @@ The domain lives in shared packages: synced tables, Zod schemas and typed collec
 The built-in assistant knows 39 typed capabilities across every module. It works pull-first: the model gets counts and hints instead of user data and has to ask through typed read tools. Every write is prepared as a preview from live data, approved once, and executed as the same domain mutation as a click.
 
 If you'd rather use your own agent, connect Claude, Claude Code or Cursor to Self-Engine's MCP server over OAuth. Permissions apply per data type, and every call lands in the agent log.
+
+<ScreenshotGallery views={['ai-assistant-panel']} />
 
 ## Hard-won lessons
 

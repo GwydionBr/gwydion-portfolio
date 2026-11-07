@@ -41,3 +41,9 @@ export function useCv() {
   const language = useSiteLanguage()
   return useContent().getCv(language)
 }
+
+/** The screenshots of the Project at `slug`, in the Site language of the page shown. */
+export function useScreenshots(slug: string) {
+  const language = useSiteLanguage()
+  return useContent().getScreenshots(slug, language)
+}

@@ -3,8 +3,12 @@ import {
   type ContentSource,
   type Post,
   type ProjectSource,
+  type ScreenshotSetSource,
   type StorySource,
 } from '#/content'
+import { ScreenshotGallery } from '#/components/story'
+import { LANGUAGES } from '#/i18n/language'
+import { THEMES } from '#/theme/theme'
 
 /** A Post as a test needs one; no real Post exists yet. */
 export const FIXTURE_POST: Post = {
@@ -64,17 +68,64 @@ function fixtureProjects(): ProjectSource[] {
   ]
 }
 
-/** A story per Project and Site language: a paragraph naming both. */
+/**
+ * A story per Project and Site language: a paragraph naming both. Fixture
+ * Engine's (at Self-Engine's slug) also shows its screenshot gallery.
+ */
 function fixtureStories(projects: ProjectSource[]): StorySource {
   return Object.fromEntries(
-    projects.map(({ slug, title }) => [
-      slug,
-      {
-        en: () => <p>The story of {title}.</p>,
-        de: () => <p>Die Geschichte von {title}.</p>,
-      },
-    ]),
+    projects.map(({ slug, title }) => {
+      const gallery = slug === 'self-engine' && <ScreenshotGallery />
+      return [
+        slug,
+        {
+          en: () => (
+            <>
+              <p>The story of {title}.</p>
+              {gallery}
+            </>
+          ),
+          de: () => (
+            <>
+              <p>Die Geschichte von {title}.</p>
+              {gallery}
+            </>
+          ),
+        },
+      ]
+    }),
   )
+}
+
+/**
+ * Fixture Engine's two screenshots, a whole window and a close-up, with every
+ * image file at `https://blob.example/<file>`.
+ */
+function fixtureScreenshots(): ScreenshotSetSource {
+  const shots = [
+    {
+      view: 'dashboard',
+      size: { width: 1440, height: 900 },
+      caption: { en: 'Dashboard', de: 'Dashboard' },
+      alt: { en: 'The fixture dashboard', de: 'Das Fixture-Dashboard' },
+    },
+    {
+      view: 'timer',
+      size: { width: 440, height: 360 },
+      caption: { en: 'Timer', de: 'Timer' },
+      alt: { en: 'A running fixture timer', de: 'Ein laufender Fixture-Timer' },
+    },
+  ]
+  const urls: Record<string, string> = {}
+  for (const { view, size } of shots)
+    for (const language of LANGUAGES)
+      for (const theme of THEMES)
+        for (const file of [
+          `${view}-${language}-${theme}.webp`,
+          `${view}-${language}-${theme}-${size.width}w.webp`,
+        ])
+          urls[file] = `https://blob.example/${file}`
+  return { shots, urls }
 }
 
 /** A complete, valid content source; a fresh copy each call, so tests may break it. */
@@ -83,6 +134,7 @@ export function fixtureSource({ posts = [] }: { posts?: Post[] } = {}): ContentS
   return {
     projects,
     stories: fixtureStories(projects),
+    screenshots: { 'self-engine': fixtureScreenshots() },
     profile: {
       name: 'Ada Example',
       role: { en: 'Fixture developer', de: 'Fixture-Entwicklerin' },

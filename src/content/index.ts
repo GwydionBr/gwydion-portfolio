@@ -5,8 +5,10 @@ import { cv } from './data/cv'
 import { posts } from './data/posts'
 import { profile } from './data/profile'
 import { projects } from './data/projects'
+import { screenshots } from './data/screenshots'
 import { stories } from './data/stories'
 import { inLanguage } from './localized'
+import { screenshotsIn } from './screenshots'
 import type {
   CareerEntry,
   ContentSource,
@@ -15,6 +17,7 @@ import type {
   Profile,
   Project,
   ProjectWithStory,
+  Screenshot,
 } from './schema'
 
 export type { Localized } from './localized'
@@ -33,6 +36,11 @@ export type {
   ProjectKind,
   ProjectSource,
   ProjectWithStory,
+  Screenshot,
+  ScreenshotImage,
+  ScreenshotSetSource,
+  ScreenshotSource,
+  ScreenshotsSource,
   Story,
   StorySource,
 } from './schema'
@@ -59,6 +67,11 @@ export interface Content {
   getProjects(language: Language, filter?: ProjectFilter): Project[]
   /** The Project at `slug` with its story in `language`, or undefined when there is none. */
   getProject(slug: string, language: Language): ProjectWithStory | undefined
+  /**
+   * The screenshots of the Project at `slug`, in gallery order, with their
+   * texts in `language` and their image in each theme; none for most Projects.
+   */
+  getScreenshots(slug: string, language: Language): Screenshot[]
   /** Every Career entry in `language`, newest first. */
   getCareerEntries(language: Language): CareerEntry[]
   /**
@@ -94,6 +107,10 @@ export function createContent(source: ContentSource): Content {
       if (!project) return undefined
       return { ...inLanguage(project, language), story: source.stories[slug]?.[language] }
     },
+    getScreenshots: (slug, language) => {
+      const set = source.screenshots[slug]
+      return set ? screenshotsIn(set, language) : []
+    },
     getCareerEntries: (language) => inLanguage(careerEntries, language),
     getCv: (language) => {
       const file = cvIn(language)
@@ -105,4 +122,12 @@ export function createContent(source: ContentSource): Content {
 }
 
 /** The site's content: the content files in `./data`. */
-export const siteContent = createContent({ profile, projects, stories, careerEntries, cv, posts })
+export const siteContent = createContent({
+  profile,
+  projects,
+  stories,
+  screenshots,
+  careerEntries,
+  cv,
+  posts,
+})

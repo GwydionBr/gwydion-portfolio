@@ -1,19 +1,25 @@
 import type { MDXComponents } from 'mdx/types'
 import { Callout } from './Callout'
 import { NumberTile, NumberTiles } from './NumberTiles'
+import { ScreenshotGallery } from './ScreenshotGallery'
 
 export { Callout } from './Callout'
 export { NumberTile, NumberTiles } from './NumberTiles'
+export { ScreenshotGallery } from './ScreenshotGallery'
+export { StoryProject } from './StoryProject'
 
 /**
  * What a Project's story (MDX) renders with: the story components it may use
- * by name without importing them (`NumberTiles`, `NumberTile`, `Callout`),
- * and the site's styling for plain Markdown. Pass as `components` to a story.
+ * by name without importing them (`NumberTiles`, `NumberTile`, `Callout`,
+ * `ScreenshotGallery`), and the site's styling for plain Markdown. Render a
+ * story inside `<StoryProject slug>`, which tells them whose story it is.
+ * Pass as `components` to a story.
  */
 export const storyComponents: MDXComponents = {
   NumberTiles,
   NumberTile,
   Callout,
+  ScreenshotGallery,
   h2: (props) => (
     <h2 className="mt-8 text-base font-semibold tracking-tight text-ink first:mt-0" {...props} />
   ),

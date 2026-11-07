@@ -6,6 +6,8 @@ Zeiterfassungs-Tools wissen nicht, was eine Stunde wert ist. Finanz-Apps wissen 
 
 In Self-Engine sind genau diese Verbindungen das Produkt: Aus einem Termin startet ein Timer, der Timer wird zum Zeiteintrag, und eine Auszahlung markiert die Einträge als bezahlt und bucht das Geld in den Finanzen. Gewohnheiten füllen sich von selbst aus der Zeit, die auf einem verknüpften Projekt erfasst wird.
 
+<ScreenshotGallery views={['work-dashboard', 'time-tracking-cockpit', 'work-payout']} />
+
 ## Ein Datenmodell, fünf Module
 
 - **Projekte & Zeiterfassung:** ein Timer pro Projekt, parallel, pausierbar und mit Pomodoro. Jede Stunde kennt ihr Projekt, ihren Stundensatz und ihre Zeitklasse.
@@ -13,6 +15,8 @@ In Self-Engine sind genau diese Verbindungen das Produkt: Aus einem Termin start
 - **Kalender:** Termine und erfasste Zeit nebeneinander, mit Zwei-Wege-Sync mit Google und Apple (iCloud), der serverseitig läuft, auch bei geschlossener App.
 - **Finanzen:** Konten in je einer Währung, einmalige und wiederkehrende Zahlungen, Umbuchungen und Währungswechsel, ausgewertet strikt pro Währung.
 - **Gewohnheiten:** täglich, an bestimmten Wochentagen oder als flexible Quote pro Woche oder Monat; Streaks werden immer aus dem Verlauf berechnet.
+
+<ScreenshotGallery views={['dashboard', 'tasks-board', 'calendar', 'finance', 'habits']} />
 
 ## Offline-first, wirklich
 
@@ -31,6 +35,8 @@ Die Domäne lebt in geteilten Packages: synchronisierte Tabellen, Zod-Schemas un
 Der eingebaute Assistent kennt 39 typisierte Capabilities über alle Module. Er arbeitet pull-first: Das Modell bekommt Zähler und Hinweise statt Nutzerdaten und muss über typisierte Read-Tools nachfragen. Jeder Schreibzugriff wird als Vorschau aus Live-Daten vorbereitet, einmal freigegeben und als dieselbe Domain-Mutation ausgeführt wie ein Klick.
 
 Wer lieber den eigenen Agenten nutzt, verbindet Claude, Claude Code oder Cursor per OAuth mit dem MCP-Server von Self-Engine. Berechtigungen gelten pro Datentyp, und jeder Aufruf landet im Agenten-Protokoll.
+
+<ScreenshotGallery views={['ai-assistant-panel']} />
 
 ## Teuer bezahlte Erkenntnisse
 

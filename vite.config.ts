@@ -78,7 +78,10 @@ const config = defineConfig({
         },
       ],
     },
-    overrides: [{ files: ['src/content/**'], rules: { 'no-restricted-imports': 'off' } }],
+    overrides: [
+      // The content module itself, and the scripts that write its files (screenshots:sync).
+      { files: ['src/content/**', 'scripts/**'], rules: { 'no-restricted-imports': 'off' } },
+    ],
     env: {
       browser: true,
       es2022: true,
