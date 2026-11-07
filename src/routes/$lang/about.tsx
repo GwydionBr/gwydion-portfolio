@@ -1,13 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { CareerList } from '#/components/CareerList'
 import { CvDownload } from '#/components/CvDownload'
 import { SkillList } from '#/components/SkillList'
 import { Tile } from '#/components/Tile'
 import { useCareerEntries } from '#/content/react'
+import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
 
-export const Route = createFileRoute('/$lang/about')({ component: About })
+export const Route = createFileRoute('/$lang/about')({
+  head: ({ match }) =>
+    pageHead(match, () => ({
+      title: msg`About`,
+      description: msg`Gwydion's path as a developer: his Career entries, his skills and his CV to download.`,
+    })),
+  component: About,
+})
 
 /** About: Gwydion's path as Career entries, his skills and the CV download, for Recruiters. */
 function About() {

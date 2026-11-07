@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangRouteImport } from './routes/$lang'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as LangAboutRouteImport } from './routes/$lang/about'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const LangRoute = LangRouteImport.update({
   id: '/$lang',
   path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LangIndexRoute = LangIndexRouteImport.update({
@@ -80,6 +86,7 @@ const LangWritingIndexRoute = LangWritingIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
   '/$lang/datenschutz': typeof LangDatenschutzRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
   '/$lang/datenschutz': typeof LangDatenschutzRoute
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/about': typeof LangAboutRoute
   '/$lang/contact': typeof LangContactRoute
   '/$lang/datenschutz': typeof LangDatenschutzRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$lang'
+    | '/sitemap.xml'
     | '/$lang/about'
     | '/$lang/contact'
     | '/$lang/datenschutz'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/sitemap.xml'
     | '/$lang/about'
     | '/$lang/contact'
     | '/$lang/datenschutz'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$lang'
+    | '/sitemap.xml'
     | '/$lang/about'
     | '/$lang/contact'
     | '/$lang/datenschutz'
@@ -160,6 +172,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LangRoute: typeof LangRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiContactRoute: typeof ApiContactRoute
 }
 
@@ -177,6 +190,13 @@ declare module '@tanstack/react-router' {
       path: '/$lang'
       fullPath: '/$lang'
       preLoaderRoute: typeof LangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$lang/': {
@@ -272,6 +292,7 @@ const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LangRoute: LangRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiContactRoute: ApiContactRoute,
 }
 export const routeTree = rootRouteImport

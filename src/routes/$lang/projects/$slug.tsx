@@ -8,6 +8,7 @@ import { Tile } from '#/components/Tile'
 import { useProject } from '#/content/react'
 import { isLanguage } from '#/i18n/language'
 import { NotFoundView } from '#/shell/NotFoundView'
+import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
 
 export const Route = createFileRoute('/$lang/projects/$slug')({
@@ -17,6 +18,11 @@ export const Route = createFileRoute('/$lang/projects/$slug')({
     if (!isLanguage(params.lang) || !context.content.getProject(params.slug, params.lang))
       throw notFound()
   },
+  head: ({ match, params }) =>
+    pageHead(match, ({ language, content }) => {
+      const project = content.getProject(params.slug, language)
+      return project && { title: project.title, description: project.summary }
+    }),
   component: ProjectPage,
 })
 

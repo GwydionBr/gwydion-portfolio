@@ -75,6 +75,8 @@ export async function visit(
     sidebar: (name = 'Sidebar') => landmark('complementary', name),
     /** The view's title: the one `h1` in the main pane. */
     title: () => within(landmark('main')).getByRole('heading', { level: 1 }).textContent,
+    /** What a search engine or a link preview reads from the document's head. */
+    head: readHead,
     /** Changes the visitor's system appearance setting while the page is open. */
     async setSystemTheme(theme: Theme) {
       await act(async () => system.set(theme))
@@ -102,7 +104,9 @@ export async function visit(
      */
     paintFirstFrame() {
       delete document.documentElement.dataset.theme
-      for (const script of document.head.querySelectorAll('script:not([src])')) {
+      // Only scripts the browser runs: not data blocks such as JSON-LD.
+      const inline = document.head.querySelectorAll<HTMLScriptElement>('script:not([src])')
+      for (const script of [...inline].filter((s) => !s.type || /javascript/.test(s.type))) {
         // oxlint-disable-next-line typescript/no-implied-eval -- executing the page's own inline script is the point
         new Function(script.textContent ?? '')()
       }
@@ -133,6 +137,39 @@ export async function visit(
 /** Lets pending work (navigation, a `fetch` answered in the test) run to its end. */
 async function settled() {
   for (let turn = 0; turn < 10; turn++) await new Promise((resolve) => setTimeout(resolve, 0))
+}
+
+/**
+ * The document head as a crawler reads it: title, description, canonical URL,
+ * hreflang alternates by language, Open Graph and Twitter tags by property,
+ * and the parsed JSON-LD structured data.
+ */
+function readHead() {
+  const { head } = document
+  const content = (selector: string) => head.querySelector(selector)?.getAttribute('content')
+  const tags = (selector: string, key: string) =>
+    Object.fromEntries(
+      [...head.querySelectorAll(selector)].map((tag) => [
+        tag.getAttribute(key),
+        tag.getAttribute('content'),
+      ]),
+    )
+  return {
+    title: document.title,
+    description: content('meta[name="description"]'),
+    canonical: head.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+    alternates: Object.fromEntries(
+      [...head.querySelectorAll('link[rel="alternate"][hreflang]')].map((link) => [
+        link.getAttribute('hreflang'),
+        link.getAttribute('href'),
+      ]),
+    ),
+    openGraph: tags('meta[property^="og:"]', 'property'),
+    twitter: tags('meta[name^="twitter:"]', 'name'),
+    structuredData: [...head.querySelectorAll('script[type="application/ld+json"]')].map(
+      (script) => JSON.parse(script.textContent ?? 'null') as unknown,
+    ),
+  }
 }
 
 /** The names of the links in the navigation landmark `name`, and the one marked current. */

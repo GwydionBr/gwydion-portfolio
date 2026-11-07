@@ -1,20 +1,32 @@
 import type { ReactNode } from 'react'
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
+  redirect,
+} from '@tanstack/react-router'
 import { Analytics } from '@vercel/analytics/react'
 import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
 import type { RouterContext } from '#/router'
+import { legacyRedirectTarget } from '#/seo/legacyRedirects'
 import { ThemeHeadTags } from '#/theme/ThemeHeadTags'
 
 import appCss from '../styles/app.css?url'
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  // Every URL of the old site that moved leads permanently to its new address.
+  beforeLoad: ({ location }) => {
+    const target = legacyRedirectTarget(location.pathname)
+    if (target) throw redirect({ href: `${target}${location.searchStr}`, statusCode: 301 })
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-      // Fallback for routes without their own head; the SEO module will set one per route.
+      // Fallback for pages without their own head (the not-found view); every page sets one (src/seo).
       { title: 'Gwydion' },
     ],
     links: [

@@ -8,9 +8,17 @@ import { Tile } from '#/components/Tile'
 import { SELF_ENGINE_SLUG } from '#/content'
 import { usePosts, useProfile, useProject, useProjects } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
+import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
 
-export const Route = createFileRoute('/$lang/')({ component: Overview })
+export const Route = createFileRoute('/$lang/')({
+  // Titled and described by the Profile itself.
+  head: ({ match }) =>
+    pageHead(match, ({ language, content }) => ({
+      description: content.getProfile(language).pitch,
+    })),
+  component: Overview,
+})
 
 /** How many Posts the "latest Posts" tile shows. */
 const LATEST_POSTS = 3

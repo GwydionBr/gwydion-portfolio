@@ -1,7 +1,9 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
+import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { PostList } from '#/components/PostList'
 import { usePosts } from '#/content/react'
+import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
 
 export const Route = createFileRoute('/$lang/writing/')({
@@ -9,6 +11,11 @@ export const Route = createFileRoute('/$lang/writing/')({
   beforeLoad: ({ context }) => {
     if (context.content.getPosts().length === 0) throw notFound()
   },
+  head: ({ match }) =>
+    pageHead(match, () => ({
+      title: msg`Writing`,
+      description: msg`Gwydion's Posts on building software.`,
+    })),
   component: Writing,
 })
 

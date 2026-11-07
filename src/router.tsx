@@ -14,10 +14,17 @@ export interface RouterContext {
 export function createAppRouter({
   history,
   content = siteContent,
-}: { history?: RouterHistory; content?: Content } = {}) {
+  isServer,
+}: {
+  history?: RouterHistory
+  content?: Content
+  /** Load as the server does per request (tests of redirects and response headers). */
+  isServer?: boolean
+} = {}) {
   return createRouter({
     routeTree,
     history,
+    isServer,
     context: { content } satisfies RouterContext,
     scrollRestoration: true,
     defaultPreload: 'intent',

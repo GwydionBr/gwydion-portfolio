@@ -31,8 +31,12 @@ const NAVIGATION_ENTRIES = [
 
 export type NavigationEntry = (typeof NAVIGATION_ENTRIES)[number]
 
-/** The navigation entries shown now: Writing only once a Post exists. */
-export function useNavigationEntries(): NavigationEntry[] {
-  const hasPosts = usePosts().length > 0
+/** The navigation entries shown while `hasPosts`: Writing only once a Post exists. */
+export function navigationEntriesFor(hasPosts: boolean): NavigationEntry[] {
   return NAVIGATION_ENTRIES.filter((entry) => hasPosts || !entry.needsPosts)
+}
+
+/** The navigation entries shown now. The sitemap lists the same pages (src/seo/buildSitemap.ts). */
+export function useNavigationEntries(): NavigationEntry[] {
+  return navigationEntriesFor(usePosts().length > 0)
 }

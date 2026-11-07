@@ -78,6 +78,18 @@ msgstr "Ausgewählte Projekte"
 msgid "Get in touch"
 msgstr "Kontakt aufnehmen"
 
+#: src/routes/$lang/about.tsx
+msgid "Gwydion's path as a developer: his Career entries, his skills and his CV to download."
+msgstr "Gwydions Weg als Entwickler: seine Stationen, seine Kenntnisse und sein Lebenslauf zum Herunterladen."
+
+#: src/routes/$lang/writing/index.tsx
+msgid "Gwydion's Posts on building software."
+msgstr "Gwydions Beiträge darüber, wie man Software baut."
+
+#: src/legal/pages.ts
+msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
+msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Kontaktformular und auf deinem Gerät gespeicherte Einstellungen."
+
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
 msgstr "Neueste Beiträge"
@@ -130,6 +142,10 @@ msgstr "Übersicht"
 #: src/components/projectKind.ts
 msgid "Own product"
 msgstr "Eigenes Produkt"
+
+#: src/routes/$lang/projects/index.tsx
+msgid "Own products, client work and open source: the Projects Gwydion built and the story behind each."
+msgstr "Eigene Produkte, Kundenprojekte und Open Source: die Projekte, die Gwydion gebaut hat, und die Geschichte hinter jedem."
 
 #: src/shell/NotFoundView.tsx
 msgid "Page not found"
@@ -226,6 +242,10 @@ msgstr "Diese englische Fassung ist eine unverbindliche Übersetzung. Rechtsverb
 msgid "View all"
 msgstr "Alle ansehen"
 
+#: src/legal/pages.ts
+msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."
+msgstr "Wer für gwydion.dev verantwortlich ist und wie er erreichbar ist."
+
 #: src/routes/$lang/contact.tsx
 msgid "Write a message"
 msgstr "Nachricht schreiben"
@@ -233,6 +253,10 @@ msgstr "Nachricht schreiben"
 #: src/contact/ContactForm.tsx
 msgid "Write another message"
 msgstr "Weitere Nachricht schreiben"
+
+#: src/routes/$lang/contact.tsx
+msgid "Write to Gwydion about a full-time role or a freelance project, or reach him by email, LinkedIn or GitHub."
+msgstr "Schreib Gwydion wegen einer Festanstellung oder eines freiberuflichen Projekts, oder erreiche ihn per E-Mail, LinkedIn oder GitHub."
 
 #: src/routes/$lang/writing/index.tsx
 #: src/shell/navigation.ts
