@@ -4,8 +4,9 @@ import { LanguageSwitch } from './LanguageSwitch'
 import { NAVIGATION_ENTRIES } from './navigation'
 import { NavigationLink } from './NavigationLink'
 import { SearchPlaceholder } from './SearchPlaceholder'
+import { ThemeToggle } from './ThemeToggle'
 
-/** The desktop sidebar: identity, search, navigation and, at the bottom, the Site language switch. */
+/** The desktop sidebar: identity, search, navigation and, at the bottom, the Site language switch and the theme toggle. */
 export function Sidebar() {
   const { t } = useLingui()
   return (
@@ -34,8 +35,9 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
-      <div className="mt-auto px-3 pt-3">
+      <div className="mt-auto flex items-center justify-between px-3 pt-3">
         <LanguageSwitch />
+        <ThemeToggle />
       </div>
     </aside>
   )

@@ -21,6 +21,10 @@ msgstr "Back to the Overview"
 msgid "Contact"
 msgstr "Contact"
 
+#: src/shell/ThemeToggle.tsx
+msgid "Dark theme"
+msgstr "Dark theme"
+
 #: src/shell/View.tsx
 msgid "Get in touch"
 msgstr "Get in touch"
