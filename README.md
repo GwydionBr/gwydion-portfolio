@@ -1,6 +1,6 @@
 # gwydion-portfolio
 
-Personal portfolio site built with TanStack Start, React, Mantine, Paraglide, and Bun.
+Personal portfolio site built with TanStack Start, React, Tailwind CSS, Base UI, Lingui, and Bun.
 Tooling runs on [Vite+](https://viteplus.dev) (`vp`): Vite, Vitest, Oxlint, and Oxfmt configured together in `vite.config.ts`.
 
 ## Setup
@@ -23,7 +23,7 @@ bun run dev
 ## Quality Checks
 
 ```bash
-bun run check      # format + lint + type-aware checks (vp check)
+bun run check      # catalog check + format + lint + type-aware checks (vp check)
 bun run check:fix  # same, applying fixes
 bun run typecheck  # tsc --noEmit
 bun run test       # vp test
@@ -48,26 +48,24 @@ bun run start
 
 ## Internationalization
 
-Source messages live in `messages/en.json` and `messages/de.json`.
-Generated Paraglide output is written to `src/generated/paraglide`:
+Interface text is translated with [Lingui](https://lingui.dev), set up like Self-Engine's (ADR 0001): PO catalogs in `src/i18n/locales/`, English as the Base language with the English text as the message id, German falling back to English. Write text with the macros (`useLingui().t`, `<Trans>`, `msg`), then:
 
 ```bash
-bun run i18n
+bun run i18n:extract   # add new messages to the catalogs, drop removed ones
+bun run i18n:check     # fails on catalogs out of sync, missing German, placeholder mismatches
 ```
 
-The main scripts run `i18n` before typechecking, tests, development, and production builds so generated message functions stay current.
+Translate the new `msgstr ""` entries in `src/i18n/locales/de.po`. `bun run check` runs `i18n:check` first, so a missing German translation fails it.
 
 ## Contact Form
 
-The contact endpoint uses Resend and needs these secrets (see `.env.example`), stored in Infisical in every environment (`dev`, `staging`, `prod`):
+The contact endpoint is being ported to the rebuilt site (#37). It uses Resend and needs these secrets (see `.env.example`), stored in Infisical in every environment (`dev`, `staging`, `prod`):
 
 - `RESEND_API_KEY`
 - `CONTACT_FROM_EMAIL` – e.g. `Portfolio Contact <contact@mail.gwydion.dev>`; the domain must be verified in Resend. Enter the value in Infisical without quotes.
 - `CONTACT_TO_EMAIL` – inbox that receives contact form messages
 
 If any of them is unset, the endpoint responds with a 500 and logs the required variable names.
-
-Validation is shared between the client and API route in `src/features/contact/model/contact.ts`.
 
 ## Deploy To Vercel
 

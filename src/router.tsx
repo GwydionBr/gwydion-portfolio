@@ -1,20 +1,20 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router'
+import { createRouter, type RouterHistory } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
-import { deLocalizeUrl, localizeUrl } from '#/generated/paraglide/runtime'
 
-export function getRouter() {
-  const router = createTanStackRouter({
+/** The site's router; tests pass a memory history (src/test/visit.tsx). */
+export function createAppRouter({ history }: { history?: RouterHistory } = {}) {
+  return createRouter({
     routeTree,
-    rewrite: {
-      input: ({ url }) => deLocalizeUrl(url),
-      output: ({ url }) => localizeUrl(url),
-    },
+    history,
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
   })
+}
 
-  return router
+/** Called by TanStack Start once per server request and once in the browser. */
+export function getRouter() {
+  return createAppRouter()
 }
 
 declare module '@tanstack/react-router' {
