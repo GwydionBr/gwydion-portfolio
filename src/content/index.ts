@@ -35,6 +35,7 @@ export type {
   ProfileSource,
   Project,
   ProjectKind,
+  ProjectLinks,
   ProjectSource,
   ProjectWithStory,
   Screenshot,

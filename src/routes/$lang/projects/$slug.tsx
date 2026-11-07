@@ -1,10 +1,9 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
+import { ProjectFacts } from '#/components/ProjectFacts'
 import { ProjectMeta } from '#/components/ProjectMeta'
 import { ProjectSwatch } from '#/components/ProjectSwatch'
 import { NumberTile, NumberTiles, StoryProject, storyComponents } from '#/components/story'
-import { TagList } from '#/components/TagList'
-import { Tile } from '#/components/Tile'
 import { useProject } from '#/content/react'
 import { NotFoundView } from '#/shell/NotFoundView'
 import { pageHead } from '#/seo/pageHead'
@@ -24,7 +23,11 @@ export const Route = createFileRoute('/$lang/projects/$slug')({
   component: ProjectPage,
 })
 
-/** A Project's page: its meta, stack and numbers, then its story in the Site language. */
+/**
+ * A Project's page: its meta and summary, its facts, its numbers, then its
+ * story in the Site language. From `lg` up the facts are a sticky rail beside
+ * the story; below it they follow the summary.
+ */
 function ProjectPage() {
   const { t } = useLingui()
   const project = useProject(Route.useParams().slug)
@@ -36,8 +39,9 @@ function ProjectPage() {
       location={[t`Projects`, project.title]}
       back={{ to: '/$lang/projects', label: t`Back to Projects`, text: t`Projects` }}
     >
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_16rem]">
-        <article className="max-w-2xl">
+      {/* One column below lg in source order; from lg the facts span both rows of the right column. */}
+      <article className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-x-10">
+        <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-xs text-subtle">
             <ProjectSwatch accent={project.accent} />
             <span>
@@ -45,27 +49,28 @@ function ProjectPage() {
             </span>
           </p>
           <p className="mt-2 text-base leading-relaxed text-ink">{project.summary}</p>
+        </div>
+        <ProjectFacts
+          project={project}
+          className="self-start lg:sticky lg:top-10 lg:col-start-2 lg:row-span-2 lg:row-start-1"
+        />
+        <div className="min-w-0 max-w-2xl">
           {project.stats && (
-            <div className="mt-6">
-              <NumberTiles label={t`Numbers`}>
-                {project.stats.map((stat) => (
-                  <NumberTile key={stat.label} value={stat.value} label={stat.label} />
-                ))}
-              </NumberTiles>
-            </div>
+            <NumberTiles label={t`Numbers`}>
+              {project.stats.map((stat) => (
+                <NumberTile key={stat.label} value={stat.value} label={stat.label} />
+              ))}
+            </NumberTiles>
           )}
           {Story && (
-            <div className="mt-8">
+            <div className={project.stats ? 'mt-8' : ''}>
               <StoryProject slug={project.slug}>
                 <Story components={storyComponents} />
               </StoryProject>
             </div>
           )}
-        </article>
-        <Tile title={t`Stack`} className="self-start">
-          <TagList label={t`Stack`} tags={project.stack} className="mt-2" />
-        </Tile>
-      </div>
+        </div>
+      </article>
     </View>
   )
 }

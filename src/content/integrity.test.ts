@@ -51,6 +51,16 @@ describe('Content integrity', () => {
     ])
   })
 
+  it.each(['role', 'status'] as const)('a Project %s missing in German is reported', (field) => {
+    const source = fixtureSource()
+    source.projects[2]![field].de = ''
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      `de: projects.1.${field} is empty`,
+      `de: project.fixture-studio.${field} is empty`,
+    ])
+  })
+
   it('a Project period that ends before it starts is reported', () => {
     const source = fixtureSource()
     source.projects[0]!.period = { start: '2024', end: '2023' }

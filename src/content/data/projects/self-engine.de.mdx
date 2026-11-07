@@ -43,9 +43,3 @@ Wer lieber den eigenen Agenten nutzt, verbindet Claude, Cursor oder einen andere
 - **Ein kaputter Write darf nicht alle blockieren.** Offline-Warteschlangen laden streng geordnet hoch, darum werden fatale Postgres-Fehler klassifiziert und verworfen, und zusammengehörige Writes werden atomar übertragen.
 - **Beim Kalender-Sync geht es um Identität.** Deterministische IDs machen Creates idempotent, ETags fangen parallele Änderungen ab, und abgelaufene Sync-Tokens lösen einen vollständigen Resync aus.
 - **Den Identity-Provider im laufenden Betrieb tauschen.** Alle Nutzer von Supabase Auth zu Clerk zu migrieren hieß, jede Row-Level-Security-Policy in einer einzigen Migration neu zu schreiben, ohne eine einzige Offline-Warteschlange zu verlieren.
-
-<Callout title="Probier es selbst aus">
-  Self-Engine läuft im Browser, auf dem Mac und auf dem iPhone:
-  [self-engine.com](https://self-engine.com). Es ist ein kommerzielles Produkt; der Quellcode ist
-  nicht öffentlich.
-</Callout>

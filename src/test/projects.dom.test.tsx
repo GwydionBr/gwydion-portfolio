@@ -54,6 +54,35 @@ describe('A Project page', () => {
     expect(navigationOf('Main navigation').current).toEqual(['Projects'])
   })
 
+  it('sums the Project up in a Facts rail: website, kind, period, role, status, source code', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+
+    const facts = within(within(page.main()).getByRole('region', { name: 'Facts' }))
+    expect(facts.getByRole('link', { name: 'Visit website' }).getAttribute('href')).toBe(
+      'https://engine.example',
+    )
+    const terms = facts.getAllByRole('term').map((term) => term.textContent)
+    const values = facts.getAllByRole('definition').map((value) => value.textContent)
+    expect(Object.fromEntries(terms.map((term, index) => [term, values[index]]))).toEqual({
+      Kind: 'Own product',
+      Period: '2025–now',
+      Role: 'Sole developer',
+      Status: 'Live, commercial',
+      'Source code': 'Not public',
+    })
+  })
+
+  it('links public source code from the Facts rail, and offers no website when there is none', async () => {
+    const page = await visit('/de/projects/fixture-kit', { content: fixtureContent() })
+
+    const facts = within(within(page.main()).getByRole('region', { name: 'Fakten' }))
+    expect(facts.getByRole('link', { name: 'Öffentlich auf GitHub' }).getAttribute('href')).toBe(
+      'https://github.com/ada-example/fixture-kit',
+    )
+    expect(facts.queryByRole('link', { name: 'Website besuchen' })).toBeNull()
+    expect(facts.getByText('Archiviert')).toBeTruthy()
+  })
+
   it('tells the German story under /de', async () => {
     const page = await visit('/de/projects/self-engine', { content: fixtureContent() })
 

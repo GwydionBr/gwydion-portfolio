@@ -80,6 +80,10 @@ msgstr "Screenshot vergrößern: {0}"
 msgid "Enter a valid email address."
 msgstr "Gib eine gültige E-Mail-Adresse ein."
 
+#: src/components/ProjectFacts.tsx
+msgid "Facts"
+msgstr "Fakten"
+
 #: src/routes/$lang/index.tsx
 msgid "Featured Projects"
 msgstr "Ausgewählte Projekte"
@@ -104,6 +108,10 @@ msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Ko
 #: src/contact/ContactForm.tsx
 msgid "How I handle your details is explained in the <0>{0}</0>."
 msgstr "Wie ich deine Angaben verarbeite, erfährst du in der <0>{0}</0>."
+
+#: src/components/ProjectFacts.tsx
+msgid "Kind"
+msgstr "Art"
 
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
@@ -136,6 +144,10 @@ msgstr "Name"
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Next screenshot"
 msgstr "Nächster Screenshot"
+
+#: src/components/ProjectFacts.tsx
+msgid "Not public"
+msgstr "Nicht öffentlich"
 
 #: src/components/PeriodText.tsx
 msgid "now"
@@ -170,6 +182,10 @@ msgstr "Eigene Produkte, Kundenprojekte und Open Source: die Projekte, die Gwydi
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
 
+#: src/components/ProjectFacts.tsx
+msgid "Period"
+msgstr "Zeitraum"
+
 #: src/shell/PinnedProjects.tsx
 msgid "Pinned"
 msgstr "Angeheftet"
@@ -196,9 +212,17 @@ msgstr "Datenschutzerklärung"
 msgid "Projects"
 msgstr "Projekte"
 
+#: src/components/ProjectFacts.tsx
+msgid "Public on GitHub"
+msgstr "Öffentlich auf GitHub"
+
 #: src/legal/LegalPage.tsx
 msgid "Read the German version"
 msgstr "Zur deutschen Fassung"
+
+#: src/components/ProjectFacts.tsx
+msgid "Role"
+msgstr "Rolle"
 
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Screenshots"
@@ -238,10 +262,18 @@ msgstr "Kenntnisse"
 msgid "Skip to content"
 msgstr "Zum Inhalt springen"
 
+#: src/components/ProjectFacts.tsx
+msgid "Source code"
+msgstr "Quellcode"
+
 #: src/components/ProjectCards.tsx
-#: src/routes/$lang/projects/$slug.tsx
+#: src/components/ProjectFacts.tsx
 msgid "Stack"
 msgstr "Stack"
+
+#: src/components/ProjectFacts.tsx
+msgid "Status"
+msgstr "Status"
 
 #: src/shell/TabBar.tsx
 msgid "Tab bar"
@@ -266,6 +298,10 @@ msgstr "Diese englische Fassung ist eine unverbindliche Übersetzung. Rechtsverb
 #: src/routes/$lang/index.tsx
 msgid "View all"
 msgstr "Alle ansehen"
+
+#: src/components/ProjectFacts.tsx
+msgid "Visit website"
+msgstr "Website besuchen"
 
 #: src/legal/pages.ts
 msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."

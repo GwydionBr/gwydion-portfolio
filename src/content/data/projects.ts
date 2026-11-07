@@ -15,6 +15,12 @@ export const projects: ProjectSource[] = [
       en: 'Time tracking, tasks, calendar, finance and habits on one data model. Offline-first sync across web, macOS and iOS.',
       de: 'Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten auf einem Datenmodell. Offline-first-Sync über Web, macOS und iOS.',
     },
+    role: {
+      en: 'Sole developer: design, build, operations',
+      de: 'Alleiniger Entwickler: Design, Entwicklung, Betrieb',
+    },
+    status: { en: 'Live, commercial', de: 'Live, kommerziell' },
+    links: { live: 'https://self-engine.com' },
     stack: [
       'TypeScript',
       'TanStack Start',
@@ -46,6 +52,9 @@ export const projects: ProjectSource[] = [
       en: 'Studio website with artist portfolios and booking requests, editable by the studio through Sanity.',
       de: 'Studio-Website mit Künstler-Portfolios und Terminanfragen, vom Studio selbst über Sanity pflegbar.',
     },
+    role: { en: 'Design and development', de: 'Design und Entwicklung' },
+    status: { en: 'Launching in the coming weeks', de: 'Geht in den nächsten Wochen live' },
+    links: { live: 'https://endstation-tattoo.com' },
     stack: ['TanStack Start', 'Sanity', 'Supabase', 'Mantine', 'Vercel'],
     featured: true,
     pinned: true,
@@ -60,6 +69,15 @@ export const projects: ProjectSource[] = [
     summary: {
       en: 'This site: a bilingual, server-rendered portfolio built like an app.',
       de: 'Diese Website: ein zweisprachiges, serverseitig gerendertes Portfolio im Stil einer App.',
+    },
+    role: {
+      en: 'Sole developer: design and build',
+      de: 'Alleiniger Entwickler: Design und Entwicklung',
+    },
+    status: { en: 'Live', de: 'Live' },
+    links: {
+      live: 'https://gwydion.dev',
+      source: 'https://github.com/GwydionBr/gwydion-portfolio',
     },
     stack: ['TanStack Start', 'Tailwind CSS', 'Base UI', 'Lingui', 'MDX'],
     featured: false,

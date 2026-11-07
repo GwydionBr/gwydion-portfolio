@@ -11,12 +11,17 @@ const PROJECT_KIND_LABELS: Record<ProjectKind, MessageDescriptor> = {
   'open-source': msg`Open source`,
 }
 
+/** What a Project's kind is called in the Site language ("Own product"). */
+export function ProjectKindText({ kind }: { kind: ProjectKind }) {
+  const { i18n } = useLingui()
+  return <>{i18n._(PROJECT_KIND_LABELS[kind])}</>
+}
+
 /** A Project's kind and period ("Own product · 2025–now"), as text for the caller to place. */
 export function ProjectMeta({ project }: { project: Pick<Project, 'kind' | 'period'> }) {
-  const { i18n } = useLingui()
   return (
     <>
-      {i18n._(PROJECT_KIND_LABELS[project.kind])} · <PeriodText period={project.period} />
+      <ProjectKindText kind={project.kind} /> · <PeriodText period={project.period} />
     </>
   )
 }

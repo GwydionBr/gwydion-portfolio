@@ -43,9 +43,3 @@ If you'd rather use your own agent, connect Claude, Cursor or any other MCP clie
 - **One broken write must not block the rest.** Offline queues upload in strict order, so fatal Postgres errors are classified and dropped, and writes that belong together are sent atomically.
 - **Calendar sync is about identity.** Deterministic IDs make creates idempotent, ETags catch concurrent edits, and expired sync tokens trigger a full resync.
 - **Swapping the identity provider in production.** Moving every user from Supabase Auth to Clerk meant rewriting every row-level security policy in one migration, without losing a single offline queue.
-
-<Callout title="Try it yourself">
-  Self-Engine runs in the browser, on the Mac and on the iPhone:
-  [self-engine.com](https://self-engine.com). It is a commercial product; its source code is not
-  public.
-</Callout>

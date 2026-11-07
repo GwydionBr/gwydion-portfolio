@@ -75,8 +75,14 @@ export interface ProjectSource {
   period: Period
   /** One line, for lists. */
   summary: Localized<string>
+  /** What Gwydion did on it ("Sole developer: design, build, operations"). */
+  role: Localized<string>
+  /** Where it stands now ("Live, commercial", "Launching in the coming weeks"). */
+  status: Localized<string>
+  /** Where to see it: the running product, and the source code when it is public. */
+  links: ProjectLinks
   stack: string[]
-  /** Its numbers, if any; Self-Engine's also become Overview tiles. */
+  /** Its numbers, if any; shown on its page and its Overview card. */
   stats?: { value: string; label: Localized<string> }[]
   /** Shown on the Overview. */
   featured: boolean
@@ -86,6 +92,14 @@ export interface ProjectSource {
   order: number
   /** Its colour (a CSS colour), for its swatch. */
   accent: string
+}
+
+/** Where a Project can be seen; each left out when there is none. */
+export interface ProjectLinks {
+  /** The running website or product. */
+  live?: string
+  /** The public source code. */
+  source?: string
 }
 
 /** A Project in one Site language, as lists receive it. */
