@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro'
-import { NAVIGATION_ENTRIES } from './navigation'
+import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
 
 /**
@@ -8,13 +8,14 @@ import { NavigationLink } from './NavigationLink'
  */
 export function TabBar() {
   const { t } = useLingui()
+  const entries = useNavigationEntries()
   return (
     <nav
       aria-label={t`Tab bar`}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-sidebar/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
     >
       <ul className="flex">
-        {NAVIGATION_ENTRIES.map((entry) => (
+        {entries.map((entry) => (
           <li key={entry.to} className="flex-1">
             <NavigationLink
               entry={entry}

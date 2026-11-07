@@ -12,6 +12,10 @@ msgstr ""
 msgid "About"
 msgstr "About"
 
+#: src/components/AvailabilityTile.tsx
+msgid "Availability"
+msgstr "Availability"
+
 #: src/shell/NotFoundView.tsx
 msgid "Back to the Overview"
 msgstr "Back to the Overview"
@@ -25,9 +29,17 @@ msgstr "Contact"
 msgid "Get in touch"
 msgstr "Get in touch"
 
+#: src/routes/$lang/index.tsx
+msgid "Latest Posts"
+msgstr "Latest Posts"
+
 #: src/shell/Sidebar.tsx
 msgid "Main navigation"
 msgstr "Main navigation"
+
+#: src/routes/$lang/index.tsx
+msgid "Now"
+msgstr "Now"
 
 #: src/routes/$lang/index.tsx
 #: src/shell/navigation.ts
@@ -37,6 +49,10 @@ msgstr "Overview"
 #: src/shell/NotFoundView.tsx
 msgid "Page not found"
 msgstr "Page not found"
+
+#: src/routes/$lang/index.tsx
+msgid "Profile"
+msgstr "Profile"
 
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts
@@ -59,13 +75,13 @@ msgstr "Sidebar"
 msgid "Site language"
 msgstr "Site language"
 
+#: src/routes/$lang/index.tsx
+msgid "Skills"
+msgstr "Skills"
+
 #: src/shell/AppShell.tsx
 msgid "Skip to content"
 msgstr "Skip to content"
-
-#: src/shell/Identity.tsx
-msgid "Software developer"
-msgstr "Software developer"
 
 #: src/shell/TabBar.tsx
 msgid "Tab bar"
@@ -79,10 +95,6 @@ msgstr "The About view is being rebuilt."
 msgid "The contact form is being rebuilt."
 msgstr "The contact form is being rebuilt."
 
-#: src/routes/$lang/index.tsx
-msgid "The Overview is being rebuilt."
-msgstr "The Overview is being rebuilt."
-
 #: src/routes/$lang/projects/index.tsx
 msgid "The Projects are being rebuilt."
 msgstr "The Projects are being rebuilt."
@@ -90,3 +102,12 @@ msgstr "The Projects are being rebuilt."
 #: src/shell/NotFoundView.tsx
 msgid "There is nothing at this address."
 msgstr "There is nothing at this address."
+
+#: src/routes/$lang/index.tsx
+msgid "View all"
+msgstr "View all"
+
+#: src/routes/$lang/writing/index.tsx
+#: src/shell/navigation.ts
+msgid "Writing"
+msgstr "Writing"

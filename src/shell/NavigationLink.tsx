@@ -2,9 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react'
 import { useSiteLanguage } from '#/i18n/react'
-import type { NAVIGATION_ENTRIES } from './navigation'
-
-type NavigationEntry = (typeof NAVIGATION_ENTRIES)[number]
+import type { NavigationEntry } from './navigation'
 
 /**
  * One navigation entry as a real link in the current Site language, marked

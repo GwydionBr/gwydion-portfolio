@@ -3,6 +3,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
 import { getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
+import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
 
 declare global {
@@ -21,6 +22,8 @@ afterEach(async () => {
 interface VisitOptions {
   /** The visitor's browser languages, most preferred first (`navigator.languages`). */
   browserLanguages?: readonly string[]
+  /** The content the site serves; the site's own content files by default. */
+  content?: Content
 }
 
 /**
@@ -32,14 +35,17 @@ interface VisitOptions {
  */
 export async function visit(
   url: string,
-  { browserLanguages = ['en-US', 'en'] }: VisitOptions = {},
+  { browserLanguages = ['en-US', 'en'], content }: VisitOptions = {},
 ) {
   globalThis.IS_REACT_ACT_ENVIRONMENT = true
   vi.spyOn(navigator, 'languages', 'get').mockReturnValue(browserLanguages)
   // jsdom does not implement scrolling; the router restores scroll positions.
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 
-  const router = createAppRouter({ history: createMemoryHistory({ initialEntries: [url] }) })
+  const router = createAppRouter({
+    history: createMemoryHistory({ initialEntries: [url] }),
+    content,
+  })
   await act(async () => {
     await router.load()
   })

@@ -15,6 +15,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as LangAboutRouteImport } from './routes/$lang/about'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
 import { Route as LangProjectsIndexRouteImport } from './routes/$lang/projects/index'
+import { Route as LangWritingIndexRouteImport } from './routes/$lang/writing/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const LangProjectsIndexRoute = LangProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => LangRoute,
 } as any)
+const LangWritingIndexRoute = LangWritingIndexRouteImport.update({
+  id: '/writing/',
+  path: '/writing/',
+  getParentRoute: () => LangRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/$lang/contact': typeof LangContactRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/projects/': typeof LangProjectsIndexRoute
+  '/$lang/writing/': typeof LangWritingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/$lang/contact': typeof LangContactRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/projects': typeof LangProjectsIndexRoute
+  '/$lang/writing': typeof LangWritingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/$lang/contact': typeof LangContactRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/projects/': typeof LangProjectsIndexRoute
+  '/$lang/writing/': typeof LangWritingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,8 +89,15 @@ export interface FileRouteTypes {
     | '/$lang/contact'
     | '/$lang/'
     | '/$lang/projects/'
+    | '/$lang/writing/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$lang/about' | '/$lang/contact' | '/$lang' | '/$lang/projects'
+  to:
+    | '/'
+    | '/$lang/about'
+    | '/$lang/contact'
+    | '/$lang'
+    | '/$lang/projects'
+    | '/$lang/writing'
   id:
     | '__root__'
     | '/'
@@ -90,6 +106,7 @@ export interface FileRouteTypes {
     | '/$lang/contact'
     | '/$lang/'
     | '/$lang/projects/'
+    | '/$lang/writing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -141,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangProjectsIndexRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/writing/': {
+      id: '/$lang/writing/'
+      path: '/writing'
+      fullPath: '/$lang/writing/'
+      preLoaderRoute: typeof LangWritingIndexRouteImport
+      parentRoute: typeof LangRoute
+    }
   }
 }
 
@@ -149,6 +173,7 @@ interface LangRouteChildren {
   LangContactRoute: typeof LangContactRoute
   LangIndexRoute: typeof LangIndexRoute
   LangProjectsIndexRoute: typeof LangProjectsIndexRoute
+  LangWritingIndexRoute: typeof LangWritingIndexRoute
 }
 
 const LangRouteChildren: LangRouteChildren = {
@@ -156,6 +181,7 @@ const LangRouteChildren: LangRouteChildren = {
   LangContactRoute: LangContactRoute,
   LangIndexRoute: LangIndexRoute,
   LangProjectsIndexRoute: LangProjectsIndexRoute,
+  LangWritingIndexRoute: LangWritingIndexRoute,
 }
 
 const LangRouteWithChildren = LangRoute._addFileChildren(LangRouteChildren)

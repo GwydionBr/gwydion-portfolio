@@ -16,6 +16,10 @@
   --hover: rgb(0 0 0 / 0.03);
   --selected: rgb(0 0 0 / 0.06);
   --focus: #2563eb;
+  /* The Availability card: Gwydion is open to work. */
+  --available: #047857;
+  --available-surface: #ecfdf5;
+  --available-line: #d1fae5;
 }
 
 @theme inline {
@@ -29,6 +33,9 @@
   --color-line: var(--line);
   --color-hover: var(--hover);
   --color-selected: var(--selected);
+  --color-available: var(--available);
+  --color-available-surface: var(--available-surface);
+  --color-available-line: var(--available-line);
 }
 
 @layer base {

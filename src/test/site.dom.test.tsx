@@ -23,7 +23,9 @@ describe('Overview', () => {
 
     expect(page.title()).toBe('Übersicht')
     expect(document.documentElement.lang).toBe('de')
-    expect(page.sidebar('Seitenleiste').textContent).toContain('Softwareentwickler')
+    expect(
+      within(page.sidebar('Seitenleiste')).getByRole('heading', { name: 'Verfügbarkeit' }),
+    ).toBeTruthy()
     expect(navigationOf('Hauptnavigation')).toEqual({
       entries: ['Übersicht', 'Projekte', 'Über mich', 'Kontakt'],
       current: ['Übersicht'],
