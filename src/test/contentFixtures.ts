@@ -31,6 +31,33 @@ export function fixtureSource({ posts = [] }: { posts?: Post[] } = {}): ContentS
         { kind: 'linkedin', href: 'https://www.linkedin.com/', placeholder: true },
       ],
     },
+    careerEntries: [
+      {
+        kind: 'freelance',
+        start: '2022-03',
+        end: '2024',
+        title: { en: 'Freelance fixture maker', de: 'Freiberufliche Fixture-Bauerin' },
+        organisation: 'Self-employed',
+        summary: { en: 'Built fixtures.', de: 'Baute Fixtures.' },
+      },
+      {
+        kind: 'job',
+        start: '2024-06',
+        end: null,
+        title: { en: 'Lead fixture', de: 'Leitendes Fixture' },
+        organisation: 'Example GmbH',
+        summary: { en: 'Leads fixtures.', de: 'Leitet Fixtures.' },
+      },
+      {
+        kind: 'education',
+        start: '2018',
+        end: '2022',
+        title: { en: 'Degree in fixtures', de: 'Studium der Fixtures' },
+        organisation: 'Example University',
+        summary: { en: 'Studied fixtures.', de: 'Studierte Fixtures.' },
+      },
+    ],
+    cv: [{ language: 'en', href: '/cv/ada-example-cv-en.pdf' }],
     posts,
   }
 }

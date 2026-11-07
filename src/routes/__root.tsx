@@ -5,6 +5,7 @@ import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
 import type { RouterContext } from '#/router'
+import { ThemeHeadTags } from '#/theme/ThemeHeadTags'
 
 import appCss from '../styles/app.css?url'
 
@@ -18,7 +19,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', href: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
       { rel: 'manifest', href: '/manifest.json' },
       { rel: 'apple-touch-icon', href: '/logo192.png' },
     ],
@@ -36,9 +36,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootDocument({ children }: { children: ReactNode }) {
   const language = useSiteLanguage()
   return (
-    <html lang={language}>
+    // The pre-paint script sets `data-theme` before React hydrates.
+    <html lang={language} suppressHydrationWarning>
       <head>
         <HeadContent />
+        <ThemeHeadTags />
       </head>
       <body>
         <SiteLanguageProvider>{children}</SiteLanguageProvider>
