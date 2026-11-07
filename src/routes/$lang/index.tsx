@@ -6,7 +6,7 @@ import { ProjectList } from '#/components/ProjectList'
 import { SkillList } from '#/components/SkillList'
 import { Tile } from '#/components/Tile'
 import { SELF_ENGINE_SLUG } from '#/content'
-import { usePosts, useProfile, useProject, useProjects } from '#/content/react'
+import { useHasWriting, usePosts, useProfile, useProject, useProjects } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
@@ -29,11 +29,11 @@ const LATEST_POSTS = 3
  */
 function Overview() {
   const { t } = useLingui()
-  const lang = useSiteLanguage()
   const { pitch, now } = useProfile()
   const selfEngine = useProject(SELF_ENGINE_SLUG)
   const featured = useProjects({ featured: true })
   const posts = usePosts()
+  const hasWriting = useHasWriting()
   return (
     <View title={t`Overview`} location={[]}>
       <div className="grid gap-4 lg:grid-cols-3">
@@ -61,15 +61,7 @@ function Overview() {
           <Tile
             title={t`Featured Projects`}
             className="lg:col-span-2"
-            action={
-              <Link
-                to="/$lang/projects"
-                params={{ lang }}
-                className="text-xs text-subtle hover:text-ink"
-              >
-                {t`View all`}
-              </Link>
-            }
+            action={<ViewAllLink to="/$lang/projects" />}
           >
             <div className="mt-1">
               <ProjectList projects={featured} label={t`Featured Projects`} headingLevel={3} />
@@ -77,23 +69,23 @@ function Overview() {
           </Tile>
         )}
         <AvailabilityTile />
-        {posts.length > 0 && (
-          <Tile
-            title={t`Latest Posts`}
-            action={
-              <Link
-                to="/$lang/writing"
-                params={{ lang }}
-                className="text-xs text-subtle hover:text-ink"
-              >
-                {t`View all`}
-              </Link>
-            }
-          >
+        {hasWriting && (
+          <Tile title={t`Latest Posts`} action={<ViewAllLink to="/$lang/writing" />}>
             <PostList posts={posts.slice(0, LATEST_POSTS)} />
           </Tile>
         )}
       </div>
     </View>
+  )
+}
+
+/** A tile's "View all" link to the full list it previews. */
+function ViewAllLink({ to }: { to: '/$lang/projects' | '/$lang/writing' }) {
+  const { t } = useLingui()
+  const lang = useSiteLanguage()
+  return (
+    <Link to={to} params={{ lang }} className="text-xs text-subtle hover:text-ink">
+      {t`View all`}
+    </Link>
   )
 }

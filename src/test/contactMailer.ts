@@ -1,5 +1,6 @@
 import { vi } from 'vite-plus/test'
-import { createContactEndpoint, type ContactEmail } from '#/contact/endpoint'
+import type { ContactEmail } from '#/contact/email'
+import { createContactEndpoint } from '#/contact/endpoint'
 
 /** A mailer that records what it would deliver, or fails every delivery. */
 export function fakeMailer({ fails = false } = {}) {

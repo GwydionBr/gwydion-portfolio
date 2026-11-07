@@ -1,8 +1,7 @@
-import { useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import type { Project } from '#/content'
 import { useSiteLanguage } from '#/i18n/react'
-import { PROJECT_KIND_LABELS } from './projectKind'
+import { ProjectMeta } from './ProjectMeta'
 import { ProjectSwatch } from './ProjectSwatch'
 
 /**
@@ -21,7 +20,6 @@ export function ProjectList({
   /** The rank of each Project's title: 2 in a view, 3 inside a tile. */
   headingLevel: 2 | 3
 }) {
-  const { i18n } = useLingui()
   const lang = useSiteLanguage()
   const Heading = `h${headingLevel}` as const
   return (
@@ -38,7 +36,7 @@ export function ProjectList({
               <span className="flex flex-wrap items-baseline justify-between gap-x-3">
                 <Heading className="font-medium text-ink">{project.title}</Heading>
                 <span className="text-xs text-subtle">
-                  {i18n._(PROJECT_KIND_LABELS[project.kind])} · {project.years}
+                  <ProjectMeta project={project} />
                 </span>
               </span>
               <span className="mt-0.5 block">{project.summary}</span>

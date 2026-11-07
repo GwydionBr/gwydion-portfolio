@@ -2,12 +2,26 @@ import { useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { pathInLanguage } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
+import { pageHead, type PageMatch } from '#/seo/pageHead'
 import { View } from '#/shell/View'
 import { BINDING_LANGUAGE, type LegalSection } from './document'
 import type { LegalPageDefinition } from './pages'
 
 const URL_SPLIT = /(https?:\/\/[^\s]+)/g
 const IS_URL = /^https?:\/\//
+
+/**
+ * What a legal page's route needs: its head and its view. The route files
+ * only bind their page: `createFileRoute('/$lang/impressum')(legalRoute(IMPRESSUM_PAGE))`.
+ */
+export function legalRoute(page: LegalPageDefinition) {
+  return {
+    head: ({ match }: { match: PageMatch }) => pageHead(match, () => page),
+    component: function LegalRouteView() {
+      return <LegalPage page={page} />
+    },
+  }
+}
 
 /**
  * A legal text as a view: in the Site language, one section per `h2`. Outside

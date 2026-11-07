@@ -28,7 +28,7 @@ msgstr "Zurück zur Übersicht"
 msgid "Career"
 msgstr "Werdegang"
 
-#: src/components/projectKind.ts
+#: src/components/ProjectMeta.tsx
 msgid "Client work"
 msgstr "Kundenprojekt"
 
@@ -148,7 +148,7 @@ msgstr "Aktuell"
 msgid "Numbers"
 msgstr "Zahlen"
 
-#: src/components/projectKind.ts
+#: src/components/ProjectMeta.tsx
 msgid "Open source"
 msgstr "Open Source"
 
@@ -157,7 +157,7 @@ msgstr "Open Source"
 msgid "Overview"
 msgstr "Übersicht"
 
-#: src/components/projectKind.ts
+#: src/components/ProjectMeta.tsx
 msgid "Own product"
 msgstr "Eigenes Produkt"
 

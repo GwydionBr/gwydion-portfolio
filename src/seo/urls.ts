@@ -1,4 +1,4 @@
-import { BASE_LANGUAGE, LANGUAGES, languageOfPath, type Language } from '#/i18n/language'
+import { BASE_LANGUAGE, LANGUAGES, withoutLanguagePrefix, type Language } from '#/i18n/language'
 
 /** Where the site is served; every canonical, alternate and sitemap URL is absolute under it. */
 export const SITE_URL = 'https://gwydion.dev'
@@ -22,7 +22,7 @@ export function withoutTrailingSlash<Path extends string>(path: Path): Path {
  * language prefix is returned as it is.
  */
 export function pagePathOf(pathname: string): PagePath {
-  const path = (languageOfPath(pathname) ? pathname.replace(/^\/[^/]+/, '') : pathname) || '/'
+  const path = withoutLanguagePrefix(pathname) || '/'
   return withoutTrailingSlash(path as PagePath)
 }
 

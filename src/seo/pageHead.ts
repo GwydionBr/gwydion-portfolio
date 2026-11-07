@@ -14,7 +14,7 @@ interface PageDescription {
 }
 
 /** The part of a route match a page's head is built from. */
-interface PageMatch {
+export interface PageMatch {
   pathname: string
   context: { content: Content }
 }

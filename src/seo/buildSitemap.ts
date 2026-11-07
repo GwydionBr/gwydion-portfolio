@@ -10,9 +10,8 @@ import { alternateUrls, pagePathOfRoute, pageUrl, type PagePath } from './urls'
  * legal pages.
  */
 export function sitePages(content: Content): PagePath[] {
-  const hasPosts = content.getPosts().length > 0
   return [
-    ...navigationEntriesFor(hasPosts).map((entry) => pagePathOfRoute(entry.to)),
+    ...navigationEntriesFor(content.hasWriting()).map((entry) => pagePathOfRoute(entry.to)),
     ...content
       .getProjects(BASE_LANGUAGE)
       .map((project): PagePath => `/projects/${encodeURIComponent(project.slug)}`),

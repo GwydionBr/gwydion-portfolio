@@ -38,7 +38,7 @@ bun run build
 bun run preview
 ```
 
-This project now uses Nitro for production hosting so TanStack Start server routes and SSR can run on Vercel.
+This project uses Nitro for production hosting so TanStack Start server routes and SSR can run on Vercel.
 
 To run the built server directly:
 
@@ -59,7 +59,7 @@ Translate the new `msgstr ""` entries in `src/i18n/locales/de.po`. `bun run chec
 
 ## Contact Form
 
-The contact endpoint is being ported to the rebuilt site (#37). It uses Resend and needs these secrets (see `.env.example`), stored in Infisical in every environment (`dev`, `staging`, `prod`):
+The Contact view's form posts to `POST /api/contact` (`src/contact/`), which sends the message through Resend. It needs these secrets (see `.env.example`), stored in Infisical in every environment (`dev`, `staging`, `prod`):
 
 - `RESEND_API_KEY`
 - `CONTACT_FROM_EMAIL` – e.g. `Portfolio Contact <contact@mail.gwydion.dev>`; the domain must be verified in Resend. Enter the value in Infisical without quotes.

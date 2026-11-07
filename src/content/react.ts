@@ -18,6 +18,11 @@ export function usePosts() {
   return useContent().getPosts()
 }
 
+/** Whether Writing exists (at least one Post). */
+export function useHasWriting() {
+  return useContent().hasWriting()
+}
+
 /** The Projects matching `filter`, in their configured order, in the Site language of the page shown. */
 export function useProjects(filter?: ProjectFilter) {
   const language = useSiteLanguage()

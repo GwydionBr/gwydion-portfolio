@@ -12,7 +12,7 @@ import { screenshotsIn } from './screenshots'
 import type {
   CareerEntry,
   ContentSource,
-  Cv,
+  CvFile,
   Post,
   Profile,
   Project,
@@ -26,7 +26,6 @@ export type {
   CareerEntry,
   CareerEntrySource,
   ContentSource,
-  Cv,
   CvFile,
   Post,
   Profile,
@@ -78,9 +77,14 @@ export interface Content {
    * The CV offered in `language`: its own when one exists, otherwise the one in
    * the Base language, otherwise any. Its `language` says which it is.
    */
-  getCv(language: Language): Cv
+  getCv(language: Language): CvFile
   /** Every Post, newest first; none yet, which hides Writing. */
   getPosts(): readonly Post[]
+  /**
+   * Whether Writing exists: at least one Post. Without it there is no Writing
+   * page, navigation entry, sitemap entry or latest-Posts tile (spec #31).
+   */
+  hasWriting(): boolean
 }
 
 /** The content module over `source`; tests pass fixtures, the site passes its content files. */
@@ -118,6 +122,7 @@ export function createContent(source: ContentSource): Content {
       return file
     },
     getPosts: () => posts,
+    hasWriting: () => posts.length > 0,
   }
 }
 

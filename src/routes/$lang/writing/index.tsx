@@ -9,7 +9,7 @@ import { View } from '#/shell/View'
 export const Route = createFileRoute('/$lang/writing/')({
   // No Writing without Posts: an empty blog would look abandoned (spec #31).
   beforeLoad: ({ context }) => {
-    if (context.content.getPosts().length === 0) throw notFound()
+    if (!context.content.hasWriting()) throw notFound()
   },
   head: ({ match }) =>
     pageHead(match, () => ({

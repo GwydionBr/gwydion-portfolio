@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 const TONES = {
   note: 'bg-selected ring-line',
   /** Marks text that stands in for content still to be written; dimmed. */
-  placeholder: 'bg-surface ring-line opacity-60 border-dashed',
+  placeholder: 'stand-in bg-surface ring-line border-dashed',
 }
 
 /** A highlighted aside inside a story (`<Callout title="…">…</Callout>`). */

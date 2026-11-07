@@ -17,7 +17,7 @@ export function CareerList({ entries }: { entries: readonly CareerEntry[] }) {
       {entries.map((entry) => (
         <li
           key={`${entry.start}-${entry.organisation}`}
-          className={`grid gap-1 border-b border-line py-3 last:border-0 sm:grid-cols-[8rem_1fr] sm:gap-4 ${entry.placeholder ? 'opacity-40' : ''}`}
+          className={`grid gap-1 border-b border-line py-3 last:border-0 sm:grid-cols-[8rem_1fr] sm:gap-4 ${entry.placeholder ? 'stand-in' : ''}`}
         >
           <p className="text-xs text-subtle">
             <time dateTime={entry.start}>{formatCareerDate(i18n, entry.start)}</time>

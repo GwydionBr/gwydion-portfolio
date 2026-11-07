@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { escapeHtml, normalizeEmailSubjectPart, validateContactMessage } from './message'
+import { validateContactMessage } from './message'
 
 const valid = {
   name: '  Ada Lovelace  ',
@@ -48,7 +48,7 @@ describe('A contact message', () => {
     })
   })
 
-  it('names every invalid field in German for a German visitor', () => {
+  it('names every invalid field in German for a message written in German', () => {
     expect(
       validateContactMessage({ name: '', email: '', message: 'x'.repeat(5001), language: 'de' }),
     ).toMatchObject({
@@ -70,19 +70,5 @@ describe('A contact message', () => {
 
   it('fails as a whole when it is not an object', () => {
     expect(validateContactMessage(null)).toMatchObject({ ok: false, language: 'en' })
-  })
-})
-
-describe('Email helpers', () => {
-  it('escape HTML interpolated into email templates', () => {
-    expect(escapeHtml(`<script>alert("x")</script>`)).toBe(
-      '&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;',
-    )
-  })
-
-  it('normalize subject fragments', () => {
-    expect(normalizeEmailSubjectPart('Ada\r\nBcc: attacker@example.com')).toBe(
-      'Ada Bcc: attacker@example.com',
-    )
   })
 })

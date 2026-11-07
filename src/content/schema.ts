@@ -167,16 +167,14 @@ export type CareerEntry = InLanguage<CareerEntrySource>
 
 /**
  * One CV file (glossary: CV): a PDF under `public/`, written in `language`.
- * A Site language without its own CV is offered another one.
+ * A Site language without its own CV is offered another one, so `language`
+ * also says which one a Site language offers.
  */
 export interface CvFile {
   language: Language
   /** The asset's URL path, for example `/cv/gwydion-braunsdorf-cv-en.pdf`. */
   href: string
 }
-
-/** The CV a Site language offers: the file to download and the language it is written in. */
-export type Cv = CvFile
 
 /** Everything the content module serves, as stored. */
 export interface ContentSource {

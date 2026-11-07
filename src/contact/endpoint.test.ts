@@ -34,7 +34,7 @@ describe('The contact endpoint', () => {
     expect(email?.html).toContain('Deutsch')
   })
 
-  it('escapes what the visitor typed in the HTML and keeps the subject on one line', async () => {
+  it('escapes what the Recruiter or Client typed in the HTML and keeps the subject on one line', async () => {
     const mailer = fakeMailer()
     await createContactEndpoint({ mailer })(
       post({ ...VALID, name: 'Ada\r\nBcc: x@example.com', message: '<script>alert(1)</script>!!' }),

@@ -55,6 +55,14 @@
   }
 }
 
+/*
+ * Content marked `placeholder: true` (it stands in for content still to be
+ * written): every place shows it dimmed the same way.
+ */
+@utility stand-in {
+  opacity: 0.6;
+}
+
 @theme inline {
   --font-sans: 'Inter Variable', system-ui, sans-serif;
   --color-canvas: var(--canvas);

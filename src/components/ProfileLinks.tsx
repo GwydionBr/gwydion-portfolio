@@ -41,9 +41,8 @@ export function ProfileLinks({ className = 'mt-2 space-y-2' }: { className?: str
           <li key={link.kind} className="flex min-w-0 items-center gap-2">
             <Icon aria-hidden className="size-4 shrink-0 text-subtle" />
             {link.placeholder ? (
-              <span className="text-subtle">
-                <span>{labels[link.kind]}</span>{' '}
-                <span className="text-xs opacity-70">({t`coming soon`})</span>
+              <span className="stand-in">
+                <span>{labels[link.kind]}</span> <span className="text-xs">({t`coming soon`})</span>
               </span>
             ) : (
               <a

@@ -56,11 +56,19 @@ export function siteLanguageOfPath(pathname: string | null | undefined): Languag
 }
 
 /**
+ * `pathname` without its Site language prefix (`/de/about` → `/about`,
+ * `/de` → `""`). A path without one is returned as it is.
+ */
+export function withoutLanguagePrefix(pathname: string): string {
+  return languageOfPath(pathname) ? pathname.replace(/^\/[^/]+/, '') : pathname
+}
+
+/**
  * The same page in `language`: the language prefix swapped, or added when the
  * path has none (a not-found view outside `/$lang`).
  */
 export function pathInLanguage(pathname: string, language: Language): string {
-  if (languageOfPath(pathname)) return pathname.replace(/^\/[^/]+/, `/${language}`)
+  if (languageOfPath(pathname)) return `/${language}${withoutLanguagePrefix(pathname)}`
   return `/${language}`
 }
 
