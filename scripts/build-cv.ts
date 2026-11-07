@@ -6,7 +6,7 @@
 //
 // The browser defaults to Helium; point CHROME at any Chromium-based browser.
 import { spawnSync } from 'node:child_process'
-import { mkdtemp, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -34,6 +34,12 @@ for (const language of LANGUAGES) {
   ])
   if (browser.status !== 0) {
     console.error(browser.error ?? browser.stderr.toString())
+    process.exit(1)
+  }
+  // The CV is laid out for one page; content that no longer fits spills onto a second.
+  const pages = (await readFile(pdfPath, 'latin1')).match(/\/Type\s*\/Page\b/g)?.length ?? 0
+  if (pages !== 1) {
+    console.error(`${path.relative(rootDir, pdfPath)} has ${pages} pages; shorten it to one.`)
     process.exit(1)
   }
   console.log(`Wrote ${path.relative(rootDir, pdfPath)}`)

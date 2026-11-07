@@ -28,6 +28,17 @@ export const careerEntries: CareerEntrySource[] = [
     },
   },
   {
+    kind: 'job',
+    start: '2025-06',
+    end: '2026-10',
+    title: { en: 'Service staff (part-time)', de: 'Servicekraft (Teilzeit)' },
+    organisation: 'Ristobar, Ottobeuren',
+    summary: {
+      en: 'Alongside freelancing: a steady income and time among people.',
+      de: 'Neben dem Freelancing: ein festes Einkommen und Zeit unter Menschen.',
+    },
+  },
+  {
     kind: 'education',
     start: '2021',
     end: '2024',

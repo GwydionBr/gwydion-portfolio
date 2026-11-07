@@ -83,10 +83,10 @@ export function renderCv(language: Language, fontUrl: string): string {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --navy: #14213d; --gold: #e3a23b; --blue: #2f6db5; --ink: #1d2433; --muted: #5b6475; --line: #dde2ea; }
   html, body { width: 210mm; height: 297mm; }
-  body { font-family: Inter, sans-serif; color: var(--ink); font-size: 8.6pt; line-height: 1.42;
+  body { font-family: Inter, sans-serif; color: var(--ink); font-size: 8.4pt; line-height: 1.4;
     display: grid; grid-template-columns: 66mm 1fr; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   aside { background: var(--navy); color: #e8ecf3; padding: 13mm 8mm 10mm 9mm; display: flex; flex-direction: column; gap: 6mm; }
-  main { padding: 12mm 11mm 9mm 10mm; display: flex; flex-direction: column; gap: 4.2mm; }
+  main { padding: 11mm 11mm 8mm 10mm; display: flex; flex-direction: column; gap: 3.4mm; }
   .monogram { width: 15mm; height: 15mm; border: 1.2px solid var(--gold); border-radius: 50%; color: var(--gold);
     display: grid; place-items: center; font-weight: 700; font-size: 13pt; letter-spacing: .5px; }
   h1 { font-size: 21pt; line-height: 1.08; font-weight: 700; color: #fff; letter-spacing: -.3px; }
@@ -103,8 +103,8 @@ export function renderCv(language: Language, fontUrl: string): string {
   main h2 { display: flex; align-items: center; gap: 3mm; font-size: 7.6pt; letter-spacing: 1.8px; text-transform: uppercase;
     color: var(--blue); font-weight: 700; margin-bottom: 2mm; }
   main h2::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-  .intro { font-size: 9pt; color: #364055; line-height: 1.5; }
-  .entry { margin-bottom: 3mm; } .entry:last-child { margin-bottom: 0; }
+  .intro { font-size: 8.8pt; color: #364055; line-height: 1.45; }
+  .entry { margin-bottom: 2.4mm; } .entry:last-child { margin-bottom: 0; }
   .entry header, .edu header, .side header { display: flex; justify-content: space-between; align-items: baseline; gap: 3mm; }
   h3 { font-size: 10pt; font-weight: 650; }
   .edu h3, .side h3 { font-size: 8.8pt; }
@@ -121,7 +121,7 @@ export function renderCv(language: Language, fontUrl: string): string {
   .side p, .edu .org { font-size: 8pt; }
   .side p { color: #364055; }
   .courses { color: var(--muted); font-size: 8pt; margin-top: 2mm; }
-  .edu { margin-bottom: 1.8mm; }
+  .edu { margin-bottom: 1.4mm; }
 </style>
 </head>
 <body>
