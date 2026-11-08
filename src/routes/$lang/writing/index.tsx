@@ -24,7 +24,7 @@ function Writing() {
   const { t } = useLingui()
   return (
     <View title={t`Writing`}>
-      <div className="max-w-2xl rounded-2xl bg-surface p-5 ring-1 ring-line">
+      <div className="rounded-2xl bg-surface p-5 ring-1 ring-line">
         <PostList posts={usePosts()} />
       </div>
     </View>
