@@ -105,3 +105,49 @@
     }
   }
 }
+
+/* The mounted phone navigation derives its single indicator only from aria-current.
+ * The count follows the visible entries, including the optional Writing tab.
+ * Initial styles already resolve the current position; only subsequent changes slide.
+ */
+.phone-tabs {
+  --active-tab: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset-block: 4px;
+    left: 6px;
+    width: calc((100% - 8px) / var(--tab-count) - 4px);
+    border-radius: 0.5rem;
+    background: var(--selected);
+    box-shadow: inset 0 0 0 1px var(--line);
+    opacity: 0;
+    transform: translateX(calc(var(--active-tab) * (100% + 4px)));
+  }
+
+  &:has(> li > a[aria-current='page'])::before {
+    opacity: 1;
+  }
+
+  &:has(> li:nth-child(2) > a[aria-current='page']) {
+    --active-tab: 1;
+  }
+  &:has(> li:nth-child(3) > a[aria-current='page']) {
+    --active-tab: 2;
+  }
+  &:has(> li:nth-child(4) > a[aria-current='page']) {
+    --active-tab: 3;
+  }
+  &:has(> li:nth-child(5) > a[aria-current='page']) {
+    --active-tab: 4;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &::before {
+      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+}
