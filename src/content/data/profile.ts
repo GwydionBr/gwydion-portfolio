@@ -13,7 +13,7 @@ export const profile: ProfileSource = {
     headline: { en: 'Open to full-time roles', de: 'Offen für Festanstellungen' },
     freelance: {
       en: 'Also available for selected freelance projects',
-      de: 'Außerdem verfügbar für ausgewählte freiberufliche Projekte',
+      de: 'Auch offen für ausgewählte Freelance-Projekte',
     },
   },
   now: [
