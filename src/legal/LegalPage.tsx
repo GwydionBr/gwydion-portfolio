@@ -35,7 +35,7 @@ export function LegalPage({ page }: { page: LegalPageDefinition }) {
   const sections = page.document[lang]
   return (
     <View title={i18n._(page.title)}>
-      <div className="max-w-3xl space-y-4">
+      <div className="space-y-4">
         {lang !== BINDING_LANGUAGE && (
           <p role="note" className="rounded-2xl bg-surface p-5 text-ink ring-1 ring-line">
             {t`This English version is a courtesy translation. Only the German version is legally binding.`}{' '}

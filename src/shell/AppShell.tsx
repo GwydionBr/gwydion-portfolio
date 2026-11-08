@@ -34,7 +34,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           tabIndex={-1}
           className="flex-1 p-4 pb-24 outline-none sm:p-6 sm:pb-24 md:pb-6 lg:p-10"
         >
-          {children}
+          <div className="mx-auto w-full max-w-5xl">{children}</div>
           <div className="mt-10 space-y-4 md:hidden">
             <ProfileLinks />
             <div className="max-w-60">

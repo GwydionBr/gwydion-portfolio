@@ -28,7 +28,7 @@ function About() {
   const entries = useCareerEntries()
   return (
     <View title={t`About`} action={<CvDownload look="primary" className="max-sm:w-full" />}>
-      <div className="grid max-w-4xl items-start gap-4 lg:grid-cols-3">
+      <div className="grid items-start gap-4 lg:grid-cols-3">
         <Tile title={t`Career`} className="lg:col-span-2">
           <CareerList entries={entries} />
         </Tile>
