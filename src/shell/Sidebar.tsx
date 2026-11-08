@@ -1,6 +1,8 @@
+import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
+import { CircleHalf, Globe, type Icon } from '@phosphor-icons/react'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
-import { ProfileLinks } from '#/components/ProfileLinks'
+import { ProfileLinkRows } from '#/components/ProfileLinks'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 import { LegalLinks } from './LegalLinks'
@@ -8,16 +10,16 @@ import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
 import { PinnedProjects } from './PinnedProjects'
 import { SearchPlaceholder } from './SearchPlaceholder'
-import { ThemeToggle } from './ThemeToggle'
+import { ThemeSwitch } from './ThemeSwitch'
 
-/** The desktop sidebar: identity, search, navigation, pinned Projects and, at the bottom, the Availability, the Profile links, the Site language switch, the theme toggle and the legal links. */
+/** The desktop sidebar: identity, search, navigation, pinned Projects and, at the bottom, the Availability, the Profile links, the Site language and theme switches and the legal links. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
   return (
     <aside
       aria-label={t`Sidebar`}
-      className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r border-line bg-sidebar p-3 md:flex"
+      className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col overflow-y-auto border-r border-line bg-sidebar p-3 md:flex"
     >
       <Identity className="p-2" />
       <SearchPlaceholder />
@@ -41,13 +43,29 @@ export function Sidebar() {
         </ul>
       </nav>
       <PinnedProjects />
-      <AvailabilityTile compact className="mt-auto" />
-      <ProfileLinks className="space-y-1.5 px-3 pt-3 text-xs" />
-      <div className="flex items-center justify-between px-3 pt-3">
-        <LanguageSwitch />
-        <ThemeToggle />
+      <div className="mt-auto space-y-2 pt-4">
+        <AvailabilityTile compact />
+        <ProfileLinkRows />
+        <div className="space-y-1.5 border-t border-line pt-2.5">
+          <Setting icon={Globe}>
+            <LanguageSwitch />
+          </Setting>
+          <Setting icon={CircleHalf}>
+            <ThemeSwitch />
+          </Setting>
+        </div>
+        <LegalLinks className="pl-3 pt-1" />
       </div>
-      <LegalLinks className="px-3 pt-2" />
     </aside>
+  )
+}
+
+/** A control in the sidebar's settings, its icon aligned with the rows above it. */
+function Setting({ icon: Icon, children }: { icon: Icon; children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 pl-3">
+      <Icon aria-hidden className="size-4 shrink-0 text-subtle" />
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
   )
 }

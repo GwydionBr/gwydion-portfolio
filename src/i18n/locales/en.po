@@ -58,9 +58,9 @@ msgstr "Contents"
 msgid "CV"
 msgstr "CV"
 
-#: src/shell/ThemeToggle.tsx
-msgid "Dark theme"
-msgstr "Dark theme"
+#: src/shell/ThemeSwitch.tsx
+msgid "Dark"
+msgstr "Dark"
 
 #: src/routes/$lang/contact.tsx
 msgid "Directly"
@@ -128,6 +128,10 @@ msgstr "Legal"
 #: src/legal/pages.ts
 msgid "Legal notice"
 msgstr "Legal notice"
+
+#: src/shell/ThemeSwitch.tsx
+msgid "Light"
+msgstr "Light"
 
 #: src/shell/Sidebar.tsx
 msgid "Main navigation"
@@ -279,6 +283,10 @@ msgstr "Stack"
 msgid "Status"
 msgstr "Status"
 
+#: src/shell/ThemeSwitch.tsx
+msgid "System"
+msgstr "System"
+
 #: src/shell/TabBar.tsx
 msgid "Tab bar"
 msgstr "Tab bar"
@@ -290,6 +298,10 @@ msgstr "The message is too long (at most {messageMax} characters)."
 #: src/contact/message.ts
 msgid "The message is too short (at least {messageMin} characters)."
 msgstr "The message is too short (at least {messageMin} characters)."
+
+#: src/shell/ThemeSwitch.tsx
+msgid "Theme"
+msgstr "Theme"
 
 #: src/shell/NotFoundView.tsx
 msgid "There is nothing at this address."

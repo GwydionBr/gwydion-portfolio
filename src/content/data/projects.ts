@@ -17,7 +17,7 @@ export const projects: ProjectSource[] = [
     },
     role: {
       en: 'Sole developer: design, build, operations',
-      de: 'Alleiniger Entwickler: Design, Entwicklung, Betrieb',
+      de: 'Alleinentwickler: Design, Entwicklung, Betrieb',
     },
     status: { en: 'Live, commercial', de: 'Live, kommerziell' },
     links: { live: 'https://self-engine.com' },
@@ -72,7 +72,7 @@ export const projects: ProjectSource[] = [
     },
     role: {
       en: 'Sole developer: design and build',
-      de: 'Alleiniger Entwickler: Design und Entwicklung',
+      de: 'Alleinentwickler: Design und Entwicklung',
     },
     status: { en: 'Live', de: 'Live' },
     links: {

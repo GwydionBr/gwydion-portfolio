@@ -4,6 +4,7 @@ import { ProfileLinks } from '#/components/ProfileLinks'
 import { LegalLinks } from './LegalLinks'
 import { Sidebar } from './Sidebar'
 import { TabBar } from './TabBar'
+import { ThemeSwitch } from './ThemeSwitch'
 import { TopBar } from './TopBar'
 
 /** The id of the main content landmark, the skip link's target. */
@@ -12,8 +13,8 @@ const MAIN_ID = 'main'
 /**
  * The app shell (ADR 0003, prototype J): a sidebar from the `md` breakpoint
  * up; below it a top bar (identity, Site language switch) and a bottom tab
- * bar, and the main pane ends with the Profile links and the legal links the
- * sidebar holds on desktop. Views render into the main pane through `View`.
+ * bar, and the main pane ends with the Profile links, the theme switch and the
+ * legal links the sidebar holds on desktop. Views render into the main pane through `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
@@ -36,6 +37,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           {children}
           <div className="mt-10 space-y-4 md:hidden">
             <ProfileLinks />
+            <div className="max-w-60">
+              <ThemeSwitch />
+            </div>
             <LegalLinks />
           </div>
         </main>

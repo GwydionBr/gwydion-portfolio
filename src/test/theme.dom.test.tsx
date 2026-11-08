@@ -2,52 +2,68 @@ import { describe, expect, it } from 'vite-plus/test'
 import { getAllByRole, within } from '@testing-library/dom'
 import { visit } from './visit'
 
-const toggleIn = (landmark: HTMLElement, name = 'Dark theme') =>
-  within(landmark).getByRole('button', { name })
+const option = (landmark: HTMLElement, name: string) =>
+  within(landmark).getByRole<HTMLInputElement>('radio', { name })
 
 describe('Theme', () => {
-  it('follows the system setting when the visitor has not chosen one', async () => {
+  it('starts on System and follows the system setting live', async () => {
     const page = await visit('/en', { systemTheme: 'dark' })
 
+    expect(option(page.sidebar(), 'System').checked).toBe(true)
     expect(page.theme()).toBe('dark')
-    expect(toggleIn(page.sidebar()).getAttribute('aria-pressed')).toBe('true')
 
     await page.setSystemTheme('light')
 
+    expect(option(page.sidebar(), 'System').checked).toBe(true)
     expect(page.theme()).toBe('light')
-    expect(toggleIn(page.sidebar()).getAttribute('aria-pressed')).toBe('false')
   })
 
-  it('switches with the toggle and keeps the choice across a reload, painted before the first frame', async () => {
+  it('offers Light and Dark, and keeps the choice across a reload, painted before the first frame', async () => {
     const page = await visit('/en', { systemTheme: 'light' })
 
-    await page.click(toggleIn(page.sidebar()))
+    await page.click(option(page.sidebar(), 'Dark'))
     expect(page.theme()).toBe('dark')
-    expect(toggleIn(page.sidebar()).getAttribute('aria-pressed')).toBe('true')
+    expect(option(page.sidebar(), 'Dark').checked).toBe(true)
 
     const reloaded = await visit('/en/about', { systemTheme: 'light' })
     reloaded.paintFirstFrame()
     expect(reloaded.theme()).toBe('dark')
-    expect(toggleIn(reloaded.sidebar()).getAttribute('aria-pressed')).toBe('true')
+    expect(option(reloaded.sidebar(), 'Dark').checked).toBe(true)
 
     // A stored choice wins over later system changes.
-    await reloaded.setSystemTheme('dark')
-    await reloaded.click(toggleIn(reloaded.sidebar()))
+    await reloaded.setSystemTheme('light')
+    expect(reloaded.theme()).toBe('dark')
+
+    await reloaded.click(option(reloaded.sidebar(), 'Light'))
     expect(reloaded.theme()).toBe('light')
   })
 
-  it('offers the toggle on phones too, in the top bar', async () => {
-    const page = await visit('/en')
+  it('goes back to following the system with System', async () => {
+    const page = await visit('/en', { systemTheme: 'dark' })
+    await page.click(option(page.sidebar(), 'Light'))
+    expect(page.theme()).toBe('light')
 
-    const toggles = getAllByRole(document.body, 'button', { name: 'Dark theme' })
-    expect(toggles).toHaveLength(2)
-    expect(toggles.filter((toggle) => !page.sidebar().contains(toggle))).toHaveLength(1)
+    await page.click(option(page.sidebar(), 'System'))
+    expect(page.theme()).toBe('dark')
+    expect(localStorage.getItem('theme')).toBeNull()
+
+    await page.setSystemTheme('light')
+    expect(page.theme()).toBe('light')
   })
 
-  it('names the toggle in German on German pages', async () => {
+  it('offers the switch on phones too, at the end of the main pane', async () => {
+    const page = await visit('/en')
+
+    const switches = getAllByRole(document.body, 'radiogroup', { name: 'Theme' })
+    expect(switches).toHaveLength(2)
+    expect(switches.filter((group) => page.main().contains(group))).toHaveLength(1)
+  })
+
+  it('names the options in German on German pages', async () => {
     const page = await visit('/de')
 
-    expect(toggleIn(page.sidebar('Seitenleiste'), 'Dunkles Design')).toBeTruthy()
+    expect(option(page.sidebar('Seitenleiste'), 'Dunkel')).toBeTruthy()
+    expect(option(page.sidebar('Seitenleiste'), 'Hell')).toBeTruthy()
   })
 
   it('colours the browser chrome and the favicon in the theme shown', async () => {
@@ -63,7 +79,7 @@ describe('Theme', () => {
     expect(dark.chrome).not.toEqual(light.chrome)
 
     // An explicit choice overrides the system setting for chrome and favicon as well.
-    await page.click(toggleIn(page.sidebar()))
+    await page.click(option(page.sidebar(), 'Light'))
     expect(page.theme()).toBe('light')
     expect(page.chromeColor()).toEqual(light.chrome)
     expect(page.favicon()).toEqual(['/favicon-light.svg'])

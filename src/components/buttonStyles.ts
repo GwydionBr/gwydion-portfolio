@@ -10,9 +10,6 @@ export const BUTTON_STYLES = {
   /** An action beside a primary one. */
   secondary:
     'inline-flex items-center justify-center gap-1.5 rounded-lg bg-surface px-3 py-2 font-medium text-ink ring-1 ring-line hover:bg-hover',
-  /** Inside the Availability card. */
-  available:
-    'flex items-center justify-center gap-1.5 rounded-md bg-available px-3 py-1.5 font-medium text-available-surface hover:opacity-90',
 } as const
 
 export type ButtonStyle = keyof typeof BUTTON_STYLES
