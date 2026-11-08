@@ -37,10 +37,10 @@ function CvFileLink({
  * language than the page names it.
  */
 export function CvDownload({
-  look = 'available',
+  look = 'primary',
   className = '',
 }: {
-  /** The button look: green in the Availability card, `primary` as a view's main action. */
+  /** The button look. */
   look?: ButtonStyle
   /** Placement only (margins, width). */
   className?: string
@@ -49,7 +49,8 @@ export function CvDownload({
   const cv = useCv()
   const siteLanguage = useSiteLanguage()
   return (
-    <CvFileLink file={cv} className={`${BUTTON_STYLES[look]} ${className}`}>
+    <CvFileLink file={cv} className={`${BUTTON_STYLES[look]} whitespace-nowrap ${className}`}>
+      <DownloadSimple aria-hidden className="size-4" />
       {t`Download CV`}
       {cv.language !== siteLanguage && (
         <span lang={cv.language}> · {nativeNameOf(cv.language)}</span>

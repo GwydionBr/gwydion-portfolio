@@ -1,5 +1,6 @@
 import { useLingui } from '@lingui/react/macro'
 import { useProfile } from '#/content/react'
+import { AvailabilityPill } from './AvailabilityPill'
 import { CvDownload } from './CvDownload'
 import { Tile } from './Tile'
 
@@ -14,13 +15,14 @@ export function AvailabilityTile({
   const { t } = useLingui()
   const { availability } = useProfile()
   return (
-    <Tile title={t`Availability`} tone="available" compact={compact} className={className}>
-      <p className="mt-2 flex items-center gap-2 font-medium text-available">
-        <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-available" />
-        {availability.headline}
-      </p>
-      {availability.freelance && <p className="mt-1 text-muted">{availability.freelance}</p>}
-      <CvDownload className="mt-3" />
+    <Tile title={t`Availability`} compact={compact} className={className}>
+      <div className="mt-2.5">
+        <AvailabilityPill headline={availability.headline} />
+      </div>
+      {availability.freelance && (
+        <p className="mt-2.5 leading-relaxed text-muted">{availability.freelance}</p>
+      )}
+      <CvDownload className="mt-3 w-full" />
     </Tile>
   )
 }

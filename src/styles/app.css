@@ -40,6 +40,9 @@
   color-scheme: dark;
 }
 
+/* A segment of a segmented control that is the current one (src/shell/segmented.ts). */
+@custom-variant segment-active (&:is([aria-current], :has(:checked)));
+
 /*
  * `dark:` for the rare case a token is not enough (e.g. swapping an icon):
  * the visitor's dark choice, or a dark system setting without a choice.

@@ -1,6 +1,7 @@
 import { useId } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useLingui } from '@lingui/react/macro'
+import { AvailabilityPill } from '#/components/AvailabilityPill'
 import { CvDownload } from '#/components/CvDownload'
 import { PostList } from '#/components/PostList'
 import { ProjectCards } from '#/components/ProjectCards'
@@ -92,10 +93,7 @@ function Hero() {
         aria-label={t`Availability`}
         className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1"
       >
-        <p className="inline-flex items-center gap-2 rounded-full bg-available-surface px-3 py-1 font-medium text-available ring-1 ring-available-line">
-          <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-available" />
-          {availability.headline}
-        </p>
+        <AvailabilityPill headline={availability.headline} />
         {availability.freelance && <p className="text-subtle">{availability.freelance}</p>}
       </section>
     </>

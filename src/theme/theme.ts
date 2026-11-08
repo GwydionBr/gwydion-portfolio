@@ -1,8 +1,8 @@
 /**
  * The site theme. Without a stored choice the page follows the visitor's
- * system setting (`prefers-color-scheme`), live. The toggle stores an explicit
- * choice on the device (localStorage), which the pre-paint script applies
- * before the first frame.
+ * system setting (`prefers-color-scheme`), live. The theme switch can store
+ * an explicit choice on the device (localStorage), which the pre-paint script
+ * applies before the first frame; choosing System removes it again.
  *
  * The contract with the stylesheet (src/styles/app.css) is one attribute:
  * `<html data-theme="light|dark">` when the visitor has chosen, none when
@@ -11,6 +11,10 @@
 
 export const THEMES = ['light', 'dark'] as const
 export type Theme = (typeof THEMES)[number]
+
+/** What the visitor can pick: a theme, or following the system (the default). */
+export const THEME_PREFERENCES = ['system', ...THEMES] as const
+export type ThemePreference = (typeof THEME_PREFERENCES)[number]
 
 export const THEME_STORAGE_KEY = 'theme'
 
@@ -28,10 +32,6 @@ export const FAVICONS: Record<Theme, string> = {
 
 export function isTheme(value: unknown): value is Theme {
   return THEMES.includes(value as Theme)
-}
-
-export function oppositeOf(theme: Theme): Theme {
-  return theme === 'dark' ? 'light' : 'dark'
 }
 
 /**
@@ -75,14 +75,16 @@ export function readThemeChoice(): Theme | null {
   }
 }
 
-/** Stores `theme` as the visitor's choice and applies it. */
-export function chooseTheme(theme: Theme) {
+/** Stores the visitor's preference and applies it; `system` clears any stored choice. */
+export function chooseTheme(preference: ThemePreference) {
+  const choice = preference === 'system' ? null : preference
   try {
-    localStorage.setItem(THEME_STORAGE_KEY, theme)
+    if (choice) localStorage.setItem(THEME_STORAGE_KEY, choice)
+    else localStorage.removeItem(THEME_STORAGE_KEY)
   } catch {
     // Storage blocked: the choice still applies to this page.
   }
-  applyThemeChoice(theme)
+  applyThemeChoice(choice)
 }
 
 /**

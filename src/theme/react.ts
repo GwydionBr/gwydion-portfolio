@@ -3,10 +3,10 @@ import {
   applyThemeChoice,
   chooseTheme,
   DARK_SYSTEM_QUERY,
-  oppositeOf,
   readThemeChoice,
   THEME_STORAGE_KEY,
   type Theme,
+  type ThemePreference,
 } from './theme'
 
 const listeners = new Set<() => void>()
@@ -36,16 +36,25 @@ function shownTheme(): Theme {
   return readThemeChoice() ?? (matchMedia(DARK_SYSTEM_QUERY).matches ? 'dark' : 'light')
 }
 
+function currentPreference(): ThemePreference {
+  return readThemeChoice() ?? 'system'
+}
+
 /**
  * The theme the page is shown in (the stored choice, else the system
- * setting) and a toggle to the other one. On the server, and while
- * hydrating, the theme is unknown (`null`): it lives on the device.
+ * setting), the visitor's preference, and a way to change it. On the server,
+ * and while hydrating, both are unknown (`null`): they live on the device.
  */
 export function useTheme() {
   const theme = useSyncExternalStore<Theme | null>(subscribe, shownTheme, () => null)
-  const toggle = useCallback(() => {
-    chooseTheme(oppositeOf(shownTheme()))
+  const preference = useSyncExternalStore<ThemePreference | null>(
+    subscribe,
+    currentPreference,
+    () => null,
+  )
+  const choose = useCallback((next: ThemePreference) => {
+    chooseTheme(next)
     notify()
   }, [])
-  return { theme, toggle }
+  return { theme, preference, choose }
 }
