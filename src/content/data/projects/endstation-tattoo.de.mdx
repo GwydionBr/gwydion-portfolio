@@ -2,24 +2,24 @@
 
 ## Der Auftrag
 
-Endstation Tattoo ist ein Studio mit mehreren Künstlern in Ottobeuren. Die alte Website lief auf WordPress und Elementor: für das Studio schwer zu ändern, und Terminanfragen kamen als lose E-Mails. Ich habe sie neu gebaut, damit das Studio alles selbst pflegt und jede Terminanfrage an einem Ort landet, an dem das Team sie abarbeiten kann.
+Endstation Tattoo ist ein Studio mit mehreren Künstlern in Ottobeuren. Die alte Website lief auf WordPress und Elementor. Das Studio konnte sie nur mühsam ändern, und Terminanfragen kamen als lose E-Mails. Ich habe sie neu gebaut, damit das Studio alles selbst pflegen kann und jede Terminanfrage an einem Ort landet, an dem das Team sie abarbeitet.
 
 ## Eine Website, die das Studio selbst pflegt
 
-Die Seite zeigt die Künstler und ihre Arbeiten, eine Tattoo-Galerie, FAQ, Pflegehinweise, einen Shop und ein geführtes Buchungsformular. Jede Seite ist Inhalt in Sanity: Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen, mit Klick-zum-Bearbeiten über das Presentation-Tool von Sanity. Die GROQ-Abfragen sind mit Sanity TypeGen typisiert, sodass eine Schemaänderung, die eine Seite bricht, den Build scheitern lässt und nicht die Seite.
+Die Seite zeigt die Künstler und ihre Arbeiten, eine Tattoo-Galerie, FAQ, Pflegehinweise, einen Shop und ein geführtes Buchungsformular. Jede Seite ist Inhalt in Sanity. Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen und per Klick bearbeiten, über das Presentation-Tool von Sanity. Sanity TypeGen typisiert die GROQ-Abfragen. Bricht eine Schemaänderung eine Seite, scheitert deshalb der Build, bevor die Änderung live geht.
 
-Der Umzug weg von WordPress, ohne Suchplatzierungen zu verlieren, hieß: 301-Weiterleitungen für jede alte URL, die noch zählt, `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten), eine Sitemap und strukturierte Daten für das Studio.
+Damit die Suchplatzierungen den Umzug weg von WordPress überstehen, habe ich 301-Weiterleitungen für jede alte URL eingerichtet, die noch zählt, `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten), eine Sitemap und strukturierte Daten für das Studio.
 
-## Terminanfragen statt E-Mails
+## Terminanfragen
 
 Das Buchungsformular fragt ab, was ein Künstler für ein Angebot braucht: den Künstler (aus Sanity gewählt), Körperstelle, Größe, eine Anzahlungsoption und Referenzbilder, die der Browser vor dem Upload auf 2 MB verkleinert. Ein einziges Zod-Schema prüft das Formular im Browser und auf dem Server.
 
-Anfragen gingen zuerst als PDFs in eine Nextcloud. Das stieß an Grenzen, sobald Anfragen einen Status brauchten, jemanden, der sie übernimmt, Übergaben zwischen Künstlern und Schutz vor Duplikaten. Darum habe ich es durch ein eigenes Anfrage-Portal auf Supabase ersetzt:
+Anfangs ging jede Anfrage als PDF in eine Nextcloud. Das reichte nicht mehr, sobald Anfragen einen Status brauchten, jemanden, der sie übernimmt, Übergaben zwischen Künstlern und Schutz vor Duplikaten. Ich habe es durch ein eigenes Anfrage-Portal auf Supabase ersetzt.
 
-- Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist; ein erneuter Versuch nutzt dieselbe Submission-ID, sodass eine wackelige Verbindung nie ein Duplikat erzeugt.
+- Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist. Ein erneuter Versuch nutzt dieselbe Submission-ID, eine wackelige Verbindung erzeugt also nie ein Duplikat.
 - Künstler bekommen höchstens eine Zusammenfassung pro Tag per E-Mail, ohne Kundendaten darin.
-- Anfragen werden sechs Monate nach dem Abschluss automatisch gelöscht.
-- Die Formulardaten bleiben in der EU: Die Seite läuft in Vercels Region Frankfurt.
+- Das Portal löscht Anfragen sechs Monate nach ihrem Abschluss.
+- Die Formulardaten bleiben in der EU, weil die Seite in Vercels Region Frankfurt läuft.
 
 <NumberTiles>
   <NumberTile value="10" label="Sanity-Dokumenttypen" />
@@ -29,4 +29,4 @@ Anfragen gingen zuerst als PDFs in eine Nextcloud. Das stieß an Grenzen, sobald
 
 ## Eine Codebasis, mehrere Studios
 
-Endstation ist die Hauptseite eines kleinen Monorepos, das auch Websites für einzelne Tattoo-Künstler betreibt. Die Seiten teilen Packages für die Künstlerseiten, das Sanity Studio und die Vorschau, aber jede hat ihr eigenes Sanity-Projekt, eigenes Vercel-Projekt und eigene Zugangsdaten, weil jede einem anderen Inhaber gehört. Geteilt wird nur der Code.
+Endstation ist die Hauptseite eines kleinen Monorepos, das auch Websites für einzelne Tattoo-Künstler betreibt. Die Seiten teilen Packages für die Künstlerseiten, das Sanity Studio und die Vorschau. Jede Seite hat trotzdem ihr eigenes Sanity-Projekt, eigenes Vercel-Projekt und eigene Zugangsdaten, weil jede einem anderen Inhaber gehört.

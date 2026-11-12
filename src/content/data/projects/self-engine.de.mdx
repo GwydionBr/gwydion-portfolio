@@ -2,27 +2,27 @@
 
 ## Die Idee
 
-Zeiterfassungs-Tools wissen nicht, was eine Stunde wert ist. Finanz-Apps wissen nicht, welche Arbeit das Geld verdient hat. Und Kalender zeigen, was geplant war, nie, was wirklich passiert ist. Die Verbindungen dazwischen existierten nur in meinem Kopf.
+Meine Zeit habe ich in einer App erfasst, mein Geld in einer anderen und meine Pläne im Kalender. Keine davon wusste von den anderen. Die Zeiterfassung wusste nicht, was eine Stunde wert ist, die Finanz-App nicht, welche Arbeit das Geld eingebracht hat, und der Kalender zeigte, was ich geplant hatte, aber nicht, was ich tatsächlich gemacht habe. Diese Zusammenhänge hatte ich nur im Kopf.
 
-In Self-Engine sind genau diese Verbindungen das Produkt: Aus einem Termin startet ein Timer, der Timer wird zum Zeiteintrag, und eine Auszahlung markiert die Einträge als bezahlt und bucht das Geld in den Finanzen. Gewohnheiten füllen sich von selbst aus der Zeit, die auf einem verknüpften Projekt erfasst wird.
+Self-Engine speichert sie. Aus einem Termin startet ein Timer, der Timer wird zum Zeiteintrag, und eine Auszahlung markiert die Einträge als bezahlt und bucht das Geld in den Finanzen. Eine Gewohnheit, die mit einem Projekt verknüpft ist, füllt sich aus der Zeit, die auf diesem Projekt erfasst wird.
 
 <ScreenshotGallery views={['work-dashboard', 'time-tracking-cockpit', 'work-payout']} />
 
 ## Ein Datenmodell, fünf Module
 
-- **Projekte & Zeiterfassung:** ein Timer pro Projekt, parallel, pausierbar und mit Pomodoro. Jede Stunde kennt ihr Projekt, ihren Stundensatz und ihre Zeitklasse.
-- **Aufgaben:** Inbox, Heute, Demnächst und ein Kanban-Board, mit eigenen Status in festen Kategorien.
-- **Kalender:** Termine und erfasste Zeit nebeneinander, mit Zwei-Wege-Sync mit Google und Apple (iCloud), der serverseitig läuft, auch bei geschlossener App.
-- **Finanzen:** Konten in je einer Währung, einmalige und wiederkehrende Zahlungen, Umbuchungen und Währungswechsel, ausgewertet strikt pro Währung.
-- **Gewohnheiten:** täglich, an bestimmten Wochentagen oder als flexible Quote pro Woche oder Monat; Streaks werden immer aus dem Verlauf berechnet.
+- **Projekte und Zeiterfassung.** Ein Timer pro Projekt, mehrere gleichzeitig, mit Pause und Pomodoro. Jede erfasste Stunde speichert ihr Projekt, ihren Stundensatz und ihre Zeitklasse.
+- **Aufgaben.** Inbox, Heute, Demnächst und ein Kanban-Board, mit eigenen Status in festen Kategorien.
+- **Kalender.** Termine und erfasste Zeit nebeneinander. Der Zwei-Wege-Sync mit Google und Apple (iCloud) läuft auf dem Server und damit auch, wenn die App geschlossen ist.
+- **Finanzen.** Konten in je einer Währung, einmalige und wiederkehrende Zahlungen, Umbuchungen und Währungswechsel. Auswertungen mischen nie Währungen.
+- **Gewohnheiten.** Täglich, an bestimmten Wochentagen oder als Quote pro Woche oder Monat. Die App berechnet Streaks aus dem Verlauf und speichert sie nie.
 
 <ScreenshotGallery views={['dashboard', 'tasks-board', 'calendar', 'finance', 'habits']} />
 
-## Offline-first, wirklich
+## So funktioniert Offline-first
 
-Jede App schreibt zuerst in eine lokale SQLite-Datenbank; ein Schreibvorgang wartet nie auf die Cloud. PowerSync stellt die Änderung in eine Warteschlange und lädt sie geordnet zu Supabase hoch, wo Postgres mit Row-Level-Security auf jeder Tabelle die Quelle der Wahrheit bleibt. Änderungen anderer Geräte fließen zurück in die lokale Datenbank, und die Oberfläche aktualisiert sich über Live-Queries.
+Jede App schreibt zuerst in eine lokale SQLite-Datenbank, ein Schreibvorgang wartet also nie auf das Netz. PowerSync stellt die Änderung in eine Warteschlange und lädt sie der Reihe nach zu Supabase hoch. Dort ist Postgres die Quelle der Wahrheit, mit Row-Level-Security auf jeder Tabelle. Änderungen anderer Geräte kommen zurück in die lokale Datenbank, und Live-Queries aktualisieren die Oberfläche.
 
-Die Domäne lebt in geteilten Packages: synchronisierte Tabellen, Zod-Schemas und typisierte Collections, die Web und Mobile identisch nutzen. Geschäftsregeln sind pure Funktionen hinter einem Persistence-Port, sodass dieselbe Regel einen Tap in der Mobile-App, einen Klick im Web und den Tool-Aufruf eines KI-Agenten auf dem Server schützt.
+Der Domänen-Code liegt in geteilten Packages: synchronisierte Tabellen, Zod-Schemas und typisierte Collections, die Web- und Mobile-App gleichermaßen nutzen. Geschäftsregeln sind pure Funktionen hinter einem Persistence-Port. Dieselbe Regel prüft deshalb einen Tap in der Mobile-App, einen Klick im Web und den Tool-Aufruf eines KI-Agenten auf dem Server.
 
 <NumberTiles>
   <NumberTile value="169" label="Datenbank-Migrationen" />
@@ -30,16 +30,16 @@ Die Domäne lebt in geteilten Packages: synchronisierte Tabellen, Zod-Schemas un
   <NumberTile value="51" label="Architektur-Entscheidungen (ADRs)" />
 </NumberTiles>
 
-## Ein Assistent mit Leitplanken
+## Der eingebaute Assistent
 
-Der eingebaute Assistent kennt mehr als 50 typisierte Capabilities über alle Module. Er arbeitet pull-first: Das Modell bekommt Zähler und Hinweise statt Nutzerdaten und muss über typisierte Read-Tools nachfragen. Jeder Schreibzugriff wird als Vorschau aus Live-Daten vorbereitet, einmal freigegeben und als dieselbe Domain-Mutation ausgeführt wie ein Klick. Er merkt sich nur dann etwas über dich, wenn du das Gedächtnis einschaltest.
+Der Assistent hat mehr als 50 typisierte Capabilities über alle Module. Er arbeitet pull-first. Das Modell bekommt Zähler und Hinweise statt Nutzerdaten und muss alles Weitere über typisierte Read-Tools anfragen. Vor jedem Schreibzugriff zeigt er eine Vorschau aus Live-Daten. Erst nach deiner Freigabe läuft der Schreibzugriff als dieselbe Domain-Mutation, die auch ein Klick auslöst. Etwas über dich merkt sich der Assistent nur, wenn du das Gedächtnis einschaltest.
 
-Wer lieber den eigenen Agenten nutzt, verbindet Claude, Cursor oder einen anderen MCP-Client per OAuth mit dem MCP-Server von Self-Engine. Berechtigungen gelten pro Datentyp und Zugriffsstufe, Agenten dürfen Aufgaben in den Papierkorb legen, aber nie löschen, und jeder Aufruf landet im Agenten-Protokoll.
+Du kannst auch deinen eigenen Agenten nutzen. Claude, Cursor oder ein anderer MCP-Client verbindet sich per OAuth mit dem MCP-Server von Self-Engine. Berechtigungen vergibst du pro Datentyp und Zugriffsstufe. Agenten können Aufgaben in den Papierkorb legen, aber nicht löschen, und jeder Aufruf steht im Agenten-Protokoll.
 
 <ScreenshotGallery views={['ai-assistant-panel']} />
 
-## Teuer bezahlte Erkenntnisse
+## Was ich im Betrieb gelernt habe
 
-- **Ein kaputter Write darf nicht alle blockieren.** Offline-Warteschlangen laden streng geordnet hoch, darum werden fatale Postgres-Fehler klassifiziert und verworfen, und zusammengehörige Writes werden atomar übertragen.
-- **Beim Kalender-Sync geht es um Identität.** Deterministische IDs machen Creates idempotent, ETags fangen parallele Änderungen ab, und abgelaufene Sync-Tokens lösen einen vollständigen Resync aus.
-- **Den Identity-Provider im laufenden Betrieb tauschen.** Alle Nutzer von Supabase Auth zu Clerk zu migrieren hieß, jede Row-Level-Security-Policy in einer einzigen Migration neu zu schreiben, ohne eine einzige Offline-Warteschlange zu verlieren.
+- **Ein kaputter Write darf nicht alle anderen blockieren.** Offline-Warteschlangen laden streng der Reihe nach hoch, ein einzelner fehlerhafter Write würde also alles dahinter aufhalten. Der Upload erkennt deshalb fatale Postgres-Fehler und verwirft diese Writes, und zusammengehörige Writes sendet er in einer Transaktion.
+- **Kalender-Sync braucht stabile IDs.** Deterministische IDs machen Creates idempotent, ETags fangen parallele Änderungen ab, und ein abgelaufenes Sync-Token löst einen vollständigen Resync aus.
+- **Den Auth-Anbieter im laufenden Betrieb wechseln.** Alle Nutzer von Supabase Auth zu Clerk zu migrieren hieß, jede Row-Level-Security-Policy in einer einzigen Migration neu zu schreiben, ohne einen einzigen wartenden Offline-Write zu verlieren.

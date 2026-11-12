@@ -2,25 +2,25 @@
 
 ## Why it looks like an app
 
-I build apps, so my portfolio is one: a sidebar, an Overview of tiles as the home page, and views for Projects, CV and Contact. On a phone it turns into list and detail with a tab bar. It is still a website underneath. Every Project and every view has its own server-rendered URL, so a link a recruiter shares opens the right page, and search engines see real HTML.
+I build apps, so I built my portfolio as one. It has a sidebar, an Overview of tiles as the home page, and views for Projects, CV and Contact. On a phone it switches to a list and detail layout with a tab bar. Underneath, it is still a website. Every Project and every view has its own server-rendered URL, so a link a recruiter shares opens the right page, and search engines get real HTML.
 
-The direction came out of a round of throwaway prototypes: several home pages side by side on one route, switchable by URL, until one of them held up. A classic scrolling portfolio said too little about what I do, and fully client-side shells broke links and search.
+I chose this layout after a round of throwaway prototypes. I put several home pages on one route, switchable by URL, and compared them. A classic scrolling portfolio showed little of the app work I do, and a fully client-side app shell broke links and search.
 
 ## Content as typed data
 
-Everything on the site, from the pitch to the Career, is typed data in the repo, with one MDX story per Project and language. A CMS would have been the obvious choice, since I build Sanity sites for clients, but for one author whose content rarely changes, files under version control are simpler, reviewable and type-checked. The decision is recorded as an ADR, and the pages read content through a narrow interface shaped so it could move to Sanity later.
+All content on the site, including the pitch and the Career, is typed data in the repo, with one MDX story per Project and language. A CMS would have been the obvious choice, since I build Sanity sites for clients. But this site has one author and the content rarely changes, so files under version control are simpler. Every change goes through review, and the type checker catches mistakes. An ADR records the decision. The pages read content through a narrow interface, so it could move to Sanity later.
 
-A content-integrity test walks everything the site can show, in both languages, and fails on any missing or empty text, malformed dates or Career entries out of order. A missing German sentence fails the build, not the page.
+A content-integrity test checks everything the site can show, in both languages. It fails on missing or empty text, malformed dates and Career entries out of order. A missing German sentence stops the build before it can reach the site.
 
-## Two languages, done properly
+## Two languages
 
-English and German each have their own URLs (`/en/…`, `/de/…`), with hreflang links and a sitemap covering both. Interface text goes through Lingui catalogs, and a check fails on any message without a German translation or with mismatched placeholders.
+English and German each have their own URLs (`/en/…`, `/de/…`), with hreflang links and a sitemap covering both. Interface text goes through Lingui catalogs, and a check fails on any message that lacks a German translation or has mismatched placeholders.
 
-## One source, several outputs
+## Shared data and schemas
 
-- **The CV** is generated from the same Career and Project data: rendered to HTML, printed to PDF in both languages, and rejected unless each fits on one page. The CV and the site never disagree.
-- **The Self-Engine screenshots** come from Self-Engine itself, which captures them in every language and theme; a script copies over their URLs.
-- **The contact form** sends through Resend from a server route, checked by the same schema on both sides.
+- **The CV** comes from the same Career and Project data as the site. A script renders it to HTML, prints it to PDF in both languages and fails if either PDF runs past one page, so the CV always matches the site.
+- **The Self-Engine screenshots** come from Self-Engine itself, which captures them in every language and theme. A script copies their URLs into this repo.
+- **The contact form** sends mail through Resend from a server route. The same schema validates it in the browser and on the server.
 
 <NumberTiles>
   <NumberTile value="2" label="languages, end to end" />
@@ -28,6 +28,6 @@ English and German each have their own URLs (`/en/…`, `/de/…`), with hreflan
   <NumberTile value="239" label="tests" />
 </NumberTiles>
 
-## How it was built
+## How I built it
 
-I wrote the rebuild as a spec in a GitHub issue, broke it into tickets with their dependencies, and implemented them with AI coding agents on an integration branch, each ticket test-first and reviewed against the spec before merging. The domain words (Project, Career entry, Recruiter) live in a glossary, so issues, code and commits use the same language.
+I wrote the rebuild as a spec in a GitHub issue and broke it into tickets with their dependencies. AI coding agents implemented the tickets on an integration branch, each one test-first, and I reviewed each against the spec before merging. The domain terms (Project, Career entry, Recruiter) are defined in a glossary, so issues, code and commits use the same words.

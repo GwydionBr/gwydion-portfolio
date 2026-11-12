@@ -6,8 +6,8 @@ export const profile: ProfileSource = {
   role: { en: 'Full-stack developer', de: 'Full-Stack-Entwickler' },
   location: { en: 'Germany · remote', de: 'Deutschland · remote' },
   pitch: {
-    en: 'I build software end to end, from the data model to the last pixel. Most recently Self-Engine: an offline-first productivity platform for web, macOS and iOS that I design, build and run on my own.',
-    de: 'Ich baue Software von Anfang bis Ende, vom Datenmodell bis zum letzten Pixel. Zuletzt Self-Engine: eine Offline-first-Produktivitätsplattform für Web, macOS und iOS, die ich allein entwerfe, entwickle und betreibe.',
+    en: 'I build complete products on my own, including the data model, sync, interface and operations. My current one is Self-Engine, an offline-first productivity platform for web, macOS and iOS.',
+    de: 'Ich baue komplette Produkte allein, mit Datenmodell, Sync, Oberfläche und Betrieb. Mein aktuelles ist Self-Engine, eine Offline-first-Produktivitätsplattform für Web, macOS und iOS.',
   },
   availability: {
     headline: { en: 'Open to full-time roles', de: 'Offen für Festanstellungen' },
@@ -20,8 +20,8 @@ export const profile: ProfileSource = {
     {
       label: { en: 'Building', de: 'Bauen' },
       text: {
-        en: 'Self-Engine, now with a paid Pro plan. And the new Endstation Tattoo website is about to launch.',
-        de: 'Self-Engine, jetzt mit bezahltem Pro-Tarif. Dazu geht bald die neue Website von Endstation Tattoo online.',
+        en: 'Self-Engine, which now has a paid Pro plan, and the new Endstation Tattoo website, which launches soon.',
+        de: 'Self-Engine, das jetzt einen bezahlten Pro-Tarif hat, und die neue Website von Endstation Tattoo, die bald online geht.',
       },
     },
     {

@@ -2,27 +2,27 @@
 
 ## The idea
 
-Time trackers don't know what an hour is worth. Finance apps don't know which work earned the money. And calendars show what was planned, never what actually happened. The connections between them only existed in my head.
+I tracked my time in one app, my money in another and my plans in a calendar. None of them knew about the others. The time tracker didn't know what an hour was worth, the finance app didn't know which work had paid, and the calendar showed what I had planned but not what I actually did. I kept those links in my head.
 
-In Self-Engine, those connections are the product: an appointment starts a timer, the timer becomes a time entry, and a payout marks the entries as paid and books the money in Finance. Habits fill themselves in from the time tracked on a linked project.
+Self-Engine stores them. An appointment starts a timer, the timer becomes a time entry, and a payout marks the entries as paid and books the money in Finance. A habit linked to a project fills itself in from the time tracked on that project.
 
 <ScreenshotGallery views={['work-dashboard', 'time-tracking-cockpit', 'work-payout']} />
 
 ## One data model, five modules
 
-- **Projects & time tracking:** one timer per project, running in parallel, pausable, with Pomodoro. Every hour knows its project, its hourly rate and its time class.
-- **Tasks:** Inbox, Today, Upcoming and a Kanban board, with your own statuses in fixed categories.
-- **Calendar:** appointments and tracked time side by side, with two-way sync with Google and Apple (iCloud) that runs on the server, even with the app closed.
-- **Finance:** accounts in one currency each, one-off and recurring payments, transfers and currency conversions, reported strictly per currency.
-- **Habits:** daily, on chosen weekdays, or as a flexible quota per week or month; streaks are always computed from history.
+- **Projects and time tracking.** One timer per project, several running in parallel, with pause and Pomodoro. Every tracked hour stores its project, its hourly rate and its time class.
+- **Tasks.** Inbox, Today, Upcoming and a Kanban board, with your own statuses in fixed categories.
+- **Calendar.** Appointments and tracked time side by side. Two-way sync with Google and Apple (iCloud) runs on the server, so it keeps working while the app is closed.
+- **Finance.** Accounts in one currency each, one-off and recurring payments, transfers and currency conversions. Reports never mix currencies.
+- **Habits.** Daily, on chosen weekdays, or as a quota per week or month. The app computes streaks from the history and never stores them.
 
 <ScreenshotGallery views={['dashboard', 'tasks-board', 'calendar', 'finance', 'habits']} />
 
-## Offline-first, for real
+## How offline-first works
 
-Every app writes to a local SQLite database first; a write never waits for the cloud. PowerSync queues the change and uploads it in order to Supabase, where Postgres, with row-level security on every table, stays the source of truth. Changes from other devices flow back into the local database, and the UI updates through live queries.
+Every app writes to a local SQLite database first, so a write never waits for the network. PowerSync queues the change and uploads it in order to Supabase. Postgres there is the source of truth, with row-level security on every table. Changes from other devices sync back into the local database, and live queries update the UI.
 
-The domain lives in shared packages: synced tables, Zod schemas and typed collections that web and mobile consume identically. Business rules are pure functions behind a persistence port, so the same rule guards a tap in the mobile app, a click on the web and an AI agent's tool call on the server.
+The domain code lives in shared packages: synced tables, Zod schemas and typed collections that the web and mobile apps both use. Business rules are pure functions behind a persistence port. The same rule therefore checks a tap in the mobile app, a click on the web and an AI agent's tool call on the server.
 
 <NumberTiles>
   <NumberTile value="169" label="database migrations" />
@@ -30,16 +30,16 @@ The domain lives in shared packages: synced tables, Zod schemas and typed collec
   <NumberTile value="51" label="architecture decisions (ADRs)" />
 </NumberTiles>
 
-## An assistant with guardrails
+## The built-in assistant
 
-The built-in assistant knows more than 50 typed capabilities across every module. It works pull-first: the model gets counts and hints instead of user data and has to ask through typed read tools. Every write is prepared as a preview from live data, approved once, and executed as the same domain mutation as a click. It remembers things about you only once you turn memory on.
+The assistant has more than 50 typed capabilities across all modules. It works pull-first. The model gets counts and hints instead of user data, and it has to request anything else through typed read tools. Before any write, it shows a preview built from live data. Once you approve it, the write runs as the same domain mutation a click would trigger. The assistant only remembers things about you if you turn memory on.
 
-If you'd rather use your own agent, connect Claude, Cursor or any other MCP client to Self-Engine's MCP server over OAuth. Permissions are set per data type and access level, agents can move a task to the trash but never delete it, and every call lands in the agent log.
+You can also use your own agent. Claude, Cursor or any other MCP client connects to Self-Engine's MCP server over OAuth. You grant permissions per data type and access level. Agents can move a task to the trash but can't delete it, and every call is written to the agent log.
 
 <ScreenshotGallery views={['ai-assistant-panel']} />
 
-## Hard-won lessons
+## Lessons from production
 
-- **One broken write must not block the rest.** Offline queues upload in strict order, so fatal Postgres errors are classified and dropped, and writes that belong together are sent atomically.
-- **Calendar sync is about identity.** Deterministic IDs make creates idempotent, ETags catch concurrent edits, and expired sync tokens trigger a full resync.
-- **Swapping the identity provider in production.** Moving every user from Supabase Auth to Clerk meant rewriting every row-level security policy in one migration, without losing a single offline queue.
+- **One broken write must not block the rest.** Offline queues upload in strict order, so a single failing write would stall everything behind it. The upload step now classifies fatal Postgres errors and drops those writes, and it sends writes that belong together in one transaction.
+- **Calendar sync needs stable IDs.** Deterministic IDs make creates idempotent, ETags catch concurrent edits, and an expired sync token triggers a full resync.
+- **Switching the auth provider in production.** Moving every user from Supabase Auth to Clerk meant rewriting every row-level security policy in one migration, without losing any queued offline writes.
