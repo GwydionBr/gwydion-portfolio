@@ -2,25 +2,25 @@
 
 ## Warum es wie eine App aussieht
 
-Ich baue Apps, also ist auch mein Portfolio eine: eine Seitenleiste, eine Übersicht aus Kacheln als Startseite und Ansichten für Projekte, Lebenslauf und Kontakt. Auf dem Handy wird daraus Liste und Detail mit einer Tab-Leiste. Darunter ist es trotzdem eine Website. Jedes Projekt und jede Ansicht hat eine eigene, serverseitig gerenderte URL, sodass ein Link, den ein Recruiter teilt, die richtige Seite öffnet und Suchmaschinen echtes HTML sehen.
+Ich baue Apps, also habe ich auch mein Portfolio als App gebaut. Es hat eine Seitenleiste, eine Übersicht aus Kacheln als Startseite und Ansichten für Projekte, Lebenslauf und Kontakt. Auf dem Handy wechselt es zu Liste und Detail mit einer Tab-Leiste. Technisch ist es trotzdem eine Website. Jedes Projekt und jede Ansicht hat eine eigene, serverseitig gerenderte URL. Ein Link, den ein Recruiter teilt, öffnet also die richtige Seite, und Suchmaschinen bekommen echtes HTML.
 
-Die Richtung entstand aus einer Runde Wegwerf-Prototypen: mehrere Startseiten nebeneinander auf einer Route, per URL umschaltbar, bis eine davon überzeugt hat. Ein klassisches Scroll-Portfolio sagte zu wenig über meine Arbeit, und reine Client-Shells machten Links und Suche kaputt.
+Für dieses Layout habe ich mich nach einer Runde Wegwerf-Prototypen entschieden. Ich habe mehrere Startseiten auf eine Route gelegt, per URL umschaltbar, und sie verglichen. Ein klassisches Scroll-Portfolio zeigte wenig von meiner Arbeit an Apps, und eine reine Client-App machte Links und Suche kaputt.
 
 ## Inhalte als typisierte Daten
 
-Alles auf der Seite, vom Pitch bis zum Werdegang, sind typisierte Daten im Repo, mit einer MDX-Geschichte pro Projekt und Sprache. Ein CMS wäre naheliegend gewesen, schließlich baue ich Sanity-Seiten für Kunden. Für einen einzigen Autor, dessen Inhalte sich selten ändern, sind versionierte Dateien aber einfacher, prüfbar und typgeprüft. Die Entscheidung steht in einem ADR, und die Seiten lesen Inhalte über eine schmale Schnittstelle, die sich später auf Sanity umziehen ließe.
+Alle Inhalte der Seite, auch der Pitch und der Werdegang, sind typisierte Daten im Repo, mit einer MDX-Geschichte pro Projekt und Sprache. Ein CMS wäre naheliegend gewesen, schließlich baue ich Sanity-Seiten für Kunden. Diese Seite hat aber nur einen Autor, und die Inhalte ändern sich selten. Dafür sind versionierte Dateien einfacher. Jede Änderung geht durch ein Review, und der Type-Checker findet Fehler. Die Entscheidung steht in einem ADR. Die Seiten lesen Inhalte über eine schmale Schnittstelle, sodass sie später zu Sanity umziehen könnten.
 
-Ein Integritätstest geht alles durch, was die Seite zeigen kann, in beiden Sprachen, und schlägt bei fehlenden oder leeren Texten, falschen Datumsangaben oder falsch sortierten Stationen fehl. Ein fehlender deutscher Satz lässt den Build scheitern, nicht die Seite.
+Ein Integritätstest prüft alles, was die Seite zeigen kann, in beiden Sprachen. Er schlägt fehl bei fehlenden oder leeren Texten, falschen Datumsangaben und falsch sortierten Stationen. Ein fehlender deutscher Satz stoppt also den Build, bevor er auf die Seite gelangt.
 
-## Zwei Sprachen, richtig gemacht
+## Zwei Sprachen
 
 Englisch und Deutsch haben eigene URLs (`/en/…`, `/de/…`), mit hreflang-Verweisen und einer Sitemap für beide. Oberflächentexte laufen über Lingui-Kataloge, und ein Check schlägt fehl, sobald einer Nachricht die deutsche Übersetzung fehlt oder ihre Platzhalter nicht passen.
 
-## Eine Quelle, mehrere Ergebnisse
+## Gemeinsame Daten und Schemas
 
-- **Der Lebenslauf** entsteht aus denselben Daten zu Werdegang und Projekten: als HTML gerendert, in beiden Sprachen als PDF gedruckt und abgelehnt, wenn er nicht auf eine Seite passt. Lebenslauf und Website widersprechen sich nie.
-- **Die Self-Engine-Screenshots** kommen aus Self-Engine selbst, das sie in jeder Sprache und jedem Theme aufnimmt; ein Skript übernimmt ihre URLs.
-- **Das Kontaktformular** sendet über Resend aus einer Server-Route, geprüft vom selben Schema auf beiden Seiten.
+- **Der Lebenslauf** entsteht aus denselben Daten zu Werdegang und Projekten wie die Website. Ein Skript rendert ihn als HTML, druckt ihn in beiden Sprachen als PDF und bricht ab, wenn ein PDF länger als eine Seite wird. Lebenslauf und Website stimmen deshalb immer überein.
+- **Die Self-Engine-Screenshots** kommen aus Self-Engine selbst, das sie in jeder Sprache und jedem Theme aufnimmt. Ein Skript übernimmt ihre URLs in dieses Repo.
+- **Das Kontaktformular** verschickt Mails über Resend aus einer Server-Route. Dasselbe Schema prüft es im Browser und auf dem Server.
 
 <NumberTiles>
   <NumberTile value="2" label="Sprachen, durchgängig" />
@@ -28,6 +28,6 @@ Englisch und Deutsch haben eigene URLs (`/en/…`, `/de/…`), mit hreflang-Verw
   <NumberTile value="239" label="Tests" />
 </NumberTiles>
 
-## Wie sie gebaut wurde
+## Wie ich sie gebaut habe
 
-Ich habe den Neubau als Spezifikation in einem GitHub-Issue geschrieben, in Tickets mit ihren Abhängigkeiten zerlegt und mit KI-Coding-Agenten auf einem Integrations-Branch umgesetzt, jedes Ticket testgetrieben und vor dem Merge gegen die Spezifikation geprüft. Die Fachbegriffe (Projekt, Station, Recruiter) stehen in einem Glossar, sodass Issues, Code und Commits dieselbe Sprache sprechen.
+Ich habe den Neubau als Spezifikation in einem GitHub-Issue geschrieben und in Tickets mit ihren Abhängigkeiten zerlegt. KI-Coding-Agenten haben die Tickets auf einem Integrations-Branch umgesetzt, jedes testgetrieben, und ich habe jedes vor dem Merge gegen die Spezifikation geprüft. Die Fachbegriffe (Projekt, Station, Recruiter) stehen in einem Glossar, sodass Issues, Code und Commits dieselben Wörter benutzen.

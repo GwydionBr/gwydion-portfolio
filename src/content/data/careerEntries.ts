@@ -36,8 +36,8 @@ export const careerEntries: CareerEntrySource[] = [
     title: { en: 'Service staff (part-time)', de: 'Servicekraft (Teilzeit)' },
     organisation: 'Dávid-Ristobar, Ottobeuren',
     summary: {
-      en: 'Alongside freelancing: a steady income and time among people.',
-      de: 'Neben dem Freelancing: ein festes Einkommen und Zeit unter Menschen.',
+      en: 'A part-time job next to freelancing, for a steady income and time with people.',
+      de: 'Ein Teilzeitjob neben dem Freelancing, für ein festes Einkommen und Zeit mit Menschen.',
     },
   },
   {
@@ -61,8 +61,8 @@ export const careerEntries: CareerEntrySource[] = [
     title: { en: 'Customer service', de: 'Kundenservice' },
     organisation: 'Ticket-Center Hohenschwangau (Neuschwanstein)',
     summary: {
-      en: 'Ticket sales and visitor service for Neuschwanstein Castle, interrupted by two semesters of mechanical engineering. Winters spent travelling.',
-      de: 'Ticketverkauf und Besucherservice für Schloss Neuschwanstein, unterbrochen von zwei Semestern Maschinenbau. Die Winter über war ich auf Reisen.',
+      en: 'Ticket sales and visitor service for Neuschwanstein Castle, interrupted by two semesters of mechanical engineering. I spent the winters travelling.',
+      de: 'Ticketverkauf und Besucherservice für Schloss Neuschwanstein, unterbrochen von zwei Semestern Maschinenbau. Die Winter habe ich auf Reisen verbracht.',
     },
   },
   {
