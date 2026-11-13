@@ -12,16 +12,16 @@ const escape = (text: string) =>
 /**
  * The share image (Open Graph and Twitter) as an HTML document of
  * OG_WIDTH × OG_HEIGHT: the Profile's name, role and Availability beside the
- * pinned Projects as tiles, echoing the site's Overview. It is shared by both
+ * featured Projects as tiles, echoing the site's Overview. It is shared by both
  * Site languages, so it uses the Base language.
  */
 export function renderOgImage(assets: { font: string; photo: string }): string {
   const me = inLanguage(profile, BASE_LANGUAGE)
-  const pinned = projects
-    .filter((project) => project.pinned)
+  const featured = projects
+    .filter((project) => project.featured)
     .sort((a, b) => a.order - b.order)
     .map((project) => inLanguage(project, BASE_LANGUAGE))
-  const tile = (project: (typeof pinned)[number]) => `
+  const tile = (project: (typeof featured)[number]) => `
     <div class="tile">
       <span class="swatch" style="background:${project.accent}"></span>
       <div class="body">
@@ -62,6 +62,6 @@ h1 { margin-top: 36px; font-size: 60px; line-height: 1.04; letter-spacing: -.035
       <p class="site">gwydion.dev</p>
     </div>
   </section>
-  <section class="side">${pinned.map(tile).join('')}</section>
+  <section class="side">${featured.map(tile).join('')}</section>
 </body></html>`
 }

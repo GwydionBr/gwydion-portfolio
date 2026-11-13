@@ -1,0 +1,40 @@
+{/* DRAFT by Claude from the tattoo-sites repo (November 2026). Gwydion reviews it before the cutover (#41). */}
+
+## The brief
+
+Endstation Tattoo is a studio with several artists in Ottobeuren. Its old website ran on WordPress and Elementor. The studio found it hard to change, and booking requests arrived as loose emails. Some of the artists also have a website of their own, which brings in requests too.
+
+I rebuilt the websites and added a portal where every booking request ends up and where the artists work through them.
+
+## The request portal
+
+The booking form on each website asks for what an artist needs to quote a tattoo: the artist, placement, size, a deposit option and reference images, which the browser shrinks to 2 MB before upload. One Zod schema validates the form in the browser and on the server. The website does not write to the database itself. It hands the request to the portal.
+
+At first, each request went to Nextcloud as a PDF. That stopped working once requests needed a status, someone to claim them, handover between artists and protection against duplicates. On folders and files I would have had to rebuild all of that. In a database it is columns, constraints and access rules. So the portal is its own app on Supabase.
+
+Who sees a request depends on the website it came through:
+
+- A request through an artist's own website is visible only to that artist.
+- A request through the studio website with no preferred artist goes to a shared inbox. Any artist can claim it, but only one: after that it is theirs.
+- An artist can hand a request over to another artist. If the customer chose a particular artist, that needs the customer's consent first, and the confirmation is filed with the request.
+- The studio coordinator distributes requests from the shared inbox but sees none of the artists' personal requests.
+- I run the portal and manage access without seeing the content of real requests.
+
+A few rules cover how the data is handled:
+
+- A request counts as received only once it is saved. A retry reuses the same submission ID, so a flaky connection never creates a duplicate.
+- Artists get at most one summary email a day, with no customer data in it.
+- The portal deletes requests six months after they are closed.
+- The data stays in the EU: the websites run in Vercel's Frankfurt region, and the database is in an EU Supabase project.
+
+The artists mostly use the portal on a phone or an iPad, so the interface is built for those first.
+
+## Sites the studio edits itself
+
+The studio website shows the artists and their work, a tattoo gallery, FAQ, aftercare, a shop and the guided booking form. Every page is content in Sanity. The studio edits it in its own hosted Studio, and a published change goes live without a deploy. Editors can preview drafts on the real site and click any part of the page to edit it, using Sanity's Presentation tool. Sanity TypeGen types the GROQ queries, so a schema change that breaks a page fails the build before it reaches the live site.
+
+To keep the search rankings after leaving WordPress, I set up 301 redirects for every old URL that still matters, `410 Gone` for the WordPress leftovers (`wp-admin`, `wp-content`, tag pages), a sitemap and structured data for the studio.
+
+## One codebase, several websites
+
+Everything lives in one monorepo: the studio website, the artists' own websites and the portal. The artist websites share one package for pages, forms and SEO and another for the Sanity schema and Studio. Each website still has its own Sanity project, Vercel project and credentials, because each one belongs to a different owner. The portal is also its own app with its own database. It sits in the same repo so that the form schema and the intake of requests can change together.

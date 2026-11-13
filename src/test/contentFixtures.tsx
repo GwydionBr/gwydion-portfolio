@@ -20,7 +20,7 @@ export const FIXTURE_POST: Post = {
 
 /**
  * Three Projects, stored out of order so tests see the configured order win.
- * Only Fixture Engine is pinned; Fixture Kit is not featured either.
+ * Fixture Kit is not featured.
  */
 function fixtureProjects(): ProjectSource[] {
   return [
@@ -35,7 +35,6 @@ function fixtureProjects(): ProjectSource[] {
       links: { source: 'https://github.com/ada-example/fixture-kit' },
       stack: ['Kit'],
       featured: false,
-      pinned: false,
       order: 3,
       accent: '#3b4a7a',
     },
@@ -51,11 +50,14 @@ function fixtureProjects(): ProjectSource[] {
       links: { live: 'https://engine.example' },
       stack: ['TypeScript', 'Postgres'],
       stats: [
-        { value: '1,234', label: { en: 'commits', de: 'Commits' } },
-        { value: '56', label: { en: 'releases', de: 'Releases' } },
+        { value: 1234, label: { en: 'commits', de: 'Commits' } },
+        {
+          value: 56,
+          precision: 'at-least',
+          label: { en: 'releases', de: 'Releases' },
+        },
       ],
       featured: true,
-      pinned: true,
       order: 1,
       accent: '#2f5d50',
     },
@@ -70,7 +72,6 @@ function fixtureProjects(): ProjectSource[] {
       links: {},
       stack: ['Sanity'],
       featured: true,
-      pinned: false,
       order: 2,
       accent: '#8a3b2e',
     },
@@ -157,7 +158,7 @@ export function fixtureSource({ posts = [] }: { posts?: Post[] } = {}): ContentS
         { label: { en: 'Building', de: 'Bauen' }, text: { en: 'Tests.', de: 'Tests.' } },
         { label: { en: 'Learning', de: 'Lernen' }, text: { en: 'More tests.', de: 'Mehr Tests.' } },
       ],
-      skills: ['Testing'],
+      skills: [{ label: { en: 'Craft', de: 'Handwerk' }, items: ['Testing'] }],
       links: [
         { kind: 'email', href: 'mailto:ada@example.com' },
         { kind: 'github', href: 'https://github.com/ada-example' },

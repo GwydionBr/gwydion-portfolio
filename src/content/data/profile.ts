@@ -4,7 +4,7 @@ import type { ProfileSource } from '../schema'
 export const profile: ProfileSource = {
   name: 'Gwydion Braunsdorf',
   role: { en: 'Full-stack developer', de: 'Full-Stack-Entwickler' },
-  location: { en: 'Germany · remote', de: 'Deutschland · remote' },
+  location: { en: 'Schwangau, Germany', de: 'Schwangau, Deutschland' },
   pitch: {
     en: 'I build complete products on my own, including the data model, sync, interface and operations. My current one is Self-Engine, an offline-first productivity platform for web, macOS and iOS.',
     de: 'Ich baue komplette Produkte allein, mit Datenmodell, Sync, Oberfläche und Betrieb. Mein aktuelles ist Self-Engine, eine Offline-first-Produktivitätsplattform für Web, macOS und iOS.',
@@ -20,8 +20,8 @@ export const profile: ProfileSource = {
     {
       label: { en: 'Building', de: 'Bauen' },
       text: {
-        en: 'Self-Engine, which now has a paid Pro plan, and the new Endstation Tattoo website, which launches soon.',
-        de: 'Self-Engine, das jetzt einen bezahlten Pro-Tarif hat, und die neue Website von Endstation Tattoo, die bald online geht.',
+        en: 'Self-Engine, which now has a paid Pro plan, and the Tattoo Booking Portal.',
+        de: 'Self-Engine, das jetzt einen bezahlten Pro-Tarif hat, und das Tattoo Booking Portal.',
       },
     },
     {
@@ -34,18 +34,33 @@ export const profile: ProfileSource = {
     },
   ],
   skills: [
-    'TypeScript',
-    'React',
-    'TanStack',
-    'React Native / Expo',
-    'Node & Bun',
-    'Postgres',
-    'Supabase',
-    'Offline sync',
-    'Sanity',
-    'Testing',
-    'CI/CD',
-    'Product design',
+    { label: { en: 'Languages', de: 'Sprachen' }, items: ['TypeScript', 'JavaScript', 'SQL'] },
+    {
+      label: { en: 'Frontend', de: 'Frontend' },
+      items: ['React', 'Next.js', 'TanStack Start & Query', 'Tailwind CSS'],
+    },
+    {
+      label: { en: 'Mobile & desktop', de: 'Mobil & Desktop' },
+      items: ['Expo', 'React Native', 'Electron'],
+    },
+    {
+      label: { en: 'Backend & data', de: 'Backend & Daten' },
+      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Sanity'],
+    },
+    {
+      label: { en: 'AI', de: 'KI' },
+      items: [
+        { en: 'MCP servers', de: 'MCP-Server' },
+        'TanStack AI',
+        'Claude Code',
+        'Codex',
+        'Grok',
+      ],
+    },
+    {
+      label: { en: 'Tooling', de: 'Werkzeuge' },
+      items: ['Git', 'Bun', 'Vite', 'Vitest', 'Vercel'],
+    },
   ],
   links: [
     { kind: 'email', href: 'mailto:hello@gwydion.dev' },

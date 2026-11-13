@@ -1,0 +1,40 @@
+{/* ENTWURF von Claude aus dem tattoo-sites-Repo (November 2026). Gwydion prüft ihn vor der Umstellung (#41). */}
+
+## Der Auftrag
+
+Endstation Tattoo ist ein Studio mit mehreren Künstlern in Ottobeuren. Die alte Website lief auf WordPress und Elementor. Das Studio konnte sie nur mühsam ändern, und Terminanfragen kamen als lose E-Mails. Einige Künstler haben daneben eine eigene Website, über die ebenfalls Anfragen kommen.
+
+Ich habe die Websites neu gebaut und dazu ein Portal, in dem jede Terminanfrage landet und in dem die Künstler sie bearbeiten.
+
+## Das Anfrage-Portal
+
+Das Buchungsformular jeder Website fragt ab, was ein Künstler für ein Angebot braucht: den Künstler, Körperstelle, Größe, eine Anzahlungsoption und Referenzbilder, die der Browser vor dem Upload auf 2 MB verkleinert. Ein einziges Zod-Schema prüft das Formular im Browser und auf dem Server. Die Website schreibt nicht selbst in die Datenbank, sie übergibt die Anfrage an das Portal.
+
+Anfangs ging jede Anfrage als PDF in eine Nextcloud. Das reichte nicht mehr, sobald Anfragen einen Status brauchten, jemanden, der sie übernimmt, Übergaben zwischen Künstlern und Schutz vor Duplikaten. Auf Ordnern und Dateien hätte ich das alles nachbauen müssen. In einer Datenbank sind es Spalten, Constraints und Zugriffsregeln. Deshalb ist das Portal eine eigene App auf Supabase.
+
+Wer welche Anfrage sieht, hängt davon ab, über welche Website sie kam:
+
+- Eine Anfrage über die eigene Website eines Künstlers sieht nur dieser Künstler.
+- Eine Anfrage über die Studio-Website ohne Wunschkünstler landet in einem gemeinsamen Eingang. Jeder Künstler kann sie übernehmen, aber nur einer: Danach liegt sie bei ihm.
+- Ein Künstler kann eine Anfrage an einen anderen übergeben. Hat die Kundin oder der Kunde einen bestimmten Künstler gewählt, geht das erst nach ihrer Zustimmung, und die Bestätigung wird bei der Anfrage abgelegt.
+- Die Studio-Koordination verteilt Anfragen aus dem gemeinsamen Eingang, sieht aber keine persönlichen Anfragen der Künstler.
+- Ich betreibe das Portal und verwalte die Zugänge, ohne den Inhalt echter Anfragen zu sehen.
+
+Dazu kommen ein paar Regeln für den Umgang mit den Daten:
+
+- Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist. Ein erneuter Versuch nutzt dieselbe Submission-ID, eine wackelige Verbindung erzeugt also nie ein Duplikat.
+- Künstler bekommen höchstens eine Zusammenfassung pro Tag per E-Mail, ohne Kundendaten darin.
+- Das Portal löscht Anfragen sechs Monate nach ihrem Abschluss.
+- Die Daten bleiben in der EU: Die Websites laufen in Vercels Region Frankfurt, die Datenbank liegt in einem EU-Projekt von Supabase.
+
+Die Künstler nutzen das Portal vor allem am Handy und am iPad, die Oberfläche ist deshalb zuerst dafür gebaut.
+
+## Websites, die das Studio selbst pflegt
+
+Die Studio-Website zeigt die Künstler und ihre Arbeiten, eine Tattoo-Galerie, FAQ, Pflegehinweise, einen Shop und das geführte Buchungsformular. Jede Seite ist Inhalt in Sanity. Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen und per Klick bearbeiten, über das Presentation-Tool von Sanity. Sanity TypeGen typisiert die GROQ-Abfragen. Bricht eine Schemaänderung eine Seite, scheitert deshalb der Build, bevor die Änderung live geht.
+
+Damit die Suchplatzierungen den Umzug weg von WordPress überstehen, habe ich 301-Weiterleitungen für jede alte URL eingerichtet, die noch zählt, `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten), eine Sitemap und strukturierte Daten für das Studio.
+
+## Eine Codebasis, mehrere Websites
+
+Alles liegt in einem Monorepo: die Studio-Website, die Websites der einzelnen Künstler und das Portal. Die Künstler-Websites teilen sich ein Package für Seiten, Formulare und SEO und eines für Sanity-Schema und Studio. Jede Website hat trotzdem ihr eigenes Sanity-Projekt, eigenes Vercel-Projekt und eigene Zugangsdaten, weil jede einem anderen Inhaber gehört. Auch das Portal ist eine eigene App mit eigener Datenbank. Es liegt im selben Repo, damit sich das Formular-Schema und die Annahme der Anfragen gemeinsam ändern lassen.

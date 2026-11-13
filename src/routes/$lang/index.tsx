@@ -5,7 +5,6 @@ import { AvailabilityPill } from '#/components/AvailabilityPill'
 import { CvDownload } from '#/components/CvDownload'
 import { PostList } from '#/components/PostList'
 import { ProjectCards } from '#/components/ProjectCards'
-import { SkillList } from '#/components/SkillList'
 import { Tile } from '#/components/Tile'
 import { useHasWriting, usePosts, useProfile, useProjects } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
@@ -26,7 +25,7 @@ const LATEST_POSTS = 3
 
 /**
  * The Overview: a hero with Gwydion's name, pitch, CV and Availability, then
- * the featured Projects as cards, then skills, "Now" and the latest Posts.
+ * the featured Projects as cards, then "Now" and the latest Posts.
  */
 function Overview() {
   const { t } = useLingui()
@@ -49,10 +48,8 @@ function Overview() {
         </section>
       )}
       <div className="grid items-start gap-4 lg:grid-cols-2">
-        <Tile title={t`Skills`}>
-          <SkillList />
-        </Tile>
-        <Tile title={t`Now`}>
+        {/* Alone until Writing exists: then it takes the whole row. */}
+        <Tile title={t`Now`} className={hasWriting ? '' : 'lg:col-span-2'}>
           <ul className="mt-2 space-y-2">
             {now.map((item) => (
               <li key={item.label}>
@@ -73,8 +70,7 @@ function Overview() {
 
 /**
  * Under Gwydion's name: role and location, the pitch, the CV and "Get in
- * touch", and the Availability. Phones see the Availability only here; the
- * sidebar shows it on desktop.
+ * touch", and on phones the Availability; from `md` up the sidebar shows it.
  */
 function Hero() {
   const { t } = useLingui()
@@ -91,7 +87,7 @@ function Hero() {
       </div>
       <section
         aria-label={t`Availability`}
-        className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1"
+        className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden"
       >
         <AvailabilityPill headline={availability.headline} />
         {availability.freelance && <p className="text-subtle">{availability.freelance}</p>}

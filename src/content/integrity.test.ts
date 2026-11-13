@@ -79,17 +79,11 @@ describe('Content integrity', () => {
     )
   })
 
-  it('no featured or no pinned Project is reported', () => {
+  it('no featured Project is reported', () => {
     const source = fixtureSource()
-    for (const project of source.projects) {
-      project.featured = false
-      project.pinned = false
-    }
+    for (const project of source.projects) project.featured = false
 
-    expect(integrityProblems(createContent(source))).toEqual([
-      'projects: none is featured',
-      'projects: none is pinned',
-    ])
+    expect(integrityProblems(createContent(source))).toEqual(['projects: none is featured'])
   })
 })
 

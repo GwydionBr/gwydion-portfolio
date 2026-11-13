@@ -31,12 +31,10 @@ describe('The Profile on the Overview', () => {
     )
   })
 
-  it('shows skills and "Now" below the Projects', async () => {
+  it('shows "Now" below the Projects, and leaves the skills to About', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    expect(within(tile(page, 'Skills')).getByRole('list', { name: 'Skills' }).textContent).toBe(
-      'Testing',
-    )
+    expect(within(page.main()).queryByRole('region', { name: 'Skills' })).toBeNull()
     expect(tile(page, 'Now').textContent).toContain('Learning · More tests.')
   })
 
@@ -44,7 +42,6 @@ describe('The Profile on the Overview', () => {
     const page = await visit('/de', { content: fixtureContent() })
 
     expect(page.main().querySelector('header')!.textContent).toContain('Ich bin ein Fixture.')
-    expect(tile(page, 'Kenntnisse')).toBeTruthy()
     expect(tile(page, 'Aktuell').textContent).toContain('Lernen · Mehr Tests.')
     const availability = tile(page, 'Verfügbarkeit')
     expect(availability.textContent).toContain('Offen für Fixtures')
