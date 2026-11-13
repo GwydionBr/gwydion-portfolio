@@ -23,7 +23,7 @@ export const careerEntries: CareerEntrySource[] = [
     end: null,
     title: { en: 'Freelance full-stack developer', de: 'Freiberuflicher Full-Stack-Entwickler' },
     organisation: { en: 'Self-employed', de: 'Selbstständig' },
-    project: 'endstation-tattoo',
+    project: 'tattoo-booking-portal',
     summary: {
       en: 'Websites and web apps for studios and small businesses.',
       de: 'Websites und Web-Apps für Studios und kleine Unternehmen.',

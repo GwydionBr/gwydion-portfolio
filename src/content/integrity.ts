@@ -31,7 +31,7 @@ function everythingIn(content: Content, language: Language) {
 
 /**
  * What the Projects must satisfy: well-formed periods, unique slugs, and
- * something to feature and pin.
+ * something to feature.
  */
 function projectProblems(content: Content): string[] {
   const problems: string[] = []
@@ -44,7 +44,6 @@ function projectProblems(content: Content): string[] {
     seen.add(slug)
   }
   if (!projects.some((project) => project.featured)) problems.push('projects: none is featured')
-  if (!projects.some((project) => project.pinned)) problems.push('projects: none is pinned')
   return problems
 }
 

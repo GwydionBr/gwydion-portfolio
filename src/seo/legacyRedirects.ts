@@ -7,6 +7,8 @@ import { withoutTrailingSlash } from './urls'
  * URLs not listed here (`/de`, `/de/about`, `/de/contact`, `/de/impressum`,
  * `/de/datenschutz`) are still the same pages' addresses. `/` stays the
  * language redirect (src/routes/index.tsx).
+ *
+ * It also holds a Project's old address when its slug changed.
  */
 export const LEGACY_REDIRECTS = {
   '/self-engine': '/en/projects/self-engine',
@@ -15,6 +17,8 @@ export const LEGACY_REDIRECTS = {
   '/contact': '/en/contact',
   '/impressum': '/en/impressum',
   '/datenschutz': '/en/datenschutz',
+  '/en/projects/endstation-tattoo': '/en/projects/tattoo-booking-portal',
+  '/de/projects/endstation-tattoo': '/de/projects/tattoo-booking-portal',
 } as const satisfies Record<string, `/${string}`>
 
 /** The new address of an old URL path (a trailing slash ignored), or undefined when it did not move. */

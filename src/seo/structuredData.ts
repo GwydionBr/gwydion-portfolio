@@ -22,7 +22,7 @@ export function buildPersonData(profile: Profile, language: Language) {
     jobTitle: profile.role,
     description: profile.pitch,
     ...(email && { email }),
-    knowsAbout: profile.skills,
+    knowsAbout: profile.skills.flatMap((group) => group.items),
     sameAs: links.filter((link) => link.kind !== 'email').map((link) => link.href),
   }
 }

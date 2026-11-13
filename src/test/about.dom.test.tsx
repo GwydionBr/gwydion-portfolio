@@ -48,25 +48,29 @@ describe('The About view', () => {
     expect(page.title()).toBe('Fixture Studio')
   })
 
-  it('lists the skills', async () => {
-    const page = await visit('/en/about', { content: fixtureContent() })
+  it('lists the skills group by group, in the Site language', async () => {
+    const page = await visit('/de/about', { content: fixtureContent() })
 
-    const skills = within(region(page.main(), 'Skills')).getByRole('list', { name: 'Skills' })
+    const skills = within(region(page.main(), 'Kenntnisse')).getByRole('list', { name: 'Handwerk' })
     expect(skills.textContent).toBe('Testing')
   })
 
-  it('offers the CV as the view\'s action, in place of "Get in touch"', async () => {
+  it('offers the CV once, in its tile, as a download', async () => {
     const page = await visit('/en/about', { content: fixtureContent() })
 
-    const header = within(page.main().querySelector('header')!)
-    expect(header.queryByRole('link', { name: 'Get in touch' })).toBeNull()
-    const download = header.getByRole('link', { name: 'Download CV' })
-    expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
-    expect(download.hasAttribute('download')).toBe(true)
+    const downloads = within(page.main())
+      .getAllByRole('link')
+      .filter((link) => link.hasAttribute('download'))
+    expect(downloads.map((link) => link.getAttribute('href'))).toEqual([
+      '/cv/ada-example-cv-en.pdf',
+    ])
+    expect(region(page.main(), 'CV').contains(downloads[0]!)).toBe(true)
   })
+})
 
+describe('The CV download on the Overview', () => {
   it('offers the English CV under /de when there is no German one, and says so', async () => {
-    const page = await visit('/de/about', { content: fixtureContent() })
+    const page = await visit('/de', { content: fixtureContent() })
 
     const download = within(page.main()).getByRole('link', { name: /Lebenslauf herunterladen/ })
     expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
@@ -90,23 +94,13 @@ describe('The CV tile on About', () => {
   })
 })
 
-describe('The CV download', () => {
+describe('The Availability card', () => {
   it.each([
-    ['/en/projects', 'Sidebar', 'Availability', 'Download CV'],
-    ['/de/contact', 'Seitenleiste', 'Verfügbarkeit', /Lebenslauf herunterladen/],
-  ])('on %s sits in the sidebar Availability card', async (url, sidebar, card, name) => {
+    ['/en/projects', 'Sidebar', 'Availability'],
+    ['/de/contact', 'Seitenleiste', 'Verfügbarkeit'],
+  ])('on %s offers no second CV download in the sidebar', async (url, sidebar, card) => {
     const page = await visit(url, { content: fixtureContent() })
 
-    const download = within(region(page.sidebar(sidebar), card)).getByRole('link', { name })
-    expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
-  })
-
-  it("sits in the Contact view's Availability tile, which phones show", async () => {
-    const page = await visit('/en/contact', { content: fixtureContent() })
-
-    const download = within(region(page.main(), 'Availability')).getByRole('link', {
-      name: 'Download CV',
-    })
-    expect(download.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
+    expect(within(region(page.sidebar(sidebar), card)).queryByRole('link')).toBeNull()
   })
 })

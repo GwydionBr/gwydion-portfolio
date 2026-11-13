@@ -1,4 +1,4 @@
-// Builds the share image public/og-image.png from the Profile and the pinned
+// Builds the share image public/og-image.png from the Profile and the featured
 // Projects, screenshotted by a headless Chromium (scripts/lib/headlessBrowser.ts).
 // Run it after changing either:
 //

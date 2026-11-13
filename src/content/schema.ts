@@ -26,8 +26,15 @@ export interface ProfileSource {
   availability: { headline: Localized<string>; freelance: Localized<string> | null }
   /** What he is doing now. */
   now: { label: Localized<string>; text: Localized<string> }[]
-  skills: string[]
+  /** His skills, in groups ("Frontend": React, …); the site and the CV both list exactly these. */
+  skills: SkillGroupSource[]
   links: ProfileLink[]
+}
+
+/** Skills that belong together, under a label; an item is localized only where its name differs. */
+export interface SkillGroupSource {
+  label: Localized<string>
+  items: (string | Localized<string>)[]
 }
 
 /** The Profile in one Site language, as pages receive it. */
@@ -77,21 +84,36 @@ export interface ProjectSource {
   summary: Localized<string>
   /** What Gwydion did on it ("Sole developer: design, build, operations"). */
   role: Localized<string>
-  /** Where it stands now ("Live, commercial", "Launching in the coming weeks"). */
+  /** Where it stands now ("Live, commercial", "Launch 2026"). */
   status: Localized<string>
   /** Where to see it: the running product, and the source code when it is public. */
   links: ProjectLinks
   stack: string[]
   /** Its numbers, if any; shown on its page and its Overview card. */
-  stats?: { value: string; label: Localized<string> }[]
-  /** Shown on the Overview. */
+  stats?: ProjectStatSource[]
+  /** Shown on the Overview and in the share image. */
   featured: boolean
-  /** Shown in the sidebar. */
-  pinned: boolean
   /** Position in every list, ascending. */
   order: number
   /** Its colour (a CSS colour), for its swatch. */
   accent: string
+}
+
+/**
+ * One of a Project's numbers, stored as a number so each Site language writes
+ * it its own way ("2,200", "2.200").
+ */
+export interface ProjectStatSource {
+  value: number
+  /** Exact unless it says otherwise: "2,200+" (at least), "~2,200" (about). */
+  precision?: 'at-least' | 'about'
+  label: Localized<string>
+}
+
+/** One of a Project's numbers in one Site language, written out. */
+export interface ProjectStat {
+  value: string
+  label: string
 }
 
 /** Where a Project can be seen; each left out when there is none. */
@@ -103,7 +125,7 @@ export interface ProjectLinks {
 }
 
 /** A Project in one Site language, as lists receive it. */
-export type Project = InLanguage<ProjectSource>
+export type Project = Omit<InLanguage<ProjectSource>, 'stats'> & { stats?: ProjectStat[] }
 
 /**
  * A Project's story: one MDX document, rendered with the story components

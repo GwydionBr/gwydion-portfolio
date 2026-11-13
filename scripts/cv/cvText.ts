@@ -2,7 +2,7 @@ import type { Localized } from '../../src/content/localized'
 
 /**
  * What only the CV says. Everything the site already knows (name, links,
- * Career entries, project stacks) comes from the content data instead, so the
+ * Career entries, skills) comes from the content data instead, so the
  * two cannot drift apart.
  */
 export const cvText = {
@@ -16,10 +16,10 @@ export const cvText = {
    * left out of English ones (UK, US and international employers expect none).
    */
   photo: { en: false, de: true },
-  location: { en: 'Schwangau, Germany', de: 'Schwangau, Deutschland' },
-  availability: {
-    en: ['Open to full-time roles.', 'On-site, hybrid or remote.', 'Available immediately.'],
-    de: ['Offen für Festanstellungen.', 'Vor Ort, hybrid oder remote.', 'Ab sofort verfügbar.'],
+  /** Under the Availability headline, which comes from the Profile. */
+  availabilityDetails: {
+    en: ['On-site, hybrid or remote', 'Available immediately'],
+    de: ['Vor Ort, hybrid oder remote', 'Ab sofort verfügbar'],
   },
   intro: {
     en: 'Self-taught full-stack developer focused on React and TypeScript. I take products from the data model to the deployed app on my own: web, mobile and desktop, offline-capable. Freelancing since 2024; since December 2025 I have been building my own product, Self-Engine.',
@@ -39,11 +39,10 @@ export const cvText = {
   /**
    * The development work, by organisation (in English): the Career entries listed
    * under Experience, with their highlights. Every other job goes under Other
-   * work, as a single line. `stackOf` names the Project whose stack the entry lists.
+   * work, as a single line.
    */
   experience: {
     'Self-Engine': {
-      stackOf: 'self-engine',
       highlights: [
         {
           en: 'Offline-first productivity platform for the self-employed: time tracking, tasks, calendar, finances and habits, synced across web, macOS and iOS.',
@@ -54,28 +53,24 @@ export const cvText = {
           de: 'Ein Monorepo, drei Apps: TanStack Start (Web), Expo / React Native (iOS) und Electron (macOS) auf einer gemeinsamen Domänenschicht.',
         },
         {
-          en: 'MCP server through which AI assistants work with the app’s data. Around 5,900 tests and more than 50 recorded architecture decisions.',
-          de: 'MCP-Server, über den KI-Assistenten mit den Daten der App arbeiten. Rund 5.900 Tests, über 50 dokumentierte Architekturentscheidungen.',
+          en: 'MCP server through which AI assistants work with the app’s data. More than 50 recorded architecture decisions.',
+          de: 'MCP-Server, über den KI-Assistenten mit den Daten der App arbeiten. Über 50 dokumentierte Architekturentscheidungen.',
         },
       ],
     },
     'Self-employed': {
-      stack: ['TanStack Start', 'Sanity', 'Supabase', 'Resend', 'Vercel'],
       highlights: [
         {
-          en: '<b>Endstation Tattoo:</b> studio website with artist portfolios and booking requests; the studio edits its content itself in Sanity. Launching in the coming weeks.',
-          de: '<b>Endstation Tattoo:</b> Studio-Website mit Künstler-Portfolios und Terminanfragen; die Inhalte pflegt das Studio selbst in Sanity. Geht in den nächsten Wochen live.',
+          en: '<b>Tattoo Booking Portal:</b> websites for a tattoo studio and its artists, with a portal where the artists handle every booking request.',
+          de: '<b>Tattoo Booking Portal:</b> Websites für ein Tattoo-Studio und seine Künstler, mit einem Portal, in dem die Künstler alle Terminanfragen bearbeiten.',
         },
         {
-          en: 'Built in one monorepo with further studio sites and a portal for their booking requests; each site with its own CMS and deployment.',
-          de: 'Gebaut in einem Monorepo mit weiteren Studio-Websites und einem Portal für deren Terminanfragen; jede Website mit eigenem CMS und Deployment.',
+          en: 'One monorepo: each site with its own Sanity CMS and deployment, the portal on Supabase with a separate access area per artist.',
+          de: 'Ein Monorepo: jede Website mit eigenem Sanity-CMS und Deployment, das Portal auf Supabase mit getrenntem Zugriffsbereich je Künstler.',
         },
       ],
     },
-  } satisfies Record<
-    string,
-    { stackOf?: string; stack?: string[]; highlights: Localized<string>[] }
-  >,
+  } satisfies Record<string, { highlights: Localized<string>[] }>,
   sideProjects: [
     {
       title: 'gwydion.dev',
@@ -106,29 +101,6 @@ export const cvText = {
     en: 'Online courses in software development (Udemy, Zero To Mastery)',
     de: 'Online-Kurse in Softwareentwicklung (Udemy, Zero To Mastery)',
   },
-  skills: [
-    { label: { en: 'Languages', de: 'Sprachen' }, items: ['TypeScript', 'JavaScript', 'SQL'] },
-    {
-      label: { en: 'Frontend', de: 'Frontend' },
-      items: ['React', 'Next.js', 'TanStack Start & Query', 'Tailwind CSS'],
-    },
-    {
-      label: { en: 'Mobile & desktop', de: 'Mobil & Desktop' },
-      items: ['Expo', 'React Native', 'Electron'],
-    },
-    {
-      label: { en: 'Backend & data', de: 'Backend & Daten' },
-      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Sanity'],
-    },
-    {
-      label: { en: 'AI', de: 'KI' },
-      items: [{ en: 'MCP servers', de: 'MCP-Server' }, 'TanStack AI', 'Claude Code'],
-    },
-    {
-      label: { en: 'Tooling', de: 'Werkzeuge' },
-      items: ['Git', 'Bun', 'Vite', 'Vitest', 'Vercel'],
-    },
-  ],
   spokenLanguages: [
     { name: { en: 'German', de: 'Deutsch' }, level: { en: 'native', de: 'Muttersprache' } },
     { name: { en: 'English', de: 'Englisch' }, level: { en: 'fluent (C1)', de: 'fließend (C1)' } },

@@ -1,6 +1,5 @@
 import { careerEntries } from '../../src/content/data/careerEntries'
 import { profile } from '../../src/content/data/profile'
-import { projects } from '../../src/content/data/projects'
 import type { Language } from '../../src/i18n/language'
 import { inLanguage } from '../../src/content/localized'
 import { newestFirst, periodDash } from '../../src/content/period'
@@ -32,6 +31,7 @@ export interface CvAssets {
 /** The CV in `language` as a complete HTML document, laid out for one A4 page. */
 export function renderCv(language: Language, assets: CvAssets): string {
   const t = inLanguage(cvText, language)
+  const me = inLanguage(profile, language)
   /** Each Career entry in `language`, newest first, with the English name of its organisation. */
   const entries = [...careerEntries].sort(newestFirst).map((source: CareerEntrySource) => ({
     ...(inLanguage(source, language) as CareerEntry),
@@ -40,22 +40,17 @@ export function renderCv(language: Language, assets: CvAssets): string {
   const link = (kind: string) => profile.links.find((each) => each.kind === kind)?.href ?? ''
   const bare = (href: string) =>
     href.replace(/^(mailto:|https:\/\/(www\.)?)/, '').replace(/\/$/, '')
-  const experience = t.experience as Record<
-    string,
-    { stackOf?: string; stack?: string[]; highlights: string[] }
-  >
+  const experience = t.experience as Record<string, { highlights: string[] }>
   const isExperience = (entry: { key: string }) => entry.key in experience
   const period = (entry: Period) => periodText(entry, language, t.now)
 
   const job = (entry: CareerEntry & { key: string }) => {
     const extra = experience[entry.key]
-    const stack = extra.stack ?? projects.find((each) => each.slug === extra.stackOf)?.stack ?? []
     return `
       <article class="job">
         <div class="row"><h3>${escape(entry.title)}</h3><time>${period(entry)}</time></div>
         <p class="org">${escape(entry.organisation)}</p>
         <ul>${extra.highlights.map((item) => `<li>${item}</li>`).join('')}</ul>
-        <p class="stack">${stack.map(escape).join(' · ')}</p>
       </article>`
   }
 
@@ -67,7 +62,7 @@ export function renderCv(language: Language, assets: CvAssets): string {
       </div>`
 
   const contact: [text: string, href?: string][] = [
-    [t.location],
+    [me.location],
     [bare(link('email')), link('email')],
     ['gwydion.dev', 'https://gwydion.dev'],
     [bare(link('github')), link('github')],
@@ -83,8 +78,9 @@ export function renderCv(language: Language, assets: CvAssets): string {
   @font-face { font-family: Inter; src: url('${assets.font}') format('woff2'); font-weight: 100 900; }
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --navy: #14213d; --gold: #e3a23b; --gold-text: #b07a1f; --blue: #2f6db5; --ink: #1d2433;
-    --body: #364055; --muted: #5b6475; --line: #dde2ea; --sidebar: #f2efe9; }
+  /* The site's colours: ink on canvas, and its one accent, the green of the Availability. */
+  :root { --ink: #171717; --body: #3a3a3a; --muted: #525252; --subtle: #666666; --line: #dfdfdb;
+    --sidebar: #f3f3f1; --accent: #047857; }
   /* A hair under A4: a layout rounded up to the next pixel would spill onto a blank second page. */
   html, body { width: 210mm; height: calc(297mm - 1px); }
   body { font-family: Inter, sans-serif; color: var(--ink); font-size: 9.2pt; line-height: 1.42;
@@ -92,33 +88,34 @@ export function renderCv(language: Language, assets: CvAssets): string {
   a { color: inherit; text-decoration: none; }
   b { font-weight: 650; color: var(--ink); }
   aside { background: var(--sidebar); padding: 13mm 8mm 10mm 10mm; display: flex; flex-direction: column; gap: 6.5mm; }
-  main { padding: 11mm 13mm 8mm 11mm; display: flex; flex-direction: column; gap: 5mm; }
+  main { padding: 13mm 13mm 10mm 11mm; display: flex; flex-direction: column; gap: 6.5mm; }
   .photo { width: 36mm; height: 36mm; border-radius: 50%; object-fit: cover; }
-  h1 { font-size: 22pt; line-height: 1.05; font-weight: 700; color: var(--navy); letter-spacing: -.4px; }
-  .headline { color: var(--gold-text); font-weight: 600; font-size: 10pt; margin-top: 2mm; line-height: 1.35; }
-  h2 { font-size: 8pt; letter-spacing: 1.8px; text-transform: uppercase; color: var(--navy); font-weight: 700; margin-bottom: 2.5mm; }
-  main h2 { color: var(--blue); border-bottom: 1px solid var(--line); padding-bottom: 1.5mm; margin-bottom: 3mm; }
+  h1 { font-size: 22pt; line-height: 1.05; font-weight: 700; letter-spacing: -.4px; }
+  .headline { color: var(--muted); font-weight: 500; font-size: 10pt; margin-top: 2mm; line-height: 1.35; }
+  .availability { margin-top: 4mm; font-size: 8.8pt; color: var(--muted); display: flex; flex-direction: column; gap: .8mm; }
+  .availability .open { color: var(--accent); font-weight: 650; font-size: 8.8pt; display: flex; align-items: center; gap: 1.6mm; white-space: nowrap; }
+  .availability .open::before { content: ''; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--accent); }
+  h2 { font-size: 8pt; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; margin-bottom: 2.5mm; }
+  main h2 { border-bottom: 1px solid var(--line); padding-bottom: 1.5mm; margin-bottom: 3mm; }
   aside ul { list-style: none; display: flex; flex-direction: column; gap: 1.2mm; font-size: 9pt; color: var(--body); }
-  .skills dt { font-weight: 600; font-size: 8.6pt; color: var(--navy); margin-top: 2mm; }
+  .skills dt { font-weight: 600; font-size: 8.6pt; margin-top: 2mm; }
   .skills dt:first-child { margin-top: 0; }
-  .skills dd { font-size: 8.6pt; color: #4a5366; }
-  .availability { margin-top: auto; font-size: 8.6pt; color: #4a5366; border-top: 1px solid #d9d3c7; padding-top: 3mm; }
+  .skills dd { font-size: 8.6pt; color: var(--muted); }
   .intro { color: var(--body); font-size: 9.6pt; }
   .row, .line { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
-  h3 { font-size: 11pt; font-weight: 650; color: var(--navy); }
-  h4 { font-size: 9.8pt; font-weight: 600; color: var(--navy); }
-  time { font-size: 8.6pt; color: var(--muted); white-space: nowrap; }
-  .org { color: var(--muted); font-size: 9pt; }
-  .job + .job { margin-top: 4.5mm; }
-  .job ul { list-style: none; margin-top: 1.6mm; display: flex; flex-direction: column; gap: 1.2mm; }
+  h3 { font-size: 11pt; font-weight: 650; }
+  h4 { font-size: 9.8pt; font-weight: 600; }
+  time { font-size: 8.6pt; color: var(--subtle); white-space: nowrap; }
+  .org { color: var(--subtle); font-size: 9pt; }
+  .job + .job { margin-top: 5mm; }
+  .job ul { list-style: none; margin-top: 1.8mm; display: flex; flex-direction: column; gap: 1.4mm; }
   .job li { position: relative; padding-left: 4mm; color: var(--body); }
-  .job li::before { content: ''; position: absolute; left: .5mm; top: 1.9mm; width: 1.4mm; height: 1.4mm; border-radius: 50%; background: var(--gold); }
-  .stack { margin-top: 1.8mm; font-size: 8.6pt; color: var(--blue); }
-  .line + .line { margin-top: 1.6mm; }
+  .job li::before { content: ''; position: absolute; left: .5mm; top: 1.9mm; width: 1.4mm; height: 1.4mm; border-radius: 50%; background: var(--accent); }
+  .line + .line { margin-top: 2mm; }
   .project { color: var(--body); }
-  .project + .project { margin-top: 1.2mm; }
-  .project .year { color: var(--muted); font-size: 8.4pt; }
-  .courses { margin-top: 2.2mm; color: var(--muted); font-size: 9pt; }
+  .project + .project { margin-top: 1.4mm; }
+  .project .year { color: var(--subtle); font-size: 8.4pt; }
+  .courses { margin-top: 2.4mm; color: var(--subtle); font-size: 9pt; }
 </style>
 </head>
 <body>
@@ -127,6 +124,10 @@ export function renderCv(language: Language, assets: CvAssets): string {
   <div>
     <h1>${escape(profile.name).replace(' ', '<br>')}</h1>
     <p class="headline">${t.headline.map(escape).join('<br>')}</p>
+    <div class="availability">
+      <p class="open">${escape(me.availability.headline)}</p>
+      ${t.availabilityDetails.map((each) => `<p>${escape(each)}</p>`).join('')}
+    </div>
   </div>
   <section>
     <h2>${t.sections.contact}</h2>
@@ -139,15 +140,16 @@ export function renderCv(language: Language, assets: CvAssets): string {
   </section>
   <section>
     <h2>${t.sections.skills}</h2>
-    <dl class="skills">${t.skills
-      .map((group) => `<dt>${group.label}</dt><dd>${group.items.map(escape).join(', ')}</dd>`)
+    <dl class="skills">${me.skills
+      .map(
+        (group) => `<dt>${escape(group.label)}</dt><dd>${group.items.map(escape).join(', ')}</dd>`,
+      )
       .join('')}</dl>
   </section>
   <section>
     <h2>${t.sections.languages}</h2>
     <ul>${t.spokenLanguages.map((each) => `<li>${each.name} · ${each.level}</li>`).join('')}</ul>
   </section>
-  <p class="availability">${t.availability.join('<br>')}</p>
 </aside>
 <main>
   <section>
@@ -157,13 +159,6 @@ export function renderCv(language: Language, assets: CvAssets): string {
   <section>
     <h2>${t.sections.experience}</h2>
     ${entries.filter(isExperience).map(job).join('')}
-  </section>
-  <section>
-    <h2>${t.sections.otherWork}</h2>
-    ${entries
-      .filter((entry) => entry.kind !== 'education' && !isExperience(entry))
-      .map(line)
-      .join('')}
   </section>
   <section>
     <h2>${t.sections.projects}</h2>
@@ -181,6 +176,13 @@ export function renderCv(language: Language, assets: CvAssets): string {
       .map(line)
       .join('')}
     <p class="courses">${escape(t.courses)}</p>
+  </section>
+  <section>
+    <h2>${t.sections.otherWork}</h2>
+    ${entries
+      .filter((entry) => entry.kind !== 'education' && !isExperience(entry))
+      .map(line)
+      .join('')}
   </section>
 </main>
 </body>

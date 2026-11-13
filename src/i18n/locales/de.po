@@ -194,14 +194,6 @@ msgstr "Seite nicht gefunden"
 msgid "Period"
 msgstr "Zeitraum"
 
-#: src/shell/PinnedProjects.tsx
-msgid "Pinned"
-msgstr "Angeheftet"
-
-#: src/shell/PinnedProjects.tsx
-msgid "Pinned Projects"
-msgstr "Angeheftete Projekte"
-
 #: src/contact/message.ts
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Bitte gib deinen Namen ein ({nameMin} bis {nameMax} Zeichen)."
@@ -236,14 +228,6 @@ msgstr "Rolle"
 msgid "Screenshots"
 msgstr "Screenshots"
 
-#: src/shell/SearchPlaceholder.tsx
-msgid "Search"
-msgstr "Suche"
-
-#: src/shell/SearchPlaceholder.tsx
-msgid "Search is coming soon"
-msgstr "Die Suche kommt bald"
-
 #: src/contact/ContactForm.tsx
 msgid "Send message"
 msgstr "Nachricht senden"
@@ -260,9 +244,7 @@ msgstr "Seitenleiste"
 msgid "Site language"
 msgstr "Seitensprache"
 
-#: src/components/SkillList.tsx
 #: src/routes/$lang/about.tsx
-#: src/routes/$lang/index.tsx
 msgid "Skills"
 msgstr "Kenntnisse"
 

@@ -9,6 +9,7 @@ import { screenshots } from './data/screenshots'
 import { stories } from './data/stories'
 import { inLanguage } from './localized'
 import { screenshotsIn } from './screenshots'
+import { statText } from './stat'
 import type {
   CareerEntry,
   ContentSource,
@@ -16,6 +17,7 @@ import type {
   Post,
   Profile,
   Project,
+  ProjectSource,
   ProjectWithStory,
   Screenshot,
 } from './schema'
@@ -37,12 +39,15 @@ export type {
   ProjectKind,
   ProjectLinks,
   ProjectSource,
+  ProjectStat,
+  ProjectStatSource,
   ProjectWithStory,
   Screenshot,
   ScreenshotImage,
   ScreenshotSetSource,
   ScreenshotSource,
   ScreenshotsSource,
+  SkillGroupSource,
   Story,
   StorySource,
 } from './schema'
@@ -50,7 +55,6 @@ export type {
 /** Which Projects `getProjects` returns; every Project by default. */
 export interface ProjectFilter {
   featured?: boolean
-  pinned?: boolean
 }
 
 /**
@@ -89,6 +93,21 @@ export interface Content {
   hasWriting(): boolean
 }
 
+/** `project` in `language`, its numbers written out. */
+function projectIn(project: ProjectSource, language: Language): Project {
+  const { stats, ...rest } = project
+  return {
+    ...inLanguage(rest, language),
+    // Left out rather than undefined: the content-integrity check reads undefined as missing.
+    ...(stats && {
+      stats: stats.map((stat) => ({
+        value: statText(stat, language),
+        label: stat.label[language],
+      })),
+    }),
+  }
+}
+
 /** The content module over `source`; tests pass fixtures, the site passes its content files. */
 export function createContent(source: ContentSource): Content {
   const posts = [...source.posts].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
@@ -100,18 +119,14 @@ export function createContent(source: ContentSource): Content {
   const projectsInOrder = [...source.projects].sort((a, b) => a.order - b.order)
   return {
     getProfile: (language) => inLanguage(source.profile, language),
-    getProjects: (language, { featured, pinned } = {}) =>
+    getProjects: (language, { featured } = {}) =>
       projectsInOrder
-        .filter(
-          (project) =>
-            (featured === undefined || project.featured === featured) &&
-            (pinned === undefined || project.pinned === pinned),
-        )
-        .map((project) => inLanguage(project, language)),
+        .filter((project) => featured === undefined || project.featured === featured)
+        .map((project) => projectIn(project, language)),
     getProject: (slug, language) => {
       const project = source.projects.find((candidate) => candidate.slug === slug)
       if (!project) return undefined
-      return { ...inLanguage(project, language), story: source.stories[slug]?.[language] }
+      return { ...projectIn(project, language), story: source.stories[slug]?.[language] }
     },
     getScreenshots: (slug, language) => {
       const set = source.screenshots[slug]

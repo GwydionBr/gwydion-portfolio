@@ -152,7 +152,7 @@ describe('Projects on the Overview and in the sidebar', () => {
       within(page.main()).getByRole('region', { name: 'Featured Projects' }),
     ).getAllByRole('article')
     expect(within(engine!).getByRole('list', { name: 'Numbers' }).textContent).toBe(
-      '1,234commits56releases',
+      '1,234commits56+releases',
     )
     expect(within(engine!).getByRole('list', { name: 'Stack' }).textContent).toBe(
       'TypeScriptPostgres',
@@ -165,20 +165,7 @@ describe('Projects on the Overview and in the sidebar', () => {
 
     const featured = within(page.main()).getByRole('region', { name: 'Ausgewählte Projekte' })
     expect(within(featured).getByRole('list', { name: 'Zahlen' }).textContent).toContain(
-      '1,234Commits',
+      '1.234Commits',
     )
-  })
-
-  it('the sidebar shows the pinned Projects, linking to their pages', async () => {
-    await visit('/en/projects/self-engine', { content: fixtureContent() })
-
-    const pinned = navigationOf('Pinned Projects')
-    expect(pinned).toEqual({ entries: ['Fixture Engine'], current: ['Fixture Engine'] })
-    expect(
-      within(document.body)
-        .getByRole('navigation', { name: 'Pinned Projects' })
-        .querySelector('a')
-        ?.getAttribute('href'),
-    ).toBe('/en/projects/self-engine')
   })
 })
