@@ -6,7 +6,7 @@ import { visit } from './visit'
 
 const notFoundHeading = /not found|nicht gefunden/i
 
-/** Every URL of the old site (main, before the rebuild) and the page it is now. */
+/** Every URL that moved (the old site's, and a renamed Project's) and the page it is now. */
 const OLD_SITE = [
   ['/self-engine', '/en/projects/self-engine', 'Self-Engine'],
   ['/de/self-engine', '/de/projects/self-engine', 'Self-Engine'],
@@ -14,6 +14,8 @@ const OLD_SITE = [
   ['/contact', '/en/contact', 'Contact'],
   ['/impressum', '/en/impressum', 'Legal notice'],
   ['/datenschutz', '/en/datenschutz', 'Privacy policy'],
+  ['/en/projects/endstation-tattoo', '/en/projects/tattoo-booking-portal', 'Tattoo Booking Portal'],
+  ['/de/projects/endstation-tattoo', '/de/projects/tattoo-booking-portal', 'Tattoo Booking Portal'],
 ] as const
 
 /** Old German URLs whose address the new site keeps: they open their page directly. */
