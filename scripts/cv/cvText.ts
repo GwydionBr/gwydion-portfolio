@@ -53,8 +53,8 @@ export const cvText = {
           de: 'Ein Monorepo, drei Apps: TanStack Start (Web), Expo / React Native (iOS) und Electron (macOS) auf einer gemeinsamen Domänenschicht.',
         },
         {
-          en: 'MCP server through which AI assistants work with the app’s data. More than 50 recorded architecture decisions.',
-          de: 'MCP-Server, über den KI-Assistenten mit den Daten der App arbeiten. Über 50 dokumentierte Architekturentscheidungen.',
+          en: 'Built-in AI assistant with typed capabilities across all modules, plus an MCP server through which external AI agents work with the app’s data.',
+          de: 'Eingebauter KI-Assistent mit typisierten Capabilities über alle Module, dazu ein MCP-Server, über den externe KI-Agenten mit den Daten der App arbeiten.',
         },
       ],
     },
@@ -78,14 +78,6 @@ export const cvText = {
       text: {
         en: 'Bilingual portfolio with TanStack Start, Tailwind CSS and MDX.',
         de: 'Zweisprachiges Portfolio mit TanStack Start, Tailwind CSS und MDX.',
-      },
-    },
-    {
-      title: 'Burgwacht',
-      period: '2026',
-      text: {
-        en: 'Castle-building strategy game in Godot 4, built solo.',
-        de: 'Burgenbau-Strategiespiel in Godot 4, allein entwickelt.',
       },
     },
     {
