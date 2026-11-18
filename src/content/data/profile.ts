@@ -37,7 +37,14 @@ export const profile: ProfileSource = {
     { label: { en: 'Languages', de: 'Sprachen' }, items: ['TypeScript', 'JavaScript', 'SQL'] },
     {
       label: { en: 'Frontend', de: 'Frontend' },
-      items: ['React', 'Next.js', 'TanStack Start & Query', 'Tailwind CSS'],
+      items: [
+        'React',
+        'Next.js',
+        'TanStack Start, Router & Query',
+        'Tailwind CSS',
+        'Mantine',
+        'Lingui',
+      ],
     },
     {
       label: { en: 'Mobile & desktop', de: 'Mobil & Desktop' },
@@ -45,7 +52,7 @@ export const profile: ProfileSource = {
     },
     {
       label: { en: 'Backend & data', de: 'Backend & Daten' },
-      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Sanity'],
+      items: ['Supabase', 'Postgres', 'SQLite', 'PowerSync', 'Kysely', 'oRPC', 'Zod', 'Sanity'],
     },
     {
       label: { en: 'AI', de: 'KI' },
@@ -58,8 +65,24 @@ export const profile: ProfileSource = {
       ],
     },
     {
+      label: { en: 'Testing', de: 'Testen' },
+      items: ['Vitest', 'Playwright', 'Testing Library', 'Storybook'],
+    },
+    {
       label: { en: 'Tooling', de: 'Werkzeuge' },
-      items: ['Git', 'Bun', 'Vite', 'Vitest', 'Vercel'],
+      items: [
+        'Vite+',
+        'Oxlint',
+        'Oxfmt',
+        'Bun',
+        'pnpm',
+        'Turborepo',
+        'Git',
+        'GitHub Actions',
+        'Docker',
+        'Sentry',
+        'Vercel',
+      ],
     },
   ],
   links: [
