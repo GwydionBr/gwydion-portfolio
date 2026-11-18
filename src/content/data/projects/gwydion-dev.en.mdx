@@ -8,7 +8,7 @@ I chose this layout after a round of throwaway prototypes. I put several home pa
 
 ## Content as typed data
 
-All content on the site, including the pitch and the Career, is typed data in the repo, with one MDX story per Project and language. A CMS would have been the obvious choice, since I build Sanity sites for clients. But this site has one author and the content rarely changes, so files under version control are simpler. Every change goes through review, and the type checker catches mistakes. An ADR records the decision. The pages read content through a narrow interface, so it could move to Sanity later.
+All content on the site, including the pitch and the Career, is typed data in the repo, with one MDX story per Project and language. A CMS would have been the obvious choice, since the tattoo websites I build run on Sanity. But this site has one author and the content rarely changes, so files under version control are simpler. Every change goes through review, and the type checker catches mistakes. An ADR records the decision. The pages read content through a narrow interface, so it could move to Sanity later.
 
 A content-integrity test checks everything the site can show, in both languages. It fails on missing or empty text, malformed dates and Career entries out of order. A missing German sentence stops the build before it can reach the site.
 

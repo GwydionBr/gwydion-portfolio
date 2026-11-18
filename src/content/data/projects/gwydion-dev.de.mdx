@@ -8,7 +8,7 @@ Für dieses Layout habe ich mich nach einer Runde Wegwerf-Prototypen entschieden
 
 ## Inhalte als typisierte Daten
 
-Alle Inhalte der Seite, auch der Pitch und der Werdegang, sind typisierte Daten im Repo, mit einer MDX-Geschichte pro Projekt und Sprache. Ein CMS wäre naheliegend gewesen, schließlich baue ich Sanity-Seiten für Kunden. Diese Seite hat aber nur einen Autor, und die Inhalte ändern sich selten. Dafür sind versionierte Dateien einfacher. Jede Änderung geht durch ein Review, und der Type-Checker findet Fehler. Die Entscheidung steht in einem ADR. Die Seiten lesen Inhalte über eine schmale Schnittstelle, sodass sie später zu Sanity umziehen könnten.
+Alle Inhalte der Seite, auch der Pitch und der Werdegang, sind typisierte Daten im Repo, mit einer MDX-Geschichte pro Projekt und Sprache. Ein CMS wäre naheliegend gewesen, schließlich laufen die Tattoo-Websites, die ich baue, auf Sanity. Diese Seite hat aber nur einen Autor, und die Inhalte ändern sich selten. Dafür sind versionierte Dateien einfacher. Jede Änderung geht durch ein Review, und der Type-Checker findet Fehler. Die Entscheidung steht in einem ADR. Die Seiten lesen Inhalte über eine schmale Schnittstelle, sodass sie später zu Sanity umziehen könnten.
 
 Ein Integritätstest prüft alles, was die Seite zeigen kann, in beiden Sprachen. Er schlägt fehl bei fehlenden oder leeren Texten, falschen Datumsangaben und falsch sortierten Stationen. Ein fehlender deutscher Satz stoppt also den Build, bevor er auf die Seite gelangt.
 
