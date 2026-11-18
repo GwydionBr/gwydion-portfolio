@@ -19,8 +19,11 @@ export const projects: ProjectSource[] = [
       en: 'Sole developer: design, build, operations',
       de: 'Alleinentwickler: Design, Entwicklung, Betrieb',
     },
-    status: { en: 'Live, commercial', de: 'Live, kommerziell' },
-    links: { live: 'https://self-engine.com' },
+    status: { en: 'Open-source rebuild', de: 'Open-Source-Neubau' },
+    links: {
+      live: 'https://self-engine.com',
+      source: 'https://github.com/Self-Engine/self-engine',
+    },
     stack: [
       'TypeScript',
       'TanStack Start',

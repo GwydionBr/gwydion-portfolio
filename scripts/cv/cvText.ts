@@ -45,8 +45,8 @@ export const cvText = {
     'Self-Engine': {
       highlights: [
         {
-          en: 'Offline-first productivity platform for the self-employed: time tracking, tasks, calendar, finances and habits, synced across web, macOS and iOS.',
-          de: 'Offline-first-Produktivitätsplattform für Selbstständige: Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten, synchron über Web, macOS und iOS.',
+          en: 'Offline-first productivity platform for the self-employed: time tracking, tasks, calendar, finances and habits, synced across web, macOS and iOS. Now being rebuilt as open source (AGPL), with self-hostable sync.',
+          de: 'Offline-first-Produktivitätsplattform für Selbstständige: Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten, synchron über Web, macOS und iOS. Wird gerade als Open Source (AGPL) neu gebaut, mit selbst hostbarem Sync.',
         },
         {
           en: 'One monorepo, three apps: TanStack Start (web), Expo / React Native (iOS) and Electron (macOS) on a shared domain layer.',
