@@ -66,7 +66,6 @@ export function renderCv(language: Language, assets: CvAssets): string {
     [bare(link('email')), link('email')],
     ['gwydion.dev', 'https://gwydion.dev'],
     [bare(link('github')), link('github')],
-    ['LinkedIn', link('linkedin')],
   ]
 
   return `<!DOCTYPE html>
