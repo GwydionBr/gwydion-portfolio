@@ -61,6 +61,10 @@ export const cvText = {
     'Self-employed': {
       highlights: [
         {
+          en: '<b>DataAnnotation:</b> evaluated and corrected AI-generated code for model training.',
+          de: '<b>DataAnnotation:</b> KI-Code für das Modelltraining bewertet und korrigiert.',
+        },
+        {
           en: '<b>Tattoo Booking Portal:</b> websites for a tattoo studio and its artists, with a portal where the artists handle every booking request.',
           de: '<b>Tattoo Booking Portal:</b> Websites für ein Tattoo-Studio und seine Künstler, mit einem Portal, in dem die Künstler alle Terminanfragen bearbeiten.',
         },

@@ -25,8 +25,8 @@ export const careerEntries: CareerEntrySource[] = [
     organisation: { en: 'Self-employed', de: 'Selbstständig' },
     project: 'tattoo-booking-portal',
     summary: {
-      en: 'Websites and web apps for studios and small businesses.',
-      de: 'Websites und Web-Apps für Studios und kleine Unternehmen.',
+      en: 'Mostly at DataAnnotation: evaluating and correcting AI-generated code as training data for language models. Besides that, one client project: the websites of a tattoo studio and its artists, with a portal for their booking requests.',
+      de: 'Vor allem bei DataAnnotation: KI-generierten Code bewertet und korrigiert, als Trainingsdaten für Sprachmodelle. Daneben ein Kundenprojekt: die Websites eines Tattoo-Studios und seiner Künstler, mit einem Portal für ihre Terminanfragen.',
     },
   },
   {
