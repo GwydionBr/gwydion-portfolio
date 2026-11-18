@@ -20,8 +20,8 @@ export const profile: ProfileSource = {
     {
       label: { en: 'Building', de: 'Bauen' },
       text: {
-        en: 'Self-Engine, which now has a paid Pro plan, and the Tattoo Booking Portal.',
-        de: 'Self-Engine, das jetzt einen bezahlten Pro-Tarif hat, und das Tattoo Booking Portal.',
+        en: 'Self-Engine, which I am rebuilding as an open-source project, and the Tattoo Booking Portal.',
+        de: 'Self-Engine, das ich gerade als Open-Source-Projekt neu aufbaue, und das Tattoo Booking Portal.',
       },
     },
     {
