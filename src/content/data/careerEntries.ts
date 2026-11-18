@@ -25,8 +25,8 @@ export const careerEntries: CareerEntrySource[] = [
     organisation: { en: 'Self-employed', de: 'Selbstständig' },
     project: 'tattoo-booking-portal',
     summary: {
-      en: 'Mostly for DataAnnotation: training data for AI models, mainly programming tasks. Besides that, one client project: the websites of a tattoo studio and its artists, with a portal for their booking requests.',
-      de: 'Vor allem für DataAnnotation: Trainingsdaten für KI-Modelle, hauptsächlich Programmieraufgaben. Daneben ein Kundenprojekt: die Websites eines Tattoo-Studios und seiner Künstler, mit einem Portal für ihre Terminanfragen.',
+      en: 'Mostly training data for AI models at DataAnnotation, with a focus on programming. Besides that, one client project: the websites of a tattoo studio and its artists, with a portal for their booking requests.',
+      de: 'Vor allem Trainingsdaten für KI-Modelle bei DataAnnotation, mit Schwerpunkt Programmierung. Daneben ein Kundenprojekt: die Websites eines Tattoo-Studios und seiner Künstler, mit einem Portal für ihre Terminanfragen.',
     },
   },
   {

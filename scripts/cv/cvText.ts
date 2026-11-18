@@ -61,8 +61,8 @@ export const cvText = {
     'Self-employed': {
       highlights: [
         {
-          en: '<b>DataAnnotation:</b> AI training data, mainly programming tasks.',
-          de: '<b>DataAnnotation:</b> KI-Trainingsdaten, vor allem Programmieraufgaben.',
+          en: '<b>DataAnnotation:</b> training data for AI models, focused on programming.',
+          de: '<b>DataAnnotation:</b> KI-Trainingsdaten mit Schwerpunkt Programmierung.',
         },
         {
           en: '<b>Tattoo Booking Portal:</b> websites for a tattoo studio and its artists, with a portal where the artists handle every booking request.',
