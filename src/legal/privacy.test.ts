@@ -39,6 +39,11 @@ describe('The privacy policy', () => {
 
   it.each(LANGUAGES)('describes the analytics the site runs (%s)', (language) => {
     expect(textOf(language, 'analytics')).toContain('Vercel Web Analytics')
+    const umami = textOf(language, 'umami')
+    expect(umami).toContain('Umami')
+    // Where it runs and how to opt out (src/analytics/umami.ts honours Do Not Track).
+    expect(umami).toMatch(/Frankfurt/)
+    expect(umami).toContain('Do Not Track')
   })
 
   it.each(LANGUAGES)('mentions nothing only the old site did (%s)', (language) => {

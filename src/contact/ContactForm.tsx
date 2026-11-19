@@ -1,6 +1,7 @@
 import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
+import { trackEvent } from '#/analytics/umami'
 import { EmailLink } from '#/components/ProfileLinks'
 import { PRIVACY_PAGE } from '#/legal/pages'
 import { useSiteLanguage } from '#/i18n/react'
@@ -69,6 +70,7 @@ export function ContactForm() {
       })
       const answer = (await response.json()) as ContactResponse
       if ('ok' in answer) {
+        trackEvent({ name: 'kontaktformular-gesendet' })
         setStatus('sent')
       } else if ('fieldErrors' in answer) {
         showErrors(answer.fieldErrors)
