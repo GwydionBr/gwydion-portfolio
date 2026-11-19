@@ -30,6 +30,17 @@ const de: LegalSection[] = [
     ],
   },
   {
+    id: 'umami',
+    title: 'Reichweitenmessung mit Umami',
+    paragraphs: [
+      'Zusätzlich nutze ich die Open-Source-Software Umami, um die Nutzung dieser Website statistisch auszuwerten. Umami betreibe ich selbst (analytics.gwydion.dev): Die Anwendung läuft bei Vercel Inc. (Anschrift siehe Hosting) mit Serverstandort Frankfurt am Main, die Datenbank bei Neon (Databricks) ebenfalls in Frankfurt am Main (EU). Das Messskript wird über gwydion.dev geladen, und die Messdaten gelangen über gwydion.dev zu Umami.',
+      'Umami setzt keine Cookies, erstellt keine personenbezogenen Profile und speichert keine IP-Adressen. Erfasst werden: aufgerufene Seite (ohne Suchparameter und Sprungmarken), verweisende Seite (Referrer), Zeitpunkt, Browser, Betriebssystem, Gerätetyp, Bildschirmgröße, Sprache, ungefährer Standort (Land, Region, Stadt) sowie Klicks auf bestimmte Elemente wie Kontakt-, Profil- oder Projekt-Links, der Download des Lebenslaufs und das erfolgreiche Absenden des Kontaktformulars (ohne dessen Inhalt). Zu einem Klick wird höchstens vermerkt, um welches Projekt oder welche Sprachfassung des Lebenslaufs es ging, nie etwas über dich.',
+      'Die IP-Adresse wird nur kurzzeitig verwendet, um den ungefähren Standort zu bestimmen und zusammen mit der Browserkennung und einem täglich wechselnden geheimen Wert (Salt) einen nicht umkehrbaren Hashwert zu bilden, mit dem Besuche unterschieden werden; sie wird nicht gespeichert. Eine Wiedererkennung über den jeweiligen Tag hinaus ist nicht möglich. Die statistischen Daten werden nach 14 Monaten gelöscht.',
+      'Rechtsgrundlage ist mein berechtigtes Interesse an einer datensparsamen Reichweitenmessung und an der Verbesserung meines Angebots (Art. 6 Abs. 1 lit. f DSGVO). Soweit dabei Informationen aus deinem Endgerät verarbeitet werden, stütze ich mich auf § 25 Abs. 2 Nr. 2 TDDDG. Mit Vercel und Neon bestehen Verträge zur Auftragsverarbeitung nach Art. 28 DSGVO; bei Vercel ist eine Übermittlung in die USA möglich, abgesichert durch das EU-US Data Privacy Framework (Art. 45 DSGVO) und die EU-Standardvertragsklauseln.',
+      'Du kannst der Erfassung widersprechen, indem du in deinem Browser „Do Not Track“ aktivierst oder JavaScript für diese Seite blockierst.',
+    ],
+  },
+  {
     id: 'contact',
     title: 'Kontaktformular und E-Mail',
     paragraphs: [
@@ -94,7 +105,7 @@ const de: LegalSection[] = [
     title: 'Änderungen',
     paragraphs: [
       'Diese Erklärung wird bei rechtlichen oder technischen Anpassungen der Website aktualisiert. Es gilt die jeweils auf gwydion.dev veröffentlichte Fassung.',
-      'Stand: 7. November 2026',
+      'Stand: 20. November 2026',
     ],
   },
 ]
@@ -125,6 +136,17 @@ const en: LegalSection[] = [
       'This website uses Vercel Web Analytics, an analytics service provided by Vercel Inc. (address see Hosting). For each page view it records, among other things, the time, the page visited, the referrer, approximate location (country, region, city), operating system, browser and device type. Visitors are not distinguished by cookies but by a hash derived from the request, which is discarded after 24 hours. Only aggregated statistics are evaluated; no individual user profiles are created and no cross-site tracking takes place.',
       'Processing serves to evaluate how the website is used in aggregated form and to improve it. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in optimising the website).',
       'As with hosting, transfers to the United States rely on the adequacy decision for the EU-U.S. Data Privacy Framework. More information: https://vercel.com/docs/analytics/privacy-policy',
+    ],
+  },
+  {
+    id: 'umami',
+    title: 'Audience measurement with Umami',
+    paragraphs: [
+      'In addition, I use the open-source software Umami to evaluate how this website is used, statistically. I run Umami myself (analytics.gwydion.dev): the application runs at Vercel Inc. (address see Hosting) with servers in Frankfurt am Main, and the database at Neon (Databricks), also in Frankfurt am Main (EU). The measurement script is loaded through gwydion.dev, and the measurement data reaches Umami through gwydion.dev.',
+      'Umami sets no cookies, creates no personal profiles and stores no IP addresses. It records: the page visited (without query parameters or fragments), the referring page (referrer), the time, browser, operating system, device type, screen size, language, approximate location (country, region, city), and clicks on certain elements such as contact, profile or project links, the CV download and the successful sending of the contact form (without its content). For a click, it notes at most which project or which language version of the CV it concerned, never anything about you.',
+      'The IP address is used only briefly, to determine the approximate location and, together with the browser identifier and a secret value that changes daily (salt), to form a non-reversible hash that distinguishes visits; it is not stored. Recognising a visitor beyond the day in question is not possible. The statistical data is deleted after 14 months.',
+      'The legal basis is my legitimate interest in data-minimising audience measurement and in improving my site (Art. 6(1)(f) GDPR). Where information from your device is processed, I rely on § 25(2) no. 2 of the German TDDDG. Data processing agreements under Art. 28 GDPR are in place with Vercel and Neon; with Vercel, a transfer to the United States is possible, safeguarded by the EU-U.S. Data Privacy Framework (Art. 45 GDPR) and the EU standard contractual clauses.',
+      'You can object to this measurement by enabling “Do Not Track” in your browser or by blocking JavaScript for this site.',
     ],
   },
   {
@@ -192,7 +214,7 @@ const en: LegalSection[] = [
     title: 'Changes',
     paragraphs: [
       'This policy will be updated when legal or technical aspects of the website change. The version published on gwydion.dev applies.',
-      'Last updated: 7 November 2026',
+      'Last updated: 20 November 2026',
     ],
   },
 ]
