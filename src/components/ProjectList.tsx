@@ -1,7 +1,6 @@
-import { Link } from '@tanstack/react-router'
 import type { Project } from '#/content'
-import { useSiteLanguage } from '#/i18n/react'
 import { ProjectMeta } from './ProjectMeta'
+import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
 
 /**
@@ -16,14 +15,12 @@ export function ProjectList({
   /** The list's accessible name. */
   label: string
 }) {
-  const lang = useSiteLanguage()
   return (
     <ol aria-label={label} className="divide-y divide-line">
       {projects.map((project) => (
         <li key={project.slug}>
-          <Link
-            to="/$lang/projects/$slug"
-            params={{ lang, slug: project.slug }}
+          <ProjectPageLink
+            slug={project.slug}
             className="-mx-2 flex items-start gap-3 rounded-lg px-2 py-3 hover:bg-hover"
           >
             <ProjectSwatch accent={project.accent} className="mt-1.5" />
@@ -36,7 +33,7 @@ export function ProjectList({
               </span>
               <span className="mt-0.5 block">{project.summary}</span>
             </span>
-          </Link>
+          </ProjectPageLink>
         </li>
       ))}
     </ol>

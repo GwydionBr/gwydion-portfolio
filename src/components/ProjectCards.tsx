@@ -1,8 +1,7 @@
 import { useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
 import type { Project } from '#/content'
-import { useSiteLanguage } from '#/i18n/react'
 import { ProjectMeta } from './ProjectMeta'
+import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
 import { TagList } from './TagList'
 
@@ -28,7 +27,6 @@ export function ProjectCards({ projects }: { projects: readonly Project[] }) {
 
 function ProjectCard({ project }: { project: Project }) {
   const { t } = useLingui()
-  const lang = useSiteLanguage()
   return (
     // The title link covers the whole card; the card's lists stay plain content.
     <article className="relative flex h-full flex-col rounded-2xl bg-surface p-5 ring-1 ring-line hover:bg-hover">
@@ -39,13 +37,12 @@ function ProjectCard({ project }: { project: Project }) {
         </span>
       </p>
       <h3 className="mt-2 text-base font-semibold tracking-tight text-ink">
-        <Link
-          to="/$lang/projects/$slug"
-          params={{ lang, slug: project.slug }}
+        <ProjectPageLink
+          slug={project.slug}
           className="after:absolute after:inset-0 after:rounded-2xl"
         >
           {project.title}
-        </Link>
+        </ProjectPageLink>
       </h3>
       <p className="mt-1 leading-relaxed">{project.summary}</p>
       {project.stats && (

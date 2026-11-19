@@ -7,6 +7,7 @@ import {
   redirect,
 } from '@tanstack/react-router'
 import { Analytics } from '@vercel/analytics/react'
+import { umamiScript } from '#/analytics/umami'
 import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
@@ -34,6 +35,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       { rel: 'manifest', href: '/manifest.json' },
       { rel: 'apple-touch-icon', href: '/logo192.png' },
     ],
+    scripts: [umamiScript()],
   }),
   shellComponent: RootDocument,
   // Every page, the not-found view included, sits inside the app shell (ADR 0003).

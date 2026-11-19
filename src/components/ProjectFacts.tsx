@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
+import { eventAttributes } from '#/analytics/umami'
 import type { Project } from '#/content'
 import { BUTTON_STYLES } from './buttonStyles'
 import { PeriodText } from './PeriodText'
@@ -16,10 +17,15 @@ import { Tile } from './Tile'
 export function ProjectFacts({ project, className }: { project: Project; className?: string }) {
   const { t } = useLingui()
   const { live, source } = project.links
+  const data = { projekt: project.slug }
   return (
     <Tile title={t`Facts`} className={className}>
       {live && (
-        <a href={live} className={`${BUTTON_STYLES.primary} mt-3 w-full`}>
+        <a
+          href={live}
+          {...eventAttributes({ name: 'projekt-website-klick', data })}
+          className={`${BUTTON_STYLES.primary} mt-3 w-full`}
+        >
           {t`Visit website`}
           <span aria-hidden>↗</span>
         </a>
@@ -35,7 +41,11 @@ export function ProjectFacts({ project, className }: { project: Project; classNa
         <Fact term={t`Status`}>{project.status}</Fact>
         <Fact term={t`Source code`}>
           {source ? (
-            <a href={source} className="font-medium text-ink underline underline-offset-2">
+            <a
+              href={source}
+              {...eventAttributes({ name: 'projekt-code-klick', data })}
+              className="font-medium text-ink underline underline-offset-2"
+            >
               {t`Public on GitHub`}
               <span aria-hidden> ↗</span>
             </a>

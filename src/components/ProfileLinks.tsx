@@ -6,6 +6,7 @@ import {
   LinkedinLogo,
   type Icon,
 } from '@phosphor-icons/react'
+import { eventAttributes, type AnalyticsEvent } from '#/analytics/umami'
 import type { Profile, ProfileLink } from '#/content'
 import { useProfile } from '#/content/react'
 
@@ -20,7 +21,11 @@ export function EmailLink({ className = '' }: { className?: string }) {
   const address = emailAddressOf(useProfile())
   if (!address) return null
   return (
-    <a href={`mailto:${address}`} className={`font-medium text-ink underline ${className}`}>
+    <a
+      href={`mailto:${address}`}
+      {...eventAttributes(PROFILE_LINK_EVENTS.email)}
+      className={`font-medium text-ink underline ${className}`}
+    >
       {address}
     </a>
   )
@@ -49,6 +54,7 @@ export function ProfileLinks({ className = 'mt-2 space-y-2' }: { className?: str
             ) : (
               <a
                 href={link.href}
+                {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
                 className="truncate font-medium text-ink hover:underline"
                 {...(link.kind === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
               >
@@ -85,6 +91,7 @@ export function ProfileLinkRows() {
             ) : (
               <a
                 href={link.href}
+                {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
                 className={`${row} hover:bg-hover hover:text-ink`}
                 {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
@@ -110,6 +117,13 @@ function useProfileLinkLabels(): Record<ProfileLink['kind'], string> {
     linkedin: 'LinkedIn',
     github: 'GitHub',
   }
+}
+
+/** What a click on each Profile link counts as. */
+const PROFILE_LINK_EVENTS: Record<ProfileLink['kind'], AnalyticsEvent> = {
+  email: { name: 'mail-klick' },
+  linkedin: { name: 'linkedin-klick' },
+  github: { name: 'github-klick' },
 }
 
 const ICONS: Record<ProfileLink['kind'], Icon> = {

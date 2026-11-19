@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { CaretLeft } from '@phosphor-icons/react'
+import { trackEvent } from '#/analytics/umami'
 import { BUTTON_STYLES } from '#/components/buttonStyles'
 import { useSiteLanguage } from '#/i18n/react'
 
@@ -103,7 +104,12 @@ export function ContactAction({
   const { t } = useLingui()
   const lang = useSiteLanguage()
   return (
-    <Link to="/$lang/contact" params={{ lang }} className={`${BUTTON_STYLES[look]} ${className}`}>
+    <Link
+      to="/$lang/contact"
+      params={{ lang }}
+      onClick={() => trackEvent({ name: 'kontakt-klick' })}
+      className={`${BUTTON_STYLES[look]} ${className}`}
+    >
       {t`Get in touch`}
     </Link>
   )

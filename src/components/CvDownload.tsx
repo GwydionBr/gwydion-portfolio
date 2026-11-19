@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { DownloadSimple } from '@phosphor-icons/react'
+import { trackEvent } from '#/analytics/umami'
 import type { CvFile } from '#/content'
 import { useCv, useCvs } from '#/content/react'
 import { nativeNameOf } from '#/i18n/language'
@@ -8,7 +9,7 @@ import { useSiteLanguage } from '#/i18n/react'
 import { BUTTON_STYLES, type ButtonStyle } from './buttonStyles'
 import { Tile } from './Tile'
 
-/** A download link to one CV file, marked with its language and type. */
+/** A download link to one CV file, marked with its language and type; counts its downloads. */
 function CvFileLink({
   file,
   className,
@@ -24,6 +25,7 @@ function CvFileLink({
       download
       hrefLang={file.language}
       type="application/pdf"
+      onClick={() => trackEvent({ name: 'cv-download', data: { sprache: file.language } })}
       className={className}
     >
       {children}

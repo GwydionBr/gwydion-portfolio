@@ -1,4 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "bunVersion": "1.x"
+  "bunVersion": "1.x",
+  "rewrites": [
+    { "source": "/lx/s.js", "destination": "https://analytics.gwydion.dev/s.js" },
+    { "source": "/lx/api/e", "destination": "https://analytics.gwydion.dev/api/e" }
+  ]
 }

@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router'
 import type { CareerEntry } from '#/content'
 import { useContent } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
 import { PeriodText } from './PeriodText'
+import { ProjectPageLink } from './ProjectPageLink'
 
 /**
  * Career entries in the order given, each with period, title, organisation
@@ -39,12 +39,11 @@ function ProjectLink({ slug }: { slug: string }) {
   if (!project) return null
   const { title } = project
   return (
-    <Link
-      to="/$lang/projects/$slug"
-      params={{ lang, slug }}
+    <ProjectPageLink
+      slug={slug}
       className="mt-1 inline-block text-xs font-medium text-ink underline-offset-2 hover:underline"
     >
       {title} <span aria-hidden>→</span>
-    </Link>
+    </ProjectPageLink>
   )
 }
