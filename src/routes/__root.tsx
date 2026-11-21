@@ -6,7 +6,6 @@ import {
   createRootRouteWithContext,
   redirect,
 } from '@tanstack/react-router'
-import { Analytics } from '@vercel/analytics/react'
 import { umamiScript } from '#/analytics/umami'
 import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { AppShell } from '#/shell/AppShell'
@@ -59,7 +58,6 @@ function RootDocument({ children }: { children: ReactNode }) {
       <body>
         <SiteLanguageProvider>{children}</SiteLanguageProvider>
         <Scripts />
-        <Analytics />
       </body>
     </html>
   )
