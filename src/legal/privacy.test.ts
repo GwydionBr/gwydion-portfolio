@@ -44,6 +44,7 @@ describe('The privacy policy', () => {
     expect(umami).toContain('Umami')
     expect(umami).toContain('/lx/s.js')
     expect(umami).toContain('analytics.gwydion.dev')
+    expect(umami).toMatch(/Frankfurt/)
     expect(umami).not.toMatch(/Vercel Web Analytics/)
     // How to opt out (src/analytics/umami.ts honours Do Not Track).
     expect(umami).toContain('Do Not Track')

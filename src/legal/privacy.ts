@@ -20,12 +20,11 @@ const de: LegalSection[] = [
       'Weitere Informationen: https://vercel.com/legal/privacy-policy',
     ],
   },
-  // TODO(legal): Serverregion der Umami-Instanz analytics.gwydion.dev ist in diesem Repo nicht konfiguriert — ggf. aus dem separaten Vercel-Projekt nachziehen.
   {
     id: 'umami',
     title: 'Reichweitenmessung mit Umami',
     paragraphs: [
-      'Diese Website nutzt Umami, eine Open-Source-Software zur Reichweitenmessung, die ich selbst unter analytics.gwydion.dev betreibe. Das Messskript wird über gwydion.dev aus dem Pfad /lx/s.js bereitgestellt (Weiterleitung zur Umami-Instanz); Messdaten werden über gwydion.dev an diese Instanz übermittelt.',
+      'Diese Website nutzt Umami, eine Open-Source-Software zur Reichweitenmessung, die ich selbst unter analytics.gwydion.dev betreibe. Der Server dieser Instanz steht in Frankfurt am Main, Deutschland (EU). Das Messskript wird über gwydion.dev aus dem Pfad /lx/s.js bereitgestellt (Weiterleitung zur Umami-Instanz); Messdaten werden über gwydion.dev an diese Instanz übermittelt.',
       'Umami setzt keine Cookies, speichert keine IP-Adressen und erstellt keine Nutzungsprofile. Erfasst werden Seitenaufrufe, Referrer, Browser, Gerätetyp, Bildschirmgröße, Sprache und Land (Suchparameter und URL-Fragmente werden nicht übermittelt). Zusätzlich zähle ich in anonymisierter Form bestimmte Interaktionen, etwa Klicks auf Kontakt- und Profil-Links, Projekt-Verweise, den Lebenslauf-Download und das erfolgreiche Absenden des Kontaktformulars — ohne den Inhalt von Nachrichten und höchstens mit Angabe des betroffenen Projekts oder der Lebenslauf-Sprachfassung.',
       'Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer anonymen Reichweitenmessung zur Verbesserung des Angebots). Soweit dabei Informationen aus deinem Endgerät verarbeitet werden, stütze ich mich auf § 25 Abs. 2 Nr. 2 TDDDG. Es kommt kein Einwilligungs-Banner zum Einsatz.',
       'Du kannst der Messung aus Gründen, die sich aus deiner besonderen Situation ergeben, nach Art. 21 DSGVO widersprechen, indem du „Do Not Track“ in deinem Browser aktivierst (der Tracker respektiert diese Einstellung), das Skript oder JavaScript blockierst oder einen Content-Blocker verwendest.',
@@ -120,12 +119,11 @@ const en: LegalSection[] = [
       'More information: https://vercel.com/legal/privacy-policy',
     ],
   },
-  // TODO(legal): Server region of the Umami instance analytics.gwydion.dev is not configured in this repo — align from its separate Vercel project if needed.
   {
     id: 'umami',
     title: 'Audience measurement with Umami',
     paragraphs: [
-      'This website uses Umami, open-source audience measurement software that I run myself at analytics.gwydion.dev. The measurement script is served through gwydion.dev from the path /lx/s.js (forwarded to the Umami instance); measurement data is sent to that instance through gwydion.dev.',
+      'This website uses Umami, open-source audience measurement software that I run myself at analytics.gwydion.dev. That instance runs on a server in Frankfurt am Main, Germany (EU). The measurement script is served through gwydion.dev from the path /lx/s.js (forwarded to the Umami instance); measurement data is sent to that instance through gwydion.dev.',
       'Umami sets no cookies, stores no IP addresses and does not create usage profiles. It records page views, referrer, browser, device type, screen size, language and country (query strings and URL fragments are not transmitted). In addition, I count certain interactions in anonymised form, such as clicks on contact and profile links, project references, CV downloads and successful contact form submissions — without message content and noting at most which project or CV language version was involved.',
       'Legal basis for processing: Art. 6(1)(f) GDPR (legitimate interest in anonymous audience measurement to improve the site). Where information from your device is processed, I rely on § 25(2) no. 2 of the German TDDDG. No consent banner is used.',
       'You may object to this measurement on grounds relating to your particular situation under Art. 21 GDPR by enabling “Do Not Track” in your browser (the tracker honours this setting), blocking the script or JavaScript, or using a content blocker.',
