@@ -20,31 +20,22 @@ const de: LegalSection[] = [
       'Weitere Informationen: https://vercel.com/legal/privacy-policy',
     ],
   },
-  {
-    id: 'analytics',
-    title: 'Webanalyse (Vercel Web Analytics)',
-    paragraphs: [
-      'Diese Website nutzt Vercel Web Analytics, einen Analysedienst der Vercel Inc. (Anschrift siehe Hosting). Erfasst werden pro Seitenaufruf u. a. Zeitpunkt, aufgerufene Seite, Referrer, ungefähre Herkunft (Land, Region, Stadt), Betriebssystem, Browser und Gerätetyp. Besucher:innen werden nicht über Cookies, sondern über einen aus der Anfrage gebildeten Hash-Wert unterschieden, der nach 24 Stunden verworfen wird. Ausgewertet werden nur aggregierte Statistiken; es werden keine individuellen Nutzungsprofile erstellt und keine seitenübergreifende Verfolgung durchgeführt.',
-      'Die Verarbeitung dient dazu, die Nutzung der Website in zusammengefasster Form auszuwerten und das Angebot zu verbessern. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Optimierung der Website).',
-      'Die Übermittlung in die USA stützt sich wie beim Hosting auf den Angemessenheitsbeschluss zum EU-US Data Privacy Framework. Weitere Informationen: https://vercel.com/docs/analytics/privacy-policy',
-    ],
-  },
+  // TODO(legal): Serverregion der Umami-Instanz analytics.gwydion.dev ist in diesem Repo nicht konfiguriert — ggf. aus dem separaten Vercel-Projekt nachziehen.
   {
     id: 'umami',
     title: 'Reichweitenmessung mit Umami',
     paragraphs: [
-      'Zusätzlich nutze ich die Open-Source-Software Umami, um die Nutzung dieser Website statistisch auszuwerten. Umami betreibe ich selbst (analytics.gwydion.dev): Die Anwendung läuft bei Vercel Inc. (Anschrift siehe Hosting) mit Serverstandort Frankfurt am Main, die Datenbank bei Neon, einem Dienst der Databricks, Inc., 160 Spear Street, Suite 1300, San Francisco, CA 94105, USA, ebenfalls in Frankfurt am Main (EU). Das Messskript wird über gwydion.dev geladen, und die Messdaten gelangen über gwydion.dev zu Umami.',
-      'Umami setzt keine Cookies, erstellt keine personenbezogenen Profile und speichert keine IP-Adressen. Erfasst werden: aufgerufene Seite (ohne Suchparameter und Sprungmarken), verweisende Seite (Referrer), Zeitpunkt, Browser, Betriebssystem, Gerätetyp, Bildschirmgröße, Sprache, ungefährer Standort (Land, Region, Stadt) sowie Klicks auf bestimmte Elemente wie Kontakt-, Profil- oder Projekt-Links, der Download des Lebenslaufs und das erfolgreiche Absenden des Kontaktformulars (ohne dessen Inhalt). Zu einem Klick wird höchstens vermerkt, um welches Projekt oder welche Sprachfassung des Lebenslaufs es ging, nie etwas über dich.',
-      'Die IP-Adresse wird nur kurzzeitig verwendet, um den ungefähren Standort zu bestimmen und zusammen mit der Browserkennung und einem täglich wechselnden geheimen Wert (Salt) einen nicht umkehrbaren Hashwert zu bilden, mit dem Besuche unterschieden werden; sie wird nicht gespeichert. Eine Wiedererkennung über den jeweiligen Tag hinaus ist nicht möglich. Die statistischen Daten werden nach 14 Monaten gelöscht.',
-      'Rechtsgrundlage ist mein berechtigtes Interesse an einer datensparsamen Reichweitenmessung und an der Verbesserung meines Angebots (Art. 6 Abs. 1 lit. f DSGVO). Soweit dabei Informationen aus deinem Endgerät verarbeitet werden, stütze ich mich auf § 25 Abs. 2 Nr. 2 TDDDG. Mit Vercel und Neon bestehen Verträge zur Auftragsverarbeitung nach Art. 28 DSGVO; bei Vercel und Databricks (Neon) ist eine Übermittlung in die USA möglich, abgesichert durch das EU-US Data Privacy Framework (Art. 45 DSGVO) und die EU-Standardvertragsklauseln.',
-      'Du kannst der Erfassung widersprechen, indem du in deinem Browser „Do Not Track“ aktivierst oder JavaScript für diese Seite blockierst.',
+      'Diese Website nutzt Umami, eine Open-Source-Software zur Reichweitenmessung, die ich selbst unter analytics.gwydion.dev betreibe. Das Messskript wird über gwydion.dev aus dem Pfad /lx/s.js bereitgestellt (Weiterleitung zur Umami-Instanz); Messdaten werden über gwydion.dev an diese Instanz übermittelt.',
+      'Umami setzt keine Cookies, speichert keine IP-Adressen und erstellt keine Nutzungsprofile. Erfasst werden Seitenaufrufe, Referrer, Browser, Gerätetyp, Bildschirmgröße, Sprache und Land (Suchparameter und URL-Fragmente werden nicht übermittelt). Zusätzlich zähle ich in anonymisierter Form bestimmte Interaktionen, etwa Klicks auf Kontakt- und Profil-Links, Projekt-Verweise, den Lebenslauf-Download und das erfolgreiche Absenden des Kontaktformulars — ohne den Inhalt von Nachrichten und höchstens mit Angabe des betroffenen Projekts oder der Lebenslauf-Sprachfassung.',
+      'Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer anonymen Reichweitenmessung zur Verbesserung des Angebots). Soweit dabei Informationen aus deinem Endgerät verarbeitet werden, stütze ich mich auf § 25 Abs. 2 Nr. 2 TDDDG. Es kommt kein Einwilligungs-Banner zum Einsatz.',
+      'Du kannst der Messung aus Gründen, die sich aus deiner besonderen Situation ergeben, nach Art. 21 DSGVO widersprechen, indem du „Do Not Track“ in deinem Browser aktivierst (der Tracker respektiert diese Einstellung), das Skript oder JavaScript blockierst oder einen Content-Blocker verwendest.',
     ],
   },
   {
     id: 'contact',
     title: 'Kontaktformular und E-Mail',
     paragraphs: [
-      'Wenn du das Kontaktformular nutzt oder mir eine E-Mail schreibst, verarbeite ich die von dir angegebenen Daten (beim Formular: Name, E-Mail-Adresse und Nachrichtentext), um deine Anfrage zu bearbeiten und zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit deine Anfrage auf einen Vertrag mit mir abzielt (vorvertragliche Maßnahmen), im Übrigen Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung eingehender Anfragen).',
+      'Wenn du das Kontaktformular nutzt oder mir eine E-Mail schreibst, verarbeite ich die von dir angegebenen Daten (beim Formular: Name, E-Mail-Adresse und Nachrichtentext), um deine Anfrage zu bearbeiten und zu beantworten. Beim Formular werden außerdem ein für dich unsichtbares Feld „website“ (Honeypot zur Spam-Abwehr) und die Sprachfassung der Seite („language“) mitgesendet; das Honeypot-Feld soll leer bleiben, die Sprache dient der Bearbeitung in der passenden Sprachfassung. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit deine Anfrage auf einen Vertrag mit mir abzielt (vorvertragliche Maßnahmen), im Übrigen Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung eingehender Anfragen).',
       'Deine Angaben sind freiwillig. Ohne Name, E-Mail-Adresse und Nachricht kann ich deine Anfrage über das Formular allerdings nicht entgegennehmen.',
       'Das Formular wird von einer Serverfunktion in der EU (Vercel-Region Frankfurt, siehe Hosting) entgegengenommen und geprüft. Der Versand der Formular-Nachricht erfolgt anschließend über den E-Mail-Dienst Resend der Plus Five Five, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA. Dabei werden die genannten Daten zur Zustellung der E-Mail an hello@gwydion.dev verarbeitet. Mit Resend besteht ein Vertrag über Auftragsverarbeitung nach Art. 28 DSGVO. Resend ist unter dem EU-US Data Privacy Framework zertifiziert; die Übermittlung in die USA stützt sich auf den entsprechenden Angemessenheitsbeschluss (Art. 45 DSGVO), ergänzend auf die EU-Standardvertragsklauseln. Weitere Informationen: https://resend.com/legal/privacy-policy',
       'Mein E-Mail-Postfach liegt bei der Proton AG, Route de la Galaise 32, 1228 Plan-les-Ouates, Schweiz. Dort werden Formular-Nachrichten und E-Mails an mich empfangen und gespeichert. Für die Schweiz besteht ein Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO). Weitere Informationen: https://proton.me/legal/privacy',
@@ -105,7 +96,7 @@ const de: LegalSection[] = [
     title: 'Änderungen',
     paragraphs: [
       'Diese Erklärung wird bei rechtlichen oder technischen Anpassungen der Website aktualisiert. Es gilt die jeweils auf gwydion.dev veröffentlichte Fassung.',
-      'Stand: 20. November 2026',
+      'Stand: 21. November 2026',
     ],
   },
 ]
@@ -129,31 +120,22 @@ const en: LegalSection[] = [
       'More information: https://vercel.com/legal/privacy-policy',
     ],
   },
-  {
-    id: 'analytics',
-    title: 'Web analytics (Vercel Web Analytics)',
-    paragraphs: [
-      'This website uses Vercel Web Analytics, an analytics service provided by Vercel Inc. (address see Hosting). For each page view it records, among other things, the time, the page visited, the referrer, approximate location (country, region, city), operating system, browser and device type. Visitors are not distinguished by cookies but by a hash derived from the request, which is discarded after 24 hours. Only aggregated statistics are evaluated; no individual user profiles are created and no cross-site tracking takes place.',
-      'Processing serves to evaluate how the website is used in aggregated form and to improve it. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in optimising the website).',
-      'As with hosting, transfers to the United States rely on the adequacy decision for the EU-U.S. Data Privacy Framework. More information: https://vercel.com/docs/analytics/privacy-policy',
-    ],
-  },
+  // TODO(legal): Server region of the Umami instance analytics.gwydion.dev is not configured in this repo — align from its separate Vercel project if needed.
   {
     id: 'umami',
     title: 'Audience measurement with Umami',
     paragraphs: [
-      'In addition, I use the open-source software Umami to evaluate how this website is used, statistically. I run Umami myself (analytics.gwydion.dev): the application runs at Vercel Inc. (address see Hosting) with servers in Frankfurt am Main, and the database at Neon, a service of Databricks, Inc., 160 Spear Street, Suite 1300, San Francisco, CA 94105, United States, also in Frankfurt am Main (EU). The measurement script is loaded through gwydion.dev, and the measurement data reaches Umami through gwydion.dev.',
-      'Umami sets no cookies, creates no personal profiles and stores no IP addresses. It records: the page visited (without query parameters or fragments), the referring page (referrer), the time, browser, operating system, device type, screen size, language, approximate location (country, region, city), and clicks on certain elements such as contact, profile or project links, the CV download and the successful sending of the contact form (without its content). For a click, it notes at most which project or which language version of the CV it concerned, never anything about you.',
-      'The IP address is used only briefly, to determine the approximate location and, together with the browser identifier and a secret value that changes daily (salt), to form a non-reversible hash that distinguishes visits; it is not stored. Recognising a visitor beyond the day in question is not possible. The statistical data is deleted after 14 months.',
-      'The legal basis is my legitimate interest in data-minimising audience measurement and in improving my site (Art. 6(1)(f) GDPR). Where information from your device is processed, I rely on § 25(2) no. 2 of the German TDDDG. Data processing agreements under Art. 28 GDPR are in place with Vercel and Neon; with Vercel and Databricks (Neon), a transfer to the United States is possible, safeguarded by the EU-U.S. Data Privacy Framework (Art. 45 GDPR) and the EU standard contractual clauses.',
-      'You can object to this measurement by enabling “Do Not Track” in your browser or by blocking JavaScript for this site.',
+      'This website uses Umami, open-source audience measurement software that I run myself at analytics.gwydion.dev. The measurement script is served through gwydion.dev from the path /lx/s.js (forwarded to the Umami instance); measurement data is sent to that instance through gwydion.dev.',
+      'Umami sets no cookies, stores no IP addresses and does not create usage profiles. It records page views, referrer, browser, device type, screen size, language and country (query strings and URL fragments are not transmitted). In addition, I count certain interactions in anonymised form, such as clicks on contact and profile links, project references, CV downloads and successful contact form submissions — without message content and noting at most which project or CV language version was involved.',
+      'Legal basis for processing: Art. 6(1)(f) GDPR (legitimate interest in anonymous audience measurement to improve the site). Where information from your device is processed, I rely on § 25(2) no. 2 of the German TDDDG. No consent banner is used.',
+      'You may object to this measurement on grounds relating to your particular situation under Art. 21 GDPR by enabling “Do Not Track” in your browser (the tracker honours this setting), blocking the script or JavaScript, or using a content blocker.',
     ],
   },
   {
     id: 'contact',
     title: 'Contact form and email',
     paragraphs: [
-      'When you use the contact form or email me, I process the data you provide (for the form: name, email address and message text) to handle and respond to your request. The legal basis is Art. 6(1)(b) GDPR where your request aims at a contract with me (pre-contractual measures), and otherwise Art. 6(1)(f) GDPR (legitimate interest in responding to incoming inquiries).',
+      'When you use the contact form or email me, I process the data you provide (for the form: name, email address and message text) to handle and respond to your request. The form also sends a hidden field “website” (honeypot for spam prevention) and the page language (“language”); the honeypot field must stay empty, and the language is used to handle your enquiry in the matching language version. The legal basis is Art. 6(1)(b) GDPR where your request aims at a contract with me (pre-contractual measures), and otherwise Art. 6(1)(f) GDPR (legitimate interest in responding to incoming inquiries).',
       'Providing your details is voluntary. Without a name, email address and message, however, I cannot accept your request through the form.',
       'The form is received and checked by a server function in the EU (Vercel’s Frankfurt region, see Hosting). The message is then sent via the email service Resend, operated by Plus Five Five, Inc., 2261 Market Street #5039, San Francisco, CA 94114, United States. The data listed above is processed to deliver the email to hello@gwydion.dev. A data processing agreement under Art. 28 GDPR is in place with Resend. Resend is certified under the EU-U.S. Data Privacy Framework; transfers to the United States rely on the corresponding adequacy decision (Art. 45 GDPR) and, in addition, on the EU standard contractual clauses. More information: https://resend.com/legal/privacy-policy',
       'My mailbox is hosted by Proton AG, Route de la Galaise 32, 1228 Plan-les-Ouates, Switzerland, where form messages and emails to me are received and stored. An adequacy decision of the EU Commission exists for Switzerland (Art. 45 GDPR). More information: https://proton.me/legal/privacy',
@@ -214,7 +196,7 @@ const en: LegalSection[] = [
     title: 'Changes',
     paragraphs: [
       'This policy will be updated when legal or technical aspects of the website change. The version published on gwydion.dev applies.',
-      'Last updated: 20 November 2026',
+      'Last updated: 21 November 2026',
     ],
   },
 ]

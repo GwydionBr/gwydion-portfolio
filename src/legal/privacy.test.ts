@@ -33,16 +33,19 @@ describe('The privacy policy', () => {
     const contact = textOf(language, 'contact')
     expect(contact).toContain('Resend')
     expect(contact).toMatch(/Frankfurt/)
+    expect(contact).toMatch(/website/)
+    expect(contact).toMatch(/language/)
     // The topic choice is gone from the form (spec #31).
     expect(contact).not.toMatch(/\b(topic|Thema)\b/)
   })
 
   it.each(LANGUAGES)('describes the analytics the site runs (%s)', (language) => {
-    expect(textOf(language, 'analytics')).toContain('Vercel Web Analytics')
     const umami = textOf(language, 'umami')
     expect(umami).toContain('Umami')
-    // Where it runs and how to opt out (src/analytics/umami.ts honours Do Not Track).
-    expect(umami).toMatch(/Frankfurt/)
+    expect(umami).toContain('/lx/s.js')
+    expect(umami).toContain('analytics.gwydion.dev')
+    expect(umami).not.toMatch(/Vercel Web Analytics/)
+    // How to opt out (src/analytics/umami.ts honours Do Not Track).
     expect(umami).toContain('Do Not Track')
   })
 
