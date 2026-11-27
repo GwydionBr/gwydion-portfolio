@@ -6,6 +6,7 @@ import classes from './AppShell.module.css'
 import { SHELL_BREAKPOINT } from './breakpoint'
 import { SECONDARY_NAVBAR_MOTION, SecondaryNavbar } from './SecondaryNavbar'
 import { Sidebar } from './Sidebar'
+import { SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarWidth'
 import { SiteSearch } from './SiteSearch'
 import { TabBar } from './TabBar'
 import { TopBar } from './TopBar'
@@ -15,7 +16,8 @@ const MAIN_ID = 'main'
 
 /**
  * The app shell (ADR 0003, prototype J), built on Mantine's AppShell: a
- * sidebar from the `sm` breakpoint up; below it a top bar (identity) and a
+ * sidebar from the `sm` breakpoint up, which the visitor can resize
+ * (src/shell/sidebarWidth.ts); below it a top bar (identity) and a
  * bottom tab bar whose More sheet holds what the sidebar has besides the
  * navigation. On wide screens a view may ask for a second sidebar beside the
  * first (`secondaryNavigation`), which slides in as the main pane makes room.
@@ -24,6 +26,7 @@ const MAIN_ID = 'main'
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
+  const resize = useSidebarResize(t`Resize sidebar`)
   const secondary = useMatches({
     select: (matches) =>
       matches.find((match) => match.staticData.secondaryNavigation)?.staticData.secondaryNavigation,
@@ -31,10 +34,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <MantineAppShell
       className={classes.shell}
+      resize={resize}
       // The main pane makes room for the second sidebar in step with its slide.
       transitionDuration={SECONDARY_NAVBAR_MOTION.duration}
       transitionTimingFunction={SECONDARY_NAVBAR_MOTION.timingFunction}
-      navbar={{ width: 240, breakpoint: SHELL_BREAKPOINT, collapsed: { mobile: true } }}
+      navbar={{
+        width: SIDEBAR_WIDTH_CSS,
+        breakpoint: SHELL_BREAKPOINT,
+        collapsed: { mobile: true },
+      }}
       header={{ height: { base: 52, [SHELL_BREAKPOINT]: 0 } }}
       footer={{ height: { base: 60, [SHELL_BREAKPOINT]: 0 } }}
       padding={{ base: 'md', xs: 'lg', md: 40 }}

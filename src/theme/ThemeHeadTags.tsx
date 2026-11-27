@@ -1,3 +1,4 @@
+import { PrePaintScript } from '#/components/PrePaintScript'
 import { CHROME_COLORS, FAVICONS, prePaintScript, systemMediaOf, THEMES } from './theme'
 
 /**
@@ -35,8 +36,7 @@ export function ThemeHeadTags() {
           suppressHydrationWarning
         />
       ))}
-      {/* oxlint-disable-next-line react/no-danger -- a fixed script built from our own constants */}
-      <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
+      <PrePaintScript script={prePaintScript} />
     </>
   )
 }

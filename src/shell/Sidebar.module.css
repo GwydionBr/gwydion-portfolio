@@ -1,0 +1,14 @@
+/*
+ * The sidebar's content scrolls inside the navbar, not the navbar itself:
+ * Mantine's resize handle is the navbar's last child, positioned on its edge,
+ * and would scroll away (and widen the scroll area) inside a scrolling navbar.
+ */
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: var(--mantine-spacing-sm);
+}
