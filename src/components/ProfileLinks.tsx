@@ -22,7 +22,7 @@ import {
 import { eventAttributes, trackEvent, type AnalyticsEvent } from '#/analytics/umami'
 import type { Profile, ProfileLink } from '#/content'
 import { useProfile } from '#/content/react'
-import { showToast } from '#/shell/toast'
+import { useToast } from '#/shell/toast'
 
 /** The address of the Profile's email link ("hello@gwydion.dev"). */
 export function emailAddressOf(profile: Profile): string | undefined {
@@ -104,6 +104,7 @@ export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: Man
 export function useCopyEmail(): (() => Promise<void>) | undefined {
   const { t } = useLingui()
   const address = emailAddressOf(useProfile())
+  const showToast = useToast()
   if (!address) return undefined
   return async () => {
     try {

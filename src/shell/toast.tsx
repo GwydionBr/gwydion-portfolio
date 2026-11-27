@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro'
 import { Notifications, notifications } from '@mantine/notifications'
 import { CheckCircle, WarningCircle } from '@phosphor-icons/react'
 import classes from './toast.module.css'
@@ -18,26 +19,28 @@ const TONES = {
   danger: { icon: WarningCircle, color: 'danger' },
 } as const
 
-/**
- * Shows a toast. `id` names what it reports: while one with the same `id`
- * shows, another isn't added (a second copy of the same address).
- */
-export function showToast({
-  id,
-  message,
-  tone = 'success',
-}: {
+/** What a toast says: `id` names what it reports, `message` says it. */
+export interface Toast {
+  /** While a toast with the same `id` shows, another isn't added (a second copy of the same address). */
   id: string
   message: string
   tone?: ToastTone
-}) {
-  const { icon: Icon, color } = TONES[tone]
-  notifications.show({
-    id,
-    message,
-    color,
-    icon: <Icon aria-hidden size={20} weight="fill" />,
-  })
+}
+
+/** Shows toasts, their close button named in the Site language. */
+export function useToast(): (toast: Toast) => void {
+  const { t } = useLingui()
+  const dismiss = t`Dismiss`
+  return ({ id, message, tone = 'success' }) => {
+    const { icon: Icon, color } = TONES[tone]
+    notifications.show({
+      id,
+      message,
+      color,
+      icon: <Icon aria-hidden size={20} weight="fill" />,
+      closeButtonProps: { 'aria-label': dismiss },
+    })
+  }
 }
 
 /** Where the toasts show: rendered in the shell, so they keep clear of its bars. */

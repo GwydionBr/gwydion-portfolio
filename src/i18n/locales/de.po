@@ -83,6 +83,10 @@ msgstr "Dunkel"
 msgid "Directly"
 msgstr "Direkt"
 
+#: src/shell/toast.tsx
+msgid "Dismiss"
+msgstr "Schließen"
+
 #: src/components/CvDownload.tsx
 #: src/shell/searchEntries.tsx
 msgid "Download CV"

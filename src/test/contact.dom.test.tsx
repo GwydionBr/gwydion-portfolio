@@ -27,7 +27,9 @@ describe('The Contact view', () => {
     await page.click(directly.getByRole('button', { name: 'Copy email address' }))
 
     expect(writeText).toHaveBeenCalledWith('ada@example.com')
-    expect(getByRole(document.body, 'alert').textContent).toContain('Email address copied')
+    const toast = getByRole(document.body, 'alert')
+    expect(toast.textContent).toContain('Email address copied')
+    expect(within(toast).getByRole('button', { name: 'Dismiss' })).toBeTruthy()
   })
 
   it('names the address in the toast when the browser refuses to copy it', async () => {
