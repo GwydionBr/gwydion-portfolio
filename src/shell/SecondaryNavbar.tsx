@@ -3,10 +3,8 @@ import { useLingui } from '@lingui/react/macro'
 import { ProjectNavigation } from '#/components/ProjectNavigation'
 import { PaneResizeHandle } from './PaneResizeHandle'
 import { SECONDARY_NAVBAR_WIDTH } from './paneWidth'
+import type { SecondaryNavigation } from './secondaryNavigation'
 import classes from './SecondaryNavbar.module.css'
-
-/** What the second sidebar can list: a route names one in its `secondaryNavigation`. */
-export type SecondaryNavigation = 'projects'
 
 /** Each list the second sidebar can show; each is a `nav` landmark of its own. */
 const LISTS: Record<SecondaryNavigation, ComponentType> = { projects: ProjectNavigation }
