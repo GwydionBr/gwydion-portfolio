@@ -5,12 +5,14 @@ import {
   Badge,
   Button,
   Code,
+  Drawer,
   InputWrapper,
   Input,
   List,
   Modal,
   NavLink,
   Paper,
+  Popover,
   SegmentedControl,
   Text,
   Title,
@@ -63,6 +65,28 @@ export const siteComponents: MantineThemeComponents = {
         return { root: { '--button-hover': 'var(--hover)', '--button-color': 'var(--ink)' } }
       return { root: {} }
     },
+  }),
+
+  /** A panel that opens beside its trigger, such as the settings: a card that floats. */
+  Popover: Popover.extend({
+    defaultProps: { radius: 'lg', shadow: 'md' },
+    classNames: { dropdown: classes.popover },
+  }),
+
+  /**
+   * A sheet, such as the phone's More sheet: a card on the canvas. From the
+   * bottom it rounds only its top corners and keeps clear of the home indicator.
+   */
+  Drawer: Drawer.extend({
+    defaultProps: { radius: 'lg' },
+    classNames: (_theme, props) => ({
+      header: classes.sheetHeader,
+      title: classes.sheetTitle,
+      ...(props.position === 'bottom' && {
+        content: classes.bottomSheet,
+        body: classes.bottomSheetBody,
+      }),
+    }),
   }),
 
   /** Body text is 14px (Mantine's default is 16px); a place that wants more says so. */

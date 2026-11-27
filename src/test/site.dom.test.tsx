@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { within } from '@testing-library/dom'
+import { queryByRole, within } from '@testing-library/dom'
 import { navigationOf, visit } from './visit'
 
 describe('Overview', () => {
@@ -87,7 +87,8 @@ describe('Language switch', () => {
   it('moves from /en/about to /de/about', async () => {
     const page = await visit('/en/about')
 
-    const switcher = within(page.sidebar()).getByRole('navigation', { name: 'Site language' })
+    const settings = await page.openSettings()
+    const switcher = within(settings).getByRole('navigation', { name: 'Site language' })
     await page.click(within(switcher).getByRole('link', { name: 'Deutsch' }))
 
     expect(page.path()).toBe('/de/about')
@@ -98,9 +99,8 @@ describe('Language switch', () => {
   it('marks the Site language shown as current', async () => {
     const page = await visit('/de/projects')
 
-    const switcher = within(page.sidebar('Seitenleiste')).getByRole('navigation', {
-      name: 'Seitensprache',
-    })
+    const settings = await page.openSettings('Einstellungen')
+    const switcher = within(settings).getByRole('navigation', { name: 'Seitensprache' })
     expect(
       within(switcher).getByRole('link', { name: 'Deutsch' }).hasAttribute('aria-current'),
     ).toBe(true)
@@ -116,5 +116,41 @@ describe('Phones', () => {
 
     expect(navigationOf('Tab bar')).toEqual(navigationOf('Main navigation'))
     expect(navigationOf('Tab bar').current).toEqual(['Projects'])
+  })
+
+  it('switch the Site language from the More sheet, which closes on the way', async () => {
+    const page = await visit('/en/about', { screen: 'phone' })
+    const more = await page.openMore()
+
+    const switcher = within(more).getByRole('navigation', { name: 'Site language' })
+    await page.click(within(switcher).getByRole('link', { name: 'Deutsch' }))
+
+    expect(page.path()).toBe('/de/about')
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+  })
+
+  it('close the More sheet when the window gets wide enough for the sidebar', async () => {
+    const page = await visit('/en', { screen: 'phone' })
+    await page.openMore()
+
+    await page.resize('desktop')
+
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+  })
+
+  it('close the sidebar’s Settings when the window gets too narrow for the sidebar', async () => {
+    const page = await visit('/en')
+    await page.openSettings()
+
+    await page.resize('phone')
+
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+  })
+
+  it('end the page with the view, not with the sidebar again', async () => {
+    const page = await visit('/en/projects')
+
+    expect(within(page.main()).queryByRole('navigation', { name: 'Legal' })).toBeNull()
+    expect(within(page.main()).queryByRole('radiogroup')).toBeNull()
   })
 })

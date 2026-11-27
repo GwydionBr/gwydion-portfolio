@@ -116,22 +116,30 @@ describe('The Profile links in the shell', () => {
     ['/en/projects', 'Sidebar'],
     ['/en/about', 'Sidebar'],
     ['/de/projects', 'Seitenleiste'],
-  ])('%s offers email and GitHub from the sidebar and on phones', async (url, sidebar) => {
-    const page = await visit(url, { content: fixtureContent() })
-    const linksOf = (container: HTMLElement) => ({
-      email: within(container).getByRole('link', { name: 'ada@example.com' }).getAttribute('href'),
-      github: within(container).getByRole('link', { name: 'GitHub' }).getAttribute('href'),
-      // The LinkedIn URL is still a placeholder: named, but not a working link.
-      linkedin: within(container).queryByRole('link', { name: 'LinkedIn' }),
-    })
-    const expected = {
-      email: 'mailto:ada@example.com',
-      github: 'https://github.com/ada-example',
-      linkedin: null,
-    }
+  ])(
+    '%s offers email and GitHub from the sidebar and from the More sheet',
+    async (url, sidebar) => {
+      const page = await visit(url, { content: fixtureContent() })
+      const linksOf = (container: HTMLElement) => ({
+        email: within(container)
+          .getByRole('link', { name: 'ada@example.com' })
+          .getAttribute('href'),
+        github: within(container).getByRole('link', { name: 'GitHub' }).getAttribute('href'),
+        // The LinkedIn URL is still a placeholder: named, but not a working link.
+        linkedin: within(container).queryByRole('link', { name: 'LinkedIn' }),
+      })
+      const expected = {
+        email: 'mailto:ada@example.com',
+        github: 'https://github.com/ada-example',
+        linkedin: null,
+      }
 
-    expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
-    // Phones have no sidebar: the main pane ends with the same links.
-    expect(linksOf(page.main())).toEqual(expected)
-  })
+      expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
+      // Phones have no sidebar: the tab bar's More sheet holds the same links.
+      await page.resize('phone')
+      expect(linksOf(await page.openMore(url.startsWith('/de') ? 'Mehr' : 'More'))).toEqual(
+        expected,
+      )
+    },
+  )
 })

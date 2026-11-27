@@ -1,4 +1,3 @@
-import { useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { LANGUAGES, nativeNameOf, pathInLanguage } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
@@ -6,15 +5,14 @@ import classes from './LanguageSwitch.module.css'
 
 /**
  * Links to the current page in every Site language; the shown one is marked
- * current. `short` writes each as its code ("EN") where the full name won't fit.
- * Real links, so it looks like the theme's SegmentedControl without being one.
+ * current. Real links, so it looks like the theme's SegmentedControl without
+ * being one. `labelledBy` is the id of the visible label that names it.
  */
-export function LanguageSwitch({ short = false }: { short?: boolean }) {
-  const { t } = useLingui()
+export function LanguageSwitch({ labelledBy }: { labelledBy: string }) {
   const current = useSiteLanguage()
   const { pathname, searchStr, hash } = useLocation()
   return (
-    <nav aria-label={t`Site language`}>
+    <nav aria-labelledby={labelledBy}>
       <ul className={classes.track}>
         {LANGUAGES.map((language) => (
           <li key={language}>
@@ -27,7 +25,7 @@ export function LanguageSwitch({ short = false }: { short?: boolean }) {
               aria-label={nativeNameOf(language)}
               className={classes.segment}
             >
-              {short ? language.toUpperCase() : nativeNameOf(language)}
+              {nativeNameOf(language)}
             </Link>
           </li>
         ))}

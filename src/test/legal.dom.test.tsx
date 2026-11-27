@@ -51,7 +51,7 @@ describe('Legal links', () => {
     ['/de', 'Seitenleiste', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
     ['/de/datenschutz', 'Seitenleiste', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
   ])(
-    '%s links to both legal pages from the sidebar and on phones',
+    '%s links to both legal pages from the sidebar and from the More sheet',
     async (url, sidebar, name, labels) => {
       const page = await visit(url)
       const lang = url.startsWith('/de') ? 'de' : 'en'
@@ -65,8 +65,9 @@ describe('Legal links', () => {
           .map((link) => [link.textContent, link.getAttribute('href')])
 
       expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
-      // Phones have no sidebar: the main pane ends with the same links.
-      expect(linksOf(page.main())).toEqual(expected)
+      // Phones have no sidebar: the tab bar's More sheet holds the same links.
+      await page.resize('phone')
+      expect(linksOf(await page.openMore(lang === 'de' ? 'Mehr' : 'More'))).toEqual(expected)
     },
   )
 

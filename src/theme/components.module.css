@@ -28,6 +28,36 @@
   background-color: var(--surface);
 }
 
+/* Popover: a floating card. */
+.popover {
+  --popover-border-color: var(--line);
+  padding: var(--mantine-spacing-md);
+  background-color: var(--surface);
+}
+
+/* Drawer: the header sits on the sheet, its title like a card's. */
+.sheetHeader {
+  background-color: inherit;
+}
+
+.sheetTitle {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.bottomSheet {
+  /* As tall as what it holds, never taller than most of the screen. */
+  height: auto;
+  max-height: 85dvh;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+  border-bottom: 0;
+}
+
+.bottomSheetBody {
+  padding-bottom: calc(var(--mantine-spacing-md) + env(safe-area-inset-bottom));
+}
+
 /* NavLink: a quiet row; the open view's row is selected (Mantine reads `aria-current`). */
 .navLink {
   border-radius: var(--mantine-radius-md);

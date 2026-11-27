@@ -5,10 +5,10 @@ import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
+import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
+import { emulateDevice, type Screen } from './device'
 
 type AppRouter = ReturnType<typeof createAppRouter>
-import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
-import { emulateSystemTheme } from './systemTheme'
 
 declare global {
   var IS_REACT_ACT_ENVIRONMENT: boolean
@@ -33,6 +33,8 @@ interface VisitOptions {
   content?: Content
   /** The visitor's system appearance setting (`prefers-color-scheme`). */
   systemTheme?: Theme
+  /** How wide the window opens: a desktop one (sidebar) by default. */
+  screen?: Screen
 }
 
 /**
@@ -44,9 +46,14 @@ interface VisitOptions {
  */
 export async function visit(
   url: string,
-  { browserLanguages = ['en-US', 'en'], content, systemTheme = 'light' }: VisitOptions = {},
+  {
+    browserLanguages = ['en-US', 'en'],
+    content,
+    systemTheme = 'light',
+    screen = 'desktop',
+  }: VisitOptions = {},
 ) {
-  const system = emulateSystemTheme(systemTheme)
+  const device = emulateDevice({ theme: systemTheme, screen })
   globalThis.IS_REACT_ACT_ENVIRONMENT = true
   vi.spyOn(navigator, 'languages', 'get').mockReturnValue(browserLanguages)
   // jsdom does not implement scrolling; the router restores scroll positions.
@@ -63,6 +70,13 @@ export async function visit(
   mounted = root
   await act(async () => root.render(<RouterProvider router={router} />))
 
+  /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
+  const click = async (element: HTMLElement) => {
+    await act(async () => {
+      element.click()
+      await settled(router)
+    })
+  }
   const applies = (element: Element) => matchMedia(element.getAttribute('media') ?? 'all').matches
   const landmark = (role: 'main' | 'complementary', name?: string) =>
     getByRole(document.body, role, name ? { name } : {})
@@ -81,7 +95,11 @@ export async function visit(
     head: readHead,
     /** Changes the visitor's system appearance setting while the page is open. */
     async setSystemTheme(theme: Theme) {
-      await act(async () => system.set(theme))
+      await act(async () => device.setTheme(theme))
+    },
+    /** Resizes the window to `screen`, across the shell's breakpoint. */
+    async resize(screen: Screen) {
+      await act(async () => device.resize(screen))
     },
     /**
      * The theme the page is painted in: the stylesheets paint the theme named
@@ -113,12 +131,16 @@ export async function visit(
         new Function(script.textContent ?? '')()
       }
     },
-    /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
-    async click(element: HTMLElement) {
-      await act(async () => {
-        element.click()
-        await settled(router)
-      })
+    click,
+    /** Opens the sidebar's settings (the button `name`) and returns the panel. */
+    async openSettings(name = 'Settings') {
+      await click(within(landmark('complementary')).getByRole('button', { name }))
+      return getByRole(document.body, 'dialog', { name })
+    },
+    /** Opens the phone tab bar's More sheet (the tab `name`) and returns it; open the page at the `phone` screen. */
+    async openMore(name = 'More') {
+      await click(getByRole(document.body, 'button', { name }))
+      return getByRole(document.body, 'dialog', { name })
     },
     /** Runs `action` (an answer the test held back) and waits for the page to follow. */
     async settle(action: () => void) {

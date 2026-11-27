@@ -45,13 +45,14 @@ describe('Self-Engine screenshots', () => {
       systemTheme: 'light',
     })
 
-    await page.click(within(page.sidebar()).getByRole('radio', { name: 'Dark' }))
+    const settings = await page.openSettings()
+    await page.click(within(settings).getByRole('radio', { name: 'Dark' }))
     expect(shownScreenshots(page).map((shot) => shot.src)).toEqual([
       'https://blob.example/dashboard-en-dark.webp',
       'https://blob.example/timer-en-dark.webp',
     ])
 
-    await page.click(within(page.sidebar()).getByRole('radio', { name: 'Light' }))
+    await page.click(within(settings).getByRole('radio', { name: 'Light' }))
     expect(shownScreenshots(page)[0]!.src).toBe('https://blob.example/dashboard-en-light.webp')
   })
 
