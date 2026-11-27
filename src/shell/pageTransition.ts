@@ -80,25 +80,41 @@ function runningPageTransition(): Animation[] {
     )
 }
 
+/** Whether a View Transition is under way: capturing, waiting for the next page, or animating. */
+function pageTransitionActive(): boolean {
+  try {
+    return document.documentElement.matches(':active-view-transition')
+  } catch {
+    // A browser that can't tell: while its animations run.
+    return runningPageTransition().length > 0
+  }
+}
+
+/** How long a click waits for the transition to end, at most, in ms. */
+const CLICK_THROUGH_WAIT = 1000
+
 /**
- * While a View Transition runs, the browser hands every click to `<html>`,
- * under its images, and the page underneath never gets it: a visitor
- * clicking on quickly would lose the click. Such a click ends the transition
- * at once and goes on to what is under the pointer on the page.
+ * While a View Transition is under way, the browser hands every click to
+ * `<html>`, under its images, and the page underneath never gets it: a
+ * visitor clicking on quickly would lose the click. Such a click ends the
+ * transition at once (its animations finish as soon as they start, should
+ * the next page still be on its way) and goes on to what is under the
+ * pointer on the page.
  */
 function passClickThrough(event: MouseEvent) {
-  if (event.target !== document.documentElement) return
-  const running = runningPageTransition()
-  if (running.length === 0) return
-  for (const animation of running) animation.finish()
+  if (event.target !== document.documentElement || !pageTransitionActive()) return
   const { clientX, clientY } = event
-  // Once the transition's images are gone, a frame after its animations ended.
-  requestAnimationFrame(() =>
-    requestAnimationFrame(() => {
-      const target = document.elementFromPoint(clientX, clientY)
-      if (target instanceof HTMLElement && target !== document.documentElement) target.click()
-    }),
-  )
+  const deadline = performance.now() + CLICK_THROUGH_WAIT
+  const pass = () => {
+    for (const animation of runningPageTransition()) animation.finish()
+    if (pageTransitionActive() && performance.now() < deadline) {
+      requestAnimationFrame(pass)
+      return
+    }
+    const target = document.elementFromPoint(clientX, clientY)
+    if (target instanceof HTMLElement && target !== document.documentElement) target.click()
+  }
+  pass()
 }
 
 if (typeof window !== 'undefined') {
