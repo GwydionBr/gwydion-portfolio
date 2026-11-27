@@ -1,6 +1,7 @@
 import { createRouter, type RouterHistory } from '@tanstack/react-router'
 import { siteContent, type Content } from './content'
 import { routeTree } from './routeTree.gen'
+import { PAGE_TRANSITION } from './shell/pageTransition'
 import type { SecondaryNavigation } from './shell/SecondaryNavbar'
 
 /** What every route can read from its context: the content module (ADR 0004). */
@@ -30,6 +31,8 @@ export function createAppRouter({
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    // Pages fade over in the main pane while the shell stays (src/shell/pageTransition.ts).
+    defaultViewTransition: PAGE_TRANSITION,
   })
 }
 

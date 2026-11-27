@@ -67,7 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className={classes.main}
         data-secondary-navbar={secondary !== undefined || undefined}
       >
-        <Box maw={1024} mx="auto">
+        <Box maw={1024} mx="auto" className={classes.view}>
           {children}
         </Box>
       </MantineAppShell.Main>
