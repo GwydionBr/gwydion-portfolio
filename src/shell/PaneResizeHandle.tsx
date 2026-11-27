@@ -95,7 +95,10 @@ export function PaneResizeHandle({
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0 || stopDrag.current) return
+    // No text selection, and so no focus either: the handle takes it itself, for the arrow keys.
     event.preventDefault()
+    event.currentTarget.focus()
+    const { pointerId } = event
     const startX = event.clientX
     let shown = width
     let moved = false
@@ -131,14 +134,28 @@ export function PaneResizeHandle({
     document.addEventListener(
       'pointermove',
       (move) => {
+        // Only the pointer that took the edge moves it (a second finger doesn't).
+        if (move.pointerId !== pointerId) return
         moved = true
         shown = clampPaneWidth(pane, width + (move.clientX - startX) / theme.scale)
         showWidth(shown)
       },
       { signal },
     )
-    document.addEventListener('pointerup', () => stopDrag.current?.(), { signal })
-    document.addEventListener('pointercancel', cancel, { signal })
+    document.addEventListener(
+      'pointerup',
+      (up) => {
+        if (up.pointerId === pointerId) stopDrag.current?.()
+      },
+      { signal },
+    )
+    document.addEventListener(
+      'pointercancel',
+      (lost) => {
+        if (lost.pointerId === pointerId) cancel()
+      },
+      { signal },
+    )
     document.addEventListener(
       'keydown',
       (key) => {
