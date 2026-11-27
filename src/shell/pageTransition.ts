@@ -8,7 +8,7 @@ import type { SecondaryNavigation } from './secondaryNavigation'
  * stand still under it, it fades out at the same time: a crossfade. It is a
  * View Transition the router starts for every navigation (src/router.tsx);
  * the stylesheet draws it (src/shell/AppShell.module.css). Browsers without
- * View Transitions change the page at once.
+ * View Transitions, or without their types, change the page at once.
  *
  * No transition runs when it would get in the way (`pageTransitionTypes`).
  */
@@ -57,13 +57,16 @@ export function pageTransitionTypes(
     : [PAGE_TRANSITION_TYPE]
 }
 
-/** The address the browser animated going back or forward to, until a page change reads it. */
-let browserAnimatedHref: string | undefined
+/**
+ * Whether the browser animated the last going back or forward itself. The
+ * page change it starts is the next one the router transitions, which reads
+ * and clears it.
+ */
+let browserAnimatedPop = false
 
-/** Whether the browser animated the change to `href`; asked once per page change. */
-function takeBrowserAnimated(href: string): boolean {
-  const animated = browserAnimatedHref === href
-  browserAnimatedHref = undefined
+function takeBrowserAnimated(): boolean {
+  const animated = browserAnimatedPop
+  browserAnimatedPop = false
   return animated
 }
 
@@ -100,11 +103,9 @@ function passClickThrough(event: MouseEvent) {
 if (typeof window !== 'undefined') {
   // Listening from the start, before the router creates its history and listens itself.
   window.addEventListener('popstate', (event) => {
-    const animated = (event as PopStateEvent & { hasUAVisualTransition?: boolean })
-      .hasUAVisualTransition
-    browserAnimatedHref = animated
-      ? `${location.pathname}${location.search}${location.hash}`
-      : undefined
+    browserAnimatedPop = Boolean(
+      (event as PopStateEvent & { hasUAVisualTransition?: boolean }).hasUAVisualTransition,
+    )
   })
   document.addEventListener('click', passClickThrough)
 }
@@ -117,15 +118,18 @@ type ViewTransitionOptions = Exclude<
 
 /**
  * The router's `defaultViewTransition`, given what the second sidebar lists
- * on a page. Browsers that can't tell View Transition types apart transition
- * every change, without the crossfade: the router asks `types` only where
- * they can.
+ * on a page; `false` (no transition) where the browser can't tell View
+ * Transition types apart, since the router then asks `types` nothing and
+ * would transition every change, those ruled out too.
  */
 export function pageTransition({
   secondaryNavigationAt,
 }: {
   secondaryNavigationAt: (pathname: string) => SecondaryNavigation | undefined
-}): ViewTransitionOptions {
+}): ViewTransitionOptions | false {
+  const typesSupported =
+    typeof CSS !== 'undefined' && CSS.supports('selector(:active-view-transition-type(a))')
+  if (!typesSupported) return false
   return {
     types: ({ fromLocation, toLocation, pathChanged }) =>
       pageTransitionTypes(
@@ -133,7 +137,7 @@ export function pageTransition({
         {
           reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
           dialogShown: document.querySelector('[role="dialog"]') !== null,
-          browserAnimated: takeBrowserAnimated(toLocation.publicHref),
+          browserAnimated: takeBrowserAnimated(),
           keepsLayout:
             fromLocation !== undefined &&
             secondaryNavigationAt(fromLocation.pathname) ===
