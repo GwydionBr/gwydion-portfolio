@@ -32,6 +32,7 @@ describe('Sidebar width', () => {
     localStorage.setItem(STORAGE_KEY, '300')
     const page = await visit('/en/about')
 
+    expect(paintedWidth()).toBe('18.75rem')
     page.paintFirstFrame()
     expect(paintedWidth()).toBe('18.75rem')
     expect(handleIn(page.sidebar()).getAttribute('aria-valuenow')).toBe('300')
@@ -41,6 +42,7 @@ describe('Sidebar width', () => {
     localStorage.setItem(STORAGE_KEY, '999')
     const page = await visit('/en')
 
+    expect(paintedWidth()).toBe('22.5rem')
     page.paintFirstFrame()
     expect(paintedWidth()).toBe('22.5rem')
     expect(handleIn(page.sidebar()).getAttribute('aria-valuenow')).toBe('360')
@@ -69,6 +71,7 @@ describe('Sidebar width', () => {
     expect(localStorage.getItem(STORAGE_KEY)).toBe('290')
 
     const reloaded = await visit('/en/projects')
+    expect(paintedWidth()).toBe('18.125rem')
     reloaded.paintFirstFrame()
     expect(paintedWidth()).toBe('18.125rem')
   })
