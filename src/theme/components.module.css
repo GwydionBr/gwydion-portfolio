@@ -143,8 +143,11 @@
 .navLinkSection {
   color: var(--subtle);
 
-  /* Beside a two-line row (label and description), at the label's line. */
-  .navLink:has(.navLinkDescription) > & {
+  /*
+   * Beside a two-line row (label and description), at the label's line.
+   * Mantine renders the description in every row, empty without one.
+   */
+  .navLink:has(.navLinkDescription:not(:empty)) > & {
     align-self: flex-start;
   }
 }
@@ -152,6 +155,11 @@
 .navLinkDescription {
   margin-top: 2px;
   color: var(--subtle);
+
+  /* A row without one keeps its label in the middle. */
+  &:empty {
+    display: none;
+  }
 }
 
 /* SegmentedControl: a sunken track with a raised segment. */
