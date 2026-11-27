@@ -5,6 +5,12 @@ import { useMediaQuery } from '@mantine/hooks'
 /** Below this Mantine breakpoint (`sm`, 48em) the sidebar gives way to the phone's top and tab bars. */
 export const SHELL_BREAKPOINT = 'sm'
 
+/**
+ * From this Mantine breakpoint (`lg`, 75em) up, a detail view keeps its list
+ * in a pane beside it (`SplitView`); below it the detail takes the whole pane.
+ */
+export const SPLIT_BREAKPOINT = 'lg'
+
 /** Where the shell's navigation is: the sidebar or the phone's tab bar. */
 export type ShellNavigation = 'sidebar' | 'tabBar'
 

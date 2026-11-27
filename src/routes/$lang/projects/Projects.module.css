@@ -2,7 +2,8 @@
   display: grid;
   gap: 1.5rem;
 
-  @media (min-width: 62em) {
+  /* Wide enough for the story beside the rail: the detail's own width (`SplitView`), not the window's. */
+  @container (min-width: 46rem) {
     grid-template-columns: minmax(0, 1fr) 17rem;
     column-gap: 2.5rem;
   }
@@ -11,7 +12,7 @@
 .facts {
   align-self: start;
 
-  @media (min-width: 62em) {
+  @container (min-width: 46rem) {
     position: sticky;
     top: 2.5rem;
     grid-column: 2;

@@ -1,0 +1,27 @@
+/* The list pane and the detail; the list pane only from `SPLIT_BREAKPOINT` (lg, 75em) up. */
+@media (min-width: 75em) {
+  .split {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* Stays in view as the detail scrolls, and scrolls itself when the list is longer than the window. */
+  .list {
+    position: sticky;
+    top: var(--app-shell-padding);
+    max-height: calc(100dvh - 2 * var(--app-shell-padding));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Room for the rows' focus rings. */
+    margin: -4px;
+    padding: 4px;
+  }
+}
+
+/* The detail decides its own layout by the room it gets (the Project page's facts rail). */
+.detail {
+  container-type: inline-size;
+  min-width: 0;
+}

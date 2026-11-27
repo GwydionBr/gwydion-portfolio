@@ -42,6 +42,16 @@ describe('Umami', () => {
     expect(page.path()).toBe('/en/projects/fixture-studio')
   })
 
+  it('counts a click on another Project in the list beside a Project page', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+
+    const pane = within(within(page.main()).getByRole('navigation', { name: 'Projects' }))
+    await page.click(pane.getByRole('link', { name: /Fixture Kit/ }))
+
+    expect(track).toHaveBeenCalledWith('projekt-klick', { projekt: 'fixture-kit' })
+    expect(page.path()).toBe('/en/projects/fixture-kit')
+  })
+
   it('counts "Get in touch", which still opens Contact in the app', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 

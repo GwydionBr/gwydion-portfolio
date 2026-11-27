@@ -15,6 +15,7 @@ import {
 import { trackEvent } from '#/analytics/umami'
 import { downloadCv } from '#/components/CvDownload'
 import { useProfileLinkItems } from '#/components/ProfileLinks'
+import { trackProjectClick } from '#/components/ProjectPageLink'
 import { ProjectSwatch } from '#/components/ProjectSwatch'
 import { useCv, useProjects } from '#/content/react'
 import { LANGUAGES, nativeNameOf } from '#/i18n/language'
@@ -84,7 +85,7 @@ export function useSearchGroups(): SearchGroup<SearchEntry>[] {
           </Center>
         ),
         run: () => {
-          trackEvent({ name: 'projekt-klick', data: { projekt: project.slug } })
+          trackProjectClick(project.slug)
           void navigate({ to: '/$lang/projects/$slug', params: { lang, slug: project.slug } })
         },
       })),

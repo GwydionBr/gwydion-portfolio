@@ -118,6 +118,41 @@ describe('A Project page', () => {
   })
 })
 
+describe('The Projects beside a Project page (wide screens; the CSS hides them below lg)', () => {
+  const projectPane = (page: { main(): HTMLElement }, name = 'Projects') =>
+    within(within(page.main()).getByRole('navigation', { name }))
+
+  it('lists every Project, with kind and period, the open one marked current', async () => {
+    const page = await visit('/en/projects/fixture-studio', { content: fixtureContent() })
+
+    const links = projectPane(page).getAllByRole('link')
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      '/en/projects/self-engine',
+      '/en/projects/fixture-studio',
+      '/en/projects/fixture-kit',
+    ])
+    expect(links[0]!.textContent).toBe('Fixture EngineOwn product · 2025–now')
+    expect(links.map((link) => link.getAttribute('aria-current'))).toEqual([null, 'page', null])
+  })
+
+  it('opens another Project from the list, which stays where it is', async () => {
+    const page = await visit('/de/projects/fixture-studio', { content: fixtureContent() })
+    const pane = page.main().querySelector('nav')
+
+    await page.click(projectPane(page, 'Projekte').getByRole('link', { name: /Fixture Kit/ }))
+
+    expect(page.path()).toBe('/de/projects/fixture-kit')
+    expect(page.title()).toBe('Fixture Kit')
+    expect(page.main().querySelector('nav')).toBe(pane)
+    expect(
+      projectPane(page, 'Projekte')
+        .getAllByRole('link')
+        .filter((link) => link.getAttribute('aria-current'))
+        .map((link) => link.getAttribute('href')),
+    ).toEqual(['/de/projects/fixture-kit'])
+  })
+})
+
 describe('The site’s own Projects', () => {
   it('Self-Engine’s page tells its MDX story in the Site language', async () => {
     const english = await visit('/en/projects/self-engine')

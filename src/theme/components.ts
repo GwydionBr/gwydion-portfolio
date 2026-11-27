@@ -108,7 +108,11 @@ export const siteComponents: MantineThemeComponents = {
       },
       children: {},
     }),
-    classNames: { root: classes.navLink, section: classes.navLinkSection },
+    classNames: {
+      root: classes.navLink,
+      section: classes.navLinkSection,
+      description: classes.navLinkDescription,
+    },
   }),
 
   SegmentedControl: SegmentedControl.extend({

@@ -41,4 +41,8 @@ declare module '@tanstack/react-router' {
   interface Register {
     router: ReturnType<typeof getRouter>
   }
+  interface StaticDataRouteOption {
+    /** `wide`: the view needs more than the main pane's usual width, as a `SplitView` does. */
+    viewWidth?: 'wide'
+  }
 }

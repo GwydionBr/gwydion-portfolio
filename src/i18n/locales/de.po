@@ -232,6 +232,7 @@ msgstr "Vorheriger Screenshot"
 msgid "Privacy policy"
 msgstr "Datenschutzerklärung"
 
+#: src/components/ProjectNavigation.tsx
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts
