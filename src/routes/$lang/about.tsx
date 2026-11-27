@@ -30,7 +30,7 @@ function About() {
   const entries = useCareerEntries()
   return (
     <View title={t`About`}>
-      <SimpleGrid cols={{ base: 1, md: 3 }} spacing={16} className={classes.tiles}>
+      <SimpleGrid cols={{ base: 1, md: 3 }} spacing="md" style={{ alignItems: 'start' }}>
         <Tile title={t`Career`} className={classes.career}>
           <CareerList entries={entries} />
         </Tile>

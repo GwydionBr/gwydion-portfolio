@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { Paper, SimpleGrid, Text } from '@mantine/core'
-import classes from './StoryBlocks.module.css'
 
 /**
  * A row of number tiles: a Project's stats on its page, or numbers inside a
@@ -10,10 +9,13 @@ export function NumberTiles({ label, children }: { label?: string; children: Rea
   return (
     <SimpleGrid
       component="ul"
+      role="list"
       aria-label={label}
       cols={{ base: 2, xs: 3 }}
       spacing="sm"
-      className={classes.list}
+      p={0}
+      mb={0}
+      style={{ listStyle: 'none' }}
     >
       {children}
     </SimpleGrid>
@@ -23,8 +25,16 @@ export function NumberTiles({ label, children }: { label?: string; children: Rea
 /** One number and what it counts. */
 export function NumberTile({ value, label }: { value: string; label: string }) {
   return (
-    <Paper component="li" p="md" radius="lg" className={classes.surface}>
-      <Text fz={24} lh="2rem" fw={600} c="var(--ink)" className={classes.value}>
+    <Paper component="li" p="md" mt={0}>
+      <Text
+        fz={24}
+        lh="2rem"
+        fw={600}
+        c="var(--ink)"
+        m={0}
+        lts="-0.025em"
+        style={{ fontVariantNumeric: 'tabular-nums' }}
+      >
         {value}
       </Text>
       <Text mt={4} size="xs" lh="1rem" c="var(--subtle)">

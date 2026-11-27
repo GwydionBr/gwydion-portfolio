@@ -1,4 +1,4 @@
-import { Box, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import { useProfile } from '#/content/react'
 import { AvailabilityPill } from './AvailabilityPill'
@@ -16,14 +16,14 @@ export function AvailabilityTile({
   const { availability } = useProfile()
   return (
     <Tile title={t`Availability`} compact={compact} className={className}>
-      <Box mt={10}>
+      <Stack gap={10} mt={10} align="flex-start">
         <AvailabilityPill headline={availability.headline} />
-      </Box>
-      {availability.freelance && (
-        <Text inherit mt={10} lh={1.625} c="var(--muted)">
-          {availability.freelance}
-        </Text>
-      )}
+        {availability.freelance && (
+          <Text inherit lh={1.625} c="var(--muted)">
+            {availability.freelance}
+          </Text>
+        )}
+      </Stack>
     </Tile>
   )
 }

@@ -98,7 +98,6 @@ export function ContactForm() {
       setValues((current) => ({ ...current, [name]: event.target.value })),
     error: fieldErrors[name],
     'aria-errormessage': fieldErrors[name] ? `${id}-${name}-error` : undefined,
-    classNames: { input: classes.input, label: classes.label, error: classes.fieldError },
   })
 
   return (
@@ -109,7 +108,8 @@ export function ContactForm() {
       onSubmit={submit}
       pos="relative"
       mt={12}
-      className={classes.form}
+      display="flex"
+      style={{ flexDirection: 'column', gap: 'var(--mantine-spacing-md)' }}
     >
       <TextInput label={t`Name`} type="text" autoComplete="name" {...field('name')} />
       <TextInput label={t`Email`} type="email" autoComplete="email" {...field('email')} />
@@ -131,18 +131,18 @@ export function ContactForm() {
         className={classes.honeypot}
       />
       {status === 'failed' && (
-        <Alert classNames={{ root: classes.alert, message: classes.alertMessage }}>
+        <Alert color="danger" p="sm">
           {t`Your message could not be sent. Please try again, or write to me directly:`}{' '}
           <EmailLink />
         </Alert>
       )}
-      <Button type="submit" disabled={status === 'sending'} className={classes.submit}>
+      <Button type="submit" disabled={status === 'sending'} style={{ alignSelf: 'flex-start' }}>
         {status === 'sending' ? t`Sending…` : t`Send message`}
       </Button>
       <Text size="xs" lh={1.3333}>
         <Trans>
           How I handle your details is explained in the{' '}
-          <RouterAnchor to={PRIVACY_PAGE.to} params={{ lang: language }} underline="always">
+          <RouterAnchor to={PRIVACY_PAGE.to} params={{ lang: language }} underline="always" inherit>
             {i18n._(PRIVACY_PAGE.title)}
           </RouterAnchor>
           .

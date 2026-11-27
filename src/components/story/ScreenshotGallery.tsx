@@ -5,7 +5,6 @@ import { CaretLeft, CaretRight, X } from '@phosphor-icons/react'
 import { useScreenshots } from '#/content/react'
 import type { Screenshot } from '#/content'
 import { useTheme } from '#/theme/react'
-import blocks from './StoryBlocks.module.css'
 import classes from './ScreenshotGallery.module.css'
 import { ScreenshotImage } from './ScreenshotImage'
 import { useStoryProject } from './StoryProject'
@@ -41,18 +40,21 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
     <>
       <SimpleGrid
         component="ul"
+        role="list"
         aria-label={t`Screenshots`}
         cols={{ base: 1, xs: 2 }}
         spacing="sm"
-        className={blocks.list}
+        p={0}
+        mb={0}
+        style={{ listStyle: 'none' }}
       >
         {shots.map((shot, position) => (
           <Paper
             component="li"
             key={shot.view}
-            radius="lg"
+            mt={0}
             p={8}
-            className={isWide(shot) ? classes.wide : blocks.surface}
+            className={isWide(shot) ? classes.wide : undefined}
           >
             <UnstyledButton
               aria-label={t`Enlarge screenshot: ${shot.caption}`}
@@ -65,7 +67,12 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
                 setTriggerIndex(position)
               }}
               w="100%"
-              className={classes.preview}
+              display="block"
+              style={{
+                overflow: 'hidden',
+                cursor: 'zoom-in',
+                borderRadius: 'var(--mantine-radius-md)',
+              }}
             >
               <ScreenshotImage
                 shot={shot}
@@ -76,7 +83,7 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
                 className={classes.thumbnail}
               />
             </UnstyledButton>
-            <Text px={8} pt={8} pb={4} size="xs" lh="1rem" c="var(--subtle)">
+            <Text m={0} px={8} pt={8} pb={4} size="xs" lh="1rem" c="var(--subtle)">
               {shot.caption}
             </Text>
           </Paper>
@@ -99,7 +106,9 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
           {enlarged && (
             <Stack align="center" justify="center" gap="sm" p="md" mih="100dvh">
               <Group justify="space-between" wrap="nowrap" gap="sm" w="100%" maw={1152}>
-                <Modal.Title className={classes.title}>{enlarged.caption}</Modal.Title>
+                <Modal.Title c="inherit" fz="sm" fw={500}>
+                  {enlarged.caption}
+                </Modal.Title>
                 <Modal.CloseButton
                   aria-label={t`Close`}
                   icon={<X aria-hidden size={20} />}

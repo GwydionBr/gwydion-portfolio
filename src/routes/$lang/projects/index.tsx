@@ -6,7 +6,6 @@ import { ProjectList } from '#/components/ProjectList'
 import { useProjects } from '#/content/react'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
-import classes from './Projects.module.css'
 
 export const Route = createFileRoute('/$lang/projects/')({
   head: ({ match }) =>
@@ -22,7 +21,7 @@ function Projects() {
   const { t } = useLingui()
   return (
     <View title={t`Projects`}>
-      <Paper radius="lg" px={20} py={8} fz="sm" lh="1.25rem" className={classes.list}>
+      <Paper px="lg" py="xs" fz="sm" lh="1.25rem">
         <ProjectList projects={useProjects()} label={t`Projects`} />
       </Paper>
     </View>

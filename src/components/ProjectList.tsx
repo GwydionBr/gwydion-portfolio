@@ -1,9 +1,8 @@
-import { Box, Group, Text } from '@mantine/core'
+import { Box, Divider, Group, List, Text, Title } from '@mantine/core'
 import type { Project } from '#/content'
 import { ProjectMeta } from './ProjectMeta'
 import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
-import lists from './lists.module.css'
 import classes from './ProjectList.module.css'
 
 /**
@@ -19,27 +18,28 @@ export function ProjectList({
   label: string
 }) {
   return (
-    <Box component="ol" aria-label={label} className={`${lists.reset} ${lists.divided}`}>
-      {projects.map((project) => (
+    <List type="ordered" role="list" aria-label={label} listStyleType="none" m={0} p={0}>
+      {projects.map((project, index) => (
         <li key={project.slug}>
+          {index > 0 && <Divider color="var(--line)" aria-hidden />}
           <ProjectPageLink slug={project.slug} className={classes.row}>
-            <ProjectSwatch accent={project.accent} className={classes.swatch} />
+            <ProjectSwatch accent={project.accent} mt={6} />
             <Box miw={0} style={{ flex: 1 }}>
-              <Group align="baseline" justify="space-between" className={classes.meta}>
-                <Text component="h2" inherit fw={500} c="var(--ink)">
+              <Group align="baseline" justify="space-between" gap="0 var(--mantine-spacing-sm)">
+                <Title order={2} fz="inherit" lh="inherit" fw={500}>
                   {project.title}
-                </Text>
+                </Title>
                 <Text component="span" size="xs" c="var(--subtle)">
                   <ProjectMeta project={project} />
                 </Text>
               </Group>
-              <Text component="span" inherit display="block" mt={2}>
+              <Text component="span" inherit display="block" mt={2} c="var(--muted)">
                 {project.summary}
               </Text>
             </Box>
           </ProjectPageLink>
         </li>
       ))}
-    </Box>
+    </List>
   )
 }

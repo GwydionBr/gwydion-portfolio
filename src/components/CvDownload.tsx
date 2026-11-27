@@ -8,7 +8,6 @@ import { useCv, useCvs } from '#/content/react'
 import { nativeNameOf } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
 import { Tile } from './Tile'
-import lists from './lists.module.css'
 
 type ButtonStyle = 'primary' | 'secondary'
 
@@ -28,10 +27,7 @@ function CvFileLink({
     <Button
       component="a"
       variant={look === 'primary' ? 'filled' : 'default'}
-      px="sm"
       leftSection={<DownloadSimple aria-hidden size={16} />}
-      styles={{ section: { marginInlineEnd: 6 } }}
-      fw={500}
       href={file.href}
       download
       hrefLang={file.language}
@@ -78,7 +74,7 @@ export function CvTile({ className }: { className?: string }) {
   return (
     <Tile title={t`CV`} className={className}>
       <Text inherit mt={4}>{t`1 page · PDF`}</Text>
-      <Group component="ul" mt="sm" gap={8} className={lists.reset}>
+      <Group component="ul" role="list" m={0} mt="sm" p={0} gap={8} style={{ listStyle: 'none' }}>
         {files.map((file) => (
           <li key={file.href}>
             <CvFileLink file={file} look="secondary">

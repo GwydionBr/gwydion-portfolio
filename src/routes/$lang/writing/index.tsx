@@ -6,7 +6,6 @@ import { PostList } from '#/components/PostList'
 import { usePosts } from '#/content/react'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
-import classes from './index.module.css'
 
 export const Route = createFileRoute('/$lang/writing/')({
   // No Writing without Posts: an empty blog would look abandoned (spec #31).
@@ -26,7 +25,7 @@ function Writing() {
   const { t } = useLingui()
   return (
     <View title={t`Writing`}>
-      <Paper p={20} radius="lg" className={classes.posts}>
+      <Paper p="lg">
         <PostList posts={usePosts()} />
       </Paper>
     </View>

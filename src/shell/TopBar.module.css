@@ -1,5 +1,0 @@
-.bar {
-  border-color: var(--line);
-  background: color-mix(in srgb, var(--sidebar) 95%, transparent);
-  backdrop-filter: blur(12px);
-}

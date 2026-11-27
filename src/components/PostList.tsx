@@ -3,14 +3,13 @@ import { useLingui } from '@lingui/react/macro'
 import type { Post } from '#/content'
 import { nativeNameOf } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
-import lists from './lists.module.css'
 
 /** Posts with their dates; a Post written in the other language is marked with its Post language. */
 export function PostList({ posts }: { posts: readonly Post[] }) {
   const { i18n } = useLingui()
   const siteLanguage = useSiteLanguage()
   return (
-    <Stack component="ul" mt={8} gap="sm" className={lists.reset}>
+    <Stack component="ul" role="list" m={0} mt={8} p={0} gap="sm" style={{ listStyle: 'none' }}>
       {posts.map((post) => (
         <li key={post.slug}>
           <Text inherit lang={post.language} fw={500} c="var(--ink)">

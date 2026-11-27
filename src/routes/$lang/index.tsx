@@ -13,7 +13,6 @@ import { useHasWriting, usePosts, useProfile, useProjects } from '#/content/reac
 import { useSiteLanguage } from '#/i18n/react'
 import { pageHead } from '#/seo/pageHead'
 import { ContactAction, View } from '#/shell/View'
-import classes from './index.module.css'
 
 export const Route = createFileRoute('/$lang/')({
   // Titled and described by the Profile itself.
@@ -51,10 +50,14 @@ function Overview() {
           <ProjectCards projects={featured} />
         </Box>
       )}
-      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={16} className={classes.tiles}>
+      <SimpleGrid
+        cols={{ base: 1, md: hasWriting ? 2 : 1 }}
+        spacing="md"
+        style={{ alignItems: 'start' }}
+      >
         {/* The Now tile takes the whole row until Writing exists. */}
-        <Tile title={t`Now`} className={hasWriting ? undefined : classes.fullRow}>
-          <Stack component="ul" mt={8} gap={8} className={classes.nowList}>
+        <Tile title={t`Now`}>
+          <Stack component="ul" mt={8} gap={8} mb={0} p={0} style={{ listStyle: 'none' }}>
             {now.map((item) => (
               <li key={item.label}>
                 <Text component="span" inherit fw={500} c="var(--ink)">
@@ -99,7 +102,8 @@ function Hero() {
         mt={20}
         hiddenFrom={SHELL_BREAKPOINT}
         aria-label={t`Availability`}
-        className={classes.availability}
+        gap="sm"
+        style={{ rowGap: '0.25rem' }}
       >
         <AvailabilityPill headline={availability.headline} />
         {availability.freelance && (
@@ -117,7 +121,7 @@ function ViewAllLink({ to }: { to: '/$lang/projects' | '/$lang/writing' }) {
   const { t } = useLingui()
   const lang = useSiteLanguage()
   return (
-    <RouterAnchor to={to} params={{ lang }} size="xs" underline="never" className={classes.viewAll}>
+    <RouterAnchor to={to} params={{ lang }} size="xs" c="var(--subtle)">
       {t`View all`}
     </RouterAnchor>
   )

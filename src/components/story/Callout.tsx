@@ -1,13 +1,5 @@
 import type { ReactNode } from 'react'
 import { Paper, Text } from '@mantine/core'
-import classes from './StoryBlocks.module.css'
-
-const TONES = {
-  note: classes.note,
-  /** Marks text that stands in for content still to be written; dimmed. */
-  placeholder: `${classes.surface} stand-in`,
-}
-
 /** A highlighted aside inside a story (`<Callout title="…">…</Callout>`). */
 export function Callout({
   title,
@@ -15,17 +7,23 @@ export function Callout({
   children,
 }: {
   title?: string
-  tone?: keyof typeof TONES
+  tone?: 'note' | 'placeholder'
   children: ReactNode
 }) {
   return (
-    <Paper component="aside" mt={24} p="md" radius="lg" className={TONES[tone]}>
+    <Paper
+      component="aside"
+      mt="lg"
+      p="md"
+      bg={tone === 'note' ? 'var(--selected)' : undefined}
+      className={tone === 'placeholder' ? 'stand-in' : undefined}
+    >
       {title && (
-        <Text fw={500} inherit c="var(--ink)">
+        <Text m={0} fw={500} inherit c="var(--ink)">
           {title}
         </Text>
       )}
-      <div className={classes.calloutBody}>{children}</div>
+      <div>{children}</div>
     </Paper>
   )
 }

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
-import { AppShell, Box, Group, Stack } from '@mantine/core'
+import { AppShell, Box, Divider, Group, Stack } from '@mantine/core'
 import { CircleHalf, Globe, type Icon } from '@phosphor-icons/react'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { ProfileLinkRows } from '#/components/ProfileLinks'
@@ -9,8 +9,7 @@ import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
-import { NavigationLink } from './NavigationLink'
-import classes from './Sidebar.module.css'
+import { NavigationRow } from './NavigationLink'
 import { ThemeSwitch } from './ThemeSwitch'
 
 /** The desktop sidebar: identity, navigation and, at the bottom, the Availability, the Profile links, the Site language and theme switches and the legal links. */
@@ -24,34 +23,25 @@ export function Sidebar() {
       aria-label={t`Sidebar`}
       // Below the breakpoint Mantine only slides it off screen; gone, it can't take keyboard focus.
       visibleFrom={SHELL_BREAKPOINT}
-      className={classes.sidebar}
     >
       <AppShell.Section p="xs">
         <Identity />
       </AppShell.Section>
-      <AppShell.Section grow mt="xs">
-        <nav aria-label={t`Main navigation`}>
-          <Stack component="ul" gap={2} className={classes.list}>
-            {entries.map((entry) => (
-              <li key={entry.to}>
-                <NavigationLink entry={entry} className={classes.entry}>
-                  {(label) => (
-                    <>
-                      <entry.icon aria-hidden className={classes.icon} />
-                      {label}
-                    </>
-                  )}
-                </NavigationLink>
-              </li>
-            ))}
-          </Stack>
-        </nav>
+      <AppShell.Section grow mt="xs" component="nav" aria-label={t`Main navigation`}>
+        <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
+          {entries.map((entry) => (
+            <li key={entry.to}>
+              <NavigationRow entry={entry} />
+            </li>
+          ))}
+        </Stack>
       </AppShell.Section>
       <AppShell.Section>
         <Stack gap="xs" pt="md">
           <AvailabilityTile compact />
           <ProfileLinkRows />
-          <Stack gap={6} className={classes.settings}>
+          <Divider color="var(--line)" />
+          <Stack gap={6}>
             <Setting icon={Globe}>
               <LanguageSwitch />
             </Setting>
@@ -59,7 +49,7 @@ export function Sidebar() {
               <ThemeSwitch />
             </Setting>
           </Stack>
-          <LegalLinks className={classes.legal} />
+          <LegalLinks pl="sm" pt={4} />
         </Stack>
       </AppShell.Section>
     </AppShell.Navbar>
@@ -70,7 +60,7 @@ export function Sidebar() {
 function Setting({ icon: Icon, children }: { icon: Icon; children: ReactNode }) {
   return (
     <Group gap="sm" wrap="nowrap" pl="sm">
-      <Icon aria-hidden className={classes.icon} />
+      <Icon aria-hidden size={16} color="var(--subtle)" style={{ flexShrink: 0 }} />
       <Box miw={0} flex={1}>
         {children}
       </Box>

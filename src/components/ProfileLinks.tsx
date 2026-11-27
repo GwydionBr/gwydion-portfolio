@@ -1,4 +1,4 @@
-import { Anchor, Group, Stack, Text } from '@mantine/core'
+import { Anchor, List, NavLink, Stack, Text, type MantineSpacing } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import {
   ArrowUpRight,
@@ -10,9 +10,6 @@ import {
 import { eventAttributes, type AnalyticsEvent } from '#/analytics/umami'
 import type { Profile, ProfileLink } from '#/content'
 import { useProfile } from '#/content/react'
-import sidebar from '#/shell/Sidebar.module.css'
-import lists from './lists.module.css'
-import classes from './ProfileLinks.module.css'
 
 /** The address of the Profile's email link ("hello@gwydion.dev"). */
 export function emailAddressOf(profile: Profile): string | undefined {
@@ -44,22 +41,19 @@ export function EmailLink({ className = '' }: { className?: string }) {
  * links. A placeholder link is named, dimmed, and not a working link.
  * The Contact view lists them, and the shell offers them on every page.
  */
-export function ProfileLinks({ className }: { className?: string }) {
+export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: MantineSpacing }) {
   const { t } = useLingui()
   const profile = useProfile()
   const labels = useProfileLinkLabels()
   return (
-    <Stack
-      component="ul"
-      mt={className === undefined ? 8 : undefined}
-      gap={8}
-      className={`${lists.reset} ${className ?? ''}`}
-    >
+    <List listStyleType="none" spacing={8} mt={mt} center>
       {profile.links.map((link) => {
         const Icon = ICONS[link.kind]
         return (
-          <Group component="li" key={link.kind} miw={0} gap={8} wrap="nowrap">
-            <Icon aria-hidden className={sidebar.icon} />
+          <List.Item
+            key={link.kind}
+            icon={<Icon aria-hidden size={16} color="var(--subtle)" style={{ display: 'block' }} />}
+          >
             {link.placeholder ? (
               <span className="stand-in">
                 <span>{labels[link.kind]}</span>{' '}
@@ -71,7 +65,6 @@ export function ProfileLinks({ className }: { className?: string }) {
               <Anchor
                 href={link.href}
                 {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
-                truncate
                 inherit
                 fw={500}
                 c="var(--ink)"
@@ -80,52 +73,43 @@ export function ProfileLinks({ className }: { className?: string }) {
                 {labels[link.kind]}
               </Anchor>
             )}
-          </Group>
+          </List.Item>
         )
       })}
-    </Stack>
+    </List>
   )
 }
 
-/** The Profile links as rows like the sidebar's navigation entries. */
+/** The Profile links as rows like the sidebar's navigation entries (Mantine NavLink). */
 export function ProfileLinkRows() {
   const { t } = useLingui()
   const profile = useProfile()
   const labels = useProfileLinkLabels()
   return (
-    <Stack component="ul" gap={2} className={lists.reset}>
+    <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
       {profile.links.map((link) => {
         const Icon = ICONS[link.kind]
         const external = link.kind !== 'email'
-        const icon = <Icon aria-hidden className={sidebar.icon} />
+        const icon = <Icon aria-hidden size={16} />
         return (
           <li key={link.kind}>
             {link.placeholder ? (
-              <span className={`stand-in ${sidebar.entry} ${classes.placeholder}`}>
-                {icon}
-                <span>{labels[link.kind]}</span>
-                <Text component="span" ml="auto" size="xs">{t`coming soon`}</Text>
-              </span>
+              <NavLink
+                component="span"
+                className="stand-in"
+                label={labels[link.kind]}
+                leftSection={icon}
+                rightSection={<Text size="xs">{t`coming soon`}</Text>}
+              />
             ) : (
-              <Anchor
+              <NavLink
                 href={link.href}
                 {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
-                underline="never"
-                className={sidebar.entry}
+                label={labels[link.kind]}
+                leftSection={icon}
+                rightSection={external && <ArrowUpRight aria-hidden size={14} />}
                 {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              >
-                {icon}
-                <Text component="span" inherit truncate>
-                  {labels[link.kind]}
-                </Text>
-                {external && (
-                  <ArrowUpRight
-                    aria-hidden
-                    className={sidebar.icon}
-                    style={{ width: 14, height: 14, marginInlineStart: 'auto' }}
-                  />
-                )}
-              </Anchor>
+              />
             )}
           </li>
         )

@@ -1,13 +1,11 @@
-import { Group, Paper, SimpleGrid, Text } from '@mantine/core'
+import { Group, Paper, SimpleGrid, Text, Title } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import type { Project } from '#/content'
 import { ProjectMeta } from './ProjectMeta'
 import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
 import { TagList } from './TagList'
-import lists from './lists.module.css'
 import classes from './ProjectCards.module.css'
-import tile from './Tile.module.css'
 
 /** How many of its stack a Project card names. */
 const CARD_STACK = 4
@@ -19,7 +17,15 @@ const CARD_STACK = 4
  */
 export function ProjectCards({ projects }: { projects: readonly Project[] }) {
   return (
-    <SimpleGrid component="ul" cols={{ base: 1, md: 2 }} spacing="md" className={lists.reset}>
+    <SimpleGrid
+      component="ul"
+      cols={{ base: 1, md: 2 }}
+      spacing="md"
+      role="list"
+      m={0}
+      p={0}
+      style={{ listStyle: 'none' }}
+    >
       {projects.map((project) => (
         <li key={project.slug}>
           <ProjectCard project={project} />
@@ -38,8 +44,9 @@ function ProjectCard({ project }: { project: Project }) {
       pos="relative"
       h="100%"
       p="lg"
-      radius="lg"
-      className={`${tile.surface} ${classes.card}`}
+      display="flex"
+      style={{ flexDirection: 'column' }}
+      className={classes.card}
     >
       <Group component="p" gap={8} fz="xs" lh={4 / 3} c="var(--subtle)" wrap="nowrap">
         <ProjectSwatch accent={project.accent} />
@@ -47,19 +54,11 @@ function ProjectCard({ project }: { project: Project }) {
           <ProjectMeta project={project} />
         </span>
       </Group>
-      <Text
-        component="h3"
-        size="md"
-        lh={1.5}
-        mt={8}
-        fw={600}
-        c="var(--ink)"
-        className={classes.title}
-      >
+      <Title order={3} fz="md" mt={8}>
         <ProjectPageLink slug={project.slug} className={classes.link}>
           {project.title}
         </ProjectPageLink>
-      </Text>
+      </Title>
       <Text inherit mt={4} lh={1.625}>
         {project.summary}
       </Text>
@@ -67,8 +66,12 @@ function ProjectCard({ project }: { project: Project }) {
         <Group
           component="ul"
           aria-label={t`Numbers`}
+          role="list"
+          m={0}
           mt="md"
-          className={`${lists.reset} ${classes.stats}`}
+          p={0}
+          gap="0.5rem 1.5rem"
+          style={{ listStyle: 'none' }}
         >
           {project.stats.map((stat) => (
             <Group component="li" key={stat.label} align="baseline" gap={6} wrap="nowrap">
@@ -78,7 +81,8 @@ function ProjectCard({ project }: { project: Project }) {
                 lh={28 / 18}
                 fw={600}
                 c="var(--ink)"
-                className={classes.statValue}
+                lts="-0.025em"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
               >
                 {stat.value}
               </Text>
@@ -89,11 +93,7 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </Group>
       )}
-      <TagList
-        label={t`Stack`}
-        tags={project.stack.slice(0, CARD_STACK)}
-        className={classes.stack}
-      />
+      <TagList label={t`Stack`} tags={project.stack.slice(0, CARD_STACK)} mt="auto" pt="md" />
     </Paper>
   )
 }

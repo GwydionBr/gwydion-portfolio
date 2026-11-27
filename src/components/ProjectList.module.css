@@ -1,3 +1,4 @@
+/* A tall navigation row whose link contains a native heading. */
 .row {
   display: flex;
   align-items: flex-start;
@@ -9,12 +10,4 @@
   &:hover {
     background: var(--hover);
   }
-}
-
-.swatch {
-  margin-top: 0.375rem;
-}
-
-.meta {
-  gap: 0 var(--mantine-spacing-sm);
 }

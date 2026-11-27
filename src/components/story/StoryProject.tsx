@@ -1,10 +1,15 @@
+import { Typography } from '@mantine/core'
 import { createContext, use, type ReactNode } from 'react'
 
 const StoryProjectContext = createContext<string | null>(null)
 
-/** Tells the story components inside whose story they are in: the Project at `slug`. */
+/** Provides Project context to story components and applies the site's Markdown theme. */
 export function StoryProject({ slug, children }: { slug: string; children: ReactNode }) {
-  return <StoryProjectContext value={slug}>{children}</StoryProjectContext>
+  return (
+    <StoryProjectContext value={slug}>
+      <Typography>{children}</Typography>
+    </StoryProjectContext>
+  )
 }
 
 /** The slug of the Project whose story is being rendered. */

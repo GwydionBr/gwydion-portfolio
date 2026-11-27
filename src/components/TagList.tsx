@@ -1,33 +1,34 @@
-import { Group, Text } from '@mantine/core'
-import lists from './lists.module.css'
+import { Badge, Group, type MantineSpacing } from '@mantine/core'
 
 /** Short labels as a row of chips, for example skills or a Project's stack. */
 export function TagList({
   label,
   tags,
-  className = '',
+  mt = 0,
+  pt = 0,
 }: {
   /** The list's accessible name. */
   label: string
   tags: readonly string[]
-  /** Placement only (margins). */
-  className?: string
+  mt?: MantineSpacing
+  pt?: MantineSpacing
 }) {
   return (
-    <Group component="ul" aria-label={label} gap={6} className={`${lists.reset} ${className}`}>
+    <Group
+      component="ul"
+      role="list"
+      aria-label={label}
+      gap={6}
+      m={0}
+      mt={mt}
+      p={0}
+      pt={pt}
+      style={{ listStyle: 'none' }}
+    >
       {tags.map((tag) => (
-        <Text
-          component="li"
-          key={tag}
-          size="xs"
-          px={8}
-          py={2}
-          bg="var(--selected)"
-          lh={4 / 3}
-          style={{ borderRadius: 6 }}
-        >
+        <Badge component="li" key={tag}>
           {tag}
-        </Text>
+        </Badge>
       ))}
     </Group>
   )

@@ -2,11 +2,12 @@ import { useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { LANGUAGES, nativeNameOf, pathInLanguage } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
-import classes from './Segmented.module.css'
+import classes from './LanguageSwitch.module.css'
 
 /**
  * Links to the current page in every Site language; the shown one is marked
  * current. `short` writes each as its code ("EN") where the full name won't fit.
+ * Real links, so it looks like the theme's SegmentedControl without being one.
  */
 export function LanguageSwitch({ short = false }: { short?: boolean }) {
   const { t } = useLingui()

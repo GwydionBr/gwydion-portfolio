@@ -1,12 +1,11 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { Box, Group, Paper, Text, Title } from '@mantine/core'
 import { CaretLeft } from '@phosphor-icons/react'
 import { trackEvent } from '#/analytics/umami'
-import { RouterButton, RouterUnstyled } from '#/components/links'
+import { RouterButton } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
 import { SHELL_BREAKPOINT } from './breakpoint'
-import classes from './View.module.css'
 
 /** A list view a detail view leads back to. */
 export interface BackTarget {
@@ -59,7 +58,7 @@ export function View({
       <>
         <Box component="header" mb={40} maw={768}>
           {locationLine}
-          <Title order={1} mt="sm" className={classes.heroTitle}>
+          <Title order={1} mt="sm" fz={{ base: '1.875rem', xs: '2.25rem' }} lh={1.2}>
             {title}
           </Title>
           {hero}
@@ -72,25 +71,28 @@ export function View({
       <Group component="header" mb="lg" justify="space-between" align="flex-end" gap="md">
         <Box miw={0}>
           {back && (
-            <RouterUnstyled
+            <RouterButton
               to={back.to}
               params={{ lang }}
               aria-label={back.label}
               // It leads up to the list; the list is not the page shown.
               activeOptions={{ exact: true }}
               hiddenFrom={SHELL_BREAKPOINT}
-              className={classes.back}
+              variant="subtle"
+              size="compact-sm"
+              ml={-6}
+              mb={4}
+              leftSection={<CaretLeft aria-hidden size={16} />}
             >
-              <CaretLeft aria-hidden className={classes.backIcon} />
               {back.text}
-            </RouterUnstyled>
+            </RouterButton>
           )}
           {locationLine}
-          <Title order={1} mt={4} className={classes.title}>
+          <Title order={1} mt={4}>
             {title}
           </Title>
         </Box>
-        {action === undefined ? <ContactAction className={classes.action} /> : action}
+        {action === undefined ? <ContactAction style={{ flexShrink: 0 }} /> : action}
       </Group>
       {children}
     </>
@@ -100,11 +102,11 @@ export function View({
 /** "Get in touch": a button-styled link to Contact. */
 export function ContactAction({
   look = 'primary',
-  className,
+  style,
 }: {
   look?: 'primary' | 'secondary'
   /** Placement only. */
-  className?: string
+  style?: CSSProperties
 }) {
   const { t } = useLingui()
   const lang = useSiteLanguage()
@@ -114,7 +116,7 @@ export function ContactAction({
       params={{ lang }}
       onClick={() => trackEvent({ name: 'kontakt-klick' })}
       variant={look === 'primary' ? 'filled' : 'default'}
-      className={className}
+      style={style}
     >
       {t`Get in touch`}
     </RouterButton>
@@ -124,7 +126,7 @@ export function ContactAction({
 /** A card standing in for a view's content until its ticket builds it. */
 export function Placeholder({ children }: { children: ReactNode }) {
   return (
-    <Paper maw={672} p="lg" radius="lg" className={classes.placeholder}>
+    <Paper maw={672} p="lg" c="var(--subtle)">
       {children}
     </Paper>
   )

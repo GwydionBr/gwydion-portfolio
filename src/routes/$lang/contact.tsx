@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { SimpleGrid } from '@mantine/core'
+import { Box, Grid, Stack } from '@mantine/core'
 import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
@@ -8,7 +8,7 @@ import { Tile } from '#/components/Tile'
 import { ContactForm } from '#/contact/ContactForm'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
-import classes from './contact.module.css'
+import { SHELL_BREAKPOINT } from '#/shell/breakpoint'
 
 export const Route = createFileRoute('/$lang/contact')({
   head: ({ match }) =>
@@ -25,16 +25,24 @@ function Contact() {
   return (
     // No "Get in touch" action: this is where it leads.
     <View title={t`Contact`} action={null}>
-      <SimpleGrid cols={{ base: 1, md: 3 }} spacing={16}>
-        <Tile title={t`Write a message`} className={classes.form}>
-          <ContactForm />
-        </Tile>
-        <Tile title={t`Directly`}>
-          <ProfileLinks />
-        </Tile>
-        {/* Phones only: from the shell breakpoint up the sidebar shows the Availability. */}
-        <AvailabilityTile className={classes.availability} />
-      </SimpleGrid>
+      <Grid gap="md">
+        <Grid.Col span={{ base: 12, md: 8 }}>
+          <Tile title={t`Write a message`}>
+            <ContactForm />
+          </Tile>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, md: 4 }}>
+          <Stack gap="md">
+            <Tile title={t`Directly`}>
+              <ProfileLinks />
+            </Tile>
+            {/* Phones only: from the shell breakpoint up the sidebar shows the Availability. */}
+            <Box hiddenFrom={SHELL_BREAKPOINT}>
+              <AvailabilityTile />
+            </Box>
+          </Stack>
+        </Grid.Col>
+      </Grid>
     </View>
   )
 }

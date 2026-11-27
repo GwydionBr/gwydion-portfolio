@@ -14,7 +14,7 @@ export function TabBar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
   return (
-    <AppShell.Footer hiddenFrom={SHELL_BREAKPOINT} className={classes.bar}>
+    <AppShell.Footer hiddenFrom={SHELL_BREAKPOINT}>
       <nav aria-label={t`Tab bar`}>
         <ul className={classes.tabs} style={{ '--tab-count': entries.length } as CSSProperties}>
           {entries.map((entry) => (

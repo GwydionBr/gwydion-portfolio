@@ -1,20 +1,7 @@
 .wide {
-  composes: surface from './StoryBlocks.module.css';
-
   @media (min-width: 36em) {
     grid-column: span 2;
   }
-}
-
-.preview {
-  display: block;
-  overflow: hidden;
-  cursor: zoom-in;
-}
-
-.preview,
-.enlarged {
-  border-radius: 0.75rem;
 }
 
 /*
@@ -41,13 +28,8 @@
   color: var(--ink);
 }
 
-.title {
-  color: inherit;
-  font-size: var(--mantine-font-size-sm);
-  font-weight: 500;
-}
-
 .enlarged {
+  border-radius: var(--mantine-radius-md);
   vertical-align: middle;
   width: auto;
   max-width: 100%;

@@ -1,21 +1,26 @@
-import { Box, Group } from '@mantine/core'
-import classes from './AvailabilityPill.module.css'
+import { Badge, Box } from '@mantine/core'
 
 /** The Availability headline as a green status pill. */
 export function AvailabilityPill({ headline }: { headline: string }) {
   return (
-    <Group
+    <Badge
       component="p"
-      gap={8}
-      px="sm"
-      py={4}
-      fw={500}
-      c="var(--available)"
-      className={classes.pill}
-      wrap="nowrap"
+      color="available"
+      size="lg"
+      radius="xl"
+      m={0}
+      leftSection={
+        <Box
+          component="span"
+          aria-hidden
+          w={6}
+          h={6}
+          bg="var(--available)"
+          style={{ borderRadius: '50%' }}
+        />
+      }
     >
-      <Box component="span" aria-hidden w={6} h={6} className={classes.dot} />
       {headline}
-    </Group>
+    </Badge>
   )
 }

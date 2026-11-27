@@ -1,9 +1,3 @@
-.bar {
-  border-color: var(--line);
-  background: color-mix(in srgb, var(--sidebar) 95%, transparent);
-  backdrop-filter: blur(12px);
-}
-
 /*
  * One indicator for the whole bar, placed only from `aria-current`: the
  * count follows the visible entries (Writing is optional), the first paint

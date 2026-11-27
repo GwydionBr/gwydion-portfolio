@@ -1,23 +1,9 @@
 .entry {
   display: grid;
   gap: 0.25rem;
-  padding-block: var(--mantine-spacing-sm);
 
   @media (min-width: 36em) {
     grid-template-columns: 8rem 1fr;
     gap: var(--mantine-spacing-md);
-  }
-}
-
-.link {
-  display: inline-block;
-  margin-top: 0.25rem;
-  color: var(--ink);
-  font-size: var(--mantine-font-size-xs);
-  font-weight: 500;
-  text-underline-offset: 2px;
-
-  &:hover {
-    text-decoration: underline;
   }
 }
