@@ -104,6 +104,15 @@
   }
 }
 
+/* Kbd: a key on the surface, quiet beside what it belongs to. */
+.kbd {
+  border-color: var(--line);
+  background-color: var(--surface);
+  color: var(--subtle);
+  font-family: inherit;
+  font-weight: 500;
+}
+
 /* Form fields: on the canvas inside a card, a hairline, the focus colour when focused. */
 .input {
   --input-bd: var(--line);
@@ -215,4 +224,66 @@
   background-color: var(--selected);
   font-size: 0.9em;
   color: inherit;
+}
+
+/* Spotlight, the site search (after .input: its field sits on the card, borderless). */
+.spotlightSearch {
+  --input-bd: transparent;
+  --input-bd-focus: transparent;
+  background-color: transparent;
+  color: var(--ink);
+
+  /* The dialog's one field, focused while it is open: the caret is its focus mark. */
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.spotlightList {
+  border-color: var(--line);
+}
+
+.spotlightGroup::before {
+  padding-block: var(--mantine-spacing-xs) 0.25rem;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--subtle);
+}
+
+.spotlightAction {
+  border-radius: var(--mantine-radius-md);
+  padding-block: 0.5rem;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--muted);
+
+  @media (hover: hover) {
+    &:where(:not([data-selected])):hover {
+      background-color: var(--hover);
+    }
+  }
+
+  &:where([data-selected]) {
+    --action-description-color: var(--subtle);
+    --action-description-opacity: 1;
+    background-color: var(--selected);
+    color: var(--ink);
+  }
+}
+
+.spotlightDescription {
+  color: var(--subtle);
+}
+
+.spotlightEmpty {
+  color: var(--subtle);
+}
+
+/* Read by screen readers, not shown. */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
