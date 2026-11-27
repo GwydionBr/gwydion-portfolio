@@ -113,6 +113,16 @@
 
 .navLinkSection {
   color: var(--subtle);
+
+  /* Beside a two-line row (label and description), at the label's line. */
+  .navLink:has(.navLinkDescription) > & {
+    align-self: flex-start;
+  }
+}
+
+.navLinkDescription {
+  margin-top: 2px;
+  color: var(--subtle);
 }
 
 /* SegmentedControl: a sunken track with a raised segment. */

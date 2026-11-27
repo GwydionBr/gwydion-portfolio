@@ -2,8 +2,11 @@ import type { Theme } from '#/theme/theme'
 
 type Listener = (event: MediaQueryListEvent) => void
 
-/** The window widths the tests open pages at, in CSS pixels: either side of the shell's breakpoint (48em). */
-export const SCREENS = { phone: 390, desktop: 1280 } as const
+/**
+ * The window widths the tests open pages at, in CSS pixels: either side of
+ * the shell's breakpoint (48em), and wide enough for the second sidebar (75em).
+ */
+export const SCREENS = { phone: 390, desktop: 1024, wide: 1440 } as const
 export type Screen = keyof typeof SCREENS
 
 /**

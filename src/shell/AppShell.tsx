@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { AppShell as MantineAppShell, Box } from '@mantine/core'
+import { useMatches } from '@tanstack/react-router'
 import classes from './AppShell.module.css'
 import { SHELL_BREAKPOINT } from './breakpoint'
+import { SECONDARY_NAVBAR_MOTION, SecondaryNavbar } from './SecondaryNavbar'
 import { Sidebar } from './Sidebar'
 import { SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarWidth'
 import { SiteSearch } from './SiteSearch'
@@ -17,15 +19,25 @@ const MAIN_ID = 'main'
  * sidebar from the `sm` breakpoint up, which the visitor can resize
  * (src/shell/sidebarWidth.ts); below it a top bar (identity) and a
  * bottom tab bar whose More sheet holds what the sidebar has besides the
- * navigation. The site search opens over all of it. Views render into the
- * main pane through `View`.
+ * navigation. On wide screens a view may ask for a second sidebar beside the
+ * first (`secondaryNavigation`), which slides in as the main pane makes room.
+ * The site search opens over all of it. Views render into the main pane
+ * through `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
   const resize = useSidebarResize(t`Resize sidebar`)
+  const secondary = useMatches({
+    select: (matches) =>
+      matches.find((match) => match.staticData.secondaryNavigation)?.staticData.secondaryNavigation,
+  })
   return (
     <MantineAppShell
+      className={classes.shell}
       resize={resize}
+      // The main pane makes room for the second sidebar in step with its slide.
+      transitionDuration={SECONDARY_NAVBAR_MOTION.duration}
+      transitionTimingFunction={SECONDARY_NAVBAR_MOTION.timingFunction}
       navbar={{
         width: SIDEBAR_WIDTH_CSS,
         breakpoint: SHELL_BREAKPOINT,
@@ -39,8 +51,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         {t`Skip to content`}
       </a>
       <Sidebar />
+      <SecondaryNavbar shown={secondary} />
       <TopBar />
-      <MantineAppShell.Main id={MAIN_ID} tabIndex={-1} className={classes.main}>
+      <MantineAppShell.Main
+        id={MAIN_ID}
+        tabIndex={-1}
+        className={classes.main}
+        data-secondary-navbar={secondary !== undefined || undefined}
+      >
         <Box maw={1024} mx="auto">
           {children}
         </Box>

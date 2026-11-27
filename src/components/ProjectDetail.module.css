@@ -1,8 +1,13 @@
+/* The detail decides its layout by the room it gets, not by the window: the facts rail needs space beside the story. */
+.detail {
+  container-type: inline-size;
+}
+
 .article {
   display: grid;
   gap: 1.5rem;
 
-  @media (min-width: 62em) {
+  @container (min-width: 46rem) {
     grid-template-columns: minmax(0, 1fr) 17rem;
     column-gap: 2.5rem;
   }
@@ -11,7 +16,7 @@
 .facts {
   align-self: start;
 
-  @media (min-width: 62em) {
+  @container (min-width: 46rem) {
     position: sticky;
     top: 2.5rem;
     grid-column: 2;

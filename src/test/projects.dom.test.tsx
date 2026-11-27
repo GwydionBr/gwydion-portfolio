@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { within } from '@testing-library/dom'
+import { screen, waitFor, within } from '@testing-library/dom'
 import { fixtureContent } from './contentFixtures'
 import { navigationOf, visit } from './visit'
 
@@ -115,6 +115,62 @@ describe('A Project page', () => {
     const page = await visit('/en/projects/does-not-exist', { content: fixtureContent() })
 
     expect(page.title()).toBe('Page not found')
+  })
+})
+
+describe('The second sidebar beside the Projects (the CSS shows it from lg up)', () => {
+  const sidebar = (name = 'Projects') => within(screen.getByRole('navigation', { name }))
+
+  it('opens the first Project from /projects on a wide screen, every Project listed beside it', async () => {
+    const page = await visit('/en/projects', { content: fixtureContent(), screen: 'wide' })
+
+    expect(page.path()).toBe('/en/projects/self-engine')
+    expect(page.title()).toBe('Fixture Engine')
+    const links = sidebar().getAllByRole('link')
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      '/en/projects/self-engine',
+      '/en/projects/fixture-studio',
+      '/en/projects/fixture-kit',
+    ])
+    expect(links[0]!.textContent).toBe('Fixture EngineOwn product · 2025–now')
+    expect(navigationOf('Projects').current).toEqual(['Fixture EngineOwn product · 2025–now'])
+    expect(navigationOf('Main navigation').current).toEqual(['Projects'])
+  })
+
+  it('opens another Project from it, and stays where it is', async () => {
+    const page = await visit('/de/projects/fixture-studio', {
+      content: fixtureContent(),
+      screen: 'wide',
+    })
+    const list = screen.getByRole('navigation', { name: 'Projekte' })
+
+    await page.click(sidebar('Projekte').getByRole('link', { name: /Fixture Kit/ }))
+
+    expect(page.path()).toBe('/de/projects/fixture-kit')
+    expect(page.title()).toBe('Fixture Kit')
+    expect(screen.getByRole('navigation', { name: 'Projekte' })).toBe(list)
+    expect(navigationOf('Projekte').current).toEqual(['Fixture KitOpen Source · 2024'])
+  })
+
+  it('keeps the list as a view below lg, and opens the first Project once the window is wide enough', async () => {
+    const page = await visit('/en/projects', { content: fixtureContent() })
+    expect(page.title()).toBe('Projects')
+
+    await page.resize('wide')
+
+    await waitFor(() => expect(page.path()).toBe('/en/projects/self-engine'))
+    expect(page.title()).toBe('Fixture Engine')
+  })
+
+  it('is gone outside the Projects', async () => {
+    const page = await visit('/en/projects/fixture-kit', {
+      content: fixtureContent(),
+      screen: 'wide',
+    })
+
+    await page.click(within(page.sidebar('Sidebar')).getByRole('link', { name: 'About' }))
+
+    await waitFor(() => expect(screen.queryByRole('navigation', { name: 'Projects' })).toBeNull())
   })
 })
 

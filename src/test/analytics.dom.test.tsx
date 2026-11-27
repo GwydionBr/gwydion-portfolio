@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
-import { within } from '@testing-library/dom'
+import { screen, within } from '@testing-library/dom'
 import { fixtureContent } from './contentFixtures'
 import { visit } from './visit'
 
@@ -40,6 +40,16 @@ describe('Umami', () => {
 
     expect(track).toHaveBeenCalledWith('projekt-klick', { projekt: 'fixture-studio' })
     expect(page.path()).toBe('/en/projects/fixture-studio')
+  })
+
+  it('counts a click on another Project in the second sidebar beside a Project page', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+
+    const projects = within(screen.getByRole('navigation', { name: 'Projects' }))
+    await page.click(projects.getByRole('link', { name: /Fixture Kit/ }))
+
+    expect(track).toHaveBeenCalledWith('projekt-klick', { projekt: 'fixture-kit' })
+    expect(page.path()).toBe('/en/projects/fixture-kit')
   })
 
   it('counts "Get in touch", which still opens Contact in the app', async () => {

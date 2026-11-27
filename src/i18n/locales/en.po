@@ -22,7 +22,7 @@ msgstr "About"
 msgid "Availability"
 msgstr "Availability"
 
-#: src/routes/$lang/projects/$slug.tsx
+#: src/components/ProjectDetail.tsx
 msgid "Back to Projects"
 msgstr "Back to Projects"
 
@@ -184,7 +184,7 @@ msgid "Now"
 msgstr "Now"
 
 #: src/components/ProjectCards.tsx
-#: src/routes/$lang/projects/$slug.tsx
+#: src/components/ProjectDetail.tsx
 msgid "Numbers"
 msgstr "Numbers"
 
@@ -232,7 +232,8 @@ msgstr "Previous screenshot"
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: src/routes/$lang/projects/$slug.tsx
+#: src/components/ProjectDetail.tsx
+#: src/components/ProjectNavigation.tsx
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts
 #: src/shell/searchEntries.tsx
