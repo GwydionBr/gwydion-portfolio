@@ -7,6 +7,7 @@ import { useShellNavigation } from './breakpoint'
 import { useShortcutLabel } from './shortcut'
 import {
   SIDEBAR_ARIA_SHORTCUTS,
+  SIDEBAR_ICON_SIZE,
   SIDEBAR_SHORTCUT,
   toggleSidebar,
   useSidebarCollapsed,
@@ -71,7 +72,7 @@ export function SidebarToggle({ className }: { className?: string }) {
         aria-keyshortcuts={SIDEBAR_ARIA_SHORTCUTS}
         className={className}
       >
-        <SidebarSimple aria-hidden size={16} />
+        <SidebarSimple aria-hidden size={SIDEBAR_ICON_SIZE} />
       </ActionIcon>
     </Tooltip>
   )

@@ -3,6 +3,7 @@ import { useLingui } from '@lingui/react'
 import { RouterNavLink, RouterUnstyled } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
 import type { NavigationEntry } from './navigation'
+import { SIDEBAR_ICON_SIZE } from './sidebarLayout'
 import { RailTooltip } from './SidebarRail'
 
 /** The link props and translated label of a navigation entry, in the current Site language. */
@@ -24,7 +25,11 @@ export function NavigationRow({ entry }: { entry: NavigationEntry }) {
   const { link, label } = useEntryLink(entry)
   return (
     <RailTooltip label={label}>
-      <RouterNavLink {...link} label={label} leftSection={<entry.icon aria-hidden size={16} />} />
+      <RouterNavLink
+        {...link}
+        label={label}
+        leftSection={<entry.icon aria-hidden size={SIDEBAR_ICON_SIZE} />}
+      />
     </RailTooltip>
   )
 }

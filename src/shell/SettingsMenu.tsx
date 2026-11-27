@@ -4,7 +4,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { GearSix } from '@phosphor-icons/react'
 import { useCloseWhenHidden } from './breakpoint'
 import { LegalLinks } from './LegalLinks'
-import { useSidebarCollapsed } from './sidebarLayout'
+import { SIDEBAR_ICON_SIZE, useSidebarCollapsed } from './sidebarLayout'
 import { RailTooltip } from './SidebarRail'
 import { SiteSettings } from './SiteSettings'
 
@@ -37,7 +37,7 @@ export function SettingsMenu() {
           <NavLink
             component="button"
             label={t`Settings`}
-            leftSection={<GearSix aria-hidden size={16} />}
+            leftSection={<GearSix aria-hidden size={SIDEBAR_ICON_SIZE} />}
             active={opened}
             onClick={toggle}
           />

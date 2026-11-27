@@ -37,6 +37,13 @@
   :global(.mantine-NavLink-body) {
     white-space: nowrap;
   }
+
+  /* A row's icon centred on the rail's centre line, whatever its size. */
+  :global(.mantine-NavLink-root) {
+    padding-inline-start: calc(
+      var(--sidebar-rail-width) / 2 - var(--mantine-spacing-sm) - var(--sidebar-icon-size) / 2
+    );
+  }
 }
 
 /* The portrait sits in the rail's centre. */

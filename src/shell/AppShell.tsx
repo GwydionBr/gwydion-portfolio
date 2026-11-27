@@ -9,7 +9,12 @@ import { SHELL_MOTION } from './motion'
 import { SecondaryNavbar } from './SecondaryNavbar'
 import { secondaryNavigationOf } from './secondaryNavigation'
 import { Sidebar } from './Sidebar'
-import { SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarLayout'
+import {
+  SIDEBAR_ICON_SIZE,
+  SIDEBAR_RAIL_WIDTH,
+  SIDEBAR_WIDTH_CSS,
+  useSidebarResize,
+} from './sidebarLayout'
 import { SiteSearch } from './SiteSearch'
 import { TabBar } from './TabBar'
 import { Toasts } from './toast'
@@ -41,6 +46,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       // The panes' widths for the stylesheets, from the same constants as the code.
       style={{
         '--sidebar-rail-width': `calc(${SIDEBAR_RAIL_WIDTH / 16}rem * var(--mantine-scale))`,
+        '--sidebar-icon-size': `${SIDEBAR_ICON_SIZE}px`,
         '--secondary-navbar-size': paneWidthCss(SECONDARY_NAVBAR_WIDTH),
       }}
       resize={resize}
