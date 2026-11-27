@@ -7,6 +7,7 @@ import { SHELL_BREAKPOINT } from './breakpoint'
 import { paneWidthCss, SECONDARY_NAVBAR_WIDTH } from './paneWidth'
 import { SHELL_MOTION } from './motion'
 import { SecondaryNavbar } from './SecondaryNavbar'
+import { secondaryNavigationOf } from './secondaryNavigation'
 import { Sidebar } from './Sidebar'
 import { SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarLayout'
 import { SiteSearch } from './SiteSearch'
@@ -31,8 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
   const resize = useSidebarResize(t`Resize sidebar`)
   const secondary = useMatches({
-    select: (matches) =>
-      matches.find((match) => match.staticData.secondaryNavigation)?.staticData.secondaryNavigation,
+    select: (matches) => secondaryNavigationOf(matches.map((match) => match.staticData)),
   })
   return (
     <MantineAppShell

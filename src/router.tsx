@@ -1,8 +1,8 @@
 import { createRouter, type RouterHistory } from '@tanstack/react-router'
 import { siteContent, type Content } from './content'
 import { routeTree } from './routeTree.gen'
-import { PAGE_TRANSITION } from './shell/pageTransition'
-import type { SecondaryNavigation } from './shell/SecondaryNavbar'
+import { pageTransition } from './shell/pageTransition'
+import { secondaryNavigationOf, type SecondaryNavigation } from './shell/secondaryNavigation'
 
 /** What every route can read from its context: the content module (ADR 0004). */
 export interface RouterContext {
@@ -23,7 +23,7 @@ export function createAppRouter({
   /** Load as the server does per request (tests of redirects and response headers). */
   isServer?: boolean
 } = {}) {
-  return createRouter({
+  const router = createRouter({
     routeTree,
     history,
     isServer,
@@ -32,8 +32,14 @@ export function createAppRouter({
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     // Pages fade over in the main pane while the shell stays (src/shell/pageTransition.ts).
-    defaultViewTransition: PAGE_TRANSITION,
+    defaultViewTransition: pageTransition({
+      secondaryNavigationAt: (pathname: string): SecondaryNavigation | undefined =>
+        secondaryNavigationOf(
+          router.getMatchedRoutes(pathname)[0].map((route) => route.options.staticData),
+        ),
+    }),
   })
+  return router
 }
 
 /** Called by TanStack Start once per server request and once in the browser. */

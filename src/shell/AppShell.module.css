@@ -56,12 +56,13 @@
 }
 
 /*
- * The page transition (src/shell/pageTransition.ts). The view fades over to
- * the next one, the next one rising a little into place; the rest of the
- * page (the root) changes at once, and so do the phone's top and tab bars,
- * captured on their own so the view never passes over them. The view
- * doesn't travel: a page that was scrolled starts the next one at the top,
- * so both images stand where the next view is.
+ * The page transition (src/shell/pageTransition.ts). The next view fades in,
+ * rising a little into place; the rest of the page (the root) changes at
+ * once, and so do the phone's top and tab bars, captured on their own so the
+ * view never passes over them. The view's group doesn't travel: it stands
+ * where the next view is. The old view shows under it, fading out, only in
+ * a crossfade: where it stood in the same place (not scrolled, the pane
+ * neither narrowing nor widening).
  */
 .view {
   view-transition-name: page;
@@ -75,6 +76,7 @@
   view-transition-name: tab-bar;
 }
 
+::view-transition-group(root),
 ::view-transition-group(page),
 ::view-transition-old(root),
 ::view-transition-new(root),
@@ -92,11 +94,19 @@
   opacity: 0;
 }
 
-/* The shell's easing (src/shell/motion.ts), shorter: a page change shouldn't hold the visitor up. */
 ::view-transition-old(page) {
-  animation: page-out 120ms ease-out both;
+  animation: none;
+  opacity: 0;
+  /* As wide as it was, should the pane change under it. */
+  inline-size: auto;
 }
 
+:root:active-view-transition-type(crossfade)::view-transition-old(page) {
+  animation: page-out 120ms ease-out both;
+  opacity: 1;
+}
+
+/* The shell's easing (src/shell/motion.ts), shorter: a page change shouldn't hold the visitor up. */
 ::view-transition-new(page) {
   animation: page-in 220ms cubic-bezier(0.32, 0.72, 0, 1) both;
 }
@@ -115,7 +125,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(page),
+  :root:active-view-transition-type(crossfade)::view-transition-old(page),
   ::view-transition-new(page) {
     animation: none;
   }
