@@ -1,0 +1,57 @@
+{/* ENTWURF von Claude aus dem tattoo-sites-Repo und den Live-Websites (November 2026). Gwydion prüft ihn. */}
+
+<ScreenshotGallery views={['endstation-start', 'guajaala-start']} />
+
+## Was es ist
+
+Endstation Tattoo ist ein Studio in Ottobeuren mit drei Künstlern. Ich habe die Website des Studios neu gebaut und dazu die eigene Website eines seiner Künstler, Guajaala. Zwei weitere Künstler-Websites sind in Arbeit.
+
+Jede Website gehört jemand anderem und sieht anders aus. Alle haben dasselbe Formular für Terminanfragen, und alle Anfragen landen im <ProjectLink slug="tattoo-booking-portal">Tattoo Booking Portal</ProjectLink>, das ich als eigenes Projekt beschreibe.
+
+## Was die Websites können
+
+<ScreenshotGallery views={['endstation-tattoos', 'endstation-buchung']} />
+
+- **Galerie nach Künstler.** Die Studio-Website zeigt alle Arbeiten oder nur die eines Künstlers, jeweils mit Porträt, Stil und Instagram.
+- **Geführtes Formular.** Vier Schritte: Idee, Details, Zeitraum, Kontakt. Mindestens ein Referenzbild oder ein Link ist Pflicht. Dasselbe Zod-Schema prüft die Antworten im Browser und auf dem Server.
+- **Hell und Dunkel.** Jede Website hat beide Farbschemata in ihren eigenen Farben.
+- **Für das Handy gebaut.** Dort bleibt der Weg zur Terminanfrage als schwebende Leiste immer erreichbar.
+
+<ScreenshotGallery
+  views={[
+    'endstation-handy',
+    'endstation-buchung-handy',
+    'guajaala-handy',
+    'guajaala-termin-handy',
+  ]}
+/>
+
+## Das Studio pflegt die Inhalte selbst
+
+Jede Seite ist Inhalt in Sanity. Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen und dort per Klick bearbeiten.
+
+Sanity TypeGen typisiert die Abfragen. Bricht eine Schemaänderung eine Seite, scheitert der Build, bevor die Änderung live geht.
+
+## Ein Package, mehrere Künstler-Websites
+
+Die Websites der einzelnen Künstler haben denselben Aufbau. Seiten, Formulare, E-Mail-Versand und SEO liegen deshalb einmal in einem gemeinsamen Package, das Sanity-Schema und das Studio in einem zweiten. Pro Website liegt nur, was sie unterscheidet:
+
+| Pro Website                                                         | Im gemeinsamen Package                |
+| ------------------------------------------------------------------- | ------------------------------------- |
+| Name, Domain, Impressumsdaten                                       | Seiten und ihre Abschnitte            |
+| Akzentfarbe, Farben für Hell und Dunkel, Schriften                  | Terminformular und seine Prüfung      |
+| Logo, Titelbild, Favicons                                           | E-Mail-Versand, SEO, Sitemap          |
+| Eigenes Sanity-Projekt, eigenes Vercel-Projekt, eigene Zugangsdaten | Sanity-Schema, Studio und Migrationen |
+
+Eine Website kann einzelne Abschnitte ersetzen, ausblenden oder umsortieren, ohne das Package zu ändern.
+
+<Callout title="Regel für Abweichungen">
+  Braucht nur eine Website etwas anders, passiert das in ihrer App. Brauchen zwei Websites dieselbe
+  Abweichung, wandert sie als Option ins Package.
+</Callout>
+
+Die Studio-Website ist eine eigene App im selben Repo, weil sie mehr kann als eine Künstler-Website: mehrere Künstler, Galerie mit Filter und Shop.
+
+## Der Umzug von WordPress
+
+Die alte Studio-Website lief auf WordPress und Elementor. Damit die Suchplatzierungen den Umzug überstehen, gibt es eine 301-Weiterleitung für jede alte URL, die noch zählt, und `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten). Dazu kommen eine Sitemap und strukturierte Daten für das Studio. Die Websites laufen in Vercels Region Frankfurt.

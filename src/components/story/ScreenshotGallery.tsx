@@ -12,11 +12,18 @@ import { useStoryProject } from './StoryProject'
 /** Wide enough to take the whole row: a whole app window or a wide close-up. */
 const isWide = (shot: Screenshot) => shot.width >= 900
 
+/** Taller than wide: a phone screen. */
+const isPortrait = (shot: Screenshot) => shot.height > shot.width
+
+/** How many phone screens stand side by side, at most. */
+const PHONES_PER_ROW = 4
+
 /**
  * The story's Project's screenshots (`<ScreenshotGallery />`), or only
  * `views`, in that order (`<ScreenshotGallery views={['dashboard']} />`), in
- * the Site language and the theme shown. Each opens enlarged; the enlarged
- * view pages through this gallery's screenshots and closes with Escape.
+ * the Site language and the theme shown. A gallery of phone screens only
+ * sets them side by side, up to four in a row. Each opens enlarged; the
+ * enlarged view pages through this gallery's screenshots and closes with Escape.
  */
 export function ScreenshotGallery({ views }: { views?: string[] }) {
   const { t } = useLingui()
@@ -30,6 +37,7 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
         return shot
       })
     : all
+  const phones = shots.length > 0 && shots.every(isPortrait)
   const dialogId = useId()
   const [triggerIndex, setTriggerIndex] = useState<number | null>(null)
   const [index, setIndex] = useState(0)
@@ -42,7 +50,7 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
         component="ul"
         role="list"
         aria-label={t`Screenshots`}
-        cols={{ base: 1, xs: 2 }}
+        cols={phones ? { base: 2, xs: Math.min(shots.length, PHONES_PER_ROW) } : { base: 1, xs: 2 }}
         spacing="sm"
         p={0}
         mb={0}

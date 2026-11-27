@@ -1,6 +1,7 @@
 import { BASE_LANGUAGE, LANGUAGES, type Language } from '#/i18n/language'
 import { newestFirst, periodProblem } from './period'
 import type { Content } from './index'
+import type { ScreenshotImage } from './schema'
 
 /**
  * Everything `content` returns in `language`, keyed by getter; each Project
@@ -90,14 +91,30 @@ export function integrityProblems(content: Content): string[] {
   return [...problems, ...projectProblems(content)]
 }
 
+/** The files an image is offered as: its 1× and its 2× file. */
+const imageFiles = (image: ScreenshotImage) =>
+  image.srcSet.split(', ').map((candidate) => candidate.split(' ')[0]!)
+
 /**
  * The static assets the content points at that do not exist: the CV each
- * Site language offers. `assetExists` answers for a URL path such as
- * `/cv/….pdf` (in tests: is the file in `public/`).
+ * Site language offers, and every screenshot image file kept in this repo
+ * (the ones hosted elsewhere have a full URL). `assetExists` answers for a
+ * URL path such as `/cv/….pdf` (in tests: is the file in `public/`).
  */
 export function assetProblems(content: Content, assetExists: (href: string) => boolean): string[] {
   return LANGUAGES.flatMap((language) => {
     const { href } = content.getCv(language)
-    return assetExists(href) ? [] : [`${language}: cv ${href} does not exist`]
+    const missingScreenshots = content.getProjects(language).flatMap(({ slug }) =>
+      content.getScreenshots(slug, language).flatMap((shot) =>
+        Object.values(shot.images)
+          .flatMap((image) => (image ? imageFiles(image) : []))
+          .filter((file) => file.startsWith('/') && !assetExists(file))
+          .map((file) => `${language}: screenshots.${slug}.${shot.view} ${file} does not exist`),
+      ),
+    )
+    return [
+      ...(assetExists(href) ? [] : [`${language}: cv ${href} does not exist`]),
+      ...missingScreenshots,
+    ]
   })
 }

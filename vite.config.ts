@@ -1,6 +1,7 @@
 import { defineConfig, lazyPlugins } from 'vite-plus'
 import { lingui } from '@lingui/vite-plugin'
 import mdx from '@mdx-js/rollup'
+import remarkGfm from 'remark-gfm'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { nitro } from 'nitro/vite'
 import viteReact from '@vitejs/plugin-react'
@@ -17,8 +18,9 @@ const config = defineConfig({
     // Compiles the Lingui macros (`useLingui`, `<Trans>`, `msg`) to message ids
     // and `.po` catalogs to modules on import (lingui.config.ts).
     lingui({ macroTransform: true, failOnCompileError: true }),
-    // Project stories are MDX (src/content/data/projects); compiled before React sees them.
-    { enforce: 'pre', ...mdx() },
+    // Project stories are MDX (src/content/data/projects), with GitHub's Markdown tables;
+    // compiled before React sees them.
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
     tanstackStart(),
     // Nitro's dev server keeps Vitest from exiting; tests don't need a server runtime.
     // Functions run in Frankfurt so contact-form data stays in the EU, as the privacy policy states.

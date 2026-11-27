@@ -149,8 +149,8 @@ export interface ProjectWithStory extends Project {
 /**
  * One screenshot of a Project's app, as stored: which view it shows, its
  * size, and the texts that go with it. Its image files live elsewhere (for
- * Self-Engine: Vercel Blob, captured by the Self-Engine repo); the set's
- * `urls` say where.
+ * Self-Engine: Vercel Blob, captured by the Self-Engine repo; otherwise
+ * `public/screenshots/<slug>/`); the set's `urls` say where.
  */
 export interface ScreenshotSource {
   /** The view's name in the file names (`<view>-<language>-<theme>.webp`). */
@@ -165,11 +165,19 @@ export interface ScreenshotSource {
 
 /**
  * A Project's screenshots, in gallery order, and the URL of each image file
- * by file name. `urls` is written by `bun run screenshots:sync`, never by hand.
+ * by file name. For Self-Engine `urls` is written by `bun run
+ * screenshots:sync`, never by hand; a set kept in this repo derives it
+ * (`localScreenshotSet`).
  */
 export interface ScreenshotSetSource {
   shots: ScreenshotSource[]
   urls: Readonly<Partial<Record<string, string>>>
+  /**
+   * The one language the app's interface exists in. Its images are captured
+   * in that language only, and every Site language shows them. Left out when
+   * the images are captured in each Site language.
+   */
+  language?: Language
 }
 
 /** Every Project's screenshots, by slug; most Projects have none. */

@@ -17,7 +17,9 @@ import {
   Paper,
   Popover,
   SegmentedControl,
+  Table,
   Text,
+  Timeline,
   Title,
   Tooltip,
   Typography,
@@ -199,6 +201,24 @@ export const siteComponents: MantineThemeComponents = {
   Typography: Typography.extend({ classNames: { root: classes.typography } }),
 
   Code: Code.extend({ classNames: { root: classes.code } }),
+
+  /** A table in a story: hairlines between rows, the head in ink. */
+  Table: Table.extend({
+    defaultProps: { verticalSpacing: 'xs', horizontalSpacing: 'sm', fz: 'inherit' },
+    vars: () => ({ table: { '--table-border-color': 'var(--line)' } }),
+    classNames: { th: classes.tableHead },
+  }),
+
+  /** The steps of a flow in a story: numbered, joined by a hairline, none marked as reached. */
+  Timeline: Timeline.extend({
+    defaultProps: { bulletSize: 24, lineWidth: 1 },
+    vars: () => ({ root: { '--tl-color': 'var(--line)' } }),
+    classNames: {
+      itemBullet: classes.stepBullet,
+      itemTitle: classes.stepTitle,
+      item: classes.step,
+    },
+  }),
 
   Modal: Modal.extend({ defaultProps: { radius: 'lg' } }),
 

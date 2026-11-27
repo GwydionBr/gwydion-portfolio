@@ -80,8 +80,8 @@ export const cvText = {
       title: 'gwydion.dev',
       period: '2026',
       text: {
-        en: 'Bilingual portfolio with TanStack Start, Tailwind CSS and MDX.',
-        de: 'Zweisprachiges Portfolio mit TanStack Start, Tailwind CSS und MDX.',
+        en: 'Bilingual portfolio with TanStack Start, Mantine and MDX.',
+        de: 'Zweisprachiges Portfolio mit TanStack Start, Mantine und MDX.',
       },
     },
     {

@@ -49,21 +49,54 @@ export const projects: ProjectSource[] = [
     accent: '#2f5d50',
   },
   {
-    slug: 'tattoo-booking-portal',
-    title: 'Tattoo Booking Portal',
+    slug: 'tattoo-sites',
+    title: 'Tattoo Sites',
     kind: 'client-work',
-    period: { start: '2026', end: '2026' },
+    period: { start: '2025', end: null },
     summary: {
-      en: 'Websites for a tattoo studio and its artists, with a portal where the artists handle every booking request.',
-      de: 'Websites für ein Tattoo-Studio und seine Künstler, mit einem Portal, in dem die Künstler alle Terminanfragen bearbeiten.',
+      en: 'The website of a tattoo studio and the personal website of one of its artists, each with its own look, edited by their owners.',
+      de: 'Die Website eines Tattoo-Studios und die eigene Website eines seiner Künstler, jede mit eigenem Aussehen und von ihren Inhabern selbst gepflegt.',
     },
     role: { en: 'Design and development', de: 'Design und Entwicklung' },
-    status: { en: 'Launch 2026', de: 'Launch 2026' },
+    status: {
+      en: 'Two websites live, two in progress',
+      de: 'Zwei Websites live, zwei in Arbeit',
+    },
     links: { live: 'https://endstation-tattoo.com' },
-    stack: ['TanStack Start', 'Sanity', 'Supabase', 'Mantine', 'Vercel'],
+    stack: ['TanStack Start', 'Mantine', 'Sanity', 'Zod', 'Vercel'],
     featured: true,
     order: 2,
     accent: '#8a3b2e',
+  },
+  {
+    slug: 'tattoo-booking-portal',
+    title: 'Tattoo Booking Portal',
+    kind: 'client-work',
+    period: { start: '2026', end: null },
+    summary: {
+      en: 'The portal where the artists of a tattoo studio handle every booking request, with strict rules for who sees what.',
+      de: 'Das Portal, in dem die Künstler eines Tattoo-Studios alle Terminanfragen bearbeiten, mit strengen Regeln dafür, wer was sieht.',
+    },
+    role: {
+      en: 'Design, development and operations',
+      de: 'Design, Entwicklung und Betrieb',
+    },
+    status: { en: 'Live', de: 'Live' },
+    links: {},
+    stack: ['TanStack Start', 'Supabase', 'Postgres', 'Mantine', 'Vercel'],
+    // Checked against the tattoo-sites repo on 2026-11-27; maintained by hand.
+    stats: [
+      { value: 37, label: { en: 'database migrations', de: 'Datenbank-Migrationen' } },
+      { value: 30, label: { en: 'SQL test files', de: 'SQL-Testdateien' } },
+      {
+        value: 9,
+        label: { en: 'architecture decisions (ADRs)', de: 'Architektur-Entscheidungen (ADRs)' },
+      },
+    ],
+    // Two Projects are featured: the Overview's grid and the share image are laid out for two.
+    featured: false,
+    order: 3,
+    accent: '#17777a',
   },
   {
     slug: 'gwydion-dev',
@@ -83,9 +116,9 @@ export const projects: ProjectSource[] = [
       live: 'https://gwydion.dev',
       source: 'https://github.com/GwydionBr/gwydion-portfolio',
     },
-    stack: ['TanStack Start', 'Tailwind CSS', 'Base UI', 'Lingui', 'MDX'],
+    stack: ['TanStack Start', 'Mantine', 'Lingui', 'MDX'],
     featured: false,
-    order: 3,
+    order: 4,
     accent: '#3b4a7a',
   },
 ]

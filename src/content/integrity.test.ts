@@ -3,6 +3,7 @@ import { createContent, siteContent, type ContentSource } from '#/content'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { assetProblems, integrityProblems } from './integrity'
+import { localScreenshotSet } from './screenshots'
 import { fixtureSource } from '#/test/contentFixtures'
 
 describe('Content integrity', () => {
@@ -164,8 +165,21 @@ describe('The CV', () => {
   /** Whether the static asset at URL path `href` is in `public/`. */
   const inPublic = (href: string) => existsSync(join(process.cwd(), 'public', href))
 
-  it('the site CV exists as a static asset for every Site language', () => {
+  it('the site CV and every screenshot kept in this repo exist as static assets', () => {
     expect(assetProblems(siteContent, inPublic)).toEqual([])
+  })
+
+  it('a screenshot file that is not in public/ is reported, for each Site language showing it', () => {
+    const source = fixtureSource()
+    const [shot] = source.screenshots['self-engine']!.shots
+    source.screenshots['self-engine'] = localScreenshotSet('/screenshots/fixture', 'de', [shot!])
+    const problems = assetProblems(createContent(source), inPublic)
+
+    expect(problems).toContain(
+      'en: screenshots.self-engine.dashboard /screenshots/fixture/dashboard-de-dark.webp does not exist',
+    )
+    // Both files of both themes, in both Site languages.
+    expect(problems.filter((problem) => problem.includes('screenshots.'))).toHaveLength(8)
   })
 
   it('a CV file that is not in public/ is reported, for each Site language offering it', () => {

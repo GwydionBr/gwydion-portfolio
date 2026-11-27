@@ -18,10 +18,16 @@ export function screenshotFileNames(
   return { oneX: `${base}-${size.width}w.webp`, twoX: `${base}.webp` }
 }
 
-/** Every file `shots` need: each screenshot in each Site language and theme, at both resolutions. */
-export function expectedScreenshotFiles(shots: readonly ScreenshotSource[]): string[] {
+/**
+ * Every file `shots` need: each screenshot in each of `languages` (every Site
+ * language unless told otherwise) and each theme, at both resolutions.
+ */
+export function expectedScreenshotFiles(
+  shots: readonly ScreenshotSource[],
+  languages: readonly Language[] = LANGUAGES,
+): string[] {
   return shots.flatMap((shot) =>
-    LANGUAGES.flatMap((language) =>
+    languages.flatMap((language) =>
       THEMES.flatMap((theme) => {
         const { oneX, twoX } = screenshotFileNames(shot, language, theme)
         return [oneX, twoX]
@@ -48,12 +54,34 @@ export function pickScreenshotUrls(
   return { urls, missing }
 }
 
-/** The screenshots of `set` in `language`, each with its image per theme. */
+/**
+ * A set whose image files are kept in this repo, under `public` at
+ * `directory` (`/screenshots/<slug>`), captured in `language` only: the
+ * interface of the app they show exists in that one language.
+ */
+export function localScreenshotSet(
+  directory: `/${string}`,
+  language: Language,
+  shots: ScreenshotSource[],
+): ScreenshotSetSource {
+  return {
+    shots,
+    language,
+    urls: Object.fromEntries(
+      expectedScreenshotFiles(shots, [language]).map((file) => [file, `${directory}/${file}`]),
+    ),
+  }
+}
+
+/**
+ * The screenshots of `set` with their texts in `language`, each with its
+ * image per theme: captured in `language`, or in the set's one language.
+ */
 export function screenshotsIn(set: ScreenshotSetSource, language: Language): Screenshot[] {
   return set.shots.map((shot) => {
     const { width, height } = shot.size
     const imageIn = (theme: Theme) => {
-      const { oneX, twoX } = screenshotFileNames(shot, language, theme)
+      const { oneX, twoX } = screenshotFileNames(shot, set.language ?? language, theme)
       const oneXUrl = set.urls[oneX]
       const twoXUrl = set.urls[twoX]
       if (!oneXUrl || !twoXUrl) return undefined

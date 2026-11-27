@@ -14,8 +14,8 @@ const OLD_SITE = [
   ['/contact', '/en/contact', 'Contact'],
   ['/impressum', '/en/impressum', 'Legal notice'],
   ['/datenschutz', '/en/datenschutz', 'Privacy policy'],
-  ['/en/projects/endstation-tattoo', '/en/projects/tattoo-booking-portal', 'Tattoo Booking Portal'],
-  ['/de/projects/endstation-tattoo', '/de/projects/tattoo-booking-portal', 'Tattoo Booking Portal'],
+  ['/en/projects/endstation-tattoo', '/en/projects/tattoo-sites', 'Tattoo Sites'],
+  ['/de/projects/endstation-tattoo', '/de/projects/tattoo-sites', 'Tattoo Sites'],
 ] as const
 
 /** Old German URLs whose address the new site keeps: they open their page directly. */
