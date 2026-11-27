@@ -77,50 +77,43 @@
 
 /*
  * Too much for the rail (the Availability, the legal links, which the
- * Settings panel offers then): hidden at once as it collapses, back once it
- * has opened, so it never shows squeezed on the way.
+ * Settings panel offers then): hidden at once as the sidebar collapses, back
+ * once it has opened. Meanwhile it keeps the full sidebar's width, so it
+ * never reflows on the way and the rows around it stay where they are.
  */
 .railHidden {
-  min-width: 0;
+  width: 100%;
   transition:
     opacity 150ms ease var(--app-shell-transition-duration),
-    visibility 0s linear var(--app-shell-transition-duration);
+    visibility 0s linear var(--app-shell-transition-duration),
+    width 0s linear var(--app-shell-transition-duration);
 
   :root[data-sidebar-collapsed] & {
+    width: calc(var(--app-shell-navbar-width) - 1px - 2 * var(--mantine-spacing-sm));
     opacity: 0;
     visibility: hidden;
     transition: none;
   }
 }
 
-/* Out of the rail's flow, where it would only stand tall and squeezed. */
-.availability {
-  :root[data-sidebar-collapsed] & {
-    position: absolute;
-  }
+/* The legal links, with the toggle over the row's end; a grid, so the links never squeeze. */
+.legalRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-height: 1.75rem;
 }
 
-/*
- * The legal links take the row's room up to the toggle, on one line (they fit
- * the narrowest sidebar), so the row keeps its height as the sidebar opens;
- * in the rail, no room at all.
- */
+/* Clear of the toggle (its width and its inset, and a gap). */
 .legal {
-  flex: 1;
-  padding-inline-start: var(--mantine-spacing-sm);
-  white-space: nowrap;
-
-  & > ul {
-    flex-wrap: nowrap;
-  }
-
-  :root[data-sidebar-collapsed] & {
-    padding: 0;
-  }
+  padding-inline: var(--mantine-spacing-sm) 2.5rem;
 }
 
 /* Its icon in line with the rows' arrows, and in the rail's centre. */
 .toggle {
-  flex: none;
-  margin-inline-end: 5px;
+  position: absolute;
+  inset-inline-end: 5px;
+  top: 50%;
+  translate: 0 -50%;
 }

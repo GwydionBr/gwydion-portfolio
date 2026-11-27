@@ -5,7 +5,8 @@ import { useMatches } from '@tanstack/react-router'
 import classes from './AppShell.module.css'
 import { SHELL_BREAKPOINT } from './breakpoint'
 import { paneWidthCss, SECONDARY_NAVBAR_WIDTH } from './paneWidth'
-import { SECONDARY_NAVBAR_MOTION, SecondaryNavbar } from './SecondaryNavbar'
+import { SHELL_MOTION } from './motion'
+import { SecondaryNavbar } from './SecondaryNavbar'
 import { Sidebar } from './Sidebar'
 import { SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarLayout'
 import { SiteSearch } from './SiteSearch'
@@ -43,8 +44,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       }}
       resize={resize}
       // The main pane makes room in step with the second sidebar's slide and the sidebar collapsing.
-      transitionDuration={SECONDARY_NAVBAR_MOTION.duration}
-      transitionTimingFunction={SECONDARY_NAVBAR_MOTION.timingFunction}
+      transitionDuration={SHELL_MOTION.duration}
+      transitionTimingFunction={SHELL_MOTION.timingFunction}
       navbar={{
         width: SIDEBAR_WIDTH_CSS,
         breakpoint: SHELL_BREAKPOINT,

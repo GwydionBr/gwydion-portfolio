@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro'
-import { AppShell, Divider, Group, Stack } from '@mantine/core'
+import { AppShell, Divider, Stack } from '@mantine/core'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { ProfileLinkRows } from '#/components/ProfileLinks'
 import { SHELL_BREAKPOINT } from './breakpoint'
@@ -52,16 +52,16 @@ export function Sidebar() {
         </AppShell.Section>
         <AppShell.Section>
           <Stack gap="xs" pt="md">
-            <AvailabilityTile compact className={`${classes.railHidden} ${classes.availability}`} />
+            <AvailabilityTile compact className={classes.railHidden} />
             <ProfileLinkRows
               wrapRow={(row, label) => <RailTooltip label={label}>{row}</RailTooltip>}
             />
             <Divider color="var(--line)" />
             <SettingsMenu />
-            <Group gap={0} wrap="nowrap">
+            <div className={classes.legalRow}>
               <LegalLinks className={`${classes.railHidden} ${classes.legal}`} />
               <SidebarToggle className={classes.toggle} />
-            </Group>
+            </div>
           </Stack>
         </AppShell.Section>
       </div>

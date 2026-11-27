@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { Box, useMantineTheme } from '@mantine/core'
 import { RESIZE_HANDLE_CLASS_NAME } from '#/theme/components'
+import { SHELL_MOTION } from './motion'
 import classes from './PaneResizeHandle.module.css'
 import {
   applyPaneWidth,
@@ -14,8 +15,36 @@ import {
 const KEYBOARD_STEP = 10
 const KEYBOARD_SHIFT_STEP = 50
 
-/** The `<html>` attribute present while a pane is dragged: the shell's transitions pause (AppShell.module.css). */
+/**
+ * The `<html>` attribute present while a pane's width changes, as Mantine's
+ * `data-resizing`: the shell's transitions pause (AppShell.module.css), so
+ * the main pane follows the edge at once instead of easing after it.
+ */
 export const PANE_RESIZING_ATTRIBUTE = 'data-pane-resizing'
+
+let resumeTransitions: ReturnType<typeof setTimeout> | undefined
+
+/** Pauses the shell's transitions until `resumeShellTransitions`. */
+function pauseShellTransitions() {
+  clearTimeout(resumeTransitions)
+  document.documentElement.setAttribute(PANE_RESIZING_ATTRIBUTE, '')
+}
+
+/** Lets the shell move again, once a width change has settled (as Mantine waits after its own). */
+function resumeShellTransitions() {
+  clearTimeout(resumeTransitions)
+  resumeTransitions = setTimeout(
+    () => document.documentElement.removeAttribute(PANE_RESIZING_ATTRIBUTE),
+    SHELL_MOTION.duration,
+  )
+}
+
+/** Changes a width without the shell easing after it: a keyboard step, a reset, a drag's end. */
+function withoutShellTransitions(change: () => void) {
+  pauseShellTransitions()
+  change()
+  resumeShellTransitions()
+}
 
 /**
  * The resize handle on the inline-end edge of a shell pane that Mantine's
@@ -26,7 +55,8 @@ export const PANE_RESIZING_ATTRIBUTE = 'data-pane-resizing'
  * position, and must not scroll itself, or the handle scrolls away.
  *
  * While dragging, the width goes straight to the pane's CSS variable each
- * frame; it is stored once the drag ends.
+ * frame; it is stored once the drag ends. No change of width eases: the
+ * main pane keeps to the edge.
  */
 export function PaneResizeHandle({
   pane,
@@ -52,10 +82,11 @@ export function PaneResizeHandle({
   // A drag still running when the pane goes (the visitor left the view) ends where it is.
   useEffect(() => () => stopDrag.current?.(), [])
 
-  const commit = (next: number | null) => {
-    setCommitted(next)
-    storePaneWidth(pane, next)
-  }
+  const commit = (next: number | null) =>
+    withoutShellTransitions(() => {
+      setCommitted(next)
+      storePaneWidth(pane, next)
+    })
 
   const showWidth = (shown: number) => {
     applyPaneWidth(pane.variable, shown)
@@ -68,7 +99,6 @@ export function PaneResizeHandle({
     const startX = event.clientX
     let shown = width
     let moved = false
-    const root = document.documentElement
     const body = document.body.style
     const previousBody = { cursor: body.cursor, userSelect: body.userSelect }
     const abort = new AbortController()
@@ -77,23 +107,23 @@ export function PaneResizeHandle({
     const stop = () => {
       abort.abort()
       stopDrag.current = undefined
-      root.removeAttribute(PANE_RESIZING_ATTRIBUTE)
+      resumeShellTransitions()
       body.cursor = previousBody.cursor
       body.userSelect = previousBody.userSelect
       setDragging(false)
     }
     const cancel = () => {
-      stop()
+      // Back to what was there, before the transitions resume: the default is no variable at all.
       showWidth(width)
-      // Back to what was there: the default is no variable at all.
       if (chosen == null) applyPaneWidth(pane.variable, null)
+      stop()
     }
     stopDrag.current = () => {
       stop()
       if (moved) commit(shown)
     }
 
-    root.setAttribute(PANE_RESIZING_ATTRIBUTE, '')
+    pauseShellTransitions()
     body.cursor = 'col-resize'
     body.userSelect = 'none'
     setDragging(true)
