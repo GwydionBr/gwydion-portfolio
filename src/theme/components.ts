@@ -40,6 +40,7 @@ export const siteComponents: MantineThemeComponents = {
     classNames: {
       root: classes.appShell,
       navbar: classes.appShellNavbar,
+      resizeHandle: classes.appShellResizeHandle,
       header: classes.appShellBar,
       footer: classes.appShellBar,
     },

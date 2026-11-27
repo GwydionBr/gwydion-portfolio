@@ -9,8 +9,10 @@ import {
 import { MantineProvider } from '@mantine/core'
 import { umamiScript } from '#/analytics/umami'
 import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
+import { PrePaintScript } from '#/components/PrePaintScript'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
+import { sidebarWidthPrePaintScript } from '#/shell/sidebarWidth'
 import type { RouterContext } from '#/router'
 import { legacyRedirectTarget } from '#/seo/legacyRedirects'
 import { siteColorSchemeManager, siteCssVariables, siteTheme } from '#/theme/mantine'
@@ -53,11 +55,12 @@ const colorSchemeManager = siteColorSchemeManager()
 function RootDocument({ children }: { children: ReactNode }) {
   const language = useSiteLanguage()
   return (
-    // The pre-paint script sets the theme shown on `<html>` before React hydrates.
+    // The pre-paint scripts set the theme and the sidebar width on `<html>` before React hydrates.
     <html lang={language} suppressHydrationWarning>
       <head>
         <HeadContent />
         <ThemeHeadTags />
+        <PrePaintScript script={sidebarWidthPrePaintScript} />
       </head>
       <body>
         <MantineProvider

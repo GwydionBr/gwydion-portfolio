@@ -10,11 +10,42 @@
 }
 
 .appShellNavbar {
-  /* All of it scrolls in a short window, so the bottom of the sidebar stays reachable. */
-  overflow-y: auto;
-  scrollbar-width: thin;
-  padding: var(--mantine-spacing-sm);
+  /* Its content scrolls in a short window (src/shell/Sidebar.module.css), the resize handle stays on the edge. */
   background: var(--sidebar);
+}
+
+/*
+ * The sidebar's resize handle: an invisible strip over the border that shows
+ * a quiet line once the pointer rests on it, and a firmer one while dragging
+ * or focused by keyboard (Mantine marks the drag `data-active`).
+ */
+.appShellResizeHandle {
+  --app-shell-resize-handle-size: 0.5rem;
+
+  &::after {
+    width: 2px;
+    transition: background-color 120ms ease;
+  }
+
+  &:hover::after {
+    background-color: color-mix(in srgb, var(--ink) 18%, transparent);
+    transition-delay: 150ms;
+  }
+
+  /* Not `:where()`: while dragging, the pointer still hovers it, and the drag must win. */
+  &[data-active]::after {
+    background-color: color-mix(in srgb, var(--ink) 32%, transparent);
+    transition-delay: 0ms;
+  }
+
+  /* The line is the focus mark, in the focus colour. */
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::after {
+    background-color: var(--focus);
+  }
 }
 
 .appShellBar {
