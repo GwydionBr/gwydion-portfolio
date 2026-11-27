@@ -53,6 +53,13 @@
   backdrop-filter: blur(12px);
 }
 
+/* Tooltip: a short name in ink, such as an icon's in the collapsed sidebar. */
+.tooltip {
+  background-color: var(--ink);
+  color: var(--canvas);
+  font-size: var(--mantine-font-size-xs);
+}
+
 /* Paper: a card on the canvas. */
 .paper {
   --paper-border-color: var(--line);

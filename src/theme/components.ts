@@ -18,6 +18,7 @@ import {
   SegmentedControl,
   Text,
   Title,
+  Tooltip,
   Typography,
   type MantineThemeComponents,
 } from '@mantine/core'
@@ -36,6 +37,11 @@ import classes from './components.module.css'
  * (Badge: Gwydion is open to work) and `danger` (Alert: something failed).
  */
 export const siteComponents: MantineThemeComponents = {
+  Tooltip: Tooltip.extend({
+    defaultProps: { radius: 'md', offset: 8 },
+    classNames: { tooltip: classes.tooltip },
+  }),
+
   AppShell: AppShell.extend({
     classNames: {
       root: classes.appShell,
@@ -205,3 +211,9 @@ export const siteComponents: MantineThemeComponents = {
     },
   }),
 }
+
+/**
+ * What a resize handle wears: Mantine's AppShell handle in the site's look,
+ * for the shell's own handles beside Mantine's (src/shell/PaneResizeHandle.tsx).
+ */
+export const RESIZE_HANDLE_CLASS_NAME = `${AppShell.classes.resizeHandle} ${classes.appShellResizeHandle}`

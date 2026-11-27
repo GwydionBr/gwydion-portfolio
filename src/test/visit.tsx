@@ -5,6 +5,7 @@ import { fireEvent, getAllByRole, getByRole, within } from '@testing-library/dom
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
+import { SIDEBAR_COLLAPSED_ATTRIBUTE } from '#/shell/sidebarLayout'
 import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
 import { emulateDevice, type Screen } from './device'
 
@@ -16,16 +17,28 @@ declare global {
 
 let mounted: Root | undefined
 
-afterEach(async () => {
+/** Closes the page shown, as a reload or leaving the site does: nothing of it keeps running. */
+async function unmount() {
   const root = mounted
   mounted = undefined
   if (root) await act(async () => root.unmount())
+}
+
+afterEach(async () => {
+  await unmount()
   vi.restoreAllMocks()
-  // The device forgets the visit: no stored choices, no theme or sidebar width left on `<html>`.
+  // The device forgets the visit: no stored choices, no theme or sidebar layout left on `<html>`.
   localStorage.clear()
-  document.documentElement.removeAttribute(THEME_ATTRIBUTE)
-  document.documentElement.removeAttribute('style')
+  forgetPrePaint()
 })
+
+/** Takes what the pre-paint scripts put on `<html>` (the theme, the sidebars' layout) off it again. */
+function forgetPrePaint() {
+  const root = document.documentElement
+  for (const attribute of [THEME_ATTRIBUTE, SIDEBAR_COLLAPSED_ATTRIBUTE, 'style']) {
+    root.removeAttribute(attribute)
+  }
+}
 
 interface VisitOptions {
   /** The visitor's browser languages, most preferred first (`navigator.languages`). */
@@ -67,6 +80,8 @@ export async function visit(
   await act(async () => {
     await router.load()
   })
+  // A second visit in one test is a reload: the page before it goes.
+  await unmount()
   const root = createRoot(document)
   mounted = root
   await act(async () => root.render(<RouterProvider router={router} />))
@@ -124,8 +139,7 @@ export async function visit(
      * parsing, before anything is painted: on a fresh `<html>`, as on a reload.
      */
     paintFirstFrame() {
-      document.documentElement.removeAttribute(THEME_ATTRIBUTE)
-      document.documentElement.removeAttribute('style')
+      forgetPrePaint()
       // Only scripts the browser runs: not data blocks such as JSON-LD.
       const inline = document.head.querySelectorAll<HTMLScriptElement>('script:not([src])')
       for (const script of [...inline].filter((s) => !s.type || /javascript/.test(s.type))) {
@@ -177,7 +191,13 @@ export async function visit(
         target = document.documentElement,
         code = key,
         ...modifiers
-      }: { target?: HTMLElement; code?: string; metaKey?: boolean; ctrlKey?: boolean } = {},
+      }: {
+        target?: HTMLElement
+        code?: string
+        metaKey?: boolean
+        ctrlKey?: boolean
+        shiftKey?: boolean
+      } = {},
     ) {
       await act(async () => {
         fireEvent.keyDown(target, { key, code, ...modifiers })

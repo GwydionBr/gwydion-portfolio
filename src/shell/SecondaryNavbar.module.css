@@ -2,21 +2,20 @@
  * Fixed beside the sidebar and below it, so it slides out from behind it;
  * only from `SECONDARY_NAVBAR_BREAKPOINT` (lg, 75em) up. It moves with the
  * AppShell's own transition variables, as the main pane's padding does, and
- * not at all while the sidebar is being resized (Mantine zeroes them then).
+ * not at all while a pane is being resized (the variables are zero then):
+ * it slides, and follows the sidebar's edge as the sidebar collapses or opens.
  */
 .navbar {
   display: none;
 
   @media (min-width: 75em) {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: fixed;
     inset-block: 0;
     inset-inline-start: var(--app-shell-navbar-offset, 0rem);
     z-index: calc(var(--app-shell-navbar-z-index, 100) - 1);
-    width: var(--secondary-navbar-width);
-    overflow-y: auto;
-    scrollbar-width: thin;
-    padding: var(--mantine-spacing-sm);
+    width: var(--secondary-navbar-size);
     background: var(--sidebar);
     border-inline-end: 1px solid var(--line);
     transform: translateX(-100%);
@@ -24,6 +23,8 @@
     visibility: hidden;
     transition:
       transform var(--app-shell-transition-duration) var(--app-shell-transition-timing-function),
+      inset-inline-start var(--app-shell-transition-duration)
+        var(--app-shell-transition-timing-function),
       visibility 0s linear var(--app-shell-transition-duration);
 
     &[data-shown] {
@@ -36,4 +37,13 @@
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
+}
+
+/* The list scrolls, not the pane: the resize handle is the pane's, on its edge. */
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: var(--mantine-spacing-sm);
 }

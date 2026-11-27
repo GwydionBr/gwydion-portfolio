@@ -1,5 +1,8 @@
-import { useState, type ComponentType } from 'react'
+import { useId, useState, type ComponentType } from 'react'
+import { useLingui } from '@lingui/react/macro'
 import { ProjectNavigation } from '#/components/ProjectNavigation'
+import { PaneResizeHandle } from './PaneResizeHandle'
+import { SECONDARY_NAVBAR_WIDTH } from './paneWidth'
 import classes from './SecondaryNavbar.module.css'
 
 /** What the second sidebar can list: a route names one in its `secondaryNavigation`. */
@@ -7,16 +10,6 @@ export type SecondaryNavigation = 'projects'
 
 /** Each list the second sidebar can show; each is a `nav` landmark of its own. */
 const LISTS: Record<SecondaryNavigation, ComponentType> = { projects: ProjectNavigation }
-
-/**
- * How the second sidebar slides, fast with a soft landing. The shell hands
- * it to Mantine's AppShell, so the main pane makes room in the same motion;
- * the slide reads it back from the AppShell's CSS variables.
- */
-export const SECONDARY_NAVBAR_MOTION = {
-  duration: 280,
-  timingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)',
-}
 
 /**
  * A second sidebar beside the first, from `SECONDARY_NAVBAR_BREAKPOINT` up (its CSS):
@@ -30,20 +23,31 @@ export const SECONDARY_NAVBAR_MOTION = {
  * the main pane's room (`data-secondary-navbar`), so both start in the same
  * frame. Slid away, it is hidden and inert: out of the tab order and the
  * accessibility tree.
+ *
+ * The visitor can resize it on its edge like the sidebar
+ * (`SECONDARY_NAVBAR_WIDTH`); the main pane makes room as it does.
  */
 export function SecondaryNavbar({ shown }: { shown: SecondaryNavigation | undefined }) {
+  const { t } = useLingui()
+  const id = useId()
   const [last, setLast] = useState(shown)
   if (shown !== undefined && shown !== last) setLast(shown)
   const List = last && LISTS[last]
   const open = shown !== undefined
+  const resizeLabels: Record<SecondaryNavigation, string> = { projects: t`Resize project list` }
   return (
     <div
+      id={id}
       className={classes.navbar}
       data-shown={open || undefined}
       inert={!open}
       aria-hidden={!open || undefined}
     >
-      {List && <List />}
+      {/* What scrolls in a short window; the resize handle stays outside, on the edge. */}
+      <div className={classes.content}>{List && <List />}</div>
+      {last && (
+        <PaneResizeHandle pane={SECONDARY_NAVBAR_WIDTH} label={resizeLabels[last]} controls={id} />
+      )}
     </div>
   )
 }

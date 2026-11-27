@@ -12,7 +12,8 @@ import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { PrePaintScript } from '#/components/PrePaintScript'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
-import { sidebarWidthPrePaintScript } from '#/shell/sidebarWidth'
+import { paneWidthPrePaintScript, SECONDARY_NAVBAR_WIDTH, SIDEBAR_WIDTH } from '#/shell/paneWidth'
+import { sidebarCollapsedPrePaintScript } from '#/shell/sidebarLayout'
 import type { RouterContext } from '#/router'
 import { legacyRedirectTarget } from '#/seo/legacyRedirects'
 import { siteColorSchemeManager, siteCssVariables, siteTheme } from '#/theme/mantine'
@@ -52,15 +53,18 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 const colorSchemeManager = siteColorSchemeManager()
 
+/** The sidebars' widths and whether the sidebar is collapsed, as the visitor left them on this device. */
+const SHELL_PRE_PAINT_SCRIPT = `${paneWidthPrePaintScript([SIDEBAR_WIDTH, SECONDARY_NAVBAR_WIDTH])};${sidebarCollapsedPrePaintScript}`
+
 function RootDocument({ children }: { children: ReactNode }) {
   const language = useSiteLanguage()
   return (
-    // The pre-paint scripts set the theme and the sidebar width on `<html>` before React hydrates.
+    // The pre-paint scripts set the theme and the sidebars' layout on `<html>` before React hydrates.
     <html lang={language} suppressHydrationWarning>
       <head>
         <HeadContent />
         <ThemeHeadTags />
-        <PrePaintScript script={sidebarWidthPrePaintScript} />
+        <PrePaintScript script={SHELL_PRE_PAINT_SCRIPT} />
       </head>
       <body>
         <MantineProvider

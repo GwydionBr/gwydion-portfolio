@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { screen, waitFor, within } from '@testing-library/dom'
+import { fireEvent, screen, waitFor, within } from '@testing-library/dom'
 import { fixtureContent } from './contentFixtures'
 import { navigationOf, visit } from './visit'
 
@@ -160,6 +160,45 @@ describe('The second sidebar beside the Projects (the CSS shows it from lg up)',
 
     await waitFor(() => expect(page.path()).toBe('/en/projects/self-engine'))
     expect(page.title()).toBe('Fixture Engine')
+  })
+
+  it('is resized on its edge, the width kept for the next visit', async () => {
+    const page = await visit('/en/projects/self-engine', {
+      content: fixtureContent(),
+      screen: 'wide',
+    })
+    const handle = screen.getByRole('separator', { name: 'Resize project list' })
+    const painted = () =>
+      document.documentElement.style.getPropertyValue('--secondary-navbar-width')
+    expect(handle.getAttribute('aria-valuemin')).toBe('208')
+    expect(handle.getAttribute('aria-valuemax')).toBe('400')
+    expect(handle.getAttribute('aria-valuenow')).toBe('256')
+
+    await page.press('ArrowRight', { target: handle })
+    await page.press('ArrowRight', { target: handle, shiftKey: true })
+
+    expect(handle.getAttribute('aria-valuenow')).toBe('316')
+    expect(localStorage.getItem('secondary-navbar-width')).toBe('316')
+    expect(painted()).toBe('19.75rem')
+
+    const reloaded = await visit('/en/projects/fixture-kit', {
+      content: fixtureContent(),
+      screen: 'wide',
+    })
+    reloaded.paintFirstFrame()
+    expect(painted()).toBe('19.75rem')
+
+    await reloaded.settle(() =>
+      fireEvent.doubleClick(screen.getByRole('separator', { name: 'Resize project list' })),
+    )
+    expect(localStorage.getItem('secondary-navbar-width')).toBeNull()
+    expect(painted()).toBe('')
+  })
+
+  it('names its resize handle in German on German pages', async () => {
+    await visit('/de/projects/self-engine', { content: fixtureContent(), screen: 'wide' })
+
+    expect(screen.getByRole('separator', { name: 'Projektliste anpassen' })).toBeTruthy()
   })
 
   it('is gone outside the Projects', async () => {

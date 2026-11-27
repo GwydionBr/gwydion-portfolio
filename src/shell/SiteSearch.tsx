@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useId, useState } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { ActionIcon, Input, Kbd } from '@mantine/core'
-import { useOs } from '@mantine/hooks'
 import { createSpotlight, Spotlight, useSpotlight } from '@mantine/spotlight'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useSearchGroups } from './searchEntries'
 import { filterSearchGroups } from './searchFilter'
+import { useShortcutLabel } from './shortcut'
 
 const [searchStore, search] = createSpotlight()
 
@@ -114,17 +114,10 @@ function useSelectedOption() {
   return [activeId, observeList] as const
 }
 
-/** The shortcut as this device writes it; unknown until the page knows the device. */
-function useShortcutLabel(): string | undefined {
-  const os = useOs()
-  if (os === 'undetermined') return undefined
-  return os === 'macos' || os === 'ios' ? '⌘ K' : 'Ctrl K'
-}
-
 /** The sidebar's way into the search: a button shaped like a search field, naming the shortcut. */
 export function SearchField() {
   const { t } = useLingui()
-  const shortcut = useShortcutLabel()
+  const shortcut = useShortcutLabel('K')
   return (
     <Input
       component="button"
@@ -135,6 +128,8 @@ export function SearchField() {
       aria-keyshortcuts={ARIA_SHORTCUTS}
       leftSection={<MagnifyingGlass aria-hidden size={16} />}
       rightSection={shortcut && <Kbd aria-hidden>{shortcut}</Kbd>}
+      // As wide as the rail's icons sit in from the edge (src/shell/Sidebar.module.css).
+      leftSectionWidth={38}
       rightSectionWidth={56}
       rightSectionPointerEvents="none"
     >
