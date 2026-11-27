@@ -112,7 +112,11 @@ function passClickThrough(event: MouseEvent) {
       return
     }
     const target = document.elementFromPoint(clientX, clientY)
-    if (target instanceof HTMLElement && target !== document.documentElement) target.click()
+    if (!target || target === document.documentElement) return
+    // Dispatched rather than `click()`: the target may be an icon (SVG), which has no `click()`.
+    target.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true, view: window, clientX, clientY }),
+    )
   }
   pass()
 }
