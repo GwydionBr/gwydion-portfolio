@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { within } from '@testing-library/dom'
+import { queryByRole, within } from '@testing-library/dom'
 import { visit } from './visit'
 
 describe('Legal pages', () => {
@@ -42,17 +42,17 @@ describe('Legal pages', () => {
 
 describe('Legal links', () => {
   it.each([
-    ['/en', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/en/projects', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/en/about', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/en/contact', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/en/impressum', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/en/anything', 'Sidebar', 'Legal', ['Legal notice', 'Privacy policy']],
-    ['/de', 'Seitenleiste', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
-    ['/de/datenschutz', 'Seitenleiste', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
+    ['/en', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/en/projects', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/en/about', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/en/contact', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/en/impressum', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/en/anything', 'Settings', 'Legal', ['Legal notice', 'Privacy policy']],
+    ['/de', 'Einstellungen', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
+    ['/de/datenschutz', 'Einstellungen', 'Rechtliches', ['Impressum', 'Datenschutzerklärung']],
   ])(
-    '%s links to both legal pages from the sidebar and from the More sheet',
-    async (url, sidebar, name, labels) => {
+    '%s links to both legal pages from the Settings panel and from the More sheet',
+    async (url, settings, name, labels) => {
       const page = await visit(url)
       const lang = url.startsWith('/de') ? 'de' : 'en'
       const expected = [
@@ -64,19 +64,26 @@ describe('Legal links', () => {
           .getAllByRole('link')
           .map((link) => [link.textContent, link.getAttribute('href')])
 
-      expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
+      // Only the Settings panel holds them, not the sidebar itself.
+      expect(
+        within(page.sidebar(lang === 'de' ? 'Seitenleiste' : 'Sidebar')).queryByRole('navigation', {
+          name,
+        }),
+      ).toBeNull()
+      expect(linksOf(await page.openSettings(settings))).toEqual(expected)
       // Phones have no sidebar: the tab bar's More sheet holds the same links.
       await page.resize('phone')
       expect(linksOf(await page.openMore(lang === 'de' ? 'Mehr' : 'More'))).toEqual(expected)
     },
   )
 
-  it('opens the legal notice from the sidebar', async () => {
+  it('opens the legal notice from the Settings panel, which then closes', async () => {
     const page = await visit('/en/about')
 
-    await page.click(within(page.sidebar()).getByRole('link', { name: 'Legal notice' }))
+    await page.click(within(await page.openSettings()).getByRole('link', { name: 'Legal notice' }))
 
     expect(page.path()).toBe('/en/impressum')
     expect(page.title()).toBe('Legal notice')
+    expect(queryByRole(document.body, 'dialog', { name: 'Settings' })).toBeNull()
   })
 })

@@ -83,8 +83,7 @@
 }
 
 /*
- * Too much for the rail (the Availability, the legal links, which the
- * Settings panel offers then): hidden at once as the sidebar collapses, back
+ * Too much for the rail (the Availability): hidden at once as the sidebar collapses, back
  * once it has opened. Meanwhile it keeps the full sidebar's width, so it
  * never reflows on the way and the rows around it stay where they are.
  */
@@ -103,24 +102,9 @@
   }
 }
 
-/* The legal links, with the toggle over the row's end; a grid, so the links never squeeze. */
-.legalRow {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: center;
-  min-height: 1.75rem;
-}
-
-/* Clear of the toggle (its width and its inset, and a gap). */
-.legal {
-  padding-inline: var(--mantine-spacing-sm) 2.5rem;
-}
-
-/* Its icon in line with the rows' arrows, and in the rail's centre. */
-.toggle {
-  position: absolute;
-  inset-inline-end: 5px;
-  top: 50%;
-  translate: 0 -50%;
+/* The toggle at the row's end: its icon in line with the rows' arrows, and in the rail's centre. */
+.toggleRow {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline-end: 5px;
 }

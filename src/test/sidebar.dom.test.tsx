@@ -142,11 +142,11 @@ describe('Collapsing the sidebar to its icons', () => {
     expect(paintedAsRail()).toBe(false)
   })
 
-  it('offers the legal links in the Settings panel while collapsed, the rail having no room for them', async () => {
+  it('offers the legal links in the Settings panel, expanded and collapsed alike', async () => {
     const expanded = await visit('/en')
     expect(
-      within(await expanded.openSettings()).queryByRole('link', { name: 'Legal notice' }),
-    ).toBeNull()
+      within(await expanded.openSettings()).getByRole('link', { name: 'Legal notice' }),
+    ).toBeTruthy()
 
     localStorage.setItem(COLLAPSED_KEY, 'true')
     const collapsed = await visit('/en')

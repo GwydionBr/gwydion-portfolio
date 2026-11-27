@@ -4,7 +4,6 @@ import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { ProfileLinkRows } from '#/components/ProfileLinks'
 import { SHELL_BREAKPOINT } from './breakpoint'
 import { Identity } from './Identity'
-import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
 import { NavigationRow } from './NavigationLink'
 import { SettingsMenu } from './SettingsMenu'
@@ -14,8 +13,8 @@ import { SearchField } from './SiteSearch'
 
 /**
  * The desktop sidebar: identity, the search field, navigation and, at the
- * bottom, the Availability, the Profile links, the Settings row and the legal
- * links beside the toggle that collapses it. Mantine adds the resize handle
+ * bottom, the Availability, the Profile links, the Settings row (which also
+ * holds the legal links) and the toggle that collapses it. Mantine adds the resize handle
  * on its edge. Collapsed to its icon rail (src/shell/sidebarLayout.ts), it
  * shows the rows' icons, named in tooltips; its stylesheet draws the rail.
  */
@@ -58,9 +57,8 @@ export function Sidebar() {
             />
             <Divider color="var(--line)" />
             <SettingsMenu />
-            <div className={classes.legalRow}>
-              <LegalLinks className={`${classes.railHidden} ${classes.legal}`} />
-              <SidebarToggle className={classes.toggle} />
+            <div className={classes.toggleRow}>
+              <SidebarToggle />
             </div>
           </Stack>
         </AppShell.Section>
