@@ -1,26 +1,28 @@
+import type { MouseEvent } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { Divider, NavLink, Popover, Stack } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { GearSix } from '@phosphor-icons/react'
 import { useCloseWhenHidden } from './breakpoint'
 import { LegalLinks } from './LegalLinks'
-import { SIDEBAR_ICON_SIZE, useSidebarCollapsed } from './sidebarLayout'
+import { SIDEBAR_ICON_SIZE } from './sidebarLayout'
 import { RailTooltip } from './SidebarRail'
 import { SiteSettings } from './SiteSettings'
 
 /**
- * The sidebar's Settings row: opens the Site language and theme switches
- * beside the sidebar, so they don't take room in it. The open panel is a
- * dialog named after the row, which stays selected while it is open; it
- * closes when the window gets too narrow for the sidebar. While the sidebar
- * is collapsed to its icons, which leaves no room for the legal links, the
- * panel offers them.
+ * The sidebar's Settings row: opens the Site language and theme switches and
+ * the legal links beside the sidebar, so they don't take room in it. The open
+ * panel is a dialog named after the row, which stays selected while it is
+ * open; it closes when the window gets too narrow for the sidebar, and when
+ * one of its links is followed.
  */
 export function SettingsMenu() {
   const { t } = useLingui()
   const [opened, { toggle, close }] = useDisclosure(false)
-  const collapsed = useSidebarCollapsed()
   useCloseWhenHidden('sidebar', close)
+  const closeOnLink = (event: MouseEvent) => {
+    if (event.target instanceof Element && event.target.closest('a')) close()
+  }
   return (
     <RailTooltip label={t`Settings`} disabled={opened}>
       <Popover
@@ -43,14 +45,10 @@ export function SettingsMenu() {
           />
         </Popover.Target>
         <Popover.Dropdown>
-          <Stack gap="md">
+          <Stack gap="md" onClick={closeOnLink}>
             <SiteSettings />
-            {collapsed && (
-              <>
-                <Divider color="var(--line)" />
-                <LegalLinks />
-              </>
-            )}
+            <Divider color="var(--line)" />
+            <LegalLinks />
           </Stack>
         </Popover.Dropdown>
       </Popover>
