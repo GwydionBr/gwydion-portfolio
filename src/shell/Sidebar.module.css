@@ -1,4 +1,7 @@
 .sidebar {
+  /* All of it scrolls in a short window, so the settings and legal links stay reachable. */
+  overflow-y: auto;
+  scrollbar-width: thin;
   background: var(--sidebar);
   border-color: var(--line);
   padding: var(--mantine-spacing-sm);

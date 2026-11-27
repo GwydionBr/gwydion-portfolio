@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
-import { AppShell, Box, Group, ScrollArea, Stack } from '@mantine/core'
+import { AppShell, Box, Group, Stack } from '@mantine/core'
 import { CircleHalf, Globe, type Icon } from '@phosphor-icons/react'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { ProfileLinkRows } from '#/components/ProfileLinks'
+import { SHELL_BREAKPOINT } from './breakpoint'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 import { LegalLinks } from './LegalLinks'
@@ -21,12 +22,14 @@ export function Sidebar() {
       // A sidebar of several parts, the navigation only one of them.
       renderRoot={(props) => <aside {...props} />}
       aria-label={t`Sidebar`}
+      // Below the breakpoint Mantine only slides it off screen; gone, it can't take keyboard focus.
+      visibleFrom={SHELL_BREAKPOINT}
       className={classes.sidebar}
     >
       <AppShell.Section p="xs">
         <Identity />
       </AppShell.Section>
-      <AppShell.Section grow component={ScrollArea} scrollbarSize={6} mt="xs">
+      <AppShell.Section grow mt="xs">
         <nav aria-label={t`Main navigation`}>
           <Stack component="ul" gap={2} className={classes.list}>
             {entries.map((entry) => (

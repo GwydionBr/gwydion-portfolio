@@ -17,8 +17,12 @@
   border-radius: 0.75rem;
 }
 
+/*
+ * No `display` on the images: while the theme is unknown both render and
+ * Mantine hides one (`lightHidden`/`darkHidden`, in its lower cascade layer).
+ */
 .thumbnail {
-  display: block;
+  vertical-align: middle;
   width: 100%;
   height: auto;
 }
@@ -44,7 +48,7 @@
 }
 
 .enlarged {
-  display: block;
+  vertical-align: middle;
   width: auto;
   max-width: 100%;
   height: auto;

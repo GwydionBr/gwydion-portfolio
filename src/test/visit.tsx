@@ -5,6 +5,8 @@ import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
+
+type AppRouter = ReturnType<typeof createAppRouter>
 import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
 import { emulateSystemTheme } from './systemTheme'
 
@@ -115,14 +117,14 @@ export async function visit(
     async click(element: HTMLElement) {
       await act(async () => {
         element.click()
-        await settled()
+        await settled(router)
       })
     },
     /** Runs `action` (an answer the test held back) and waits for the page to follow. */
     async settle(action: () => void) {
       await act(async () => {
         action()
-        await settled()
+        await settled(router)
       })
     },
     /** Types `value` into a form field, replacing what it held. */
@@ -134,9 +136,16 @@ export async function visit(
   }
 }
 
-/** Lets pending work (navigation, a `fetch` answered in the test) run to its end. */
-async function settled() {
-  for (let turn = 0; turn < 10; turn++) await new Promise((resolve) => setTimeout(resolve, 0))
+/**
+ * Lets pending work (navigation, a `fetch` answered in the test) run to its
+ * end. A navigation may first load the next view's code, which on a cold
+ * start takes longer than a few turns: wait until the router is done too.
+ */
+async function settled(router: AppRouter) {
+  const turn = () => new Promise((resolve) => setTimeout(resolve, 0))
+  for (let count = 0; count < 10; count++) await turn()
+  const deadline = Date.now() + 5000
+  while (router.state.isLoading && Date.now() < deadline) await turn()
 }
 
 /**
