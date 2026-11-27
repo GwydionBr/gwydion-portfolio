@@ -1,4 +1,5 @@
 import type { AnyRouter } from '@tanstack/react-router'
+import { secondaryNavbarFits } from './breakpoint'
 import type { SecondaryNavigation } from './secondaryNavigation'
 
 /**
@@ -29,7 +30,7 @@ export interface PageTransitionConditions {
   browserAnimated: boolean
   /**
    * The main pane keeps its place: the second sidebar shows on both pages or
-   * on neither. Otherwise the pane narrows or widens as the view changes, and
+   * on neither (on narrower windows it never shows). Otherwise the pane narrows or widens as the view changes, and
    * the old view's image would be squeezed or stretched with it.
    */
   keepsLayout: boolean
@@ -140,8 +141,9 @@ export function pageTransition({
           browserAnimated: takeBrowserAnimated(),
           keepsLayout:
             fromLocation !== undefined &&
-            secondaryNavigationAt(fromLocation.pathname) ===
-              secondaryNavigationAt(toLocation.pathname),
+            (!secondaryNavbarFits() ||
+              secondaryNavigationAt(fromLocation.pathname) ===
+                secondaryNavigationAt(toLocation.pathname)),
           scrolled: window.scrollY > 0,
         },
       ),
