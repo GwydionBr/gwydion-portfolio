@@ -5,10 +5,10 @@ import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
-
-type AppRouter = ReturnType<typeof createAppRouter>
 import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
 import { emulateSystemTheme } from './systemTheme'
+
+type AppRouter = ReturnType<typeof createAppRouter>
 
 declare global {
   var IS_REACT_ACT_ENVIRONMENT: boolean
@@ -63,6 +63,13 @@ export async function visit(
   mounted = root
   await act(async () => root.render(<RouterProvider router={router} />))
 
+  /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
+  const click = async (element: HTMLElement) => {
+    await act(async () => {
+      element.click()
+      await settled(router)
+    })
+  }
   const applies = (element: Element) => matchMedia(element.getAttribute('media') ?? 'all').matches
   const landmark = (role: 'main' | 'complementary', name?: string) =>
     getByRole(document.body, role, name ? { name } : {})
@@ -113,12 +120,16 @@ export async function visit(
         new Function(script.textContent ?? '')()
       }
     },
-    /** Clicks `element` (a link, a button) like a visitor and waits for what follows: a new page, a request. */
-    async click(element: HTMLElement) {
-      await act(async () => {
-        element.click()
-        await settled(router)
-      })
+    click,
+    /** Opens the sidebar's settings (the button `name`) and returns the panel. */
+    async openSettings(name = 'Settings') {
+      await click(within(landmark('complementary')).getByRole('button', { name }))
+      return getByRole(document.body, 'dialog', { name })
+    },
+    /** Opens the phone tab bar's More sheet (the tab `name`) and returns it. */
+    async openMore(name = 'More') {
+      await click(getByRole(document.body, 'button', { name }))
+      return getByRole(document.body, 'dialog', { name })
     },
     /** Runs `action` (an answer the test held back) and waits for the page to follow. */
     async settle(action: () => void) {

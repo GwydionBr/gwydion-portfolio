@@ -7,9 +7,9 @@ import { THEME_PREFERENCES, type ThemePreference } from '#/theme/theme'
  * Picks the theme: System (the default), Light or Dark. A choice overrides the
  * system setting and is remembered on the device; System goes back to it.
  * Until the page knows the preference (it lives on the device) no option is
- * picked.
+ * picked. `labelledBy` is the id of the visible label that names it.
  */
-export function ThemeSwitch() {
+export function ThemeSwitch({ labelledBy }: { labelledBy: string }) {
   const { t } = useLingui()
   const { preference, choose } = useTheme()
   const labels: Record<ThemePreference, string> = {
@@ -19,7 +19,7 @@ export function ThemeSwitch() {
   }
   return (
     <SegmentedControl
-      aria-label={t`Theme`}
+      aria-labelledby={labelledBy}
       value={preference ?? ''}
       onChange={(value) => choose(value as ThemePreference)}
       data={THEME_PREFERENCES.map((option) => ({ value: option, label: labels[option] }))}

@@ -38,6 +38,7 @@ msgid "Client work"
 msgstr "Kundenprojekt"
 
 #: src/components/story/ScreenshotGallery.tsx
+#: src/shell/MoreSheet.tsx
 msgid "Close"
 msgstr "Schließen"
 
@@ -145,6 +146,11 @@ msgstr "Nachricht"
 msgid "Message sent. I'll get back to you."
 msgstr "Nachricht gesendet. Ich melde mich bei dir."
 
+#: src/shell/MoreSheet.tsx
+#: src/shell/TabBar.tsx
+msgid "More"
+msgstr "Mehr"
+
 #: src/contact/ContactForm.tsx
 msgid "Name"
 msgstr "Name"
@@ -236,11 +242,15 @@ msgstr "Nachricht senden"
 msgid "Sending…"
 msgstr "Wird gesendet …"
 
+#: src/shell/SettingsMenu.tsx
+msgid "Settings"
+msgstr "Einstellungen"
+
 #: src/shell/Sidebar.tsx
 msgid "Sidebar"
 msgstr "Seitenleiste"
 
-#: src/shell/LanguageSwitch.tsx
+#: src/shell/SiteSettings.tsx
 msgid "Site language"
 msgstr "Seitensprache"
 
@@ -281,7 +291,7 @@ msgstr "Die Nachricht ist zu lang (höchstens {messageMax} Zeichen)."
 msgid "The message is too short (at least {messageMin} characters)."
 msgstr "Die Nachricht ist zu kurz (mindestens {messageMin} Zeichen)."
 
-#: src/shell/ThemeSwitch.tsx
+#: src/shell/SiteSettings.tsx
 msgid "Theme"
 msgstr "Design"
 

@@ -1,7 +1,8 @@
 /*
  * One indicator for the whole bar, placed only from `aria-current`: the
- * count follows the visible entries (Writing is optional), the first paint
- * already shows the current position, and only later changes slide.
+ * count follows the visible tabs (Writing is optional; More is always last),
+ * the first paint already shows the current position, and only later
+ * changes slide.
  */
 .tabs {
   --active-tab: 0;
@@ -67,7 +68,11 @@
   outline-offset: -3px;
   transition: color 200ms ease;
 
-  &[aria-current='page'] {
+  /* More is a button: it fills its cell like the links do. */
+  width: 100%;
+
+  &[aria-current='page'],
+  &[aria-expanded='true'] {
     color: var(--ink);
   }
 }
@@ -88,11 +93,11 @@
 }
 
 .filled,
-.tab[aria-current='page'] .outline {
+.tab:is([aria-current='page'], [aria-expanded='true']) .outline {
   opacity: 0;
 }
 
-.tab[aria-current='page'] .filled {
+.tab:is([aria-current='page'], [aria-expanded='true']) .filled {
   opacity: 1;
 }
 
