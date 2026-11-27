@@ -11,6 +11,13 @@
   );
 }
 
+/* Room for the second sidebar comes at once for a visitor who asks for less motion, as its slide does. */
+@media (prefers-reduced-motion: reduce) {
+  .main {
+    transition: none;
+  }
+}
+
 @media (min-width: 75em) {
   .main[data-secondary-navbar] {
     padding-inline-start: calc(

@@ -1,4 +1,9 @@
-/* Fixed beside the sidebar and below it, so it slides out from behind it; only from `SECONDARY_NAVBAR_BREAKPOINT` (lg, 75em) up. */
+/*
+ * Fixed beside the sidebar and below it, so it slides out from behind it;
+ * only from `SECONDARY_NAVBAR_BREAKPOINT` (lg, 75em) up. It moves with the
+ * AppShell's own transition variables, as the main pane's padding does, and
+ * not at all while the sidebar is being resized (Mantine zeroes them then).
+ */
 .navbar {
   display: none;
 
@@ -14,5 +19,21 @@
     padding: var(--mantine-spacing-sm);
     background: var(--sidebar);
     border-inline-end: 1px solid var(--line);
+    transform: translateX(-100%);
+    /* Hidden once it is behind the sidebar. */
+    visibility: hidden;
+    transition:
+      transform var(--app-shell-transition-duration) var(--app-shell-transition-timing-function),
+      visibility 0s linear var(--app-shell-transition-duration);
+
+    &[data-shown] {
+      transform: none;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
