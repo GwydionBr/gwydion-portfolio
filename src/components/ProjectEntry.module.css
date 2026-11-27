@@ -1,0 +1,27 @@
+/*
+ * The entry decides its layout by the room the Project page gives it (the
+ * page is the size container, ProjectDetail.module.css): text and cover side
+ * by side where both have room, the cover under the text otherwise.
+ */
+.entry {
+  display: grid;
+  gap: var(--mantine-spacing-xl);
+
+  @container (min-width: 44rem) {
+    &[data-with-cover] {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: center;
+    }
+  }
+}
+
+/* Without a cover the text keeps to the story's column, so it reads as the start of the page, not a gap. */
+.entry:not([data-with-cover]) .text {
+  max-width: var(--story-width);
+}
+
+/* Beside the key point's first line. */
+.check {
+  flex-shrink: 0;
+  margin-top: 2px;
+}

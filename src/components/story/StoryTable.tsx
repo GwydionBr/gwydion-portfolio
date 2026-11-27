@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react'
 import { Table } from '@mantine/core'
 
 /** Narrower than this a story's table scrolls sideways instead of squeezing its columns. */
-const MIN_WIDTH = 560
+const MIN_WIDTH = 480
 
 /**
  * A Markdown table in a story (`| who | sees |`), as the site's table; on

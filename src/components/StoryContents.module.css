@@ -1,0 +1,4 @@
+/* A long section title wraps tight, so the rail stays short enough for a laptop's height. */
+.body {
+  line-height: 1.35;
+}

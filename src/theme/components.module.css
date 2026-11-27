@@ -135,8 +135,15 @@
     color: var(--muted);
   }
 
-  &:where([data-active], [aria-current='page']) {
+  &:where([data-active], [aria-current='page'], [aria-current='location']) {
     font-weight: 500;
+  }
+
+  /* Where the reader is within a page (a story's sections): an ink bar on its edge, too. */
+  &:where([aria-current='location']) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    box-shadow: inset 2px 0 0 var(--ink);
   }
 }
 
@@ -248,6 +255,10 @@
 
   & :where(h2) {
     margin: 2rem 0 0;
+    /* A jump to a section leaves the page's top padding above its heading (level with a sticky rail), below the phone's top bar. */
+    scroll-margin-top: calc(
+      var(--app-shell-header-offset, 0rem) + var(--app-shell-padding, var(--mantine-spacing-lg))
+    );
     font-size: var(--mantine-font-size-md);
     line-height: 1.5;
     letter-spacing: -0.025em;

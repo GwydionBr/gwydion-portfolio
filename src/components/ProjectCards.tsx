@@ -5,7 +5,7 @@ import { ProjectMeta } from './ProjectMeta'
 import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
 import { TagList } from './TagList'
-import classes from './ProjectCards.module.css'
+import classes from './LinkCard.module.css'
 
 /** How many of its stack a Project card names. */
 const CARD_STACK = 4
@@ -41,7 +41,6 @@ function ProjectCard({ project }: { project: Project }) {
     // The title link covers the whole card; the card's lists stay plain content.
     <Paper
       component="article"
-      pos="relative"
       h="100%"
       p="lg"
       display="flex"

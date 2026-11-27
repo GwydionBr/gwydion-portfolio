@@ -33,8 +33,12 @@ export function LanguageSwitch({ labelledBy }: { labelledBy: string }) {
   )
 }
 
-/** The address of the page shown in another Site language: same page, other prefix, so the visitor stays where they are. */
+/**
+ * The address of the page shown in another Site language: same page, other
+ * prefix, so the visitor stays where they are. A hash is left behind: it
+ * names a place by its heading, which reads differently in each language.
+ */
 export function usePageInLanguage(): (language: Language) => string {
-  const { pathname, searchStr, hash } = useLocation()
-  return (language) => `${pathInLanguage(pathname, language)}${searchStr}${hash ? `#${hash}` : ''}`
+  const { pathname, searchStr } = useLocation()
+  return (language) => `${pathInLanguage(pathname, language)}${searchStr}`
 }

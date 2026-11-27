@@ -104,6 +104,8 @@ export async function visit(
     router,
     /** The path the visitor ends up on, after redirects. */
     path: () => router.state.location.pathname,
+    /** The address's fragment, without `#`: the section jumped to. */
+    hash: () => router.state.location.hash,
     /** The main content landmark. */
     main: () => landmark('main'),
     /** The desktop sidebar landmark. */

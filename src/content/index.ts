@@ -23,6 +23,7 @@ import type {
 } from './schema'
 
 export type { Localized } from './localized'
+export type { StorySection } from './storySections'
 export { periodDash } from './period'
 export type {
   CareerEntry,
@@ -41,6 +42,7 @@ export type {
   ProjectSource,
   ProjectStat,
   ProjectStatSource,
+  ProjectStatus,
   ProjectWithStory,
   Screenshot,
   ScreenshotImage,
@@ -68,7 +70,7 @@ export interface Content {
   getProfile(language: Language): Profile
   /** The Projects matching `filter`, in their configured order, in `language`. */
   getProjects(language: Language, filter?: ProjectFilter): Project[]
-  /** The Project at `slug` with its story in `language`, or undefined when there is none. */
+  /** The Project at `slug` with its story and cover in `language`, or undefined when there is none. */
   getProject(slug: string, language: Language): ProjectWithStory | undefined
   /**
    * The screenshots of the Project at `slug`, in gallery order, with their
@@ -95,7 +97,7 @@ export interface Content {
 
 /** `project` in `language`, its numbers written out. */
 function projectIn(project: ProjectSource, language: Language): Project {
-  const { stats, ...rest } = project
+  const { stats, cover: _cover, ...rest } = project
   return {
     ...inLanguage(rest, language),
     // Left out rather than undefined: the content-integrity check reads undefined as missing.
@@ -117,6 +119,10 @@ export function createContent(source: ContentSource): Content {
     source.cv.find((file) => file.language === BASE_LANGUAGE) ??
     source.cv[0]
   const projectsInOrder = [...source.projects].sort((a, b) => a.order - b.order)
+  const screenshotsOf = (slug: string, language: Language): Screenshot[] => {
+    const set = source.screenshots[slug]
+    return set ? screenshotsIn(set, language) : []
+  }
   return {
     getProfile: (language) => inLanguage(source.profile, language),
     getProjects: (language, { featured } = {}) =>
@@ -126,12 +132,13 @@ export function createContent(source: ContentSource): Content {
     getProject: (slug, language) => {
       const project = source.projects.find((candidate) => candidate.slug === slug)
       if (!project) return undefined
-      return { ...projectIn(project, language), story: source.stories[slug]?.[language] }
+      const cover =
+        project.cover === undefined
+          ? null
+          : screenshotsOf(slug, language).find((shot) => shot.view === project.cover)
+      return { ...projectIn(project, language), story: source.stories[slug]?.[language], cover }
     },
-    getScreenshots: (slug, language) => {
-      const set = source.screenshots[slug]
-      return set ? screenshotsIn(set, language) : []
-    },
+    getScreenshots: screenshotsOf,
     getCareerEntries: (language) => inLanguage(careerEntries, language),
     getCv: (language) => {
       const file = cvIn(language)

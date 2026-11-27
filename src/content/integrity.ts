@@ -5,19 +5,22 @@ import type { ScreenshotImage } from './schema'
 
 /**
  * Everything `content` returns in `language`, keyed by getter; each Project
- * page as `project.<slug>`, so a missing story is reported by slug, and its
+ * page as `project.<slug>`, so a missing story or cover is reported by slug, and its
  * screenshots as `screenshots.<slug>.<view>`, so a missing image file is
  * reported by view and theme. New
  * content types join here.
  */
 function everythingIn(content: Content, language: Language) {
   const projects = content.getProjects(language)
+  // A cover is one of the screenshots, checked with them; here only whether it is there.
+  const pageOf = (slug: string) => {
+    const project = content.getProject(slug, language)
+    return project && { ...project, cover: project.cover && project.cover.view }
+  }
   return {
     profile: content.getProfile(language),
     projects,
-    ...Object.fromEntries(
-      projects.map(({ slug }) => [`project.${slug}`, content.getProject(slug, language)]),
-    ),
+    ...Object.fromEntries(projects.map(({ slug }) => [`project.${slug}`, pageOf(slug)])),
     ...Object.fromEntries(
       projects.map(({ slug }) => [
         `screenshots.${slug}`,

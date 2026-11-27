@@ -1,25 +1,82 @@
-/* The detail decides its layout by the room it gets, not by the window: the facts rail needs space beside the story. */
+/*
+ * A Project page decides its layout by the room it gets, not by the window:
+ * the rail needs space beside the story. Wide, the story runs on the left;
+ * on the right the rail (the story's sections, the facts) stays in view
+ * while it scrolls, and the next Project waits at the end of the column,
+ * level with the story's end. Narrow, one column: the facts, the story, the
+ * next Project; no section list.
+ */
 .detail {
+  --rail-width: 17rem;
+  --rail-gap: 2.5rem;
+
   container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xl);
 }
 
-.article {
-  display: grid;
-  gap: 1.5rem;
+/* How wide the story's column is, for what lines up with it (the entry without a cover). */
+.detail > * {
+  --story-width: 100%;
 
-  @container (min-width: 46rem) {
-    grid-template-columns: minmax(0, 1fr) 17rem;
-    column-gap: 2.5rem;
+  @container (min-width: 50rem) {
+    --story-width: calc(100% - var(--rail-width) - var(--rail-gap));
   }
 }
 
-.facts {
-  align-self: start;
+.body {
+  display: grid;
+  gap: var(--mantine-spacing-xl);
+}
 
-  @container (min-width: 46rem) {
-    position: sticky;
-    top: 2.5rem;
-    grid-column: 2;
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+@container (min-width: 50rem) {
+  .body {
+    grid-template-columns: minmax(0, 1fr) var(--rail-width);
+    /* The rail takes what the next Project leaves of the story's height. */
+    grid-template-rows: 1fr auto;
+    gap: var(--mantine-spacing-lg) var(--rail-gap);
+  }
+
+  .story {
     grid-row: 1 / span 2;
+    grid-column: 1;
+  }
+
+  .railCell {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  /*
+   * In view while the story scrolls, level with the page's top padding, until
+   * its cell ends where the next Project begins. On a window too short for
+   * it, it scrolls on its own.
+   */
+  .rail {
+    position: sticky;
+    top: var(--app-shell-padding);
+    max-height: calc(100dvh - 2 * var(--app-shell-padding));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .next {
+    align-self: end;
+    grid-row: 2;
+    grid-column: 2;
+  }
+}
+
+@container not (min-width: 50rem) {
+  .wideOnly {
+    display: none;
   }
 }

@@ -1,0 +1,18 @@
+/*
+ * A card that is one link: its title's link covers the whole card, so the
+ * card's other content stays plain content (ProjectCards, NextProject).
+ */
+.card {
+  position: relative;
+
+  &:hover {
+    background-color: var(--hover);
+  }
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--mantine-radius-lg);
+}

@@ -1,0 +1,12 @@
+/* The facts one under the other in the rail; side by side where the card is wider, as before the story on narrow screens. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+  /* A word too long for the card breaks rather than overflow it. */
+  overflow-wrap: break-word;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}

@@ -1,26 +1,10 @@
-import { Badge, Box } from '@mantine/core'
+import { StatusPill } from './StatusPill'
 
 /** The Availability headline as a green status pill. */
 export function AvailabilityPill({ headline }: { headline: string }) {
   return (
-    <Badge
-      component="p"
-      color="available"
-      size="lg"
-      radius="xl"
-      m={0}
-      leftSection={
-        <Box
-          component="span"
-          aria-hidden
-          w={6}
-          h={6}
-          bg="var(--available)"
-          style={{ borderRadius: '50%' }}
-        />
-      }
-    >
+    <StatusPill live component="p" size="lg">
       {headline}
-    </Badge>
+    </StatusPill>
   )
 }

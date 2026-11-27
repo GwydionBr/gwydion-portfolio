@@ -39,48 +39,142 @@ describe('The Projects view', () => {
 })
 
 describe('A Project page', () => {
-  it('tells the Project’s story in English under /en, with its meta, stack and stats', async () => {
+  it('opens with what the Project is: kind, status, summary, key points, website and cover', async () => {
     const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
 
     expect(page.title()).toBe('Fixture Engine')
+    const main = within(page.main())
+    expect(main.getByText('Own product')).toBeTruthy()
+    expect(main.getByText('Live, commercial')).toBeTruthy()
+    expect(main.getByText('An engine for fixtures.')).toBeTruthy()
+    expect(main.getByRole('list', { name: 'Key points' }).textContent).toBe(
+      'Fast engineTested engineTyped engine',
+    )
+    expect(main.getByRole('link', { name: 'Visit website' }).getAttribute('href')).toBe(
+      'https://engine.example',
+    )
+    expect(main.queryByRole('link', { name: 'View source' })).toBeNull()
+    // The cover: the first screenshot on the page, before the story and outside its galleries.
+    const [cover] = main.getAllByRole('button', { name: 'Enlarge screenshot: Dashboard' })
+    expect(cover!.closest('ul')).toBeNull()
+    expect(navigationOf('Main navigation').current).toEqual(['Projects'])
+  })
+
+  it('tells the Project’s story in English under /en, with its stats', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+
     const main = page.main()
-    expect(main.textContent).toContain('Own product · 2025–now')
-    expect(main.textContent).toContain('An engine for fixtures.')
-    expect(within(main).getByRole('list', { name: 'Stack' }).textContent).toBe('TypeScriptPostgres')
     expect(within(main).getByRole('list', { name: 'Numbers' }).textContent).toContain(
       '1,234commits',
     )
     expect(main.textContent).toContain('The story of Fixture Engine.')
-    expect(navigationOf('Main navigation').current).toEqual(['Projects'])
   })
 
-  it('sums the Project up in a Facts rail: website, kind, period, role, status, source code', async () => {
+  it('lists the story’s sections as links to their headings', async () => {
+    const page = await visit('/en/projects/fixture-studio', { content: fixtureContent() })
+
+    const contents = within(screen.getByRole('navigation', { name: 'On this page' }))
+    const links = contents.getAllByRole('link')
+    expect(links.map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['The idea', '#the-idea'],
+      ['How it works', '#how-it-works'],
+    ])
+    for (const link of links) {
+      const id = link.getAttribute('href')!.slice(1)
+      expect(
+        within(page.main()).getByRole('heading', { level: 2, name: link.textContent! }).id,
+      ).toBe(id)
+    }
+  })
+
+  it('moves the focus to a section’s heading when its link is followed, and puts it in the address', async () => {
+    const page = await visit('/de/projects/fixture-studio', { content: fixtureContent() })
+    const heading = within(page.main()).getByRole('heading', { name: 'Wie es funktioniert' })
+
+    await page.click(
+      within(screen.getByRole('navigation', { name: 'Auf dieser Seite' })).getByRole('link', {
+        name: 'Wie es funktioniert',
+      }),
+    )
+
+    expect(document.activeElement).toBe(heading)
+    await waitFor(() => expect(page.hash()).toBe('wie-es-funktioniert'))
+    expect(page.path()).toBe('/de/projects/fixture-studio')
+  })
+
+  it('marks the section jumped to as the one being read, wherever its heading comes to rest', async () => {
+    const page = await visit('/de/projects/fixture-studio', { content: fixtureContent() })
+    const contents = () => screen.getByRole('navigation', { name: 'Auf dieser Seite' })
+    const marked = () =>
+      within(contents())
+        .getAllByRole('link')
+        .filter((link) => link.getAttribute('aria-current') === 'location')
+        .map((link) => link.textContent)
+
+    await page.click(within(contents()).getByRole('link', { name: 'Die Idee' }))
+
+    await waitFor(() => expect(page.hash()).toBe('die-idee'))
+    expect(marked()).toEqual(['Die Idee'])
+  })
+
+  it('leaves a section’s address behind when the Site language is switched', async () => {
+    const page = await visit('/de/projects/fixture-studio', { content: fixtureContent() })
+    await page.click(
+      within(screen.getByRole('navigation', { name: 'Auf dieser Seite' })).getByRole('link', {
+        name: 'Wie es funktioniert',
+      }),
+    )
+    await waitFor(() => expect(page.hash()).toBe('wie-es-funktioniert'))
+
+    const settings = await page.openSettings('Einstellungen')
+    const switcher = within(settings).getByRole('navigation', { name: 'Seitensprache' })
+    await page.click(within(switcher).getByRole('link', { name: 'English' }))
+
+    expect(page.path()).toBe('/en/projects/fixture-studio')
+    expect(page.hash()).toBe('')
+  })
+
+  it('sums the Project up in its Facts: period, role, source code and stack', async () => {
     const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
 
     const facts = within(within(page.main()).getByRole('region', { name: 'Facts' }))
-    expect(facts.getByRole('link', { name: 'Visit website' }).getAttribute('href')).toBe(
-      'https://engine.example',
-    )
     const terms = facts.getAllByRole('term').map((term) => term.textContent)
     const values = facts.getAllByRole('definition').map((value) => value.textContent)
     expect(Object.fromEntries(terms.map((term, index) => [term, values[index]]))).toEqual({
-      Kind: 'Own product',
       Period: '2025–now',
       Role: 'Sole developer',
-      Status: 'Live, commercial',
       'Source code': 'Not public',
+      Stack: 'TypeScriptPostgres',
     })
   })
 
-  it('links public source code from the Facts rail, and offers no website when there is none', async () => {
+  it('links public source code from the entry, and offers no website when there is none', async () => {
     const page = await visit('/de/projects/fixture-kit', { content: fixtureContent() })
 
-    const facts = within(within(page.main()).getByRole('region', { name: 'Fakten' }))
-    expect(facts.getByRole('link', { name: 'Öffentlich auf GitHub' }).getAttribute('href')).toBe(
+    const main = within(page.main())
+    expect(main.getByRole('link', { name: 'Quellcode ansehen' }).getAttribute('href')).toBe(
       'https://github.com/ada-example/fixture-kit',
     )
-    expect(facts.queryByRole('link', { name: 'Website besuchen' })).toBeNull()
-    expect(facts.getByText('Archiviert')).toBeTruthy()
+    expect(main.queryByRole('link', { name: 'Website besuchen' })).toBeNull()
+    expect(main.getByText('Archiviert')).toBeTruthy()
+    expect(
+      within(main.getByRole('region', { name: 'Fakten' })).getByText('Öffentlich auf GitHub'),
+    ).toBeTruthy()
+  })
+
+  it('has no cover without screenshots', async () => {
+    const page = await visit('/en/projects/fixture-kit', { content: fixtureContent() })
+
+    expect(within(page.main()).queryByRole('img')).toBeNull()
+  })
+
+  it('ends with the next Project, the first again after the last', async () => {
+    const page = await visit('/en/projects/fixture-kit', { content: fixtureContent() })
+
+    const next = within(within(page.main()).getByRole('region', { name: 'Next Project' }))
+    expect(next.getByRole('link', { name: 'Fixture Engine' }).getAttribute('href')).toBe(
+      '/en/projects/self-engine',
+    )
   })
 
   it('tells the German story under /de', async () => {
@@ -88,7 +182,8 @@ describe('A Project page', () => {
 
     expect(page.main().textContent).toContain('Die Geschichte von Fixture Engine.')
     expect(page.main().textContent).not.toContain('The story of')
-    expect(page.main().textContent).toContain('Eigenes Produkt · 2025–heute')
+    expect(page.main().textContent).toContain('Eigenes Produkt')
+    expect(page.main().textContent).toContain('Schnelles engine')
   })
 
   it('is opened from the Projects view', async () => {

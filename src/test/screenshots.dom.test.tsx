@@ -84,7 +84,9 @@ describe('Self-Engine screenshots', () => {
     const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
 
     await page.click(
-      within(page.main()).getByRole('button', { name: 'Enlarge screenshot: Dashboard' }),
+      within(within(page.main()).getByRole('list', { name: 'Screenshots' })).getByRole('button', {
+        name: 'Enlarge screenshot: Dashboard',
+      }),
     )
     await page.click(
       within(getByRole(document.body, 'dialog', { name: 'Dashboard' })).getByRole('button', {
@@ -95,18 +97,31 @@ describe('Self-Engine screenshots', () => {
     expect(queryByRole(document.body, 'dialog')).toBeNull()
   })
 
-  it('fills the real Self-Engine story with its screenshots, by Site language and theme', async () => {
+  it('enlarges the cover on its own', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+    const [cover] = within(page.main()).getAllByRole('button', {
+      name: 'Enlarge screenshot: Dashboard',
+    })
+
+    await page.click(cover!)
+
+    const dialog = getByRole(document.body, 'dialog', { name: 'Dashboard' })
+    expect(within(dialog).getByRole('img').getAttribute('alt')).toBe('The fixture dashboard')
+    expect(within(dialog).queryByRole('button', { name: 'Next screenshot' })).toBeNull()
+  })
+
+  it('fills the real Self-Engine page with its screenshots, by Site language and theme', async () => {
     const page = await visit('/de/projects/self-engine', { systemTheme: 'dark' })
 
-    const images = within(page.main())
-      .getAllByRole('list', { name: 'Screenshots' })
-      .flatMap((gallery) => within(gallery).getAllByRole('img'))
+    // The cover, then the story's galleries, which do not show it again.
+    const images = within(page.main()).getAllByRole('img')
     expect(images).toHaveLength(9)
+    expect(new Set(images.map((image) => image.getAttribute('src'))).size).toBe(9)
     for (const image of images) {
       expect(image.getAttribute('src')).toMatch(
         /^https:\/\/[a-z0-9]+\.public\.blob\.vercel-storage\.com\/public-site\/[a-z-]+-de-dark-[0-9a-f]+\.webp$/,
       )
     }
-    expect(images[3]!.getAttribute('alt')).toMatch(/^Self-Engine-Dashboard mit/)
+    expect(images[0]!.getAttribute('alt')).toMatch(/^Self-Engine-Dashboard mit/)
   })
 })

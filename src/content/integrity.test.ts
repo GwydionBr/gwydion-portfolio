@@ -52,13 +52,59 @@ describe('Content integrity', () => {
     ])
   })
 
-  it.each(['role', 'status'] as const)('a Project %s missing in German is reported', (field) => {
+  it('a Project role missing in German is reported', () => {
     const source = fixtureSource()
-    source.projects[2]![field].de = ''
+    source.projects[2]!.role.de = ''
 
     expect(integrityProblems(createContent(source))).toEqual([
-      `de: projects.1.${field} is empty`,
-      `de: project.fixture-studio.${field} is empty`,
+      'de: projects.1.role is empty',
+      'de: project.fixture-studio.role is empty',
+    ])
+  })
+
+  it('a Project status missing in German is reported', () => {
+    const source = fixtureSource()
+    source.projects[2]!.status.label.de = ''
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: projects.1.status.label is empty',
+      'de: project.fixture-studio.status.label is empty',
+    ])
+  })
+
+  it('a Project key point missing in German is reported', () => {
+    const source = fixtureSource()
+    source.projects[2]!.keyPoints[1].de = ' '
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'de: projects.1.keyPoints.1 is empty',
+      'de: project.fixture-studio.keyPoints.1 is empty',
+    ])
+  })
+
+  it('a Project cover that names none of its screenshots is reported', () => {
+    const source = fixtureSource()
+    source.projects[1]!.cover = 'nowhere'
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'en: project.self-engine.cover is missing',
+      'de: project.self-engine.cover is missing',
+    ])
+  })
+
+  it('a Project without screenshots needs no cover', () => {
+    const source = fixtureSource()
+    delete source.projects[1]!.cover
+
+    expect(integrityProblems(createContent(source))).toEqual([])
+  })
+
+  it('a story section without a title is reported', () => {
+    const source = fixtureSource()
+    source.stories['fixture-kit']!.en!.sections[0]!.title = ''
+
+    expect(integrityProblems(createContent(source))).toEqual([
+      'en: project.fixture-kit.story.sections.0.title is empty',
     ])
   })
 
