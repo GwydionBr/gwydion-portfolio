@@ -1,9 +1,11 @@
+import { Group, Paper, SimpleGrid, Text, Title } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import type { Project } from '#/content'
 import { ProjectMeta } from './ProjectMeta'
 import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
 import { TagList } from './TagList'
+import classes from './ProjectCards.module.css'
 
 /** How many of its stack a Project card names. */
 const CARD_STACK = 4
@@ -15,13 +17,21 @@ const CARD_STACK = 4
  */
 export function ProjectCards({ projects }: { projects: readonly Project[] }) {
   return (
-    <ul className="grid gap-4 lg:grid-cols-2">
+    <SimpleGrid
+      component="ul"
+      cols={{ base: 1, md: 2 }}
+      spacing="md"
+      role="list"
+      m={0}
+      p={0}
+      style={{ listStyle: 'none' }}
+    >
       {projects.map((project) => (
         <li key={project.slug}>
           <ProjectCard project={project} />
         </li>
       ))}
-    </ul>
+    </SimpleGrid>
   )
 }
 
@@ -29,39 +39,61 @@ function ProjectCard({ project }: { project: Project }) {
   const { t } = useLingui()
   return (
     // The title link covers the whole card; the card's lists stay plain content.
-    <article className="relative flex h-full flex-col rounded-2xl bg-surface p-5 ring-1 ring-line hover:bg-hover">
-      <p className="flex items-center gap-2 text-xs text-subtle">
+    <Paper
+      component="article"
+      pos="relative"
+      h="100%"
+      p="lg"
+      display="flex"
+      style={{ flexDirection: 'column' }}
+      className={classes.card}
+    >
+      <Group component="p" gap={8} fz="xs" lh={4 / 3} c="var(--subtle)" wrap="nowrap">
         <ProjectSwatch accent={project.accent} />
         <span>
           <ProjectMeta project={project} />
         </span>
-      </p>
-      <h3 className="mt-2 text-base font-semibold tracking-tight text-ink">
-        <ProjectPageLink
-          slug={project.slug}
-          className="after:absolute after:inset-0 after:rounded-2xl"
-        >
+      </Group>
+      <Title order={3} fz="md" mt={8}>
+        <ProjectPageLink slug={project.slug} className={classes.link}>
           {project.title}
         </ProjectPageLink>
-      </h3>
-      <p className="mt-1 leading-relaxed">{project.summary}</p>
+      </Title>
+      <Text inherit mt={4} lh={1.625}>
+        {project.summary}
+      </Text>
       {project.stats && (
-        <ul aria-label={t`Numbers`} className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+        <Group
+          component="ul"
+          aria-label={t`Numbers`}
+          role="list"
+          m={0}
+          mt="md"
+          p={0}
+          gap="0.5rem 1.5rem"
+          style={{ listStyle: 'none' }}
+        >
           {project.stats.map((stat) => (
-            <li key={stat.label} className="flex items-baseline gap-1.5">
-              <span className="text-lg font-semibold tracking-tight text-ink tabular-nums">
+            <Group component="li" key={stat.label} align="baseline" gap={6} wrap="nowrap">
+              <Text
+                component="span"
+                size="lg"
+                lh={28 / 18}
+                fw={600}
+                c="var(--ink)"
+                lts="-0.025em"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
+              >
                 {stat.value}
-              </span>
-              <span className="text-xs text-subtle">{stat.label}</span>
-            </li>
+              </Text>
+              <Text component="span" size="xs" c="var(--subtle)">
+                {stat.label}
+              </Text>
+            </Group>
           ))}
-        </ul>
+        </Group>
       )}
-      <TagList
-        label={t`Stack`}
-        tags={project.stack.slice(0, CARD_STACK)}
-        className="mt-auto pt-4"
-      />
-    </article>
+      <TagList label={t`Stack`} tags={project.stack.slice(0, CARD_STACK)} mt="auto" pt="md" />
+    </Paper>
   )
 }

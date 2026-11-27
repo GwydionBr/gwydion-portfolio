@@ -1,3 +1,4 @@
+import { Anchor, List, NavLink, Stack, Text, type MantineSpacing } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import {
   ArrowUpRight,
@@ -21,13 +22,17 @@ export function EmailLink({ className = '' }: { className?: string }) {
   const address = emailAddressOf(useProfile())
   if (!address) return null
   return (
-    <a
+    <Anchor
       href={`mailto:${address}`}
       {...eventAttributes(PROFILE_LINK_EVENTS.email)}
-      className={`font-medium text-ink underline ${className}`}
+      inherit
+      fw={500}
+      c="var(--ink)"
+      underline="always"
+      className={className}
     >
       {address}
-    </a>
+    </Anchor>
   )
 }
 
@@ -36,76 +41,80 @@ export function EmailLink({ className = '' }: { className?: string }) {
  * links. A placeholder link is named, dimmed, and not a working link.
  * The Contact view lists them, and the shell offers them on every page.
  */
-export function ProfileLinks({ className = 'mt-2 space-y-2' }: { className?: string }) {
+export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: MantineSpacing }) {
   const { t } = useLingui()
   const profile = useProfile()
   const labels = useProfileLinkLabels()
   return (
-    <ul className={className}>
+    <List listStyleType="none" spacing={8} mt={mt} center>
       {profile.links.map((link) => {
         const Icon = ICONS[link.kind]
         return (
-          <li key={link.kind} className="flex min-w-0 items-center gap-2">
-            <Icon aria-hidden className="size-4 shrink-0 text-subtle" />
+          <List.Item
+            key={link.kind}
+            icon={<Icon aria-hidden size={16} color="var(--subtle)" style={{ display: 'block' }} />}
+          >
             {link.placeholder ? (
               <span className="stand-in">
-                <span>{labels[link.kind]}</span> <span className="text-xs">({t`coming soon`})</span>
+                <span>{labels[link.kind]}</span>{' '}
+                <Text component="span" size="xs">
+                  ({t`coming soon`})
+                </Text>
               </span>
             ) : (
-              <a
+              <Anchor
                 href={link.href}
                 {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
-                className="truncate font-medium text-ink hover:underline"
+                inherit
+                fw={500}
+                c="var(--ink)"
                 {...(link.kind === 'email' ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
               >
                 {labels[link.kind]}
-              </a>
+              </Anchor>
             )}
-          </li>
+          </List.Item>
         )
       })}
-    </ul>
+    </List>
   )
 }
 
-/** The Profile links as rows like the sidebar's navigation entries. */
+/** The Profile links as rows like the sidebar's navigation entries (Mantine NavLink). */
 export function ProfileLinkRows() {
   const { t } = useLingui()
   const profile = useProfile()
   const labels = useProfileLinkLabels()
-  const row = 'flex w-full items-center gap-3 rounded-lg px-3 py-1.5'
   return (
-    <ul className="space-y-0.5">
+    <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
       {profile.links.map((link) => {
         const Icon = ICONS[link.kind]
         const external = link.kind !== 'email'
-        const icon = <Icon aria-hidden className="size-4 shrink-0 text-subtle" />
+        const icon = <Icon aria-hidden size={16} />
         return (
           <li key={link.kind}>
             {link.placeholder ? (
-              <span className={`stand-in ${row}`}>
-                {icon}
-                <span>{labels[link.kind]}</span>
-                <span className="ml-auto text-xs">{t`coming soon`}</span>
-              </span>
+              <NavLink
+                component="span"
+                className="stand-in"
+                label={labels[link.kind]}
+                leftSection={icon}
+                rightSection={<Text size="xs">{t`coming soon`}</Text>}
+              />
             ) : (
-              <a
+              <NavLink
                 href={link.href}
                 {...eventAttributes(PROFILE_LINK_EVENTS[link.kind])}
-                className={`${row} hover:bg-hover hover:text-ink`}
+                label={labels[link.kind]}
+                leftSection={icon}
+                rightSection={external && <ArrowUpRight aria-hidden size={14} />}
                 {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              >
-                {icon}
-                <span className="truncate">{labels[link.kind]}</span>
-                {external && (
-                  <ArrowUpRight aria-hidden className="ml-auto size-3.5 shrink-0 text-subtle" />
-                )}
-              </a>
+              />
             )}
           </li>
         )
       })}
-    </ul>
+    </Stack>
   )
 }
 

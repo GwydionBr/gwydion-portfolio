@@ -1,3 +1,4 @@
+import { Button, Group, Text } from '@mantine/core'
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { DownloadSimple } from '@phosphor-icons/react'
@@ -6,21 +7,27 @@ import type { CvFile } from '#/content'
 import { useCv, useCvs } from '#/content/react'
 import { nativeNameOf } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
-import { BUTTON_STYLES, type ButtonStyle } from './buttonStyles'
 import { Tile } from './Tile'
+
+type ButtonStyle = 'primary' | 'secondary'
 
 /** A download link to one CV file, marked with its language and type; counts its downloads. */
 function CvFileLink({
   file,
+  look,
   className,
   children,
 }: {
   file: CvFile
-  className: string
+  look: ButtonStyle
+  className?: string
   children: ReactNode
 }) {
   return (
-    <a
+    <Button
+      component="a"
+      variant={look === 'primary' ? 'filled' : 'default'}
+      leftSection={<DownloadSimple aria-hidden size={16} />}
       href={file.href}
       download
       hrefLang={file.language}
@@ -29,7 +36,7 @@ function CvFileLink({
       className={className}
     >
       {children}
-    </a>
+    </Button>
   )
 }
 
@@ -51,8 +58,7 @@ export function CvDownload({
   const cv = useCv()
   const siteLanguage = useSiteLanguage()
   return (
-    <CvFileLink file={cv} className={`${BUTTON_STYLES[look]} whitespace-nowrap ${className}`}>
-      <DownloadSimple aria-hidden className="size-4" />
+    <CvFileLink file={cv} look={look} className={className}>
       {t`Download CV`}
       {cv.language !== siteLanguage && (
         <span lang={cv.language}> · {nativeNameOf(cv.language)}</span>
@@ -67,17 +73,16 @@ export function CvTile({ className }: { className?: string }) {
   const files = useCvs()
   return (
     <Tile title={t`CV`} className={className}>
-      <p className="mt-1">{t`1 page · PDF`}</p>
-      <ul className="mt-3 flex flex-wrap gap-2">
+      <Text inherit mt={4}>{t`1 page · PDF`}</Text>
+      <Group component="ul" role="list" m={0} mt="sm" p={0} gap={8} style={{ listStyle: 'none' }}>
         {files.map((file) => (
           <li key={file.href}>
-            <CvFileLink file={file} className={BUTTON_STYLES.secondary}>
-              <DownloadSimple aria-hidden className="size-4" />
+            <CvFileLink file={file} look="secondary">
               <span lang={file.language}>{nativeNameOf(file.language)}</span>
             </CvFileLink>
           </li>
         ))}
-      </ul>
+      </Group>
     </Tile>
   )
 }

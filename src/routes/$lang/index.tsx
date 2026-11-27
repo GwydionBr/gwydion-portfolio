@@ -1,5 +1,8 @@
 import { useId } from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
+import { Box, Group, SimpleGrid, Stack, Text } from '@mantine/core'
+import { RouterAnchor } from '#/components/links'
+import { SHELL_BREAKPOINT } from '#/shell/breakpoint'
 import { useLingui } from '@lingui/react/macro'
 import { AvailabilityPill } from '#/components/AvailabilityPill'
 import { CvDownload } from '#/components/CvDownload'
@@ -37,61 +40,78 @@ function Overview() {
   return (
     <View title={name} location={[]} hero={<Hero />}>
       {featured.length > 0 && (
-        <section aria-labelledby={featuredId} className="mb-4">
-          <div className="mb-3 flex items-baseline justify-between gap-3 px-1">
-            <h2 id={featuredId} className="text-xs font-medium text-subtle">
+        <Box component="section" aria-labelledby={featuredId} mb={16}>
+          <Group mb={12} align="baseline" justify="space-between" gap={12} px={4}>
+            <Text component="h2" id={featuredId} size="xs" fw={500} c="var(--subtle)">
               {t`Featured Projects`}
-            </h2>
+            </Text>
             <ViewAllLink to="/$lang/projects" />
-          </div>
+          </Group>
           <ProjectCards projects={featured} />
-        </section>
+        </Box>
       )}
-      <div className="grid items-start gap-4 lg:grid-cols-2">
-        {/* Alone until Writing exists: then it takes the whole row. */}
-        <Tile title={t`Now`} className={hasWriting ? '' : 'lg:col-span-2'}>
-          <ul className="mt-2 space-y-2">
+      <SimpleGrid
+        cols={{ base: 1, md: hasWriting ? 2 : 1 }}
+        spacing="md"
+        style={{ alignItems: 'start' }}
+      >
+        {/* The Now tile takes the whole row until Writing exists. */}
+        <Tile title={t`Now`}>
+          <Stack component="ul" mt={8} gap={8} mb={0} p={0} style={{ listStyle: 'none' }}>
             {now.map((item) => (
               <li key={item.label}>
-                <span className="font-medium text-ink">{item.label}</span> · {item.text}
+                <Text component="span" inherit fw={500} c="var(--ink)">
+                  {item.label}
+                </Text>{' '}
+                · {item.text}
               </li>
             ))}
-          </ul>
+          </Stack>
         </Tile>
         {hasWriting && (
           <Tile title={t`Latest Posts`} action={<ViewAllLink to="/$lang/writing" />}>
             <PostList posts={posts.slice(0, LATEST_POSTS)} />
           </Tile>
         )}
-      </div>
+      </SimpleGrid>
     </View>
   )
 }
 
 /**
  * Under Gwydion's name: role and location, the pitch, the CV and "Get in
- * touch", and on phones the Availability; from `md` up the sidebar shows it.
+ * touch", and on phones the Availability; from the shell breakpoint up the sidebar shows it.
  */
 function Hero() {
   const { t } = useLingui()
   const { role, location, pitch, availability } = useProfile()
   return (
     <>
-      <p className="mt-1 text-base text-muted">
+      <Text mt={4} size="md" lh={1.5}>
         {role} · {location}
-      </p>
-      <p className="mt-5 text-lg leading-relaxed text-ink sm:text-xl">{pitch}</p>
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      </Text>
+      <Text mt={20} fz={{ base: 18, xs: 20 }} lh={1.625} c="var(--ink)">
+        {pitch}
+      </Text>
+      <Group mt={24} gap={12}>
         <CvDownload look="primary" />
         <ContactAction look="secondary" />
-      </div>
-      <section
+      </Group>
+      <Group
+        component="section"
+        mt={20}
+        hiddenFrom={SHELL_BREAKPOINT}
         aria-label={t`Availability`}
-        className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden"
+        gap="sm"
+        style={{ rowGap: '0.25rem' }}
       >
         <AvailabilityPill headline={availability.headline} />
-        {availability.freelance && <p className="text-subtle">{availability.freelance}</p>}
-      </section>
+        {availability.freelance && (
+          <Text size="sm" c="var(--subtle)">
+            {availability.freelance}
+          </Text>
+        )}
+      </Group>
     </>
   )
 }
@@ -101,8 +121,8 @@ function ViewAllLink({ to }: { to: '/$lang/projects' | '/$lang/writing' }) {
   const { t } = useLingui()
   const lang = useSiteLanguage()
   return (
-    <Link to={to} params={{ lang }} className="text-xs text-subtle hover:text-ink">
+    <RouterAnchor to={to} params={{ lang }} size="xs" c="var(--subtle)">
       {t`View all`}
-    </Link>
+    </RouterAnchor>
   )
 }

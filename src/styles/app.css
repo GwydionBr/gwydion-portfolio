@@ -1,15 +1,17 @@
-@import 'tailwindcss';
+/* Mantine in its own cascade layer: the site's styles (this file, CSS Modules) win over it. */
+@import '@mantine/core/styles.layer.css';
 @import '@fontsource-variable/inter';
 
 /*
- * Colour tokens. Components use only these (`bg-canvas`, `text-ink`, …), never
- * raw palette colours, so every view supports both themes for free.
+ * Colour tokens. Components use only these (`var(--ink)`, …), never raw
+ * palette colours, so every view supports both themes for free; Mantine's own
+ * colour variables point to them too (src/theme/mantine.ts).
  *
  * Each token is `light-dark(<light>, <dark>)`. `color-scheme` picks the side:
- * the system setting by default, or the visitor's choice, which the theme
- * module (src/theme/theme.ts) puts on `<html data-theme>`. Text tokens
- * (ink, muted, subtle) reach WCAG AA on every background (canvas, sidebar,
- * surface) in both themes; src/styles/contrast.test.ts checks that.
+ * the theme shown, which the theme module (src/theme/theme.ts) and Mantine put
+ * on `<html data-mantine-color-scheme>`; the system setting until then. Text
+ * tokens (ink, muted, subtle) reach WCAG AA on every background (canvas,
+ * sidebar, surface) in both themes; src/styles/contrast.test.ts checks that.
  */
 :root {
   color-scheme: light dark;
@@ -32,63 +34,33 @@
   --danger-surface: light-dark(#fef2f2, #2a1212);
 }
 
-:root[data-theme='light'] {
+:root[data-mantine-color-scheme='light'] {
   color-scheme: light;
 }
 
-:root[data-theme='dark'] {
+:root[data-mantine-color-scheme='dark'] {
   color-scheme: dark;
-}
-
-/* A segment of a segmented control that is the current one (src/shell/segmented.ts). */
-@custom-variant segment-active (&:is([aria-current], :has(:checked)));
-
-/*
- * `dark:` for the rare case a token is not enough (e.g. swapping an icon):
- * the visitor's dark choice, or a dark system setting without a choice.
- */
-@custom-variant dark {
-  &:where([data-theme='dark'], [data-theme='dark'] *) {
-    @slot;
-  }
-  @media (prefers-color-scheme: dark) {
-    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
-      @slot;
-    }
-  }
 }
 
 /*
  * Content marked `placeholder: true` (it stands in for content still to be
  * written): every place shows it dimmed the same way.
  */
-@utility stand-in {
+.stand-in {
   opacity: 0.6;
 }
 
-@theme inline {
-  --font-sans: 'Inter Variable', system-ui, sans-serif;
-  --color-canvas: var(--canvas);
-  --color-sidebar: var(--sidebar);
-  --color-surface: var(--surface);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
-  --color-subtle: var(--subtle);
-  --color-line: var(--line);
-  --color-hover: var(--hover);
-  --color-selected: var(--selected);
-  --color-available: var(--available);
-  --color-available-surface: var(--available-surface);
-  --color-available-line: var(--available-line);
-  --color-danger: var(--danger);
-  --color-danger-surface: var(--danger-surface);
+html {
+  background-color: var(--canvas);
 }
 
-@layer base {
-  html {
-    background-color: var(--canvas);
-  }
+/* Body text is 14px; Mantine's default is 16px. */
+body {
+  font-size: var(--mantine-font-size-sm);
+}
 
+/* Above Mantine's layer, below the site's unlayered CSS Modules. */
+@layer base {
   /* Visible keyboard focus everywhere, never on pointer clicks. */
   :focus-visible {
     outline: 2px solid var(--focus);
@@ -102,52 +74,6 @@
     ::after {
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
-    }
-  }
-}
-
-/* The mounted phone navigation derives its single indicator only from aria-current.
- * The count follows the visible entries, including the optional Writing tab.
- * Initial styles already resolve the current position; only subsequent changes slide.
- */
-.phone-tabs {
-  --active-tab: 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    inset-block: 4px;
-    left: 6px;
-    width: calc((100% - 8px) / var(--tab-count) - 4px);
-    border-radius: 0.5rem;
-    background: var(--selected);
-    box-shadow: inset 0 0 0 1px var(--line);
-    opacity: 0;
-    transform: translateX(calc(var(--active-tab) * (100% + 4px)));
-  }
-
-  &:has(> li > a[aria-current='page'])::before {
-    opacity: 1;
-  }
-
-  &:has(> li:nth-child(2) > a[aria-current='page']) {
-    --active-tab: 1;
-  }
-  &:has(> li:nth-child(3) > a[aria-current='page']) {
-    --active-tab: 2;
-  }
-  &:has(> li:nth-child(4) > a[aria-current='page']) {
-    --active-tab: 3;
-  }
-  &:has(> li:nth-child(5) > a[aria-current='page']) {
-    --active-tab: 4;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    &::before {
-      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 }

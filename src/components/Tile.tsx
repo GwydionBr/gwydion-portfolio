@@ -1,3 +1,4 @@
+import { Group, Paper, Title } from '@mantine/core'
 import { useId, type ReactNode } from 'react'
 
 /**
@@ -8,7 +9,7 @@ export function Tile({
   title,
   action,
   compact = false,
-  className = '',
+  className,
   children,
 }: {
   title: string
@@ -22,17 +23,21 @@ export function Tile({
 }) {
   const id = useId()
   return (
-    <section
+    <Paper
+      component="section"
+      p={compact ? 'sm' : 'lg'}
+      fz={compact ? 'xs' : undefined}
+      lh={compact ? 4 / 3 : undefined}
       aria-labelledby={id}
-      className={`rounded-2xl bg-surface ring-1 ring-line ${compact ? 'p-3 text-xs' : 'p-5'} ${className}`}
+      className={className}
     >
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 id={id} className="text-xs font-medium text-subtle">
+      <Group align="baseline" justify="space-between" gap="sm" wrap="nowrap">
+        <Title order={2} id={id} fz="xs" fw={500} c="var(--subtle)">
           {title}
-        </h2>
+        </Title>
         {action}
-      </div>
+      </Group>
       {children}
-    </section>
+    </Paper>
   )
 }

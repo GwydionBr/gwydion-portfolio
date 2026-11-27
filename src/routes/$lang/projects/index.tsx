@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Paper } from '@mantine/core'
 import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { ProjectList } from '#/components/ProjectList'
@@ -20,9 +21,9 @@ function Projects() {
   const { t } = useLingui()
   return (
     <View title={t`Projects`}>
-      <div className="rounded-2xl bg-surface px-5 py-2 ring-1 ring-line">
+      <Paper px="lg" py="xs" fz="sm" lh="1.25rem">
         <ProjectList projects={useProjects()} label={t`Projects`} />
-      </div>
+      </Paper>
     </View>
   )
 }

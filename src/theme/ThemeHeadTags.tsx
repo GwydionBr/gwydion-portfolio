@@ -9,7 +9,7 @@ import { CHROME_COLORS, FAVICONS, prePaintScript, systemMediaOf, THEMES } from '
  * Rendered in the root document's `<head>`, not through the route `head`:
  * that dedupes metas by name and would keep only one `theme-color`.
  * `suppressHydrationWarning`: the pre-paint script may have changed `media`
- * and `<html data-theme>` before React hydrates.
+ * and the theme on `<html>` before React hydrates.
  */
 export function ThemeHeadTags() {
   return (

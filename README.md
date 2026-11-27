@@ -1,7 +1,7 @@
 # gwydion-portfolio
 
 The source of [gwydion.dev](https://gwydion.dev), Gwydion Braunsdorf's portfolio: Projects with their stories, the Career, the CV as PDF, writing, and a contact form, in English and German.
-It is built like an app (an app shell over real, server-rendered routes, see `docs/adr/0003`) with TanStack Start, React, Tailwind CSS, Base UI, Lingui, MDX, and Bun.
+It is built like an app (an app shell over real, server-rendered routes, see `docs/adr/0003`) with TanStack Start, React, Mantine, Lingui, MDX, and Bun (see `docs/adr/0005` for the UI stack).
 Tooling runs on [Vite+](https://viteplus.dev) (`vp`): Vite, Vitest, Oxlint, and Oxfmt configured together in `vite.config.ts`.
 
 ## Setup

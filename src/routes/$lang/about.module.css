@@ -1,0 +1,22 @@
+.profile {
+  display: contents;
+}
+
+.cv {
+  order: -1;
+}
+
+@media (min-width: 62em) {
+  .career {
+    grid-column: span 2;
+  }
+
+  .profile {
+    display: grid;
+    gap: var(--mantine-spacing-md);
+  }
+
+  .cv {
+    order: 0;
+  }
+}

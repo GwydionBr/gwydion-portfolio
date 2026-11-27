@@ -4,9 +4,10 @@
  * an explicit choice on the device (localStorage), which the pre-paint script
  * applies before the first frame; choosing System removes it again.
  *
- * The contract with the stylesheet (src/styles/app.css) is one attribute:
- * `<html data-theme="light|dark">` when the visitor has chosen, none when
- * the system decides.
+ * The contract with the stylesheet (src/styles/app.css) and Mantine is one
+ * attribute: `<html data-mantine-color-scheme="light|dark">`, always the
+ * theme shown (the choice, else the system setting). Mantine keeps it in step
+ * with the system setting while there is no choice (src/theme/mantine.ts).
  */
 
 export const THEMES = ['light', 'dark'] as const
@@ -17,6 +18,9 @@ export const THEME_PREFERENCES = ['system', ...THEMES] as const
 export type ThemePreference = (typeof THEME_PREFERENCES)[number]
 
 export const THEME_STORAGE_KEY = 'theme'
+
+/** The `<html>` attribute naming the theme shown, which Mantine's styles and ours read. */
+export const THEME_ATTRIBUTE = 'data-mantine-color-scheme'
 
 /** The query that is true when the system setting is dark. */
 export const DARK_SYSTEM_QUERY = '(prefers-color-scheme: dark)'
@@ -45,8 +49,9 @@ export function systemMediaOf(theme: Theme) {
 
 /**
  * Puts a theme choice (or none: follow the system) on the document: the
- * `data-theme` attribute for the stylesheet, and the media of the
- * per-theme head tags, so chrome colour and favicon follow the choice too.
+ * theme shown on `<html>` (`THEME_ATTRIBUTE`) for the stylesheets, and the
+ * media of the per-theme head tags, so chrome colour and favicon follow the
+ * choice too.
  *
  * Self-contained on purpose: it is serialized into the pre-paint script
  * (`prePaintScript`), so it must not reference anything outside its body.
@@ -54,8 +59,8 @@ export function systemMediaOf(theme: Theme) {
 export function applyThemeChoice(choice: string | null) {
   const root = document.documentElement
   const theme = choice === 'light' || choice === 'dark' ? choice : null
-  if (theme) root.dataset.theme = theme
-  else delete root.dataset.theme
+  const system = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  root.setAttribute('data-mantine-color-scheme', theme ?? system)
   for (const tag of document.head.querySelectorAll<HTMLElement>('[data-theme]')) {
     const own = tag.dataset.theme
     tag.setAttribute(

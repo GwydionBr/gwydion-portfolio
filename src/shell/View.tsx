@@ -1,10 +1,11 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
+import { Box, Group, Paper, Text, Title } from '@mantine/core'
 import { CaretLeft } from '@phosphor-icons/react'
 import { trackEvent } from '#/analytics/umami'
-import { BUTTON_STYLES } from '#/components/buttonStyles'
+import { RouterButton } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
+import { SHELL_BREAKPOINT } from './breakpoint'
 
 /** A list view a detail view leads back to. */
 export interface BackTarget {
@@ -48,45 +49,51 @@ export function View({
 }) {
   const lang = useSiteLanguage()
   const locationLine = (
-    <p className={`truncate text-xs text-subtle ${back ? 'hidden md:block' : ''}`}>
+    <Text size="xs" c="var(--subtle)" truncate visibleFrom={back ? SHELL_BREAKPOINT : undefined}>
       {['gwydion.dev', ...location].join(' / ')}
-    </p>
+    </Text>
   )
   if (hero)
     return (
       <>
-        <header className="mb-10 max-w-3xl">
+        <Box component="header" mb={40} maw={768}>
           {locationLine}
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          <Title order={1} mt="sm" fz={{ base: '1.875rem', xs: '2.25rem' }} lh={1.2}>
             {title}
-          </h1>
+          </Title>
           {hero}
-        </header>
+        </Box>
         {children}
       </>
     )
   return (
     <>
-      <header className="mb-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
-        <div className="min-w-0">
+      <Group component="header" mb="lg" justify="space-between" align="flex-end" gap="md">
+        <Box miw={0}>
           {back && (
-            <Link
+            <RouterButton
               to={back.to}
               params={{ lang }}
               aria-label={back.label}
               // It leads up to the list; the list is not the page shown.
               activeOptions={{ exact: true }}
-              className="-ml-1 mb-1 inline-flex items-center gap-1 rounded-md px-1 py-0.5 font-medium text-ink hover:bg-hover md:hidden"
+              hiddenFrom={SHELL_BREAKPOINT}
+              variant="subtle"
+              size="compact-sm"
+              ml={-6}
+              mb={4}
+              leftSection={<CaretLeft aria-hidden size={16} />}
             >
-              <CaretLeft aria-hidden className="size-4" />
               {back.text}
-            </Link>
+            </RouterButton>
           )}
           {locationLine}
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink">{title}</h1>
-        </div>
-        {action === undefined ? <ContactAction className="shrink-0" /> : action}
-      </header>
+          <Title order={1} mt={4}>
+            {title}
+          </Title>
+        </Box>
+        {action === undefined ? <ContactAction style={{ flexShrink: 0 }} /> : action}
+      </Group>
       {children}
     </>
   )
@@ -95,31 +102,32 @@ export function View({
 /** "Get in touch": a button-styled link to Contact. */
 export function ContactAction({
   look = 'primary',
-  className = '',
+  style,
 }: {
   look?: 'primary' | 'secondary'
   /** Placement only. */
-  className?: string
+  style?: CSSProperties
 }) {
   const { t } = useLingui()
   const lang = useSiteLanguage()
   return (
-    <Link
+    <RouterButton
       to="/$lang/contact"
       params={{ lang }}
       onClick={() => trackEvent({ name: 'kontakt-klick' })}
-      className={`${BUTTON_STYLES[look]} ${className}`}
+      variant={look === 'primary' ? 'filled' : 'default'}
+      style={style}
     >
       {t`Get in touch`}
-    </Link>
+    </RouterButton>
   )
 }
 
 /** A card standing in for a view's content until its ticket builds it. */
 export function Placeholder({ children }: { children: ReactNode }) {
   return (
-    <div className="max-w-2xl rounded-2xl bg-surface p-5 text-subtle ring-1 ring-line">
+    <Paper maw={672} p="lg" c="var(--subtle)">
       {children}
-    </div>
+    </Paper>
   )
 }

@@ -1,7 +1,6 @@
 import { defineConfig, lazyPlugins } from 'vite-plus'
 import { lingui } from '@lingui/vite-plugin'
 import mdx from '@mdx-js/rollup'
-import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { nitro } from 'nitro/vite'
 import viteReact from '@vitejs/plugin-react'
@@ -20,7 +19,6 @@ const config = defineConfig({
     lingui({ macroTransform: true, failOnCompileError: true }),
     // Project stories are MDX (src/content/data/projects); compiled before React sees them.
     { enforce: 'pre', ...mdx() },
-    tailwindcss(),
     tanstackStart(),
     // Nitro's dev server keeps Vitest from exiting; tests don't need a server runtime.
     // Functions run in Frankfurt so contact-form data stays in the EU, as the privacy policy states.
@@ -44,6 +42,7 @@ const config = defineConfig({
           name: 'dom',
           include: ['src/**/*.dom.test.{ts,tsx}'],
           environment: 'jsdom',
+          setupFiles: ['src/test/domSetup.ts'],
         },
       },
     ],

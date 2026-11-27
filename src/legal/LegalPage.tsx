@@ -1,5 +1,7 @@
 import { useLingui } from '@lingui/react/macro'
-import { Link, useLocation } from '@tanstack/react-router'
+import { useLocation } from '@tanstack/react-router'
+import { Anchor, List, Paper, Stack, Text, Title } from '@mantine/core'
+import { RouterAnchor } from '#/components/links'
 import { pathInLanguage } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
 import { pageHead, type PageMatch } from '#/seo/pageHead'
@@ -35,58 +37,61 @@ export function LegalPage({ page }: { page: LegalPageDefinition }) {
   const sections = page.document[lang]
   return (
     <View title={i18n._(page.title)}>
-      <div className="space-y-4">
+      <Stack gap={16}>
         {lang !== BINDING_LANGUAGE && (
-          <p role="note" className="rounded-2xl bg-surface p-5 text-ink ring-1 ring-line">
+          <Paper component="p" role="note" p="lg" m={0} c="var(--ink)">
             {t`This English version is a courtesy translation. Only the German version is legally binding.`}{' '}
-            <Link
+            <RouterAnchor
               to={pathInLanguage(pathname, BINDING_LANGUAGE)}
               hrefLang={BINDING_LANGUAGE}
-              className="font-medium underline underline-offset-2"
+              fw={500}
+              underline="always"
             >
               {t`Read the German version`}
-            </Link>
-          </p>
+            </RouterAnchor>
+          </Paper>
         )}
         {page.withContents && (
-          <nav aria-label={t`Contents`} className="rounded-2xl bg-surface p-5 ring-1 ring-line">
-            <ol className="list-decimal space-y-1 pl-5">
+          <Paper component="nav" aria-label={t`Contents`} p="lg">
+            <List type="ordered" spacing={4} pl={20} size="sm">
               {sections.map((section) => (
-                <li key={section.id}>
-                  <a href={`#${section.id}`} className="hover:text-ink hover:underline">
+                <List.Item key={section.id}>
+                  <Anchor href={`#${section.id}`} c="var(--muted)">
                     {section.title}
-                  </a>
-                </li>
+                  </Anchor>
+                </List.Item>
               ))}
-            </ol>
-          </nav>
+            </List>
+          </Paper>
         )}
         {sections.map((section) => (
           <Section key={section.id} section={section} />
         ))}
-      </div>
+      </Stack>
     </View>
   )
 }
 
 function Section({ section }: { section: LegalSection }) {
   return (
-    <section
+    <Paper
+      component="section"
+      p="lg"
       id={section.id}
       aria-labelledby={`${section.id}-title`}
-      className="scroll-mt-20 rounded-2xl bg-surface p-5 ring-1 ring-line"
+      style={{ scrollMarginTop: '5rem' }}
     >
-      <h2 id={`${section.id}-title`} className="mb-3 text-base font-semibold text-ink">
+      <Title order={2} id={`${section.id}-title`} mb="sm">
         {section.title}
-      </h2>
-      <div className="space-y-3 leading-relaxed">
+      </Title>
+      <Stack gap={12}>
         {section.paragraphs.map((paragraph, index) => (
-          <p key={index}>
+          <Text key={index} size="sm" lh={1.625}>
             <Linkified text={paragraph} />
-          </p>
+          </Text>
         ))}
-      </div>
-    </section>
+      </Stack>
+    </Paper>
   )
 }
 
@@ -94,15 +99,16 @@ function Section({ section }: { section: LegalSection }) {
 function Linkified({ text }: { text: string }) {
   return text.split(URL_SPLIT).map((part, index) =>
     IS_URL.test(part) ? (
-      <a
+      <Anchor
         key={index}
         href={part}
         target="_blank"
         rel="noopener noreferrer"
-        className="break-all text-ink underline underline-offset-2"
+        underline="always"
+        style={{ overflowWrap: 'anywhere' }}
       >
         {part}
-      </a>
+      </Anchor>
     ) : (
       part
     ),

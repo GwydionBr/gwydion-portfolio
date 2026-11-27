@@ -1,8 +1,8 @@
+import { Anchor, Box, Button, Text } from '@mantine/core'
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { eventAttributes } from '#/analytics/umami'
 import type { Project } from '#/content'
-import { BUTTON_STYLES } from './buttonStyles'
 import { PeriodText } from './PeriodText'
 import { ProjectKindText } from './ProjectMeta'
 import { TagList } from './TagList'
@@ -21,17 +21,19 @@ export function ProjectFacts({ project, className }: { project: Project; classNa
   return (
     <Tile title={t`Facts`} className={className}>
       {live && (
-        <a
+        <Button
+          component="a"
+          mt="sm"
+          fullWidth
+          rightSection={<span aria-hidden>↗</span>}
           href={live}
           {...eventAttributes({ name: 'projekt-website-klick', data })}
-          className={`${BUTTON_STYLES.primary} mt-3 w-full`}
         >
           {t`Visit website`}
-          <span aria-hidden>↗</span>
-        </a>
+        </Button>
       )}
-      <dl className="mt-3 divide-y divide-line">
-        <Fact term={t`Kind`}>
+      <Box component="dl" m={0} mt="sm">
+        <Fact term={t`Kind`} first>
           <ProjectKindText kind={project.kind} />
         </Fact>
         <Fact term={t`Period`}>
@@ -41,30 +43,37 @@ export function ProjectFacts({ project, className }: { project: Project; classNa
         <Fact term={t`Status`}>{project.status}</Fact>
         <Fact term={t`Source code`}>
           {source ? (
-            <a
+            <Anchor
               href={source}
               {...eventAttributes({ name: 'projekt-code-klick', data })}
-              className="font-medium text-ink underline underline-offset-2"
+              inherit
+              c="var(--ink)"
+              underline="always"
+              style={{ textUnderlineOffset: 2 }}
             >
               {t`Public on GitHub`}
               <span aria-hidden> ↗</span>
-            </a>
+            </Anchor>
           ) : (
             t`Not public`
           )}
         </Fact>
-      </dl>
-      <TagList label={t`Stack`} tags={project.stack} className="mt-3" />
+      </Box>
+      <TagList label={t`Stack`} tags={project.stack} mt="sm" />
     </Tile>
   )
 }
 
 /** One term of the facts and its value. */
-function Fact({ term, children }: { term: string; children: ReactNode }) {
+function Fact({ term, first, children }: { term: string; first?: boolean; children: ReactNode }) {
   return (
-    <div className="py-2">
-      <dt className="text-xs text-subtle">{term}</dt>
-      <dd className="mt-0.5 text-ink">{children}</dd>
-    </div>
+    <Box py={8} style={{ borderTop: first ? undefined : '1px solid var(--line)' }}>
+      <Text component="dt" size="xs" c="var(--subtle)">
+        {term}
+      </Text>
+      <Text component="dd" inherit m={0} mt={2} c="var(--ink)">
+        {children}
+      </Text>
+    </Box>
   )
 }

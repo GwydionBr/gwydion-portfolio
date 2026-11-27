@@ -5,7 +5,9 @@ import { fireEvent, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
-import type { Theme } from '#/theme/theme'
+
+type AppRouter = ReturnType<typeof createAppRouter>
+import { THEME_ATTRIBUTE, type Theme } from '#/theme/theme'
 import { emulateSystemTheme } from './systemTheme'
 
 declare global {
@@ -21,7 +23,7 @@ afterEach(async () => {
   vi.restoreAllMocks()
   // The device forgets the visit: no stored choices, no theme left on `<html>`.
   localStorage.clear()
-  delete document.documentElement.dataset.theme
+  document.documentElement.removeAttribute(THEME_ATTRIBUTE)
 })
 
 interface VisitOptions {
@@ -82,11 +84,11 @@ export async function visit(
       await act(async () => system.set(theme))
     },
     /**
-     * The theme the page is painted in. The stylesheet paints `<html
-     * data-theme>` when set, else the system setting (src/styles/app.css).
+     * The theme the page is painted in: the stylesheets paint the theme named
+     * on `<html>` (src/styles/app.css), else the system setting.
      */
     theme: (): Theme =>
-      (document.documentElement.dataset.theme as Theme | undefined) ??
+      (document.documentElement.getAttribute(THEME_ATTRIBUTE) as Theme | null) ??
       (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
     /** The browser chrome colour in effect: the `theme-color` whose media applies. */
     chromeColor: () =>
@@ -103,7 +105,7 @@ export async function visit(
      * parsing, before anything is painted: on a fresh `<html>`, as on a reload.
      */
     paintFirstFrame() {
-      delete document.documentElement.dataset.theme
+      document.documentElement.removeAttribute(THEME_ATTRIBUTE)
       // Only scripts the browser runs: not data blocks such as JSON-LD.
       const inline = document.head.querySelectorAll<HTMLScriptElement>('script:not([src])')
       for (const script of [...inline].filter((s) => !s.type || /javascript/.test(s.type))) {
@@ -115,14 +117,14 @@ export async function visit(
     async click(element: HTMLElement) {
       await act(async () => {
         element.click()
-        await settled()
+        await settled(router)
       })
     },
     /** Runs `action` (an answer the test held back) and waits for the page to follow. */
     async settle(action: () => void) {
       await act(async () => {
         action()
-        await settled()
+        await settled(router)
       })
     },
     /** Types `value` into a form field, replacing what it held. */
@@ -134,9 +136,16 @@ export async function visit(
   }
 }
 
-/** Lets pending work (navigation, a `fetch` answered in the test) run to its end. */
-async function settled() {
-  for (let turn = 0; turn < 10; turn++) await new Promise((resolve) => setTimeout(resolve, 0))
+/**
+ * Lets pending work (navigation, a `fetch` answered in the test) run to its
+ * end. A navigation may first load the next view's code, which on a cold
+ * start takes longer than a few turns: wait until the router is done too.
+ */
+async function settled(router: AppRouter) {
+  const turn = () => new Promise((resolve) => setTimeout(resolve, 0))
+  for (let count = 0; count < 10; count++) await turn()
+  const deadline = Date.now() + 5000
+  while (router.state.isLoading && Date.now() < deadline) await turn()
 }
 
 /**

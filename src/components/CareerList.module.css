@@ -1,0 +1,9 @@
+.entry {
+  display: grid;
+  gap: 0.25rem;
+
+  @media (min-width: 36em) {
+    grid-template-columns: 8rem 1fr;
+    gap: var(--mantine-spacing-md);
+  }
+}

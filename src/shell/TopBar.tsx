@@ -1,12 +1,16 @@
+import { AppShell, Group } from '@mantine/core'
+import { SHELL_BREAKPOINT } from './breakpoint'
 import { Identity } from './Identity'
 import { LanguageSwitch } from './LanguageSwitch'
 
-/** The phone top bar below the `md` breakpoint: identity and the Site language switch, which the sidebar holds on desktop. */
+/** The phone top bar below the shell's breakpoint: identity and the Site language switch, which the sidebar holds on desktop. */
 export function TopBar() {
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-sidebar/95 px-4 py-2 backdrop-blur md:hidden">
-      <Identity />
-      <LanguageSwitch short />
-    </header>
+    <AppShell.Header hiddenFrom={SHELL_BREAKPOINT}>
+      <Group h="100%" px="md" justify="space-between" wrap="nowrap" gap="sm">
+        <Identity />
+        <LanguageSwitch short />
+      </Group>
+    </AppShell.Header>
   )
 }

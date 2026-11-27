@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
+import { Paper } from '@mantine/core'
 import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { PostList } from '#/components/PostList'
@@ -24,9 +25,9 @@ function Writing() {
   const { t } = useLingui()
   return (
     <View title={t`Writing`}>
-      <div className="rounded-2xl bg-surface p-5 ring-1 ring-line">
+      <Paper p="lg">
         <PostList posts={usePosts()} />
-      </div>
+      </Paper>
     </View>
   )
 }

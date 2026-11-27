@@ -1,7 +1,6 @@
 import { useCallback, useSyncExternalStore } from 'react'
+import { useMantineColorScheme } from '@mantine/core'
 import {
-  applyThemeChoice,
-  chooseTheme,
   DARK_SYSTEM_QUERY,
   readThemeChoice,
   THEME_STORAGE_KEY,
@@ -17,11 +16,9 @@ const notify = () => {
 function subscribe(listener: () => void) {
   listeners.add(listener)
   const system = matchMedia(DARK_SYSTEM_QUERY)
-  // A choice made in another tab applies here too.
+  // A choice made in another tab shows here too (Mantine applies it: src/theme/mantine.ts).
   const onStorage = (event: StorageEvent) => {
-    if (event.key !== THEME_STORAGE_KEY && event.key !== null) return
-    applyThemeChoice(readThemeChoice())
-    listener()
+    if (event.key === THEME_STORAGE_KEY || event.key === null) listener()
   }
   system.addEventListener('change', listener)
   window.addEventListener('storage', onStorage)
@@ -44,6 +41,7 @@ function currentPreference(): ThemePreference {
  * The theme the page is shown in (the stored choice, else the system
  * setting), the visitor's preference, and a way to change it. On the server,
  * and while hydrating, both are unknown (`null`): they live on the device.
+ * Choosing goes through Mantine, which stores the choice in the theme store.
  */
 export function useTheme() {
   const theme = useSyncExternalStore<Theme | null>(subscribe, shownTheme, () => null)
@@ -52,9 +50,13 @@ export function useTheme() {
     currentPreference,
     () => null,
   )
-  const choose = useCallback((next: ThemePreference) => {
-    chooseTheme(next)
-    notify()
-  }, [])
+  const { setColorScheme } = useMantineColorScheme()
+  const choose = useCallback(
+    (next: ThemePreference) => {
+      setColorScheme(next === 'system' ? 'auto' : next)
+      notify()
+    },
+    [setColorScheme],
+  )
   return { theme, preference, choose }
 }

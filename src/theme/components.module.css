@@ -1,0 +1,188 @@
+/*
+ * The parts of the site's component look that Mantine's props and CSS
+ * variables don't reach (src/theme/components.ts hands these classes to the
+ * components). Colours only from the tokens in src/styles/app.css.
+ */
+
+/* App shell: the sidebar and the phone bars sit on the sidebar colour. */
+.appShell {
+  --app-shell-border-color: var(--line);
+}
+
+.appShellNavbar {
+  /* All of it scrolls in a short window, so the bottom of the sidebar stays reachable. */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: var(--mantine-spacing-sm);
+  background: var(--sidebar);
+}
+
+.appShellBar {
+  background: color-mix(in srgb, var(--sidebar) 95%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+/* Paper: a card on the canvas. */
+.paper {
+  --paper-border-color: var(--line);
+  background-color: var(--surface);
+}
+
+/* NavLink: a quiet row; the open view's row is selected (Mantine reads `aria-current`). */
+.navLink {
+  border-radius: var(--mantine-radius-md);
+  padding: 0.375rem var(--mantine-spacing-sm);
+  color: var(--muted);
+
+  &:hover {
+    background-color: var(--hover);
+    color: var(--ink);
+  }
+
+  /* A row that is not a link (a placeholder) doesn't react. */
+  &:where(span):hover {
+    background-color: transparent;
+    color: var(--muted);
+  }
+
+  &:where([data-active], [aria-current='page']) {
+    font-weight: 500;
+  }
+}
+
+.navLinkSection {
+  color: var(--subtle);
+}
+
+/* SegmentedControl: a sunken track with a raised segment. */
+.segmented {
+  padding: 2px;
+  background-color: var(--selected);
+}
+
+.segmentedLabel {
+  font-weight: 400;
+  color: var(--subtle);
+
+  &:hover,
+  &:where([data-active]) {
+    color: var(--ink);
+  }
+
+  &:where([data-active]) {
+    font-weight: 500;
+  }
+}
+
+/* Form fields: on the canvas inside a card, a hairline, the focus colour when focused. */
+.input {
+  --input-bd: var(--line);
+  --input-bd-focus: var(--focus);
+  background-color: var(--canvas);
+  color: var(--ink);
+
+  &:where([data-error]) {
+    --input-bd: var(--danger);
+    color: var(--ink);
+  }
+}
+
+.inputLabel {
+  margin-bottom: 0.25rem;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.inputError {
+  color: var(--danger);
+}
+
+.alertMessage {
+  color: inherit;
+}
+
+.badge {
+  font-weight: 400;
+}
+
+.badgeWrap {
+  height: auto;
+  min-height: var(--badge-height);
+  justify-content: flex-start;
+  padding-block: 0.25rem;
+}
+
+.badgeWrapLabel {
+  overflow: visible;
+  white-space: normal;
+  text-align: start;
+  line-height: 1.35;
+}
+
+.title {
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+
+/* Markdown (a Project's story): body text with room to read, ink for emphasis. */
+.typography {
+  line-height: 1.625;
+
+  & :where(h2) {
+    margin: 2rem 0 0;
+    font-size: var(--mantine-font-size-md);
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+  }
+
+  & :where(h3) {
+    margin: 1.5rem 0 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  & :where(h2, h3, strong) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  & :where(p, ul, ol) {
+    margin: 0.75rem 0 0;
+  }
+
+  & :where(ul, ol) {
+    padding-inline-start: 1.25rem;
+  }
+
+  & :where(li + li) {
+    margin-top: 0.25rem;
+  }
+
+  & > :where(:first-child) {
+    margin-top: 0;
+  }
+
+  & :where(code) {
+    border-radius: var(--mantine-radius-sm);
+    padding: 0.125rem 0.25rem;
+    background-color: var(--selected);
+    font-size: 0.9em;
+    color: inherit;
+  }
+
+  & :where(a) {
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 0.125rem;
+  }
+}
+
+.code {
+  border-radius: var(--mantine-radius-sm);
+  padding: 0.125rem 0.25rem;
+  background-color: var(--selected);
+  font-size: 0.9em;
+  color: inherit;
+}
