@@ -10,13 +10,8 @@ import { THEME_PREFERENCES, type ThemePreference } from '#/theme/theme'
  * picked. `labelledBy` is the id of the visible label that names it.
  */
 export function ThemeSwitch({ labelledBy }: { labelledBy: string }) {
-  const { t } = useLingui()
   const { preference, choose } = useTheme()
-  const labels: Record<ThemePreference, string> = {
-    system: t`System`,
-    light: t`Light`,
-    dark: t`Dark`,
-  }
+  const labels = useThemePreferenceLabels()
   return (
     <SegmentedControl
       aria-labelledby={labelledBy}
@@ -25,4 +20,10 @@ export function ThemeSwitch({ labelledBy }: { labelledBy: string }) {
       data={THEME_PREFERENCES.map((option) => ({ value: option, label: labels[option] }))}
     />
   )
+}
+
+/** What each theme preference is called. */
+export function useThemePreferenceLabels(): Record<ThemePreference, string> {
+  const { t } = useLingui()
+  return { system: t`System`, light: t`Light`, dark: t`Dark` }
 }

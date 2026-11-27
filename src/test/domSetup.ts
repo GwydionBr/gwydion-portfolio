@@ -7,3 +7,11 @@ globalThis.ResizeObserver ??= class {
   unobserve() {}
   disconnect() {}
 }
+
+/** What jsdom lacks and Mantine's Spotlight calls to keep the selected result in view. */
+if (!('scrollIntoView' in Element.prototype)) {
+  Object.defineProperty(Element.prototype, 'scrollIntoView', {
+    value: () => {},
+    configurable: true,
+  })
+}

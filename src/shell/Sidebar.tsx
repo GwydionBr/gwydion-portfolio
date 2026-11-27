@@ -8,8 +8,9 @@ import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
 import { NavigationRow } from './NavigationLink'
 import { SettingsMenu } from './SettingsMenu'
+import { SearchField } from './SiteSearch'
 
-/** The desktop sidebar: identity, navigation and, at the bottom, the Availability, the Profile links, the Settings row and the legal links. */
+/** The desktop sidebar: identity, the search field, navigation and, at the bottom, the Availability, the Profile links, the Settings row and the legal links. */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -24,7 +25,10 @@ export function Sidebar() {
       <AppShell.Section p="xs">
         <Identity />
       </AppShell.Section>
-      <AppShell.Section grow mt="xs" component="nav" aria-label={t`Main navigation`}>
+      <AppShell.Section mt="xs">
+        <SearchField />
+      </AppShell.Section>
+      <AppShell.Section grow mt="md" component="nav" aria-label={t`Main navigation`}>
         <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
           {entries.map((entry) => (
             <li key={entry.to}>

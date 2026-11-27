@@ -4,6 +4,7 @@ import { AppShell as MantineAppShell, Box } from '@mantine/core'
 import classes from './AppShell.module.css'
 import { SHELL_BREAKPOINT } from './breakpoint'
 import { Sidebar } from './Sidebar'
+import { SiteSearch } from './SiteSearch'
 import { TabBar } from './TabBar'
 import { TopBar } from './TopBar'
 
@@ -14,7 +15,8 @@ const MAIN_ID = 'main'
  * The app shell (ADR 0003, prototype J), built on Mantine's AppShell: a
  * sidebar from the `sm` breakpoint up; below it a top bar (identity) and a
  * bottom tab bar whose More sheet holds what the sidebar has besides the
- * navigation. Views render into the main pane through `View`.
+ * navigation. The site search opens over all of it. Views render into the
+ * main pane through `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
@@ -36,6 +38,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </Box>
       </MantineAppShell.Main>
       <TabBar />
+      <SiteSearch />
     </MantineAppShell>
   )
 }

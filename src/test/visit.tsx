@@ -1,7 +1,7 @@
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
-import { fireEvent, getByRole, within } from '@testing-library/dom'
+import { fireEvent, getAllByRole, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
 import { createAppRouter } from '#/router'
@@ -141,6 +141,46 @@ export async function visit(
     async openMore(name = 'More') {
       await click(getByRole(document.body, 'button', { name }))
       return getByRole(document.body, 'dialog', { name })
+    },
+    /**
+     * Opens the site search from the sidebar's field, or with `from: 'topBar'`
+     * from the phone top bar's button, and returns its search field.
+     */
+    async openSearch({
+      from = 'sidebar',
+      name = 'Search',
+    }: { from?: 'sidebar' | 'topBar'; name?: string } = {}) {
+      // Both are in the document at every width; the sidebar's sits in its landmark.
+      const button = getAllByRole(document.body, 'button', { name }).find(
+        (candidate) => (from === 'sidebar') === Boolean(candidate.closest('aside')),
+      )
+      if (!button) throw new Error(`No ${from} button "${name}" opens the search.`)
+      await click(button)
+      const field = getByRole(document.body, 'combobox', { name })
+      // The field takes focus once the dialog has appeared.
+      const deadline = Date.now() + 2000
+      while (document.activeElement !== field && Date.now() < deadline) {
+        await act(async () => new Promise((resolve) => setTimeout(resolve, 10)))
+      }
+      return field
+    },
+    /**
+     * Presses `key` on `target` (the focused field; the page by default), with
+     * the modifiers held, and waits for what follows. `code` is the physical
+     * key, which Mantine's fields read; it defaults to `key`.
+     */
+    async press(
+      key: string,
+      {
+        target = document.documentElement,
+        code = key,
+        ...modifiers
+      }: { target?: HTMLElement; code?: string; metaKey?: boolean; ctrlKey?: boolean } = {},
+    ) {
+      await act(async () => {
+        fireEvent.keyDown(target, { key, code, ...modifiers })
+        await settled(router)
+      })
     },
     /** Runs `action` (an answer the test held back) and waits for the page to follow. */
     async settle(action: () => void) {

@@ -8,6 +8,7 @@ msgstr ""
 "Language: de\n"
 
 #: src/components/CvDownload.tsx
+#: src/shell/searchEntries.tsx
 msgid "1 page · PDF"
 msgstr "1 Seite · PDF"
 
@@ -48,6 +49,7 @@ msgstr "folgt bald"
 
 #: src/routes/$lang/contact.tsx
 #: src/shell/navigation.ts
+#: src/shell/searchEntries.tsx
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -55,7 +57,12 @@ msgstr "Kontakt"
 msgid "Contents"
 msgstr "Inhalt"
 
+#: src/shell/searchEntries.tsx
+msgid "Current"
+msgstr "Aktuell"
+
 #: src/components/CvDownload.tsx
+#: src/shell/searchEntries.tsx
 msgid "CV"
 msgstr "Lebenslauf"
 
@@ -68,6 +75,7 @@ msgid "Directly"
 msgstr "Direkt"
 
 #: src/components/CvDownload.tsx
+#: src/shell/searchEntries.tsx
 msgid "Download CV"
 msgstr "Lebenslauf herunterladen"
 
@@ -163,6 +171,10 @@ msgstr "Nächster Screenshot"
 msgid "Not public"
 msgstr "Nicht öffentlich"
 
+#: src/shell/SiteSearch.tsx
+msgid "Nothing found"
+msgstr "Nichts gefunden"
+
 #: src/components/PeriodText.tsx
 msgid "now"
 msgstr "heute"
@@ -196,6 +208,14 @@ msgstr "Eigene Produkte, Kundenprojekte und Open Source: die Projekte, die Gwydi
 msgid "Page not found"
 msgstr "Seite nicht gefunden"
 
+#: src/shell/searchEntries.tsx
+msgid "Pages"
+msgstr "Seiten"
+
+#: src/shell/SiteSearch.tsx
+msgid "Pages, projects, settings…"
+msgstr "Seiten, Projekte, Einstellungen …"
+
 #: src/components/ProjectFacts.tsx
 msgid "Period"
 msgstr "Zeitraum"
@@ -215,6 +235,7 @@ msgstr "Datenschutzerklärung"
 #: src/routes/$lang/projects/$slug.tsx
 #: src/routes/$lang/projects/index.tsx
 #: src/shell/navigation.ts
+#: src/shell/searchEntries.tsx
 msgid "Projects"
 msgstr "Projekte"
 
@@ -226,6 +247,10 @@ msgstr "Öffentlich auf GitHub"
 msgid "Read the German version"
 msgstr "Zur deutschen Fassung"
 
+#: src/shell/SiteSearch.tsx
+msgid "Results"
+msgstr "Ergebnisse"
+
 #: src/components/ProjectFacts.tsx
 msgid "Role"
 msgstr "Rolle"
@@ -233,6 +258,10 @@ msgstr "Rolle"
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Screenshots"
 msgstr "Screenshots"
+
+#: src/shell/SiteSearch.tsx
+msgid "Search"
+msgstr "Suche"
 
 #: src/contact/ContactForm.tsx
 msgid "Send message"
@@ -242,6 +271,7 @@ msgstr "Nachricht senden"
 msgid "Sending…"
 msgstr "Wird gesendet …"
 
+#: src/shell/searchEntries.tsx
 #: src/shell/SettingsMenu.tsx
 msgid "Settings"
 msgstr "Einstellungen"
@@ -250,6 +280,7 @@ msgstr "Einstellungen"
 msgid "Sidebar"
 msgstr "Seitenleiste"
 
+#: src/shell/searchEntries.tsx
 #: src/shell/SiteSettings.tsx
 msgid "Site language"
 msgstr "Seitensprache"
@@ -291,6 +322,7 @@ msgstr "Die Nachricht ist zu lang (höchstens {messageMax} Zeichen)."
 msgid "The message is too short (at least {messageMin} characters)."
 msgstr "Die Nachricht ist zu kurz (mindestens {messageMin} Zeichen)."
 
+#: src/shell/searchEntries.tsx
 #: src/shell/SiteSettings.tsx
 msgid "Theme"
 msgstr "Design"
@@ -318,6 +350,10 @@ msgstr "Wer für gwydion.dev verantwortlich ist und wie er erreichbar ist."
 #: src/routes/$lang/contact.tsx
 msgid "Write a message"
 msgstr "Nachricht schreiben"
+
+#: src/shell/searchEntries.tsx
+msgid "Write an email"
+msgstr "E-Mail schreiben"
 
 #: src/contact/ContactForm.tsx
 msgid "Write another message"

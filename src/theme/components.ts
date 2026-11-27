@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Alert,
   Anchor,
   AppShell,
@@ -8,6 +9,7 @@ import {
   Drawer,
   InputWrapper,
   Input,
+  Kbd,
   List,
   Modal,
   NavLink,
@@ -19,6 +21,7 @@ import {
   Typography,
   type MantineThemeComponents,
 } from '@mantine/core'
+import { Spotlight } from '@mantine/spotlight'
 import classes from './components.module.css'
 
 /**
@@ -167,4 +170,33 @@ export const siteComponents: MantineThemeComponents = {
   Code: Code.extend({ classNames: { root: classes.code } }),
 
   Modal: Modal.extend({ defaultProps: { radius: 'lg' } }),
+
+  /** An icon-only control, such as the phone's search button: ink, a faint hover. */
+  ActionIcon: ActionIcon.extend({
+    vars: (_theme, props) =>
+      props.variant === 'subtle'
+        ? { root: { '--ai-color': 'var(--ink)', '--ai-hover': 'var(--hover)' } }
+        : { root: {} },
+  }),
+
+  /** A key, such as the search's shortcut in the sidebar. */
+  Kbd: Kbd.extend({ defaultProps: { size: 'xs' }, classNames: { root: classes.kbd } }),
+
+  /**
+   * The site search: a floating card whose field sits on it, the results
+   * below a hairline, the selected one marked like an open view in the sidebar.
+   * Its title only names the dialog.
+   */
+  Spotlight: Spotlight.extend({
+    defaultProps: { radius: 'lg' },
+    classNames: {
+      header: classes.visuallyHidden,
+      search: classes.spotlightSearch,
+      actionsList: classes.spotlightList,
+      actionsGroup: classes.spotlightGroup,
+      action: classes.spotlightAction,
+      actionDescription: classes.spotlightDescription,
+      empty: classes.spotlightEmpty,
+    },
+  }),
 }

@@ -11,6 +11,26 @@ import { Tile } from './Tile'
 
 type ButtonStyle = 'primary' | 'secondary'
 
+/** Counts a download of `file`. */
+function trackCvDownload(file: CvFile) {
+  trackEvent({ name: 'cv-download', data: { sprache: file.language } })
+}
+
+/**
+ * Downloads `file` now, as a click on its link would, and counts it: for a
+ * place that offers the download without showing the link, such as the search.
+ */
+export function downloadCv(file: CvFile) {
+  trackCvDownload(file)
+  const link = document.createElement('a')
+  link.href = file.href
+  link.download = ''
+  // In the document: some browsers ignore a click on a link outside it.
+  document.body.append(link)
+  link.click()
+  link.remove()
+}
+
 /** A download link to one CV file, marked with its language and type; counts its downloads. */
 function CvFileLink({
   file,
@@ -32,7 +52,7 @@ function CvFileLink({
       download
       hrefLang={file.language}
       type="application/pdf"
-      onClick={() => trackEvent({ name: 'cv-download', data: { sprache: file.language } })}
+      onClick={() => trackCvDownload(file)}
       className={className}
     >
       {children}
