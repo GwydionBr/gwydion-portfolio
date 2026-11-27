@@ -1,0 +1,4 @@
+/* On the pane's inline-end edge, over its border; Mantine's handle class draws the rest. */
+.handle {
+  inset-inline-end: calc(var(--app-shell-resize-handle-size) / -2);
+}

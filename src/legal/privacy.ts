@@ -1,3 +1,5 @@
+import { SECONDARY_NAVBAR_WIDTH, SIDEBAR_WIDTH } from '#/shell/paneWidth'
+import { SIDEBAR_COLLAPSED_STORAGE_KEY } from '#/shell/sidebarLayout'
 import { THEME_STORAGE_KEY } from '#/theme/theme'
 import type { LegalDocument, LegalSection } from './document'
 
@@ -50,11 +52,12 @@ const de: LegalSection[] = [
   },
   {
     id: 'preferences',
-    title: 'Farbschema und Sprache',
+    title: 'Farbschema, Ansicht und Sprache',
     paragraphs: [
       `Ohne dein Zutun folgt das Farbschema (hell oder dunkel) der Einstellung deines Geräts; dann wird nichts gespeichert. Schaltest du das Farbschema selbst um, wird deine Wahl („light“ oder „dark“) unter dem Schlüssel „${THEME_STORAGE_KEY}“ im lokalen Speicher deines Browsers (localStorage) abgelegt, damit sie beim nächsten Besuch erhalten bleibt. Der Eintrag bleibt auf deinem Gerät und wird nicht an mich oder Dritte übermittelt. Diese Website setzt keine Cookies.`,
+      `Auf größeren Bildschirmen kannst du die Seitenleisten in der Breite anpassen und die linke Seitenleiste auf ihre Symbole einklappen. Auch diese Wahl wird erst gespeichert, wenn du sie triffst, ebenfalls im localStorage und nur auf deinem Gerät: die Breiten unter den Schlüsseln „${SIDEBAR_WIDTH.storageKey}“ und „${SECONDARY_NAVBAR_WIDTH.storageKey}“, das Einklappen unter „${SIDEBAR_COLLAPSED_STORAGE_KEY}“.`,
       'Die Sprache ergibt sich aus der Adresse der Seite (/de oder /en) und wird nicht gespeichert. Rufst du die Startseite ohne Sprachangabe auf, wirst du anhand der Spracheinstellung deines Browsers einmalig zur passenden Sprachversion weitergeleitet.',
-      'Die Speicherung des Farbschemas ist für die von dir ausdrücklich gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Rechtsgrundlage für die weitere Verarbeitung ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst den Eintrag in den Einstellungen deines Browsers jederzeit löschen.',
+      'Die Speicherung dieser Einstellungen ist für die von dir ausdrücklich gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Rechtsgrundlage für die weitere Verarbeitung ist Art. 6 Abs. 1 lit. f DSGVO (komfortable Nutzung der Website). Du kannst die Einträge in den Einstellungen deines Browsers jederzeit löschen.',
     ],
   },
   {
@@ -95,7 +98,7 @@ const de: LegalSection[] = [
     title: 'Änderungen',
     paragraphs: [
       'Diese Erklärung wird bei rechtlichen oder technischen Anpassungen der Website aktualisiert. Es gilt die jeweils auf gwydion.dev veröffentlichte Fassung.',
-      'Stand: 21. November 2026',
+      'Stand: 27. November 2026',
     ],
   },
 ]
@@ -149,11 +152,12 @@ const en: LegalSection[] = [
   },
   {
     id: 'preferences',
-    title: 'Colour scheme and language',
+    title: 'Colour scheme, layout and language',
     paragraphs: [
       `By default the colour scheme (light or dark) follows your device’s setting, and nothing is stored. If you switch the colour scheme yourself, your choice (“light” or “dark”) is stored under the key “${THEME_STORAGE_KEY}” in your browser’s local storage (localStorage), so it persists on your next visit. The entry stays on your device and is not transmitted to me or to third parties. This website sets no cookies.`,
+      `On larger screens you can resize the sidebars and collapse the left one to its icons. These choices, too, are stored only once you make them, likewise in localStorage and only on your device: the widths under the keys “${SIDEBAR_WIDTH.storageKey}” and “${SECONDARY_NAVBAR_WIDTH.storageKey}”, the collapse under “${SIDEBAR_COLLAPSED_STORAGE_KEY}”.`,
       'The language follows the page’s address (/de or /en) and is not stored. If you open the home page without a language, you are redirected once to the matching language version based on your browser’s language setting.',
-      'Storing the colour scheme is strictly necessary for the function you explicitly requested (§ 25(2) no. 2 of the German TDDDG). The legal basis for any further processing is Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entry in your browser settings at any time.',
+      'Storing these settings is strictly necessary for the function you explicitly requested (§ 25(2) no. 2 of the German TDDDG). The legal basis for any further processing is Art. 6(1)(f) GDPR (convenient use of the site). You can delete the entries in your browser settings at any time.',
     ],
   },
   {
@@ -194,7 +198,7 @@ const en: LegalSection[] = [
     title: 'Changes',
     paragraphs: [
       'This policy will be updated when legal or technical aspects of the website change. The version published on gwydion.dev applies.',
-      'Last updated: 21 November 2026',
+      'Last updated: 27 November 2026',
     ],
   },
 ]

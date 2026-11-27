@@ -3,6 +3,7 @@ import { useLingui } from '@lingui/react'
 import { RouterNavLink, RouterUnstyled } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
 import type { NavigationEntry } from './navigation'
+import { RailTooltip } from './SidebarRail'
 
 /** The link props and translated label of a navigation entry, in the current Site language. */
 function useEntryLink(entry: NavigationEntry) {
@@ -16,12 +17,15 @@ function useEntryLink(entry: NavigationEntry) {
 
 /**
  * One navigation entry as a sidebar row (Mantine NavLink, its look from the
- * theme): a real link, marked `aria-current="page"` while its view is open.
+ * theme): a real link, marked `aria-current="page"` while its view is open;
+ * named in a tooltip while the sidebar is collapsed to its icons.
  */
 export function NavigationRow({ entry }: { entry: NavigationEntry }) {
   const { link, label } = useEntryLink(entry)
   return (
-    <RouterNavLink {...link} label={label} leftSection={<entry.icon aria-hidden size={16} />} />
+    <RailTooltip label={label}>
+      <RouterNavLink {...link} label={label} leftSection={<entry.icon aria-hidden size={16} />} />
+    </RailTooltip>
   )
 }
 

@@ -1,14 +1,126 @@
 /*
+ * The sidebar collapses to its icon rail (`:root[data-sidebar-collapsed]`,
+ * src/shell/sidebarLayout.ts) by growing narrower, in step with the main pane
+ * and the second sidebar (the AppShell's transition variables). Nothing in it
+ * moves: each icon already sits where the rail's centre will be (the
+ * identity's portrait, the search field's icon, the rows' icons, the
+ * toggle), and everything else fades as the edge passes over it.
+ */
+.sidebar {
+  transition-property: transform, top, height, width;
+
+  :root[data-sidebar-collapsed] & {
+    width: var(--sidebar-rail-width);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/*
  * The sidebar's content scrolls inside the navbar, not the navbar itself:
  * Mantine's resize handle is the navbar's last child, positioned on its edge,
  * and would scroll away (and widen the scroll area) inside a scrolling navbar.
+ * Sideways it clips what the narrower rail has no room for.
  */
 .content {
   display: flex;
   flex: 1;
   flex-direction: column;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden auto;
   scrollbar-width: thin;
   padding: var(--mantine-spacing-sm);
+
+  /* A row's label stays on its line as the edge passes over it. */
+  :global(.mantine-NavLink-body) {
+    white-space: nowrap;
+  }
+}
+
+/* The portrait sits in the rail's centre. */
+.identity {
+  padding-inline: 2px;
+}
+
+/* What fades: labels, which stay as the rows' accessible names; the rail draws only icons. */
+.identity > * > :last-child,
+.content :global(.mantine-NavLink-body),
+.search :global(.mantine-InputPlaceholder-placeholder),
+.search :global(.mantine-Input-section[data-position='right']) {
+  transition: opacity var(--app-shell-transition-duration)
+    var(--app-shell-transition-timing-function);
+
+  :root[data-sidebar-collapsed] & {
+    opacity: 0;
+  }
+}
+
+:root[data-sidebar-collapsed] {
+  /* Gone in the rail, the arrows and "coming soon" beside the Profile links. */
+  & .content :global(.mantine-NavLink-section[data-position='right']) {
+    display: none;
+  }
+
+  /* The search field shrinks to its icon. */
+  & .search :global(.mantine-Input-input) {
+    padding-inline-end: 0;
+    overflow: hidden;
+  }
+
+  /* The sidebar's resize handle: the rail has one width only. */
+  & .sidebar > :global(.mantine-AppShell-resizeHandle) {
+    display: none;
+  }
+}
+
+/*
+ * Too much for the rail (the Availability, the legal links, which the
+ * Settings panel offers then): hidden at once as it collapses, back once it
+ * has opened, so it never shows squeezed on the way.
+ */
+.railHidden {
+  min-width: 0;
+  transition:
+    opacity 150ms ease var(--app-shell-transition-duration),
+    visibility 0s linear var(--app-shell-transition-duration);
+
+  :root[data-sidebar-collapsed] & {
+    opacity: 0;
+    visibility: hidden;
+    transition: none;
+  }
+}
+
+/* Out of the rail's flow, where it would only stand tall and squeezed. */
+.availability {
+  :root[data-sidebar-collapsed] & {
+    position: absolute;
+  }
+}
+
+/*
+ * The legal links take the row's room up to the toggle, on one line (they fit
+ * the narrowest sidebar), so the row keeps its height as the sidebar opens;
+ * in the rail, no room at all.
+ */
+.legal {
+  flex: 1;
+  padding-inline-start: var(--mantine-spacing-sm);
+  white-space: nowrap;
+
+  & > ul {
+    flex-wrap: nowrap;
+  }
+
+  :root[data-sidebar-collapsed] & {
+    padding: 0;
+  }
+}
+
+/* Its icon in line with the rows' arrows, and in the rail's centre. */
+.toggle {
+  flex: none;
+  margin-inline-end: 5px;
 }

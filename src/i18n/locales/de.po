@@ -43,6 +43,10 @@ msgstr "Kundenprojekt"
 msgid "Close"
 msgstr "Schließen"
 
+#: src/shell/SidebarRail.tsx
+msgid "Collapse sidebar"
+msgstr "Seitenleiste einklappen"
+
 #: src/components/ProfileLinks.tsx
 msgid "coming soon"
 msgstr "folgt bald"
@@ -92,6 +96,10 @@ msgstr "Screenshot vergrößern: {0}"
 #: src/contact/message.ts
 msgid "Enter a valid email address."
 msgstr "Gib eine gültige E-Mail-Adresse ein."
+
+#: src/shell/SidebarRail.tsx
+msgid "Expand sidebar"
+msgstr "Seitenleiste ausklappen"
 
 #: src/components/ProjectFacts.tsx
 msgid "Facts"
@@ -248,6 +256,10 @@ msgstr "Öffentlich auf GitHub"
 msgid "Read the German version"
 msgstr "Zur deutschen Fassung"
 
+#: src/shell/SecondaryNavbar.tsx
+msgid "Resize project list"
+msgstr "Projektliste anpassen"
+
 #: src/shell/AppShell.tsx
 msgid "Resize sidebar"
 msgstr "Seitenleiste anpassen"
@@ -264,6 +276,7 @@ msgstr "Rolle"
 msgid "Screenshots"
 msgstr "Screenshots"
 
+#: src/shell/Sidebar.tsx
 #: src/shell/SiteSearch.tsx
 msgid "Search"
 msgstr "Suche"

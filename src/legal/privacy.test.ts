@@ -29,6 +29,14 @@ describe('The privacy policy', () => {
     expect(preferences).toMatch(/dark/)
   })
 
+  it.each(LANGUAGES)('names the sidebar layout the site stores on the device (%s)', (language) => {
+    const preferences = textOf(language, 'preferences')
+    // The keys the sidebars' widths and collapse write (src/shell/paneWidth.ts, sidebarLayout.ts).
+    for (const key of ['sidebar-width', 'secondary-navbar-width', 'sidebar-collapsed']) {
+      expect(preferences).toContain(key)
+    }
+  })
+
   it.each(LANGUAGES)('describes the contact form the new site has (%s)', (language) => {
     const contact = textOf(language, 'contact')
     expect(contact).toContain('Resend')

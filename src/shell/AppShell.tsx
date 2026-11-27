@@ -4,9 +4,10 @@ import { AppShell as MantineAppShell, Box } from '@mantine/core'
 import { useMatches } from '@tanstack/react-router'
 import classes from './AppShell.module.css'
 import { SHELL_BREAKPOINT } from './breakpoint'
+import { paneWidthCss, SECONDARY_NAVBAR_WIDTH } from './paneWidth'
 import { SECONDARY_NAVBAR_MOTION, SecondaryNavbar } from './SecondaryNavbar'
 import { Sidebar } from './Sidebar'
-import { SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarWidth'
+import { SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarLayout'
 import { SiteSearch } from './SiteSearch'
 import { TabBar } from './TabBar'
 import { TopBar } from './TopBar'
@@ -16,13 +17,14 @@ const MAIN_ID = 'main'
 
 /**
  * The app shell (ADR 0003, prototype J), built on Mantine's AppShell: a
- * sidebar from the `sm` breakpoint up, which the visitor can resize
- * (src/shell/sidebarWidth.ts); below it a top bar (identity) and a
- * bottom tab bar whose More sheet holds what the sidebar has besides the
- * navigation. On wide screens a view may ask for a second sidebar beside the
- * first (`secondaryNavigation`), which slides in as the main pane makes room.
- * The site search opens over all of it. Views render into the main pane
- * through `View`.
+ * sidebar from the `sm` breakpoint up, which the visitor can resize and
+ * collapse to an icon rail (src/shell/sidebarLayout.ts); below it a top bar
+ * (identity) and a bottom tab bar whose More sheet holds what the sidebar has
+ * besides the navigation. On wide screens a view may ask for a second
+ * sidebar beside the first (`secondaryNavigation`), which slides in as the
+ * main pane makes room, and which the visitor can resize too. The site
+ * search opens over all of it. Views render into the main pane through
+ * `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
@@ -34,8 +36,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <MantineAppShell
       className={classes.shell}
+      // The panes' widths for the stylesheets, from the same constants as the code.
+      style={{
+        '--sidebar-rail-width': `calc(${SIDEBAR_RAIL_WIDTH / 16}rem * var(--mantine-scale))`,
+        '--secondary-navbar-size': paneWidthCss(SECONDARY_NAVBAR_WIDTH),
+      }}
       resize={resize}
-      // The main pane makes room for the second sidebar in step with its slide.
+      // The main pane makes room in step with the second sidebar's slide and the sidebar collapsing.
       transitionDuration={SECONDARY_NAVBAR_MOTION.duration}
       transitionTimingFunction={SECONDARY_NAVBAR_MOTION.timingFunction}
       navbar={{

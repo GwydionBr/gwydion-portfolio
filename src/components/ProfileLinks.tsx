@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Anchor, List, NavLink, Stack, Text, type MantineSpacing } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import {
@@ -77,8 +78,16 @@ export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: Man
   )
 }
 
-/** The Profile links as rows like the sidebar's navigation entries (Mantine NavLink). */
-export function ProfileLinkRows() {
+/**
+ * The Profile links as rows like the sidebar's navigation entries (Mantine
+ * NavLink). `wrapRow` puts something around each row, given its label, such
+ * as the sidebar's tooltip.
+ */
+export function ProfileLinkRows({
+  wrapRow = (row) => row,
+}: {
+  wrapRow?: (row: ReactNode, label: string) => ReactNode
+}) {
   const { t } = useLingui()
   return (
     <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
@@ -86,23 +95,26 @@ export function ProfileLinkRows() {
         const icon = <link.icon aria-hidden size={16} />
         return (
           <li key={link.kind}>
-            {link.placeholder ? (
-              <NavLink
-                component="span"
-                className="stand-in"
-                label={link.label}
-                leftSection={icon}
-                rightSection={<Text size="xs">{t`coming soon`}</Text>}
-              />
-            ) : (
-              <NavLink
-                href={link.href}
-                {...eventAttributes(link.event)}
-                label={link.label}
-                leftSection={icon}
-                rightSection={link.external && <ArrowUpRight aria-hidden size={14} />}
-                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              />
+            {wrapRow(
+              link.placeholder ? (
+                <NavLink
+                  component="span"
+                  className="stand-in"
+                  label={link.label}
+                  leftSection={icon}
+                  rightSection={<Text size="xs">{t`coming soon`}</Text>}
+                />
+              ) : (
+                <NavLink
+                  href={link.href}
+                  {...eventAttributes(link.event)}
+                  label={link.label}
+                  leftSection={icon}
+                  rightSection={link.external && <ArrowUpRight aria-hidden size={14} />}
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                />
+              ),
+              link.label,
             )}
           </li>
         )

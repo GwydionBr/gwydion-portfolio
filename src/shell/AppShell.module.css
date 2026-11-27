@@ -1,8 +1,3 @@
-/* The second sidebar's width (`SecondaryNavbar`), which the main pane makes room for. */
-.shell {
-  --secondary-navbar-width: 16rem;
-}
-
 .main {
   outline: none;
   /* Clear of the tab bar and the phone's home indicator, which Mantine's footer adds to its own height. */
@@ -18,11 +13,26 @@
   }
 }
 
+/*
+ * The sidebar collapsed to its icon rail (src/shell/sidebarLayout.ts): the
+ * main pane and the second sidebar start at the rail's edge. Over Mantine's
+ * offset for the sidebar's width, which stays the width it opens to again.
+ */
+@media (min-width: 48em) {
+  :root[data-sidebar-collapsed] .shell {
+    --app-shell-navbar-offset: var(--sidebar-rail-width) !important;
+  }
+}
+
+/* While a pane is dragged, nothing eases after it (Mantine does the same for its own). */
+:root[data-pane-resizing] .shell {
+  --app-shell-transition-duration: 0ms !important;
+}
+
 @media (min-width: 75em) {
   .main[data-secondary-navbar] {
     padding-inline-start: calc(
-      var(--app-shell-navbar-offset, 0rem) + var(--secondary-navbar-width) +
-        var(--app-shell-padding)
+      var(--app-shell-navbar-offset, 0rem) + var(--secondary-navbar-size) + var(--app-shell-padding)
     );
   }
 }
