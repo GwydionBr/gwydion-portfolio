@@ -32,7 +32,8 @@
     transition-delay: 150ms;
   }
 
-  &:where([data-active])::after {
+  /* Not `:where()`: while dragging, the pointer still hovers it, and the drag must win. */
+  &[data-active]::after {
     background-color: color-mix(in srgb, var(--ink) 32%, transparent);
     transition-delay: 0ms;
   }
