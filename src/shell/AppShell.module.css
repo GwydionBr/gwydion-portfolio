@@ -1,9 +1,23 @@
+/* The second sidebar's width (`SecondaryNavbar`), which the main pane makes room for. */
+.shell {
+  --secondary-navbar-width: 16rem;
+}
+
 .main {
   outline: none;
   /* Clear of the tab bar and the phone's home indicator, which Mantine's footer adds to its own height. */
   padding-bottom: calc(
     var(--app-shell-footer-offset, 0rem) + env(safe-area-inset-bottom) + var(--app-shell-padding)
   );
+}
+
+@media (min-width: 75em) {
+  .main[data-secondary-navbar] {
+    padding-inline-start: calc(
+      var(--app-shell-navbar-offset, 0rem) + var(--secondary-navbar-width) +
+        var(--app-shell-padding)
+    );
+  }
 }
 
 /* Off screen until focused by keyboard. */

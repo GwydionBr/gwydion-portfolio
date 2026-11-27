@@ -1,6 +1,7 @@
 import { createRouter, type RouterHistory } from '@tanstack/react-router'
 import { siteContent, type Content } from './content'
 import { routeTree } from './routeTree.gen'
+import type { SecondaryNavigation } from './shell/SecondaryNavbar'
 
 /** What every route can read from its context: the content module (ADR 0004). */
 export interface RouterContext {
@@ -42,7 +43,7 @@ declare module '@tanstack/react-router' {
     router: ReturnType<typeof getRouter>
   }
   interface StaticDataRouteOption {
-    /** `wide`: the view needs more than the main pane's usual width, as a `SplitView` does. */
-    viewWidth?: 'wide'
+    /** What the shell's second sidebar lists beside the view (`SecondaryNavbar`); none when left out. */
+    secondaryNavigation?: SecondaryNavigation
   }
 }

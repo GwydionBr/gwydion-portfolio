@@ -1,0 +1,18 @@
+/* Fixed beside the sidebar and below it, so it slides out from behind it; only from `SECONDARY_NAVBAR_BREAKPOINT` (lg, 75em) up. */
+.navbar {
+  display: none;
+
+  @media (min-width: 75em) {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: var(--app-shell-navbar-offset, 0rem);
+    z-index: calc(var(--app-shell-navbar-z-index, 100) - 1);
+    width: var(--secondary-navbar-width);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: var(--mantine-spacing-sm);
+    background: var(--sidebar);
+    border-inline-end: 1px solid var(--line);
+  }
+}

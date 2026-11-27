@@ -1,6 +1,7 @@
-import { Box, Center, Text } from '@mantine/core'
+import { Box, Center, Group, Stack, Text } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import type { Project } from '#/content'
+import { useProjects } from '#/content/react'
 import { RouterNavLink } from './links'
 import { ProjectMeta } from './ProjectMeta'
 import { useProjectPageLink } from './ProjectPageLink'
@@ -8,23 +9,29 @@ import { ProjectSwatch } from './ProjectSwatch'
 
 /**
  * Every Project as a compact navigation row (title, kind and period), the
- * open Project's row selected: the list pane beside a Project page.
+ * open Project's row selected: the shell's second sidebar beside the Projects.
  */
-export function ProjectNavigation({ projects }: { projects: readonly Project[] }) {
+export function ProjectNavigation() {
   const { t } = useLingui()
+  const projects = useProjects()
   return (
     <Box component="nav" aria-label={t`Projects`}>
-      {/* In line with the detail's location line. */}
-      <Text size="xs" c="var(--subtle)" px="sm" mb={6} aria-hidden>
-        {t`Projects`}
-      </Text>
-      <Box component="ul" role="list" m={0} p={0} style={{ listStyle: 'none' }}>
+      {/* As tall as the sidebar's identity, so the lists below start level. */}
+      <Group h={56} px="sm" justify="space-between" aria-hidden>
+        <Text size="sm" fw={600} c="var(--ink)">
+          {t`Projects`}
+        </Text>
+        <Text size="xs" c="var(--subtle)">
+          {projects.length}
+        </Text>
+      </Group>
+      <Stack component="ul" role="list" gap={2} m={0} mt="md" p={0} style={{ listStyle: 'none' }}>
         {projects.map((project) => (
           <li key={project.slug}>
             <ProjectRow project={project} />
           </li>
         ))}
-      </Box>
+      </Stack>
     </Box>
   )
 }
