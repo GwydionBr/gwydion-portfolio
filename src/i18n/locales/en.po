@@ -247,6 +247,10 @@ msgstr "Public on GitHub"
 msgid "Read the German version"
 msgstr "Read the German version"
 
+#: src/shell/AppShell.tsx
+msgid "Resize sidebar"
+msgstr "Resize sidebar"
+
 #: src/shell/SiteSearch.tsx
 msgid "Results"
 msgstr "Results"

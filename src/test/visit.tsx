@@ -21,9 +21,10 @@ afterEach(async () => {
   mounted = undefined
   if (root) await act(async () => root.unmount())
   vi.restoreAllMocks()
-  // The device forgets the visit: no stored choices, no theme left on `<html>`.
+  // The device forgets the visit: no stored choices, no theme or sidebar width left on `<html>`.
   localStorage.clear()
   document.documentElement.removeAttribute(THEME_ATTRIBUTE)
+  document.documentElement.removeAttribute('style')
 })
 
 interface VisitOptions {
@@ -124,6 +125,7 @@ export async function visit(
      */
     paintFirstFrame() {
       document.documentElement.removeAttribute(THEME_ATTRIBUTE)
+      document.documentElement.removeAttribute('style')
       // Only scripts the browser runs: not data blocks such as JSON-LD.
       const inline = document.head.querySelectorAll<HTMLScriptElement>('script:not([src])')
       for (const script of [...inline].filter((s) => !s.type || /javascript/.test(s.type))) {

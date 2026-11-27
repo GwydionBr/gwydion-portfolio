@@ -8,9 +8,14 @@ import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
 import { NavigationRow } from './NavigationLink'
 import { SettingsMenu } from './SettingsMenu'
+import classes from './Sidebar.module.css'
 import { SearchField } from './SiteSearch'
 
-/** The desktop sidebar: identity, the search field, navigation and, at the bottom, the Availability, the Profile links, the Settings row and the legal links. */
+/**
+ * The desktop sidebar: identity, the search field, navigation and, at the
+ * bottom, the Availability, the Profile links, the Settings row and the legal
+ * links. Mantine adds the resize handle on its edge (src/shell/sidebarWidth.ts).
+ */
 export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
@@ -22,30 +27,33 @@ export function Sidebar() {
       // Below the breakpoint Mantine only slides it off screen; gone, it can't take keyboard focus.
       visibleFrom={SHELL_BREAKPOINT}
     >
-      <AppShell.Section p="xs">
-        <Identity />
-      </AppShell.Section>
-      <AppShell.Section mt="xs">
-        <SearchField />
-      </AppShell.Section>
-      <AppShell.Section grow mt="md" component="nav" aria-label={t`Main navigation`}>
-        <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
-          {entries.map((entry) => (
-            <li key={entry.to}>
-              <NavigationRow entry={entry} />
-            </li>
-          ))}
-        </Stack>
-      </AppShell.Section>
-      <AppShell.Section>
-        <Stack gap="xs" pt="md">
-          <AvailabilityTile compact />
-          <ProfileLinkRows />
-          <Divider color="var(--line)" />
-          <SettingsMenu />
-          <LegalLinks pl="sm" />
-        </Stack>
-      </AppShell.Section>
+      {/* What scrolls in a short window; the resize handle stays outside, on the edge. */}
+      <div className={classes.content}>
+        <AppShell.Section p="xs">
+          <Identity />
+        </AppShell.Section>
+        <AppShell.Section mt="xs">
+          <SearchField />
+        </AppShell.Section>
+        <AppShell.Section grow mt="md" component="nav" aria-label={t`Main navigation`}>
+          <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
+            {entries.map((entry) => (
+              <li key={entry.to}>
+                <NavigationRow entry={entry} />
+              </li>
+            ))}
+          </Stack>
+        </AppShell.Section>
+        <AppShell.Section>
+          <Stack gap="xs" pt="md">
+            <AvailabilityTile compact />
+            <ProfileLinkRows />
+            <Divider color="var(--line)" />
+            <SettingsMenu />
+            <LegalLinks pl="sm" />
+          </Stack>
+        </AppShell.Section>
+      </div>
     </AppShell.Navbar>
   )
 }
