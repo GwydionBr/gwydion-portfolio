@@ -1,79 +1,71 @@
-import { Anchor, Box, Button, Text } from '@mantine/core'
+import { Box, Group, Text } from '@mantine/core'
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
-import { eventAttributes } from '#/analytics/umami'
+import {
+  CalendarBlank,
+  GithubLogo,
+  LockSimple,
+  Stack as StackIcon,
+  UserCircle,
+  type Icon,
+} from '@phosphor-icons/react'
 import type { Project } from '#/content'
 import { PeriodText } from './PeriodText'
-import { ProjectKindText } from './ProjectMeta'
+import classes from './ProjectFacts.module.css'
 import { TagList } from './TagList'
 import { Tile } from './Tile'
 
 /**
- * A Project's facts at a glance, for a Recruiter who reads no further: a
- * link to the running product, then kind, period, role, status and whether
- * the source code is public, then the stack. The rail beside a Project's
- * story; `className` places it.
+ * A Project's facts as a quiet list, for a Recruiter who wants them while
+ * reading on: period, role, whether the source code is public, and the stack.
+ * Its kind and status open the page (ProjectEntry), so they are not repeated.
+ * Each term has a small icon in its line. Where there is room the facts
+ * stand side by side; `className` places the card.
  */
 export function ProjectFacts({ project, className }: { project: Project; className?: string }) {
   const { t } = useLingui()
-  const { live, source } = project.links
-  const data = { projekt: project.slug }
+  const { source } = project.links
   return (
-    <Tile title={t`Facts`} className={className}>
-      {live && (
-        <Button
-          component="a"
-          mt="sm"
-          fullWidth
-          rightSection={<span aria-hidden>↗</span>}
-          href={live}
-          {...eventAttributes({ name: 'projekt-website-klick', data })}
-        >
-          {t`Visit website`}
-        </Button>
-      )}
-      <Box component="dl" m={0} mt="sm">
-        <Fact term={t`Kind`} first>
-          <ProjectKindText kind={project.kind} />
-        </Fact>
-        <Fact term={t`Period`}>
+    <Tile title={t`Facts`} density="snug" className={className}>
+      <Box component="dl" m={0} mt="sm" className={classes.facts}>
+        <Fact icon={CalendarBlank} term={t`Period`}>
           <PeriodText period={project.period} />
         </Fact>
-        <Fact term={t`Role`}>{project.role}</Fact>
-        <Fact term={t`Status`}>{project.status}</Fact>
-        <Fact term={t`Source code`}>
-          {source ? (
-            <Anchor
-              href={source}
-              {...eventAttributes({ name: 'projekt-code-klick', data })}
-              inherit
-              c="var(--ink)"
-              underline="always"
-              style={{ textUnderlineOffset: 2 }}
-            >
-              {t`Public on GitHub`}
-              <span aria-hidden> ↗</span>
-            </Anchor>
-          ) : (
-            t`Not public`
-          )}
+        <Fact icon={UserCircle} term={t`Role`}>
+          {project.role}
+        </Fact>
+        <Fact icon={source ? GithubLogo : LockSimple} term={t`Source code`}>
+          {source ? t`Public on GitHub` : t`Not public`}
+        </Fact>
+        <Fact icon={StackIcon} term={t`Stack`} wide>
+          <TagList label={t`Stack`} tags={project.stack} mt={4} />
         </Fact>
       </Box>
-      <TagList label={t`Stack`} tags={project.stack} mt="sm" />
     </Tile>
   )
 }
 
-/** One term of the facts and its value. */
-function Fact({ term, first, children }: { term: string; first?: boolean; children: ReactNode }) {
+/** One term of the facts, its icon in the term's line, and its value; a `wide` one takes the whole row. */
+function Fact({
+  icon: Glyph,
+  term,
+  wide,
+  children,
+}: {
+  icon: Icon
+  term: string
+  wide?: boolean
+  children: ReactNode
+}) {
   return (
-    <Box py={8} style={{ borderTop: first ? undefined : '1px solid var(--line)' }}>
-      <Text component="dt" size="xs" c="var(--subtle)">
+    <div className={wide ? classes.wide : undefined}>
+      <Group component="dt" gap={6} wrap="nowrap" c="var(--subtle)" fz="xs" lh="1rem">
+        <Glyph aria-hidden size={14} style={{ flexShrink: 0 }} />
         {term}
-      </Text>
-      <Text component="dd" inherit m={0} mt={2} c="var(--ink)">
+      </Group>
+      <Text component="dd" inherit m={0} mt={4} c="var(--ink)">
         {children}
       </Text>
-    </Box>
+    </div>
   )
 }

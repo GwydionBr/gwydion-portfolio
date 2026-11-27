@@ -52,7 +52,7 @@ bun run start
 All content lives in the repo as typed data (`src/content/data/`), decided in `docs/adr/0004`:
 
 - `profile.ts`: pitch, Availability, "Now", skills, links
-- `projects.ts` plus one MDX story per Project and language in `projects/<slug>.<language>.mdx`
+- `projects.ts` plus one MDX story per Project and language in `projects/<slug>.<language>.mdx`. Each Project names its Key points and its Cover (a screenshot view); a story should not open with the Cover again. A story's `##` headings are its sections: they get ids and make up "On this page" on the Project's page (`src/content/storySections.ts`).
 - `careerEntries.ts` and `cv.ts`: the Career and the CV
 - `posts.ts`: writing
 

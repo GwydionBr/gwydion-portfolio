@@ -46,7 +46,7 @@ msgstr "Werdegang"
 msgid "Client work"
 msgstr "Kundenprojekt"
 
-#: src/components/story/ScreenshotGallery.tsx
+#: src/components/story/ScreenshotViewer.tsx
 #: src/shell/MoreSheet.tsx
 msgid "Close"
 msgstr "Schließen"
@@ -111,7 +111,7 @@ msgid "Email address copied"
 msgstr "E-Mail-Adresse kopiert"
 
 #. placeholder {0}: shot.caption
-#: src/components/story/ScreenshotGallery.tsx
+#: src/components/story/ScreenshotViewer.tsx
 msgid "Enlarge screenshot: {0}"
 msgstr "Screenshot vergrößern: {0}"
 
@@ -152,9 +152,9 @@ msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Ko
 msgid "How I handle your details is explained in the <0>{0}</0>."
 msgstr "Wie ich deine Angaben verarbeite, erfährst du in der <0>{0}</0>."
 
-#: src/components/ProjectFacts.tsx
-msgid "Kind"
-msgstr "Art"
+#: src/components/ProjectEntry.tsx
+msgid "Key points"
+msgstr "Kernpunkte"
 
 #: src/routes/$lang/index.tsx
 msgid "Latest Posts"
@@ -193,7 +193,11 @@ msgstr "Mehr"
 msgid "Name"
 msgstr "Name"
 
-#: src/components/story/ScreenshotGallery.tsx
+#: src/components/NextProject.tsx
+msgid "Next Project"
+msgstr "Nächstes Projekt"
+
+#: src/components/story/ScreenshotViewer.tsx
 msgid "Next screenshot"
 msgstr "Nächster Screenshot"
 
@@ -217,6 +221,10 @@ msgstr "Aktuell"
 #: src/components/ProjectDetail.tsx
 msgid "Numbers"
 msgstr "Zahlen"
+
+#: src/components/StoryContents.tsx
+msgid "On this page"
+msgstr "Auf dieser Seite"
 
 #: src/components/ProjectMeta.tsx
 msgid "Open source"
@@ -254,7 +262,7 @@ msgstr "Zeitraum"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Bitte gib deinen Namen ein ({nameMin} bis {nameMax} Zeichen)."
 
-#: src/components/story/ScreenshotGallery.tsx
+#: src/components/story/ScreenshotViewer.tsx
 msgid "Previous screenshot"
 msgstr "Vorheriger Screenshot"
 
@@ -342,10 +350,6 @@ msgstr "Quellcode"
 msgid "Stack"
 msgstr "Stack"
 
-#: src/components/ProjectFacts.tsx
-msgid "Status"
-msgstr "Status"
-
 #: src/shell/ThemeSwitch.tsx
 msgid "System"
 msgstr "System"
@@ -383,7 +387,11 @@ msgstr "Diese englische Fassung ist eine unverbindliche Übersetzung. Rechtsverb
 msgid "View all"
 msgstr "Alle ansehen"
 
-#: src/components/ProjectFacts.tsx
+#: src/components/ProjectEntry.tsx
+msgid "View source"
+msgstr "Quellcode ansehen"
+
+#: src/components/ProjectEntry.tsx
 msgid "Visit website"
 msgstr "Website besuchen"
 

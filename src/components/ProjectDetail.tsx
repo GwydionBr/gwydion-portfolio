@@ -1,21 +1,28 @@
-import { Box, Group, Text } from '@mantine/core'
+import { Box } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import type { ProjectWithStory } from '#/content'
 import { View } from '#/shell/View'
+import { NextProject } from './NextProject'
+import { ProjectEntry } from './ProjectEntry'
 import { ProjectFacts } from './ProjectFacts'
-import { ProjectMeta } from './ProjectMeta'
-import { ProjectSwatch } from './ProjectSwatch'
+import { StoryContents } from './StoryContents'
 import { NumberTile, NumberTiles, StoryProject, storyComponents } from './story'
 import classes from './ProjectDetail.module.css'
 
 /**
- * A Project in full, as its own view: its meta and summary, its facts, its
- * numbers, then its story in the Site language. Where there is room the
- * facts are a sticky rail beside the story; otherwise they follow the summary.
+ * A Project in full, as its own view. It opens with the entry (what it is,
+ * its key points, its cover), then tells its story with its numbers first,
+ * and ends with the next Project. Where there is room, a rail beside the
+ * story stays in view: the story's sections and the facts. Narrower, the
+ * facts come before the story; the sections are left out.
+ *
+ * The rail comes before the story in the page, so it reads in the order it
+ * shows when narrow; wide, the CSS puts it beside the story.
  */
 export function ProjectDetail({ project }: { project: ProjectWithStory }) {
   const { t } = useLingui()
-  const { story: Story } = project
+  const { story } = project
+  const sections = story?.sections ?? []
   return (
     <View
       title={project.title}
@@ -23,21 +30,20 @@ export function ProjectDetail({ project }: { project: ProjectWithStory }) {
       back={{ to: '/$lang/projects', label: t`Back to Projects`, text: t`Projects` }}
     >
       <div className={classes.detail}>
-        {/* The facts span both rows of the right column when there is room. */}
-        <Box component="article" fz="sm" lh="1.25rem" className={classes.article}>
-          <Box maw={672}>
-            <Group component="p" wrap="nowrap" gap={8} fz="xs" lh="1rem" c="var(--subtle)" m={0}>
-              <ProjectSwatch accent={project.accent} />
-              <span>
-                <ProjectMeta project={project} />
-              </span>
-            </Group>
-            <Text mt={8} size="md" lh={1.625} c="var(--ink)">
-              {project.summary}
-            </Text>
-          </Box>
-          <ProjectFacts project={project} className={classes.facts} />
-          <Box miw={0} maw={672}>
+        <ProjectEntry project={project} />
+        <div className={classes.body}>
+          {/* The rail's cell ends where the next Project begins, and so does its stay in view. */}
+          <div className={classes.railCell}>
+            <div className={classes.rail}>
+              {sections.length > 1 && (
+                <div className={classes.wideOnly}>
+                  <StoryContents sections={sections} />
+                </div>
+              )}
+              <ProjectFacts project={project} />
+            </div>
+          </div>
+          <Box component="article" miw={0} fz="sm" lh="1.25rem" className={classes.story}>
             {project.stats && (
               <NumberTiles label={t`Numbers`}>
                 {project.stats.map((stat) => (
@@ -45,15 +51,16 @@ export function ProjectDetail({ project }: { project: ProjectWithStory }) {
                 ))}
               </NumberTiles>
             )}
-            {Story && (
+            {story && (
               <Box mt={project.stats ? 32 : undefined}>
                 <StoryProject slug={project.slug}>
-                  <Story components={storyComponents} />
+                  <story.Content components={storyComponents} />
                 </StoryProject>
               </Box>
             )}
           </Box>
-        </Box>
+          <NextProject slug={project.slug} className={classes.next} />
+        </div>
       </div>
     </View>
   )

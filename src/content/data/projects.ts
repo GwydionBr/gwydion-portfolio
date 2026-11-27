@@ -15,11 +15,16 @@ export const projects: ProjectSource[] = [
       en: 'Time tracking, tasks, calendar, finance and habits on one data model. Offline-first sync across web, macOS and iOS.',
       de: 'Zeiterfassung, Aufgaben, Kalender, Finanzen und Gewohnheiten auf einem Datenmodell. Offline-first-Sync über Web, macOS und iOS.',
     },
+    keyPoints: [
+      { en: 'Web, macOS and iOS', de: 'Web, macOS und iOS' },
+      { en: 'Offline-first sync', de: 'Offline-first-Sync' },
+      { en: 'Built-in AI assistant', de: 'Eingebauter KI-Assistent' },
+    ],
     role: {
       en: 'Sole developer: design, build, operations',
       de: 'Alleinentwickler: Design, Entwicklung, Betrieb',
     },
-    status: { en: 'Open-source rebuild', de: 'Open-Source-Neubau' },
+    status: { label: { en: 'Open-source rebuild', de: 'Open-Source-Neubau' }, live: false },
     links: {
       live: 'https://self-engine.com',
       source: 'https://github.com/Self-Engine/self-engine',
@@ -47,6 +52,7 @@ export const projects: ProjectSource[] = [
     featured: true,
     order: 1,
     accent: '#2f5d50',
+    cover: 'dashboard',
   },
   {
     slug: 'tattoo-sites',
@@ -57,16 +63,22 @@ export const projects: ProjectSource[] = [
       en: 'The website of a tattoo studio and the personal website of one of its artists, each with its own look, edited by their owners.',
       de: 'Die Website eines Tattoo-Studios und die eigene Website eines seiner Künstler, jede mit eigenem Aussehen und von ihren Inhabern selbst gepflegt.',
     },
+    keyPoints: [
+      { en: 'Guided booking form in four steps', de: 'Geführtes Terminformular in vier Schritten' },
+      { en: 'The studio edits its own content', de: 'Das Studio pflegt seine Inhalte selbst' },
+      { en: 'One package for all artist websites', de: 'Ein Package für alle Künstler-Websites' },
+    ],
     role: { en: 'Design and development', de: 'Design und Entwicklung' },
     status: {
-      en: 'Two websites live, two in progress',
-      de: 'Zwei Websites live, zwei in Arbeit',
+      label: { en: 'Two websites live, two in progress', de: 'Zwei Websites live, zwei in Arbeit' },
+      live: true,
     },
     links: { live: 'https://endstation-tattoo.com' },
     stack: ['TanStack Start', 'Mantine', 'Sanity', 'Zod', 'Vercel'],
     featured: true,
     order: 2,
     accent: '#8a3b2e',
+    cover: 'endstation-start',
   },
   {
     slug: 'tattoo-booking-portal',
@@ -77,11 +89,16 @@ export const projects: ProjectSource[] = [
       en: 'The portal where the artists of a tattoo studio handle every booking request, with strict rules for who sees what.',
       de: 'Das Portal, in dem die Künstler eines Tattoo-Studios alle Terminanfragen bearbeiten, mit strengen Regeln dafür, wer was sieht.',
     },
+    keyPoints: [
+      { en: 'Built for phones and iPads first', de: 'Zuerst für Handy und iPad gebaut' },
+      { en: 'Access rules in the database', de: 'Zugriffsregeln in der Datenbank' },
+      { en: 'Deletion after six months', de: 'Löschung nach sechs Monaten' },
+    ],
     role: {
       en: 'Design, development and operations',
       de: 'Design, Entwicklung und Betrieb',
     },
-    status: { en: 'Live', de: 'Live' },
+    status: { label: { en: 'Live', de: 'Live' }, live: true },
     links: {},
     stack: ['TanStack Start', 'Supabase', 'Postgres', 'Mantine', 'Vercel'],
     // Checked against the tattoo-sites repo on 2026-11-27; maintained by hand.
@@ -97,6 +114,7 @@ export const projects: ProjectSource[] = [
     featured: false,
     order: 3,
     accent: '#17777a',
+    cover: 'postfach',
   },
   {
     slug: 'gwydion-dev',
@@ -107,11 +125,16 @@ export const projects: ProjectSource[] = [
       en: 'This site: a bilingual, server-rendered portfolio built like an app.',
       de: 'Diese Website: ein zweisprachiges, serverseitig gerendertes Portfolio im Stil einer App.',
     },
+    keyPoints: [
+      { en: 'English and German', de: 'Deutsch und Englisch' },
+      { en: 'Server-rendered', de: 'Serverseitig gerendert' },
+      { en: 'Content as typed data', de: 'Inhalte als typisierte Daten' },
+    ],
     role: {
       en: 'Sole developer: design and build',
       de: 'Alleinentwickler: Design und Entwicklung',
     },
-    status: { en: 'Live', de: 'Live' },
+    status: { label: { en: 'Live', de: 'Live' }, live: true },
     links: {
       live: 'https://gwydion.dev',
       source: 'https://github.com/GwydionBr/gwydion-portfolio',

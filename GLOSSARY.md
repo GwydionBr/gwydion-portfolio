@@ -32,6 +32,14 @@ _Avoid_: status (alone), open to work
 A piece of Gwydion's work presented as evidence of what he can do: his own products, client work, open source. Each Project has its own page telling its story.
 _Avoid_: case study (that is the page, not the thing), portfolio item, work item
 
+**Key points** (de: _Kernpunkte_):
+The three short statements that open a Project's page beside its summary, each a few words ("Offline-first sync"), so a Recruiter sees in seconds what the Project is.
+_Avoid_: highlights (those are the CV's bullets), features, bullets
+
+**Cover** (de: _Titelbild_):
+The one screenshot chosen to open a Project's page, shown in a browser frame beside its Key points. A Project without screenshots has none.
+_Avoid_: hero image, thumbnail
+
 **Career entry** (de: _Station_):
 One stage of Gwydion's path: a job, a freelance period, an education. Career entries together make up the CV.
 _Avoid_: job, position, experience item

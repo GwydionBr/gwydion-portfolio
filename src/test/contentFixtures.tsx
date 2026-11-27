@@ -4,8 +4,10 @@ import {
   type Post,
   type ProjectSource,
   type ScreenshotSetSource,
+  type StorySection,
   type StorySource,
 } from '#/content'
+import { Fragment, type ReactNode } from 'react'
 import { ScreenshotGallery } from '#/components/story'
 import { LANGUAGES } from '#/i18n/language'
 import { THEMES } from '#/theme/theme'
@@ -18,9 +20,16 @@ export const FIXTURE_POST: Post = {
   publishedAt: '2026-10-21',
 }
 
+/** Three key points about a fixture `thing`, in both Site languages. */
+const keyPoints = (thing: string): ProjectSource['keyPoints'] => [
+  { en: `Fast ${thing}`, de: `Schnelles ${thing}` },
+  { en: `Tested ${thing}`, de: `Getestetes ${thing}` },
+  { en: `Typed ${thing}`, de: `Typisiertes ${thing}` },
+]
+
 /**
  * Three Projects, stored out of order so tests see the configured order win.
- * Fixture Kit is not featured.
+ * Fixture Kit is not featured. Fixture Engine opens with its dashboard as cover.
  */
 function fixtureProjects(): ProjectSource[] {
   return [
@@ -30,8 +39,9 @@ function fixtureProjects(): ProjectSource[] {
       kind: 'open-source',
       period: { start: '2024', end: '2024' },
       summary: { en: 'A kit of fixtures.', de: 'Ein Baukasten für Fixtures.' },
+      keyPoints: keyPoints('kit'),
       role: { en: 'Maintainer', de: 'Maintainerin' },
-      status: { en: 'Archived', de: 'Archiviert' },
+      status: { label: { en: 'Archived', de: 'Archiviert' }, live: false },
       links: { source: 'https://github.com/ada-example/fixture-kit' },
       stack: ['Kit'],
       featured: false,
@@ -45,8 +55,9 @@ function fixtureProjects(): ProjectSource[] {
       kind: 'own-product',
       period: { start: '2025', end: null },
       summary: { en: 'An engine for fixtures.', de: 'Ein Motor für Fixtures.' },
+      keyPoints: keyPoints('engine'),
       role: { en: 'Sole developer', de: 'Alleinige Entwicklerin' },
-      status: { en: 'Live, commercial', de: 'Live, kommerziell' },
+      status: { label: { en: 'Live, commercial', de: 'Live, kommerziell' }, live: true },
       links: { live: 'https://engine.example' },
       stack: ['TypeScript', 'Postgres'],
       stats: [
@@ -60,6 +71,7 @@ function fixtureProjects(): ProjectSource[] {
       featured: true,
       order: 1,
       accent: '#2f5d50',
+      cover: 'dashboard',
     },
     {
       slug: 'fixture-studio',
@@ -67,8 +79,9 @@ function fixtureProjects(): ProjectSource[] {
       kind: 'client-work',
       period: { start: '2026', end: '2026' },
       summary: { en: 'A studio for fixtures.', de: 'Ein Studio für Fixtures.' },
+      keyPoints: keyPoints('studio'),
       role: { en: 'Design and development', de: 'Design und Entwicklung' },
-      status: { en: 'Launching soon', de: 'Bald live' },
+      status: { label: { en: 'Launching soon', de: 'Bald live' }, live: false },
       links: {},
       stack: ['Sanity'],
       featured: true,
@@ -79,27 +92,49 @@ function fixtureProjects(): ProjectSource[] {
 }
 
 /**
- * A story per Project and Site language: a paragraph naming both. Fixture
+ * A story per Project and Site language: a paragraph naming both, then two
+ * sections, as a compiled story has them (`remarkStorySections`). Fixture
  * Engine's (at Self-Engine's slug) also shows its screenshot gallery.
  */
 function fixtureStories(projects: ProjectSource[]): StorySource {
+  const story = (intro: string, sections: StorySection[], gallery: ReactNode) => ({
+    Content: () => (
+      <>
+        <p>{intro}</p>
+        {gallery}
+        {sections.map(({ id, title }) => (
+          <Fragment key={id}>
+            <h2 id={id} tabIndex={-1}>
+              {title}
+            </h2>
+            <p>{title}.</p>
+          </Fragment>
+        ))}
+      </>
+    ),
+    sections,
+  })
   return Object.fromEntries(
     projects.map(({ slug, title }) => {
       const gallery = slug === 'self-engine' && <ScreenshotGallery />
       return [
         slug,
         {
-          en: () => (
-            <>
-              <p>The story of {title}.</p>
-              {gallery}
-            </>
+          en: story(
+            `The story of ${title}.`,
+            [
+              { id: 'the-idea', title: 'The idea' },
+              { id: 'how-it-works', title: 'How it works' },
+            ],
+            gallery,
           ),
-          de: () => (
-            <>
-              <p>Die Geschichte von {title}.</p>
-              {gallery}
-            </>
+          de: story(
+            `Die Geschichte von ${title}.`,
+            [
+              { id: 'die-idee', title: 'Die Idee' },
+              { id: 'wie-es-funktioniert', title: 'Wie es funktioniert' },
+            ],
+            gallery,
           ),
         },
       ]

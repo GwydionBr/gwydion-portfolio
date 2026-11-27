@@ -2,6 +2,7 @@ import type { MDXContent } from 'mdx/types'
 import type { Language } from '#/i18n/language'
 import type { Theme } from '#/theme/theme'
 import type { InLanguage, Localized } from './localized'
+import type { StorySection } from './storySections'
 
 /**
  * The content shapes, as stored in the content files. Each could map one to
@@ -80,12 +81,16 @@ export interface ProjectSource {
   kind: ProjectKind
   /** When he worked on it. */
   period: Period
-  /** One line, for lists. */
+  /** One line, for lists; on its page, the first thing said about it. */
   summary: Localized<string>
+  /**
+   * Three short statements under the summary that say in seconds what it is
+   * (glossary: Key points), each a few words ("Offline-first sync").
+   */
+  keyPoints: [Localized<string>, Localized<string>, Localized<string>]
   /** What Gwydion did on it ("Sole developer: design, build, operations"). */
   role: Localized<string>
-  /** Where it stands now ("Live, commercial", "Launch 2026"). */
-  status: Localized<string>
+  status: ProjectStatus
   /** Where to see it: the running product, and the source code when it is public. */
   links: ProjectLinks
   stack: string[]
@@ -97,6 +102,20 @@ export interface ProjectSource {
   order: number
   /** Its colour (a CSS colour), for its swatch. */
   accent: string
+  /**
+   * The view of the screenshot that opens its page, beside the key points;
+   * left out for a Project without screenshots. Its story should not open
+   * with the same screenshot again.
+   */
+  cover?: string
+}
+
+/** Where a Project stands now. */
+export interface ProjectStatus {
+  /** In a few words ("Live", "Two websites live, two in progress", "Open-source rebuild"). */
+  label: Localized<string>
+  /** Whether the label says it is live, in use; its page then marks it in the live colour. */
+  live: boolean
 }
 
 /**
@@ -125,13 +144,20 @@ export interface ProjectLinks {
 }
 
 /** A Project in one Site language, as lists receive it. */
-export type Project = Omit<InLanguage<ProjectSource>, 'stats'> & { stats?: ProjectStat[] }
+export type Project = Omit<InLanguage<ProjectSource>, 'stats' | 'cover'> & {
+  stats?: ProjectStat[]
+}
 
 /**
  * A Project's story: one MDX document, rendered with the story components
- * (`#/components/story`) passed as `components`.
+ * (`#/components/story`) passed as `components`, and its sections, known
+ * before it renders.
  */
-export type Story = MDXContent
+export interface Story {
+  Content: MDXContent
+  /** Its `##` headings, in order; each heading carries its section's id. */
+  sections: StorySection[]
+}
 
 /**
  * Every Project's story, by slug, then by Site language. Stories are MDX
@@ -140,10 +166,16 @@ export type Story = MDXContent
  */
 export type StorySource = Partial<Record<string, Partial<Record<Language, Story>>>>
 
-/** A Project with its story in one Site language, as its page receives it. */
+/** A Project with its story and cover in one Site language, as its page receives it. */
 export interface ProjectWithStory extends Project {
   /** Undefined only when the story is missing, which the content-integrity check reports. */
   story: Story | undefined
+  /**
+   * The screenshot that opens its page; null for a Project without one, and
+   * undefined only when its `cover` names no screenshot of it, which the
+   * content-integrity check reports.
+   */
+  cover: Screenshot | null | undefined
 }
 
 /**

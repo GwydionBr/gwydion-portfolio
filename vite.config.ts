@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { nitro } from 'nitro/vite'
 import viteReact from '@vitejs/plugin-react'
+import { remarkStorySections } from './src/content/storySections'
 
 // Generated sources are owned by their generators, never by fmt/lint.
 const generatedFiles = ['src/routeTree.gen.ts', 'src/i18n/locales/*.po']
@@ -19,8 +20,8 @@ const config = defineConfig({
     // and `.po` catalogs to modules on import (lingui.config.ts).
     lingui({ macroTransform: true, failOnCompileError: true }),
     // Project stories are MDX (src/content/data/projects), with GitHub's Markdown tables;
-    // compiled before React sees them.
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
+    // compiled before React sees them. Each exports its sections, its headings carrying their ids.
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm, remarkStorySections] }) },
     tanstackStart(),
     // Nitro's dev server keeps Vitest from exiting; tests don't need a server runtime.
     // Functions run in Frankfurt so contact-form data stays in the EU, as the privacy policy states.

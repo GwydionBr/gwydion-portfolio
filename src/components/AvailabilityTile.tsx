@@ -15,7 +15,7 @@ export function AvailabilityTile({
   const { t } = useLingui()
   const { availability } = useProfile()
   return (
-    <Tile title={t`Availability`} compact={compact} className={className}>
+    <Tile title={t`Availability`} density={compact ? 'compact' : undefined} className={className}>
       <Stack gap={10} mt={10} align="flex-start">
         <AvailabilityPill headline={availability.headline} />
         {availability.freelance && (
