@@ -1,40 +1,77 @@
-{/* ENTWURF von Claude aus dem tattoo-sites-Repo (November 2026). Gwydion prüft ihn vor der Umstellung (#41). */}
+{/* ENTWURF von Claude aus dem tattoo-sites-Repo (November 2026). Gwydion prüft ihn. Die Bilder zeigen die lokalen Demodaten, keine echten Anfragen. Zahlen am 2026-11-27 gegen das Repo geprüft. */}
 
-## Der Auftrag
+<ScreenshotGallery views={['postfach']} />
 
-Endstation Tattoo ist ein Studio mit mehreren Künstlern in Ottobeuren. Die alte Website lief auf WordPress und Elementor. Das Studio konnte sie nur mühsam ändern, und Terminanfragen kamen als lose E-Mails. Einige Künstler haben daneben eine eigene Website, über die ebenfalls Anfragen kommen.
+## Was es ist
 
-Ich habe die Websites neu gebaut und dazu ein Portal, in dem jede Terminanfrage landet und in dem die Künstler sie bearbeiten.
+Über die <ProjectLink slug="tattoo-sites">Websites eines Tattoo-Studios und seiner Künstler</ProjectLink> kommen Terminanfragen. Früher waren das lose E-Mails. Das Portal ist der eine Ort, an dem jede Anfrage landet und an dem die Künstler sie bearbeiten.
 
-## Das Anfrage-Portal
+Die Künstler nutzen es vor allem am Handy und am iPad, die Oberfläche ist deshalb zuerst dafür gebaut.
 
-Das Buchungsformular jeder Website fragt ab, was ein Künstler für ein Angebot braucht: den Künstler, Körperstelle, Größe, eine Anzahlungsoption und Referenzbilder, die der Browser vor dem Upload auf 2 MB verkleinert. Ein einziges Zod-Schema prüft das Formular im Browser und auf dem Server. Die Website schreibt nicht selbst in die Datenbank, sie übergibt die Anfrage an das Portal.
+<ScreenshotGallery views={['postfach-handy', 'anfrage-handy', 'uebergabe-handy']} />
 
-Anfangs ging jede Anfrage als PDF in eine Nextcloud. Das reichte nicht mehr, sobald Anfragen einen Status brauchten, jemanden, der sie übernimmt, Übergaben zwischen Künstlern und Schutz vor Duplikaten. Auf Ordnern und Dateien hätte ich das alles nachbauen müssen. In einer Datenbank sind es Spalten, Constraints und Zugriffsregeln. Deshalb ist das Portal eine eigene App auf Supabase.
+## Der Weg einer Anfrage
 
-Wer welche Anfrage sieht, hängt davon ab, über welche Website sie kam:
+<Steps>
+  <Step title="Formular">
+    Die Website prüft die Anfrage und übergibt sie dem Portal. Sie schreibt nicht selbst in die
+    Datenbank.
+  </Step>
+  <Step title="Annahme">
+    Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist. Ein erneuter Versuch nutzt
+    dieselbe Submission-ID, eine wackelige Verbindung erzeugt also nie ein Duplikat.
+  </Step>
+  <Step title="Zuordnung">
+    Eine Anfrage über die eigene Website eines Künstlers liegt sofort bei ihm. Eine Anfrage über die
+    Studio-Website mit Wunschkünstler geht an diesen. Ohne Wunsch landet sie im gemeinsamen Eingang,
+    wo sie genau ein Künstler übernimmt.
+  </Step>
+  <Step title="Bearbeitung">
+    Neu, in Klärung, Termin vereinbart, abgeschlossen. Das Portal zeigt zu jeder Anfrage den
+    nächsten Schritt.
+  </Step>
+  <Step title="Übergabe">
+    Ein Künstler kann eine Anfrage an einen anderen übergeben. Hat die anfragende Person einen
+    bestimmten Künstler gewählt, geht das erst nach ihrer Zustimmung, und der Nachweis wird bei der
+    Anfrage abgelegt.
+  </Step>
+  <Step title="Löschung">Sechs Monate nach dem Abschluss löscht das Portal die Anfrage.</Step>
+</Steps>
 
-- Eine Anfrage über die eigene Website eines Künstlers sieht nur dieser Künstler.
-- Eine Anfrage über die Studio-Website ohne Wunschkünstler landet in einem gemeinsamen Eingang. Jeder Künstler kann sie übernehmen, aber nur einer: Danach liegt sie bei ihm.
-- Ein Künstler kann eine Anfrage an einen anderen übergeben. Hat die Kundin oder der Kunde einen bestimmten Künstler gewählt, geht das erst nach ihrer Zustimmung, und die Bestätigung wird bei der Anfrage abgelegt.
-- Die Studio-Koordination verteilt Anfragen aus dem gemeinsamen Eingang, sieht aber keine persönlichen Anfragen der Künstler.
-- Ich betreibe das Portal und verwalte die Zugänge, ohne den Inhalt echter Anfragen zu sehen.
+<ScreenshotGallery views={['zum-uebernehmen']} />
 
-Dazu kommen ein paar Regeln für den Umgang mit den Daten:
+Künstler bekommen höchstens eine Zusammenfassung pro Tag per E-Mail: wie viele ungesehene Anfragen warten, ohne Kundendaten darin.
 
-- Eine Anfrage gilt erst als eingegangen, wenn sie gespeichert ist. Ein erneuter Versuch nutzt dieselbe Submission-ID, eine wackelige Verbindung erzeugt also nie ein Duplikat.
-- Künstler bekommen höchstens eine Zusammenfassung pro Tag per E-Mail, ohne Kundendaten darin.
-- Das Portal löscht Anfragen sechs Monate nach ihrem Abschluss.
-- Die Daten bleiben in der EU: Die Websites laufen in Vercels Region Frankfurt, die Datenbank liegt in einem EU-Projekt von Supabase.
+## Wer sieht was
 
-Die Künstler nutzen das Portal vor allem am Handy und am iPad, die Oberfläche ist deshalb zuerst dafür gebaut.
+Wer eine Anfrage sieht, hängt davon ab, über welche Website sie kam und bei wem sie liegt.
 
-## Websites, die das Studio selbst pflegt
+| Wer                   | Über die eigene Website eines Künstlers | Studio-Website, im gemeinsamen Eingang | Studio-Website, bei einem Künstler |
+| --------------------- | --------------------------------------- | -------------------------------------- | ---------------------------------- |
+| Zuständiger Künstler  | alles                                   | noch keiner                            | alles                              |
+| Andere Künstler       | nichts                                  | alles, dürfen übernehmen               | nichts                             |
+| Studio-Koordination   | nichts                                  | alles, darf zuweisen                   | nur Eckdaten                       |
+| Technische Verwaltung | nichts                                  | nichts                                 | nichts                             |
 
-Die Studio-Website zeigt die Künstler und ihre Arbeiten, eine Tattoo-Galerie, FAQ, Pflegehinweise, einen Shop und das geführte Buchungsformular. Jede Seite ist Inhalt in Sanity. Das Studio bearbeitet sie im eigenen gehosteten Studio, und eine veröffentlichte Änderung ist ohne Deployment live. Entwürfe lassen sich auf der echten Seite ansehen und per Klick bearbeiten, über das Presentation-Tool von Sanity. Sanity TypeGen typisiert die GROQ-Abfragen. Bricht eine Schemaänderung eine Seite, scheitert deshalb der Build, bevor die Änderung live geht.
+Die Studio-Koordination verteilt Anfragen, bearbeitet aber keine fremden. Von der Anfrage eines anderen Künstlers sieht sie nur Eckdaten: Datum, Status, Künstler und wie er zuständig wurde. Die technische Verwaltung bin ich. Ich betreibe das Portal und verwalte die Zugänge, ohne den Inhalt echter Anfragen zu sehen.
 
-Damit die Suchplatzierungen den Umzug weg von WordPress überstehen, habe ich 301-Weiterleitungen für jede alte URL eingerichtet, die noch zählt, `410 Gone` für die WordPress-Reste (`wp-admin`, `wp-content`, Tag-Seiten), eine Sitemap und strukturierte Daten für das Studio.
+<ScreenshotGallery views={['eckdaten', 'verwaltung']} />
 
-## Eine Codebasis, mehrere Websites
+Diese Grenzen setzt die Datenbank durch, mit Row-Level-Security auf den Tabellen, und nicht nur die Oberfläche.
 
-Alles liegt in einem Monorepo: die Studio-Website, die Websites der einzelnen Künstler und das Portal. Die Künstler-Websites teilen sich ein Package für Seiten, Formulare und SEO und eines für Sanity-Schema und Studio. Jede Website hat trotzdem ihr eigenes Sanity-Projekt, eigenes Vercel-Projekt und eigene Zugangsdaten, weil jede einem anderen Inhaber gehört. Auch das Portal ist eine eigene App mit eigener Datenbank. Es liegt im selben Repo, damit sich das Formular-Schema und die Annahme der Anfragen gemeinsam ändern lassen.
+## Wie ich es gebaut habe
+
+<Callout title="Entschieden: Datenbank statt Ordner">
+  Anfangs ging jede Anfrage als PDF in eine Nextcloud. Das reichte nicht mehr, sobald Anfragen einen
+  Status brauchten, eine eindeutige Übernahme, Übergaben und Schutz vor Duplikaten. Auf Ordnern und
+  Dateien hätte ich das alles nachbauen müssen. In einer Datenbank sind es Spalten, Constraints und
+  Zugriffsregeln.
+</Callout>
+
+- **Regeln als Datenbanktests.** Wer was sehen und tun darf, prüfen SQL-Tests direkt gegen die Datenbank, auch für gleichzeitige Zugriffe.
+- **Demodaten für jeden Fall.** Ein Befehl baut die Datenbank neu auf, mit knapp 50 Anfragen, die zusammen jeden Fall des Postfachs abdecken. Die Bilder auf dieser Seite zeigen diese Demodaten.
+- **Testanfragen in Production.** Mit einem widerrufbaren Testschlüssel lässt sich der ganze Weg über die echten Formulare prüfen. Testanfragen sind dauerhaft gekennzeichnet und werden nach 14 Tagen gelöscht.
+- **Sicherung.** Einmal pro Woche sichert das Portal Datenbank und Dateien in einen privaten Speicher in Frankfurt. Es behält die zwei neuesten vollständigen Stände, damit nie eine kaputte Sicherung die einzige gute ersetzt.
+- **Daten in der EU.** Portal und Datenbank laufen in Frankfurt.
+
+Das Portal liegt im selben Repo wie die Websites, damit sich das Formular-Schema und die Annahme der Anfragen gemeinsam ändern lassen. Es bleibt aber eine eigene App mit eigener Datenbank und eigenen Zugangsdaten.

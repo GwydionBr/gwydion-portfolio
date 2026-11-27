@@ -17,8 +17,8 @@ export const LEGACY_REDIRECTS = {
   '/contact': '/en/contact',
   '/impressum': '/en/impressum',
   '/datenschutz': '/en/datenschutz',
-  '/en/projects/endstation-tattoo': '/en/projects/tattoo-booking-portal',
-  '/de/projects/endstation-tattoo': '/de/projects/tattoo-booking-portal',
+  '/en/projects/endstation-tattoo': '/en/projects/tattoo-sites',
+  '/de/projects/endstation-tattoo': '/de/projects/tattoo-sites',
 } as const satisfies Record<string, `/${string}`>
 
 /** The new address of an old URL path (a trailing slash ignored), or undefined when it did not move. */

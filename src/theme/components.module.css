@@ -296,6 +296,36 @@
   }
 }
 
+.tableHead {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* A step of a flow: a quiet numbered bullet on the canvas, its text in the story's size. */
+.step {
+  --item-border-color: var(--line);
+  color: inherit;
+
+  & :where(p) {
+    margin: 0.25rem 0 0;
+  }
+}
+
+.stepBullet {
+  border-color: var(--line);
+  background-color: var(--canvas);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.stepTitle {
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: var(--ink);
+}
+
 .code {
   border-radius: var(--mantine-radius-sm);
   padding: 0.125rem 0.25rem;

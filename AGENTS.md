@@ -16,6 +16,7 @@ gwydion.dev: Gwydion's bilingual (English, German) portfolio. TanStack Start wit
 - **Interface text** goes through Lingui macros; `bun run check` fails on a missing German translation. The README covers the extract workflow.
 - **CV PDFs** (`public/cv/`) and the **share image** (`public/og-image.png`) are generated from the content data by `bun run cv:build` and `bun run og:build`. Rebuild and commit them whenever the content they show changes; the CV build fails unless each CV fits one page.
 - **Self-Engine screenshots** come from the Self-Engine repo via `bun run screenshots:sync`. Never edit Self-Engine's code from here.
+- **Tattoo screenshots** (`public/screenshots/`) are captured by `bun run screenshots:tattoo` from the tattoo-sites repo: the portal from its local demo data, never from production, the websites from the live sites. Never edit tattoo-sites' code from here.
 
 ## Maintainability
 

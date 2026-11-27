@@ -84,6 +84,16 @@ The Self-Engine Project shows screenshots that the Self-Engine repo captures and
 bun run screenshots:sync [path/to/self-engine]   # default: ../self-engine
 ```
 
+## Tattoo Screenshots
+
+The Tattoo Sites and Tattoo Booking Portal Projects show screenshots kept in `public/screenshots/`. The portal's show the local demo data of the tattoo-sites repo, never production; the websites' are captured from the live sites. Start the demo portal there (`bun run db:dev` in `apps/portal`, then `bun run dev portal`), then:
+
+```bash
+bun run screenshots:tattoo [path/to/tattoo-sites] [view …]   # default: ../tattoo-sites, every view
+```
+
+The views and their texts are in `src/content/data/screenshots/tattoo-*.ts`; the content-integrity test fails when a file one of them needs is missing.
+
 ## Internationalization
 
 Interface text is translated with [Lingui](https://lingui.dev), set up like Self-Engine's (ADR 0001): PO catalogs in `src/i18n/locales/`, English as the Base language with the English text as the message id, German falling back to English. Write text with the macros (`useLingui().t`, `<Trans>`, `msg`), then:

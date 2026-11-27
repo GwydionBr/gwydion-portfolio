@@ -1,40 +1,75 @@
-{/* DRAFT by Claude from the tattoo-sites repo (November 2026). Gwydion reviews it before the cutover (#41). */}
+{/* DRAFT by Claude from the tattoo-sites repo (November 2026). Gwydion reviews it. The images show the local demo data, no real requests. Numbers checked against the repo on 2026-11-27. */}
 
-## The brief
+<ScreenshotGallery views={['postfach']} />
 
-Endstation Tattoo is a studio with several artists in Ottobeuren. Its old website ran on WordPress and Elementor. The studio found it hard to change, and booking requests arrived as loose emails. Some of the artists also have a website of their own, which brings in requests too.
+## What it is
 
-I rebuilt the websites and added a portal where every booking request ends up and where the artists work through them.
+Booking requests come in through the <ProjectLink slug="tattoo-sites">websites of a tattoo studio and its artists</ProjectLink>. They used to be loose e-mails. The portal is the one place where every request ends up and where the artists handle it.
 
-## The request portal
+The artists use it mostly on phones and iPads, so the interface is built for those first. Its interface is in German.
 
-The booking form on each website asks for what an artist needs to quote a tattoo: the artist, placement, size, a deposit option and reference images, which the browser shrinks to 2 MB before upload. One Zod schema validates the form in the browser and on the server. The website does not write to the database itself. It hands the request to the portal.
+<ScreenshotGallery views={['postfach-handy', 'anfrage-handy', 'uebergabe-handy']} />
 
-At first, each request went to Nextcloud as a PDF. That stopped working once requests needed a status, someone to claim them, handover between artists and protection against duplicates. On folders and files I would have had to rebuild all of that. In a database it is columns, constraints and access rules. So the portal is its own app on Supabase.
+## The path of a request
 
-Who sees a request depends on the website it came through:
+<Steps>
+  <Step title="Form">
+    The website checks the request and hands it to the portal. It never writes to the database
+    itself.
+  </Step>
+  <Step title="Intake">
+    A request counts as received only once it is stored. A retry reuses the same submission ID, so a
+    flaky connection never creates a duplicate.
+  </Step>
+  <Step title="Assignment">
+    A request through an artist's own website belongs to that artist at once. A request through the
+    studio website that names an artist goes to that artist. Without a preference it lands in the
+    shared inbox, where exactly one artist takes it.
+  </Step>
+  <Step title="Handling">
+    New, in discussion, appointment arranged, completed. For every request the portal shows the next
+    step.
+  </Step>
+  <Step title="Hand-over">
+    An artist can hand a request over to another one. When the person chose a specific artist, that
+    needs their consent first, and the proof is filed with the request.
+  </Step>
+  <Step title="Deletion">Six months after a request is closed, the portal deletes it.</Step>
+</Steps>
 
-- A request through an artist's own website is visible only to that artist.
-- A request through the studio website with no preferred artist goes to a shared inbox. Any artist can claim it, but only one: after that it is theirs.
-- An artist can hand a request over to another artist. If the customer chose a particular artist, that needs the customer's consent first, and the confirmation is filed with the request.
-- The studio coordinator distributes requests from the shared inbox but sees none of the artists' personal requests.
-- I run the portal and manage access without seeing the content of real requests.
+<ScreenshotGallery views={['zum-uebernehmen']} />
 
-A few rules cover how the data is handled:
+Artists get at most one summary e-mail per day: how many unseen requests are waiting, with no customer data in it.
 
-- A request counts as received only once it is saved. A retry reuses the same submission ID, so a flaky connection never creates a duplicate.
-- Artists get at most one summary email a day, with no customer data in it.
-- The portal deletes requests six months after they are closed.
-- The data stays in the EU: the websites run in Vercel's Frankfurt region, and the database is in an EU Supabase project.
+## Who sees what
 
-The artists mostly use the portal on a phone or an iPad, so the interface is built for those first.
+Who sees a request depends on which website it came through and whose it is.
 
-## Sites the studio edits itself
+| Who                      | Through an artist's own website | Studio website, in the shared inbox | Studio website, with an artist |
+| ------------------------ | ------------------------------- | ----------------------------------- | ------------------------------ |
+| Responsible artist       | everything                      | nobody yet                          | everything                     |
+| Other artists            | nothing                         | everything, may take it             | nothing                        |
+| Studio coordination      | nothing                         | everything, may assign it           | key data only                  |
+| Technical administration | nothing                         | nothing                             | nothing                        |
 
-The studio website shows the artists and their work, a tattoo gallery, FAQ, aftercare, a shop and the guided booking form. Every page is content in Sanity. The studio edits it in its own hosted Studio, and a published change goes live without a deploy. Editors can preview drafts on the real site and click any part of the page to edit it, using Sanity's Presentation tool. Sanity TypeGen types the GROQ queries, so a schema change that breaks a page fails the build before it reaches the live site.
+The studio coordination distributes requests but does not handle other artists' requests. Of another artist's request it sees key data only: date, status, artist and how the artist got it. The technical administration is me. I run the portal and manage the accounts without seeing the content of real requests.
 
-To keep the search rankings after leaving WordPress, I set up 301 redirects for every old URL that still matters, `410 Gone` for the WordPress leftovers (`wp-admin`, `wp-content`, tag pages), a sitemap and structured data for the studio.
+<ScreenshotGallery views={['eckdaten', 'verwaltung']} />
 
-## One codebase, several websites
+The database enforces these boundaries, with row-level security on the tables, and not just the interface.
 
-Everything lives in one monorepo: the studio website, the artists' own websites and the portal. The artist websites share one package for pages, forms and SEO and another for the Sanity schema and Studio. Each website still has its own Sanity project, Vercel project and credentials, because each one belongs to a different owner. The portal is also its own app with its own database. It sits in the same repo so that the form schema and the intake of requests can change together.
+## How I built it
+
+<Callout title="Decided: a database instead of folders">
+  At first every request went into a Nextcloud as a PDF. That stopped working once requests needed a
+  status, an unambiguous take-over, hand-overs and duplicate protection. On folders and files I
+  would have had to rebuild all of that. In a database it is columns, constraints and access rules.
+</Callout>
+
+- **Rules as database tests.** SQL tests check who may see and do what directly against the database, including concurrent access.
+- **Demo data for every case.** One command rebuilds the database with close to 50 requests that together cover every case of the inbox. The images on this page show that demo data.
+- **Test requests in production.** A revocable test key lets me check the whole path through the real forms. Test requests are marked permanently and deleted after 14 days.
+- **Backup.** Once a week the portal backs up database and files to a private store in Frankfurt. It keeps the two newest complete backups, so a broken one never replaces the only good one.
+- **Data in the EU.** Portal and database run in Frankfurt.
+
+The portal lives in the same repo as the websites, so the form schema and the intake can change together. It still is its own app with its own database and credentials.

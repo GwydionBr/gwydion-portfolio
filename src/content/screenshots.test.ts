@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { pickScreenshotUrls } from './screenshots'
+import { localScreenshotSet, pickScreenshotUrls, screenshotsIn } from './screenshots'
 
 const closeUp = {
   view: 'timer',
@@ -45,5 +45,27 @@ describe('Syncing the screenshot URLs from the Self-Engine repo', () => {
       'timer-en-light-440w.webp',
       'timer-de-dark.webp',
     ])
+  })
+})
+
+describe('Screenshots kept in this repo', () => {
+  const set = localScreenshotSet('/screenshots/fixture-portal', 'de', [closeUp])
+
+  it('expects each screenshot in its one language and every theme, at 1× and 2×', () => {
+    expect(set.urls).toEqual({
+      'timer-de-light-440w.webp': '/screenshots/fixture-portal/timer-de-light-440w.webp',
+      'timer-de-light.webp': '/screenshots/fixture-portal/timer-de-light.webp',
+      'timer-de-dark-440w.webp': '/screenshots/fixture-portal/timer-de-dark-440w.webp',
+      'timer-de-dark.webp': '/screenshots/fixture-portal/timer-de-dark.webp',
+    })
+  })
+
+  it('shows the same images in every Site language, with the texts in that language', () => {
+    const [english] = screenshotsIn(set, 'en')
+    const [german] = screenshotsIn(set, 'de')
+
+    expect(english!.images).toEqual(german!.images)
+    expect(english!.images.dark!.src).toBe('/screenshots/fixture-portal/timer-de-dark.webp')
+    expect([english!.alt, german!.alt]).toEqual(['A timer', 'Ein Timer'])
   })
 })

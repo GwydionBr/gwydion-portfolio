@@ -1,0 +1,57 @@
+{/* DRAFT by Claude from the tattoo-sites repo and the live websites (November 2026). Gwydion reviews it. */}
+
+<ScreenshotGallery views={['endstation-start', 'guajaala-start']} />
+
+## What it is
+
+Endstation Tattoo is a studio in Ottobeuren, Germany, with three artists. I rebuilt the studio's website and built the personal website of one of its artists, Guajaala. Two more artist websites are in progress.
+
+Each website belongs to someone else and looks different. All of them have the same form for booking requests, and every request ends up in the <ProjectLink slug="tattoo-booking-portal">Tattoo Booking Portal</ProjectLink>, which I describe as its own Project.
+
+## What the websites do
+
+<ScreenshotGallery views={['endstation-tattoos', 'endstation-buchung']} />
+
+- **Gallery by artist.** The studio website shows all work or one artist's, each with portrait, style and Instagram.
+- **Guided form.** Four steps: idea, details, time frame, contact. At least one reference image or a link is required. The same Zod schema checks the answers in the browser and on the server.
+- **Light and dark.** Each website has both colour schemes in its own colours.
+- **Built for phones.** There the way to the booking request stays within reach as a floating bar.
+
+<ScreenshotGallery
+  views={[
+    'endstation-handy',
+    'endstation-buchung-handy',
+    'guajaala-handy',
+    'guajaala-termin-handy',
+  ]}
+/>
+
+## The studio edits its own content
+
+Every page is content in Sanity. The studio edits it in its own hosted studio, and a published change is live without a deployment. Drafts can be viewed on the real page and edited there with a click.
+
+Sanity TypeGen types the queries. When a schema change breaks a page, the build fails before the change goes live.
+
+## One package, several artist websites
+
+The artists' own websites have the same structure. Pages, forms, e-mail and SEO therefore live once in a shared package, the Sanity schema and studio in a second one. Each website holds only what makes it different:
+
+| Per website                                            | In the shared package                |
+| ------------------------------------------------------ | ------------------------------------ |
+| Name, domain, legal details                            | Pages and their sections             |
+| Accent colour, colours for light and dark, typefaces   | Appointment form and its validation  |
+| Logo, hero image, favicons                             | E-mail, SEO, sitemap                 |
+| Its own Sanity project, Vercel project and credentials | Sanity schema, studio and migrations |
+
+A website can replace, hide or reorder single sections without changing the package.
+
+<Callout title="Rule for exceptions">
+  When only one website needs something different, that happens in its app. When two websites need
+  the same exception, it moves into the package as an option.
+</Callout>
+
+The studio website is its own app in the same repo, because it does more than an artist website: several artists, a gallery with a filter and a shop.
+
+## Moving off WordPress
+
+The old studio website ran on WordPress and Elementor. To keep the search rankings through the move, there is a 301 redirect for every old URL that still matters and `410 Gone` for the WordPress leftovers (`wp-admin`, `wp-content`, tag pages), plus a sitemap and structured data for the studio. The websites run in Vercel's Frankfurt region.
