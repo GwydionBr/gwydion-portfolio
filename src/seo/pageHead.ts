@@ -1,6 +1,7 @@
+import { msg } from '@lingui/core/macro'
 import type { Content } from '#/content'
 import { siteLanguageOfPath, type Language } from '#/i18n/language'
-import { i18nFor, type MessageDescriptor } from '#/i18n/runtime'
+import { i18nFor, type I18n, type MessageDescriptor } from '#/i18n/runtime'
 import { buildRouteHead } from './buildRouteHead'
 import { pagePathOf } from './urls'
 
@@ -46,5 +47,18 @@ export function pageHead(
     language,
     title: page.title ? `${text(page.title)} · ${name}` : `${name} · ${role}`,
     description: text(page.description),
+    imageAlt: shareImageAlt(content, language, i18n),
   })
+}
+
+/**
+ * The share image's alt text: what scripts/og/renderOgImage.ts draws, the
+ * Profile's name and role beside the featured Projects, in the Site language.
+ */
+function shareImageAlt(content: Content, language: Language, i18n: I18n): string {
+  const { name, role } = content.getProfile(language)
+  const titles = content.getProjects(language, { featured: true }).map((project) => project.title)
+  if (titles.length === 0) return i18n._(msg`${name}, ${role}`)
+  const projects = new Intl.ListFormat(language, { type: 'conjunction' }).format(titles)
+  return i18n._(msg`${name}, ${role}, beside the featured projects ${projects}`)
 }

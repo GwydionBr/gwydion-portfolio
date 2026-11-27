@@ -7,6 +7,14 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/seo/pageHead.ts
+msgid "{name}, {role}"
+msgstr "{name}, {role}"
+
+#: src/seo/pageHead.ts
+msgid "{name}, {role}, beside the featured projects {projects}"
+msgstr "{name}, {role}, beside the featured projects {projects}"
+
 #: src/components/CvDownload.tsx
 #: src/shell/searchEntries.tsx
 msgid "1 page · PDF"

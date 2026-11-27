@@ -1,8 +1,6 @@
 import { LANGUAGES, type Language } from '#/i18n/language'
+import { SHARE_IMAGE } from './shareImage'
 import { absoluteUrl, alternateUrls, pageUrl, type PagePath } from './urls'
-
-/** The Open Graph image every page shares (spec #31: per-Project images are out of scope). */
-export const DEFAULT_OG_IMAGE = '/og-image.png'
 
 /** The name social cards show for the site. */
 const SITE_NAME = 'gwydion.dev'
@@ -18,17 +16,19 @@ interface RouteHeadOptions {
   /** The full document title. */
   title: string
   description: string
+  /** What the share image shows, in the Site language. */
+  imageAlt: string
 }
 
 /**
  * Everything a search engine and a link preview read from a page's head:
  * title, description, canonical URL, hreflang alternates (each Site language
- * plus `x-default`), Open Graph and Twitter tags. Pure, so the URL edge cases
+ * plus `x-default`), Open Graph and Twitter tags with the share image. Pure, so the URL edge cases
  * are tested directly; routes reach it through `pageHead` (./pageHead.ts).
  */
-export function buildRouteHead({ path, language, title, description }: RouteHeadOptions) {
+export function buildRouteHead({ path, language, title, description, imageAlt }: RouteHeadOptions) {
   const canonical = pageUrl(path, language)
-  const image = absoluteUrl(DEFAULT_OG_IMAGE)
+  const image = absoluteUrl(SHARE_IMAGE.path)
 
   return {
     meta: [
@@ -45,10 +45,16 @@ export function buildRouteHead({ path, language, title, description }: RouteHead
         content: OG_LOCALES[other],
       })),
       { property: 'og:image', content: image },
+      // Declared so a link preview can lay out the card before it fetches the image.
+      { property: 'og:image:width', content: String(SHARE_IMAGE.width) },
+      { property: 'og:image:height', content: String(SHARE_IMAGE.height) },
+      { property: 'og:image:type', content: SHARE_IMAGE.type },
+      { property: 'og:image:alt', content: imageAlt },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },
+      { name: 'twitter:image:alt', content: imageAlt },
     ],
     links: [
       { rel: 'canonical', href: canonical },

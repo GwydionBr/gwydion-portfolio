@@ -2,9 +2,10 @@ import { profile } from '../../src/content/data/profile'
 import { projects } from '../../src/content/data/projects'
 import { inLanguage } from '../../src/content/localized'
 import { BASE_LANGUAGE } from '../../src/i18n/language'
+import { SHARE_IMAGE } from '../../src/seo/shareImage'
 
-export const OG_WIDTH = 1200
-export const OG_HEIGHT = 630
+export const OG_WIDTH = SHARE_IMAGE.width
+export const OG_HEIGHT = SHARE_IMAGE.height
 
 const escape = (text: string) =>
   text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
