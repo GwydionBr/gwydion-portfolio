@@ -103,7 +103,7 @@ const CLICK_THROUGH_WAIT = 1000
  */
 function passClickThrough(event: MouseEvent) {
   if (event.target !== document.documentElement || !pageTransitionActive()) return
-  const { clientX, clientY } = event
+  const { clientX, clientY, ctrlKey, metaKey, shiftKey, altKey, button } = event
   const deadline = performance.now() + CLICK_THROUGH_WAIT
   const pass = () => {
     for (const animation of runningPageTransition()) animation.finish()
@@ -113,9 +113,21 @@ function passClickThrough(event: MouseEvent) {
     }
     const target = document.elementFromPoint(clientX, clientY)
     if (!target || target === document.documentElement) return
-    // Dispatched rather than `click()`: the target may be an icon (SVG), which has no `click()`.
+    // Dispatched rather than `click()`: the target may be an icon (SVG), which has no
+    // `click()`. With the keys held at the time, so a ⌘-click still opens a new tab.
     target.dispatchEvent(
-      new MouseEvent('click', { bubbles: true, cancelable: true, view: window, clientX, clientY }),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX,
+        clientY,
+        ctrlKey,
+        metaKey,
+        shiftKey,
+        altKey,
+        button,
+      }),
     )
   }
   pass()
