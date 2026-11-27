@@ -23,7 +23,10 @@ describe('Page head', () => {
       'og:url': 'https://gwydion.dev/de',
       'og:locale': 'de_DE',
       'og:image': 'https://gwydion.dev/og-image.png',
+      'og:image:alt':
+        'Ada Example, Fixture-Entwicklerin, daneben die ausgewählten Projekte Fixture Engine und Fixture Studio',
     })
+    expect(head.twitter['twitter:image:alt']).toBe(head.openGraph['og:image:alt'])
   })
 
   it("describes a Project page by the Project's title and summary", async () => {
@@ -94,7 +97,16 @@ describe('Page head', () => {
         'x-default': path ? `https://gwydion.dev/en${path}` : 'https://gwydion.dev/',
       })
       expect(Object.keys(head.openGraph)).toEqual(
-        expect.arrayContaining(['og:title', 'og:description', 'og:url', 'og:image', 'og:locale']),
+        expect.arrayContaining([
+          'og:title',
+          'og:description',
+          'og:url',
+          'og:image',
+          'og:image:width',
+          'og:image:height',
+          'og:image:alt',
+          'og:locale',
+        ]),
       )
     },
   )

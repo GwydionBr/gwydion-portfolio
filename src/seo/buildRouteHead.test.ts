@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { buildRouteHead } from './buildRouteHead'
+import { SHARE_IMAGE } from './shareImage'
 
 describe('buildRouteHead', () => {
   it('builds canonical and alternate metadata for an English page', () => {
@@ -8,6 +9,7 @@ describe('buildRouteHead', () => {
       language: 'en',
       title: 'Contact · Gwydion Braunsdorf',
       description: 'Contact Gwydion.',
+      imageAlt: 'Gwydion Braunsdorf, Full-Stack Developer',
     })
 
     expect(head.links).toEqual([
@@ -33,12 +35,34 @@ describe('buildRouteHead', () => {
     )
   })
 
+  it('declares the share image: its size and type as og:build renders it, and its alt text', () => {
+    const head = buildRouteHead({
+      path: '/about',
+      language: 'en',
+      title: 'About · Gwydion Braunsdorf',
+      description: 'About Gwydion.',
+      imageAlt: 'Gwydion Braunsdorf, Full-Stack Developer',
+    })
+
+    expect(head.meta).toEqual(
+      expect.arrayContaining([
+        { property: 'og:image', content: 'https://gwydion.dev/og-image.png' },
+        { property: 'og:image:width', content: String(SHARE_IMAGE.width) },
+        { property: 'og:image:height', content: String(SHARE_IMAGE.height) },
+        { property: 'og:image:type', content: 'image/png' },
+        { property: 'og:image:alt', content: 'Gwydion Braunsdorf, Full-Stack Developer' },
+        { name: 'twitter:image:alt', content: 'Gwydion Braunsdorf, Full-Stack Developer' },
+      ]),
+    )
+  })
+
   it('points the Overview at /en and /de without a trailing slash, x-default at the bare domain', () => {
     const head = buildRouteHead({
       path: '/',
       language: 'de',
       title: 'Gwydion Braunsdorf · Full-Stack-Entwickler',
       description: 'Über Gwydion.',
+      imageAlt: 'Gwydion Braunsdorf, Full-Stack-Entwickler',
     })
 
     expect(head.links).toEqual([
@@ -58,6 +82,7 @@ describe('buildRouteHead', () => {
       language: 'en',
       title: 'Self-Engine',
       description: 'An app.',
+      imageAlt: 'Gwydion Braunsdorf, Full-Stack Developer',
     })
 
     expect(head.links[0]).toEqual({

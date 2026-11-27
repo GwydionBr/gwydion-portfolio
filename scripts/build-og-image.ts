@@ -5,9 +5,10 @@
 //   bun run og:build
 import path from 'node:path'
 import { interFontUrl, repoFileUrl, rootDir, runHeadless } from './lib/headlessBrowser'
+import { SHARE_IMAGE } from '../src/seo/shareImage'
 import { OG_HEIGHT, OG_WIDTH, renderOgImage } from './og/renderOgImage'
 
-const pngPath = path.join(rootDir, 'public/og-image.png')
+const pngPath = path.join(rootDir, 'public', SHARE_IMAGE.path)
 await runHeadless(
   renderOgImage({ font: interFontUrl, photo: repoFileUrl('public/portrait.webp') }),
   [`--window-size=${OG_WIDTH},${OG_HEIGHT}`, `--screenshot=${pngPath}`],
