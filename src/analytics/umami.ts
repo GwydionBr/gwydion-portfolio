@@ -42,6 +42,7 @@ export type AnalyticsEvent =
         | 'kontakt-klick'
         | 'kontaktformular-gesendet'
         | 'mail-klick'
+        | 'mail-kopiert'
         | 'github-klick'
         | 'linkedin-klick'
     }

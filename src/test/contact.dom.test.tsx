@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vite-plus/test'
-import { within } from '@testing-library/dom'
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test'
+import { getByRole, within } from '@testing-library/dom'
 import { fixtureContent } from './contentFixtures'
 import { fakeMailer, serveContactEndpoint } from './contactMailer'
 import { visit } from './visit'
@@ -13,7 +13,40 @@ async function openContact(url: string, mailer = fakeMailer()) {
   return { page, main, mailer, fetch }
 }
 
+afterEach(() => {
+  Reflect.deleteProperty(navigator, 'clipboard')
+})
+
 describe('The Contact view', () => {
+  it('copies the email address and says so in a toast', async () => {
+    const writeText = vi.fn<(text: string) => Promise<void>>().mockResolvedValue(undefined)
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+    const { page, main } = await openContact('/en/contact')
+    const directly = within(main.getByRole('region', { name: 'Directly' }))
+
+    await page.click(directly.getByRole('button', { name: 'Copy email address' }))
+
+    expect(writeText).toHaveBeenCalledWith('ada@example.com')
+    const toast = getByRole(document.body, 'alert')
+    expect(toast.textContent).toContain('Email address copied')
+    expect(within(toast).getByRole('button', { name: 'Dismiss' })).toBeTruthy()
+  })
+
+  it('names the address in the toast when the browser refuses to copy it', async () => {
+    const writeText = vi
+      .fn<(text: string) => Promise<void>>()
+      .mockRejectedValue(new DOMException('Denied', 'NotAllowedError'))
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+    const { page, main } = await openContact('/de/contact')
+    const directly = within(main.getByRole('region', { name: 'Direkt' }))
+
+    await page.click(directly.getByRole('button', { name: 'E-Mail-Adresse kopieren' }))
+
+    expect(getByRole(document.body, 'alert').textContent).toContain(
+      'Die Adresse ließ sich nicht kopieren. Sie lautet ada@example.com.',
+    )
+  })
+
   it('offers email, LinkedIn and GitHub and restates the Availability', async () => {
     const { main } = await openContact('/en/contact')
     const directly = within(main.getByRole('region', { name: 'Directly' }))

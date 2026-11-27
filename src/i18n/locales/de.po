@@ -61,6 +61,11 @@ msgstr "Kontakt"
 msgid "Contents"
 msgstr "Inhalt"
 
+#: src/components/ProfileLinks.tsx
+#: src/shell/searchEntries.tsx
+msgid "Copy email address"
+msgstr "E-Mail-Adresse kopieren"
+
 #: src/shell/searchEntries.tsx
 msgid "Current"
 msgstr "Aktuell"
@@ -78,6 +83,10 @@ msgstr "Dunkel"
 msgid "Directly"
 msgstr "Direkt"
 
+#: src/shell/toast.tsx
+msgid "Dismiss"
+msgstr "Schließen"
+
 #: src/components/CvDownload.tsx
 #: src/shell/searchEntries.tsx
 msgid "Download CV"
@@ -85,8 +94,13 @@ msgstr "Lebenslauf herunterladen"
 
 #: src/components/ProfileLinks.tsx
 #: src/contact/ContactForm.tsx
+#: src/shell/searchEntries.tsx
 msgid "Email"
 msgstr "E-Mail"
+
+#: src/components/ProfileLinks.tsx
+msgid "Email address copied"
+msgstr "E-Mail-Adresse kopiert"
 
 #. placeholder {0}: shot.caption
 #: src/components/story/ScreenshotGallery.tsx
@@ -331,6 +345,10 @@ msgstr "System"
 #: src/shell/TabBar.tsx
 msgid "Tab bar"
 msgstr "Tab-Leiste"
+
+#: src/components/ProfileLinks.tsx
+msgid "The address could not be copied. It is {address}."
+msgstr "Die Adresse ließ sich nicht kopieren. Sie lautet {address}."
 
 #: src/contact/message.ts
 msgid "The message is too long (at most {messageMax} characters)."

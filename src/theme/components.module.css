@@ -73,6 +73,28 @@
   background-color: var(--surface);
 }
 
+/* Notification: a toast, a floating card like a popover. */
+.toast {
+  border-color: var(--line);
+  background-color: var(--surface);
+  box-shadow: var(--mantine-shadow-md);
+  padding-inline-start: var(--mantine-spacing-sm);
+}
+
+.toastIcon {
+  margin-inline-end: var(--mantine-spacing-xs);
+  background-color: transparent;
+  color: var(--notification-color);
+}
+
+.toastDescription {
+  color: var(--ink);
+}
+
+.toastCloseButton {
+  color: var(--subtle);
+}
+
 /* Drawer: the header sits on the sheet, its title like a card's. */
 .sheetHeader {
   background-color: inherit;

@@ -1,16 +1,28 @@
 import type { ReactNode } from 'react'
-import { Anchor, List, NavLink, Stack, Text, type MantineSpacing } from '@mantine/core'
+import {
+  ActionIcon,
+  Anchor,
+  Group,
+  List,
+  NavLink,
+  Stack,
+  Text,
+  Tooltip,
+  type MantineSpacing,
+} from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import {
   ArrowUpRight,
+  Copy,
   EnvelopeSimple,
   GithubLogo,
   LinkedinLogo,
   type Icon,
 } from '@phosphor-icons/react'
-import { eventAttributes, type AnalyticsEvent } from '#/analytics/umami'
+import { eventAttributes, trackEvent, type AnalyticsEvent } from '#/analytics/umami'
 import type { Profile, ProfileLink } from '#/content'
 import { useProfile } from '#/content/react'
+import { useToast } from '#/shell/toast'
 
 /** The address of the Profile's email link ("hello@gwydion.dev"). */
 export function emailAddressOf(profile: Profile): string | undefined {
@@ -39,8 +51,9 @@ export function EmailLink({ className = '' }: { className?: string }) {
 
 /**
  * How to reach Gwydion directly: the Profile's email, LinkedIn and GitHub
- * links. A placeholder link is named, dimmed, and not a working link.
- * The Contact view lists them, and the shell offers them on every page.
+ * links, the email with a button that copies it. A placeholder link is
+ * named, dimmed, and not a working link. The Contact view lists them, and
+ * the shell offers them on every page.
  */
 export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: MantineSpacing }) {
   const { t } = useLingui()
@@ -61,20 +74,66 @@ export function ProfileLinks({ mt = 8 }: { /** Space above the list. */ mt?: Man
               </Text>
             </span>
           ) : (
-            <Anchor
-              href={link.href}
-              {...eventAttributes(link.event)}
-              inherit
-              fw={500}
-              c="var(--ink)"
-              {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            >
-              {link.label}
-            </Anchor>
+            <Group gap={4} wrap="nowrap">
+              <Anchor
+                href={link.href}
+                {...eventAttributes(link.event)}
+                inherit
+                fw={500}
+                c="var(--ink)"
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {link.label}
+              </Anchor>
+              {link.kind === 'email' && <CopyEmailButton />}
+            </Group>
           )}
         </List.Item>
       ))}
     </List>
+  )
+}
+
+/**
+ * Copying the Profile's email address to the clipboard, for a visitor who
+ * writes from somewhere other than their mail program: the address is
+ * copied, a toast says so, and the copy is counted. Should the browser
+ * refuse, the toast says so and names the address. `undefined` while the
+ * Profile has no working email link.
+ */
+export function useCopyEmail(): (() => Promise<void>) | undefined {
+  const { t } = useLingui()
+  const address = emailAddressOf(useProfile())
+  const showToast = useToast()
+  if (!address) return undefined
+  return async () => {
+    try {
+      await navigator.clipboard.writeText(address)
+    } catch {
+      showToast({
+        id: 'email-not-copied',
+        tone: 'danger',
+        message: t`The address could not be copied. It is ${address}.`,
+      })
+      return
+    }
+    trackEvent({ name: 'mail-kopiert' })
+    showToast({ id: 'email-copied', message: t`Email address copied` })
+  }
+}
+
+/** A small button that copies the Profile's email address, named in its tooltip. */
+export function CopyEmailButton() {
+  const { t } = useLingui()
+  const copy = useCopyEmail()
+  if (!copy) return null
+  const label = t`Copy email address`
+  return (
+    <Tooltip label={label}>
+      <ActionIcon variant="subtle" size="sm" aria-label={label} onClick={() => void copy()}>
+        <Copy aria-hidden size={14} />
+      </ActionIcon>
+    </Tooltip>
   )
 }
 

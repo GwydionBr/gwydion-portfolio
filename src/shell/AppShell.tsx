@@ -12,6 +12,7 @@ import { Sidebar } from './Sidebar'
 import { SIDEBAR_RAIL_WIDTH, SIDEBAR_WIDTH_CSS, useSidebarResize } from './sidebarLayout'
 import { SiteSearch } from './SiteSearch'
 import { TabBar } from './TabBar'
+import { Toasts } from './toast'
 import { TopBar } from './TopBar'
 
 /** The id of the main content landmark, the skip link's target. */
@@ -25,8 +26,8 @@ const MAIN_ID = 'main'
  * besides the navigation. On wide screens a view may ask for a second
  * sidebar beside the first (`secondaryNavigation`), which slides in as the
  * main pane makes room, and which the visitor can resize too. The site
- * search opens over all of it. Views render into the main pane through
- * `View`.
+ * search opens over all of it; toasts (src/shell/toast.tsx) show in its
+ * corner. Views render into the main pane through `View`.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { t } = useLingui()
@@ -73,6 +74,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </MantineAppShell.Main>
       <TabBar />
       <SiteSearch />
+      <Toasts />
     </MantineAppShell>
   )
 }

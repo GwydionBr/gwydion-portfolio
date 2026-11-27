@@ -1,0 +1,22 @@
+/*
+ * Above the phone's tab bar and home indicator (the footer offset is 0 from
+ * the shell's breakpoint up, where there is no tab bar). Mantine renders a
+ * container for every position; only the one the toasts use (`Toasts`) is
+ * placed, the others stay empty in their corners.
+ */
+.toasts[data-position='bottom-right'] {
+  bottom: calc(
+    var(--app-shell-footer-offset, 0rem) + env(safe-area-inset-bottom) + var(--mantine-spacing-md)
+  );
+  /* The page transition (AppShell.module.css) leaves them in place: they never fade with a view. */
+  view-transition-name: toasts;
+}
+
+::view-transition-old(toasts),
+::view-transition-new(toasts) {
+  animation: none;
+}
+
+::view-transition-old(toasts) {
+  opacity: 0;
+}
