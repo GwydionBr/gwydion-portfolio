@@ -54,3 +54,79 @@
     transform: none;
   }
 }
+
+/*
+ * The page transition (src/shell/pageTransition.ts). The next view fades in,
+ * rising a little into place; the rest of the page (the root) changes at
+ * once, and so do the phone's top and tab bars, captured on their own so the
+ * view never passes over them. The view's group doesn't travel: it stands
+ * where the next view is. The old view shows under it, fading out, only in
+ * a crossfade: where it stood in the same place (not scrolled, the pane
+ * neither narrowing nor widening).
+ */
+.view {
+  view-transition-name: page;
+}
+
+.shell :global(.mantine-AppShell-header) {
+  view-transition-name: top-bar;
+}
+
+.shell :global(.mantine-AppShell-footer) {
+  view-transition-name: tab-bar;
+}
+
+::view-transition-group(root),
+::view-transition-group(page),
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-old(top-bar),
+::view-transition-new(top-bar),
+::view-transition-old(tab-bar),
+::view-transition-new(tab-bar) {
+  animation: none;
+}
+
+/* What stays changes in place: only the next state shows, live (the tab bar's indicator still slides). */
+::view-transition-old(root),
+::view-transition-old(top-bar),
+::view-transition-old(tab-bar) {
+  opacity: 0;
+}
+
+::view-transition-old(page) {
+  animation: none;
+  opacity: 0;
+  /* As wide as it was, should the pane change under it. */
+  inline-size: auto;
+}
+
+:root:active-view-transition-type(crossfade)::view-transition-old(page) {
+  animation: page-out 120ms ease-out both;
+  opacity: 1;
+}
+
+/* The shell's easing (src/shell/motion.ts), shorter: a page change shouldn't hold the visitor up. */
+::view-transition-new(page) {
+  animation: page-in 220ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:active-view-transition-type(crossfade)::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation: none;
+  }
+}
