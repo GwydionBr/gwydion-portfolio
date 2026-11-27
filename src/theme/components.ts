@@ -13,6 +13,7 @@ import {
   List,
   Modal,
   NavLink,
+  Notification,
   Paper,
   Popover,
   SegmentedControl,
@@ -150,6 +151,25 @@ export const siteComponents: MantineThemeComponents = {
           }
         : { root: {} },
     classNames: { message: classes.alertMessage },
+  }),
+
+  /**
+   * A toast (src/shell/toast.tsx): a small floating card, its icon in the
+   * toast's colour (`available` for done, `danger` for failed).
+   */
+  Notification: Notification.extend({
+    defaultProps: { radius: 'lg', withBorder: true },
+    vars: (_theme, props) => ({
+      root: {
+        '--notification-color': props.color === 'danger' ? 'var(--danger)' : 'var(--available)',
+      },
+    }),
+    classNames: {
+      root: classes.toast,
+      icon: classes.toastIcon,
+      description: classes.toastDescription,
+      closeButton: classes.toastCloseButton,
+    },
   }),
 
   /** A chip: tags, skills and status pills. */

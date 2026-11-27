@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   Check,
   CircleHalf,
+  Copy,
   DownloadSimple,
   Moon,
   Sun,
@@ -14,7 +15,7 @@ import {
 } from '@phosphor-icons/react'
 import { trackEvent } from '#/analytics/umami'
 import { downloadCv } from '#/components/CvDownload'
-import { useProfileLinkItems } from '#/components/ProfileLinks'
+import { useCopyEmail, useProfileLinkItems } from '#/components/ProfileLinks'
 import { trackProjectClick } from '#/components/ProjectPageLink'
 import { ProjectSwatch } from '#/components/ProjectSwatch'
 import { useCv, useProjects } from '#/content/react'
@@ -46,7 +47,7 @@ const icon = (Shown: Icon) => <Shown aria-hidden size={18} />
 /**
  * Everything the search finds, in the Site language of the page shown: the
  * views of the navigation, every Project, the ways to reach Gwydion (the CV
- * download among them) and the site settings. Each does what its counterpart
+ * download and copying the email address among them) and the site settings. Each does what its counterpart
  * elsewhere on the site does, counted the same way.
  */
 export function useSearchGroups(): SearchGroup<SearchEntry>[] {
@@ -57,6 +58,7 @@ export function useSearchGroups(): SearchGroup<SearchEntry>[] {
   const projects = useProjects()
   const cv = useCv()
   const links = useProfileLinkItems().filter((link) => !link.placeholder)
+  const copyEmail = useCopyEmail()
   const pageIn = usePageInLanguage()
   const { preference, choose } = useTheme()
   const themeLabels = useThemePreferenceLabels()
@@ -116,6 +118,17 @@ export function useSearchGroups(): SearchGroup<SearchEntry>[] {
             else window.location.href = link.href
           },
         })),
+        ...(copyEmail
+          ? [
+              {
+                id: 'copy-email',
+                label: t`Copy email address`,
+                keywords: [t`Email`],
+                leading: icon(Copy),
+                run: () => void copyEmail(),
+              },
+            ]
+          : []),
       ],
     },
     {

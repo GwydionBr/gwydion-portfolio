@@ -1,6 +1,7 @@
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
+import { notifications } from '@mantine/notifications'
 import { fireEvent, getAllByRole, getByRole, within } from '@testing-library/dom'
 import { afterEach, vi } from 'vite-plus/test'
 import type { Content } from '#/content'
@@ -22,6 +23,8 @@ async function unmount() {
   const root = mounted
   mounted = undefined
   if (root) await act(async () => root.unmount())
+  // Its toasts go with it (Mantine keeps them in a store of its own).
+  notifications.clean()
 }
 
 afterEach(async () => {

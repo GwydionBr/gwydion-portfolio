@@ -28,6 +28,17 @@ function results() {
     ])
 }
 
+/** A clipboard the page can write to (jsdom has none); taken away again after each test. */
+function stubClipboard() {
+  const writeText = vi.fn<(text: string) => Promise<void>>().mockResolvedValue(undefined)
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+  return writeText
+}
+
+afterEach(() => {
+  Reflect.deleteProperty(navigator, 'clipboard')
+})
+
 const option = (name: string | RegExp) => getByRole(document.body, 'option', { name })
 
 describe('The site search', () => {
@@ -40,7 +51,13 @@ describe('The site search', () => {
     expect(document.activeElement).toBe(field)
     expect(results().map(([group]) => group)).toEqual(['Pages', 'Projects', 'Contact', 'Settings'])
     expect(results()[0]).toEqual(['Pages', ['Overview', 'Projects', 'About', 'Contact']])
-    expect(results()[2]?.[1]).toEqual(['Download CV', 'hello@gwydion.dev', 'GitHub', 'LinkedIn'])
+    expect(results()[2]?.[1]).toEqual([
+      'Download CV',
+      'hello@gwydion.dev',
+      'GitHub',
+      'LinkedIn',
+      'Copy email address',
+    ])
     expect(results()[3]?.[1]).toEqual(['Deutsch', 'System', 'Light', 'Dark'])
   })
 
@@ -147,15 +164,24 @@ describe('The site search', () => {
     expect(track).toHaveBeenCalledWith('cv-download', { sprache: 'en' })
   })
 
+  it('copies the email address, says so in a toast and counts it', async () => {
+    const writeText = stubClipboard()
+    const page = await visit('/en')
+    const field = await page.openSearch()
+
+    await page.fill(field, 'copy')
+    await page.click(option(/Copy email address/))
+
+    expect(writeText).toHaveBeenCalledWith('hello@gwydion.dev')
+    expect(getByRole(document.body, 'alert').textContent).toContain('Email address copied')
+    expect(track).toHaveBeenCalledWith('mail-kopiert', undefined)
+  })
+
   it('opens from the phone top bar', async () => {
     const page = await visit('/en', { screen: 'phone' })
 
     const field = await page.openSearch({ from: 'topBar' })
 
     expect(document.activeElement).toBe(field)
-    console.log(
-      document.querySelectorAll('header').length,
-      [...document.querySelectorAll('header')].map((h) => h.outerHTML.slice(0, 200)),
-    )
   })
 })
