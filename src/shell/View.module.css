@@ -1,0 +1,49 @@
+.title {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.heroTitle {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+
+  @media (min-width: 36em) {
+    font-size: 2.25rem;
+  }
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: -0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--mantine-radius-sm);
+  padding: 0.125rem 0.25rem;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  color: var(--ink);
+
+  &:hover {
+    background: var(--hover);
+  }
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.action {
+  flex-shrink: 0;
+}
+
+.placeholder {
+  background: var(--surface);
+  color: var(--subtle);
+  box-shadow: 0 0 0 1px var(--line);
+}

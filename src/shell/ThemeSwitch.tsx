@@ -2,7 +2,7 @@ import { useId } from 'react'
 import { useLingui } from '@lingui/react/macro'
 import { useTheme } from '#/theme/react'
 import { THEME_PREFERENCES, type ThemePreference } from '#/theme/theme'
-import { SEGMENT, SEGMENTED_TRACK } from './segmented'
+import classes from './Segmented.module.css'
 
 /**
  * Picks the theme: System (the default), Light or Dark. A choice overrides the
@@ -18,18 +18,15 @@ export function ThemeSwitch() {
     dark: t`Dark`,
   }
   return (
-    <div role="radiogroup" aria-label={t`Theme`} className={SEGMENTED_TRACK}>
+    <div role="radiogroup" aria-label={t`Theme`} className={classes.track}>
       {THEME_PREFERENCES.map((option) => (
-        <label
-          key={option}
-          className={`${SEGMENT} has-focus-visible:outline-2 has-focus-visible:outline-focus`}
-        >
+        <label key={option} className={classes.segment}>
           <input
             type="radio"
             name={group}
             checked={preference === option}
             onChange={() => choose(option)}
-            className="sr-only"
+            className={classes.radio}
           />
           {labels[option]}
         </label>

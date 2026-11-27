@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-sm);
+  margin-inline: -0.5rem;
+  padding: var(--mantine-spacing-sm) 0.5rem;
+  border-radius: var(--mantine-radius-md);
+
+  &:hover {
+    background: var(--hover);
+  }
+}
+
+.swatch {
+  margin-top: 0.375rem;
+}
+
+.meta {
+  gap: 0 var(--mantine-spacing-sm);
+}

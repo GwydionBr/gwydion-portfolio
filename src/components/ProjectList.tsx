@@ -1,7 +1,10 @@
+import { Box, Group, Text } from '@mantine/core'
 import type { Project } from '#/content'
 import { ProjectMeta } from './ProjectMeta'
 import { ProjectPageLink } from './ProjectPageLink'
 import { ProjectSwatch } from './ProjectSwatch'
+import lists from './lists.module.css'
+import classes from './ProjectList.module.css'
 
 /**
  * Projects as an ordered list of rows, each linking to its Project page:
@@ -16,26 +19,27 @@ export function ProjectList({
   label: string
 }) {
   return (
-    <ol aria-label={label} className="divide-y divide-line">
+    <Box component="ol" aria-label={label} className={`${lists.reset} ${lists.divided}`}>
       {projects.map((project) => (
         <li key={project.slug}>
-          <ProjectPageLink
-            slug={project.slug}
-            className="-mx-2 flex items-start gap-3 rounded-lg px-2 py-3 hover:bg-hover"
-          >
-            <ProjectSwatch accent={project.accent} className="mt-1.5" />
-            <span className="min-w-0 flex-1">
-              <span className="flex flex-wrap items-baseline justify-between gap-x-3">
-                <h2 className="font-medium text-ink">{project.title}</h2>
-                <span className="text-xs text-subtle">
+          <ProjectPageLink slug={project.slug} className={classes.row}>
+            <ProjectSwatch accent={project.accent} className={classes.swatch} />
+            <Box miw={0} style={{ flex: 1 }}>
+              <Group align="baseline" justify="space-between" className={classes.meta}>
+                <Text component="h2" inherit fw={500} c="var(--ink)">
+                  {project.title}
+                </Text>
+                <Text component="span" size="xs" c="var(--subtle)">
                   <ProjectMeta project={project} />
-                </span>
-              </span>
-              <span className="mt-0.5 block">{project.summary}</span>
-            </span>
+                </Text>
+              </Group>
+              <Text component="span" inherit display="block" mt={2}>
+                {project.summary}
+              </Text>
+            </Box>
           </ProjectPageLink>
         </li>
       ))}
-    </ol>
+    </Box>
   )
 }

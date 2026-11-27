@@ -1,7 +1,9 @@
+import { Anchor } from '@mantine/core'
 import type { MDXComponents } from 'mdx/types'
 import { Callout } from './Callout'
 import { NumberTile, NumberTiles } from './NumberTiles'
 import { ScreenshotGallery } from './ScreenshotGallery'
+import classes from './StoryMarkdown.module.css'
 
 export { Callout } from './Callout'
 export { NumberTile, NumberTiles } from './NumberTiles'
@@ -20,14 +22,12 @@ export const storyComponents: MDXComponents = {
   NumberTile,
   Callout,
   ScreenshotGallery,
-  h2: (props) => (
-    <h2 className="mt-8 text-base font-semibold tracking-tight text-ink first:mt-0" {...props} />
-  ),
-  h3: (props) => <h3 className="mt-6 font-semibold text-ink" {...props} />,
-  p: (props) => <p className="mt-3 leading-relaxed first:mt-0" {...props} />,
-  ul: (props) => <ul className="mt-3 list-disc space-y-1 pl-5" {...props} />,
-  ol: (props) => <ol className="mt-3 list-decimal space-y-1 pl-5" {...props} />,
-  a: (props) => <a className="font-medium text-ink underline underline-offset-2" {...props} />,
-  strong: (props) => <strong className="font-semibold text-ink" {...props} />,
-  code: (props) => <code className="rounded bg-selected px-1 py-0.5 text-[0.9em]" {...props} />,
+  h2: (props) => <h2 className={classes.h2} {...props} />,
+  h3: (props) => <h3 className={classes.h3} {...props} />,
+  p: (props) => <p className={classes.paragraph} {...props} />,
+  ul: (props) => <ul className={classes.bullets} {...props} />,
+  ol: (props) => <ol className={classes.numbered} {...props} />,
+  a: (props) => <Anchor className={classes.link} {...props} />,
+  strong: (props) => <strong className={classes.strong} {...props} />,
+  code: (props) => <code className={classes.code} {...props} />,
 }

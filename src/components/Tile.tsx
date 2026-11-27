@@ -1,4 +1,6 @@
+import { Group, Paper, Text } from '@mantine/core'
 import { useId, type ReactNode } from 'react'
+import classes from './Tile.module.css'
 
 /**
  * A titled card: an Overview tile or a sidebar card. A region named by its
@@ -22,17 +24,22 @@ export function Tile({
 }) {
   const id = useId()
   return (
-    <section
+    <Paper
+      component="section"
+      radius="lg"
+      p={compact ? 'sm' : 'lg'}
+      fz={compact ? 'xs' : undefined}
+      lh={compact ? 4 / 3 : undefined}
       aria-labelledby={id}
-      className={`rounded-2xl bg-surface ring-1 ring-line ${compact ? 'p-3 text-xs' : 'p-5'} ${className}`}
+      className={`${classes.surface} ${className}`}
     >
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 id={id} className="text-xs font-medium text-subtle">
+      <Group align="baseline" justify="space-between" gap="sm" wrap="nowrap">
+        <Text component="h2" id={id} size="xs" fw={500} c="var(--subtle)">
           {title}
-        </h2>
+        </Text>
         {action}
-      </div>
+      </Group>
       {children}
-    </section>
+    </Paper>
   )
 }

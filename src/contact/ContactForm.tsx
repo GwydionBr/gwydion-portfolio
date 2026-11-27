@@ -1,6 +1,7 @@
-import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useId, useRef, useState, type FormEvent } from 'react'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
+import { Alert, Box, Button, Text, Textarea, TextInput, UnstyledButton } from '@mantine/core'
+import { RouterAnchor } from '#/components/links'
 import { trackEvent } from '#/analytics/umami'
 import { EmailLink } from '#/components/ProfileLinks'
 import { PRIVACY_PAGE } from '#/legal/pages'
@@ -12,6 +13,7 @@ import {
   type ContactField,
   type ContactFieldErrors,
 } from './message'
+import classes from './ContactForm.module.css'
 
 type Status = 'editing' | 'sending' | 'sent' | 'failed'
 
@@ -33,19 +35,24 @@ export function ContactForm() {
 
   if (status === 'sent') {
     return (
-      <div role="status" className="mt-2">
-        <p className="text-base font-medium text-ink">{t`Message sent. I'll get back to you.`}</p>
-        <button
+      <Box role="status" mt={8}>
+        <Text size="md" lh={1.5} fw={500} c="var(--ink)">
+          {t`Message sent. I'll get back to you.`}
+        </Text>
+        <UnstyledButton
           type="button"
-          className="mt-3 font-medium text-muted underline"
+          mt={12}
+          fw={500}
+          c="var(--muted)"
+          td="underline"
           onClick={() => {
             setValues(EMPTY)
             setStatus('editing')
           }}
         >
           {t`Write another message`}
-        </button>
-      </div>
+        </UnstyledButton>
+      </Box>
     )
   }
 
@@ -89,34 +96,29 @@ export function ContactForm() {
     value: values[name],
     onChange: (event: { target: { value: string } }) =>
       setValues((current) => ({ ...current, [name]: event.target.value })),
-    'aria-invalid': fieldErrors[name] ? true : undefined,
+    error: fieldErrors[name],
     'aria-errormessage': fieldErrors[name] ? `${id}-${name}-error` : undefined,
-    className:
-      'mt-1 w-full rounded-lg bg-canvas px-3 py-2 text-ink ring-1 ring-line outline-none focus-visible:ring-2 focus-visible:ring-focus aria-invalid:ring-danger',
+    classNames: { input: classes.input, label: classes.label, error: classes.fieldError },
   })
-  const label = (name: ContactField, text: string, control: ReactNode) => (
-    <div>
-      <label htmlFor={`${id}-${name}`} className="text-xs font-medium text-muted">
-        {text}
-      </label>
-      {control}
-      {fieldErrors[name] && (
-        <p id={`${id}-${name}-error`} className="mt-1 text-xs text-danger">
-          {fieldErrors[name]}
-        </p>
-      )}
-    </div>
-  )
 
   return (
-    <form ref={formRef} noValidate onSubmit={submit} className="relative mt-3 space-y-4">
-      {label('name', t`Name`, <input type="text" autoComplete="name" {...field('name')} />)}
-      {label('email', t`Email`, <input type="email" autoComplete="email" {...field('email')} />)}
-      {label(
-        'message',
-        t`Message`,
-        <textarea rows={6} maxLength={CONTACT_LIMITS.messageMax} {...field('message')} />,
-      )}
+    <Box
+      component="form"
+      ref={formRef}
+      noValidate
+      onSubmit={submit}
+      pos="relative"
+      mt={12}
+      className={classes.form}
+    >
+      <TextInput label={t`Name`} type="text" autoComplete="name" {...field('name')} />
+      <TextInput label={t`Email`} type="email" autoComplete="email" {...field('email')} />
+      <Textarea
+        label={t`Message`}
+        rows={6}
+        maxLength={CONTACT_LIMITS.messageMax}
+        {...field('message')}
+      />
       {/* The honeypot: off screen and out of the tab order; only bots fill it in. */}
       <input
         type="text"
@@ -126,30 +128,26 @@ export function ContactForm() {
         aria-hidden="true"
         value={values.website}
         onChange={(event) => setValues((current) => ({ ...current, website: event.target.value }))}
-        className="absolute -left-[10000px] size-px opacity-0"
+        className={classes.honeypot}
       />
       {status === 'failed' && (
-        <p role="alert" className="rounded-lg bg-danger-surface p-3 text-danger">
+        <Alert classNames={{ root: classes.alert, message: classes.alertMessage }}>
           {t`Your message could not be sent. Please try again, or write to me directly:`}{' '}
           <EmailLink />
-        </p>
+        </Alert>
       )}
-      <button
-        type="submit"
-        disabled={status === 'sending'}
-        className="rounded-lg bg-ink px-4 py-2 font-medium text-canvas hover:opacity-90 disabled:opacity-60"
-      >
+      <Button type="submit" disabled={status === 'sending'} className={classes.submit}>
         {status === 'sending' ? t`Sending…` : t`Send message`}
-      </button>
-      <p className="text-xs text-muted">
+      </Button>
+      <Text size="xs" lh={1.3333}>
         <Trans>
           How I handle your details is explained in the{' '}
-          <Link to={PRIVACY_PAGE.to} params={{ lang: language }} className="text-ink underline">
+          <RouterAnchor to={PRIVACY_PAGE.to} params={{ lang: language }} underline="always">
             {i18n._(PRIVACY_PAGE.title)}
-          </Link>
+          </RouterAnchor>
           .
         </Trans>
-      </p>
-    </form>
+      </Text>
+    </Box>
   )
 }

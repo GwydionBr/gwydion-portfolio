@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { LANGUAGES, nativeNameOf, pathInLanguage } from '#/i18n/language'
 import { useSiteLanguage } from '#/i18n/react'
-import { SEGMENT, SEGMENTED_TRACK } from './segmented'
+import classes from './Segmented.module.css'
 
 /**
  * Links to the current page in every Site language; the shown one is marked
@@ -14,7 +14,7 @@ export function LanguageSwitch({ short = false }: { short?: boolean }) {
   const { pathname, searchStr, hash } = useLocation()
   return (
     <nav aria-label={t`Site language`}>
-      <ul className={SEGMENTED_TRACK}>
+      <ul className={classes.track}>
         {LANGUAGES.map((language) => (
           <li key={language}>
             <Link
@@ -24,7 +24,7 @@ export function LanguageSwitch({ short = false }: { short?: boolean }) {
               lang={language}
               aria-current={language === current ? 'true' : undefined}
               aria-label={nativeNameOf(language)}
-              className={SEGMENT}
+              className={classes.segment}
             >
               {short ? language.toUpperCase() : nativeNameOf(language)}
             </Link>

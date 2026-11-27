@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
 import { trackEvent } from '#/analytics/umami'
 import { useSiteLanguage } from '#/i18n/react'
+import { RouterUnstyled } from './links'
 
 /**
  * A link to the page of the Project at `slug`, in the Site language. Every
@@ -18,13 +18,13 @@ export function ProjectPageLink({
 }) {
   const lang = useSiteLanguage()
   return (
-    <Link
+    <RouterUnstyled
       to="/$lang/projects/$slug"
       params={{ lang, slug }}
       onClick={() => trackEvent({ name: 'projekt-klick', data: { projekt: slug } })}
       className={className}
     >
       {children}
-    </Link>
+    </RouterUnstyled>
   )
 }

@@ -1,0 +1,25 @@
+.panel {
+  margin: 0;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
+
+  &:is(section) {
+    scroll-margin-top: 5rem;
+  }
+}
+
+.underlined {
+  text-underline-offset: 2px;
+}
+
+.contentsLink {
+  color: var(--muted);
+
+  &:hover {
+    color: var(--ink);
+  }
+}
+
+.externalLink {
+  word-break: break-all;
+}

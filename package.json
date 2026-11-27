@@ -25,10 +25,11 @@
     "check:fix": "vp check --fix && bun run i18n:check"
   },
   "dependencies": {
-    "@base-ui/react": "^1.9.0",
     "@fontsource-variable/inter": "^5.3.0",
     "@lingui/core": "6.10.1",
     "@lingui/react": "6.10.1",
+    "@mantine/core": "9.8.2",
+    "@mantine/hooks": "9.8.2",
     "@mdx-js/rollup": "^3.1.1",
     "@phosphor-icons/react": "^2.1.10",
     "@tanstack/react-router": "^1.170.41",
@@ -46,7 +47,6 @@
     "@lingui/native-tools": "0.1.6",
     "@lingui/vite-plugin": "6.10.1",
     "@messageformat/parser": "5.2.0",
-    "@tailwindcss/vite": "^4.3.5",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/mdx": "^2.0.14",
@@ -56,7 +56,6 @@
     "@vitejs/plugin-react": "^6.1.2",
     "jsdom": "^30.1.2",
     "nitro": "^3.0.260903-beta",
-    "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@1.0.0",
     "vite-plus": "1.0.0"

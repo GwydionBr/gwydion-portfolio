@@ -1,3 +1,6 @@
+import { Group, Text } from '@mantine/core'
+import lists from './lists.module.css'
+
 /** Short labels as a row of chips, for example skills or a Project's stack. */
 export function TagList({
   label,
@@ -11,12 +14,21 @@ export function TagList({
   className?: string
 }) {
   return (
-    <ul aria-label={label} className={`flex flex-wrap gap-1.5 ${className}`}>
+    <Group component="ul" aria-label={label} gap={6} className={`${lists.reset} ${className}`}>
       {tags.map((tag) => (
-        <li key={tag} className="rounded-md bg-selected px-2 py-0.5 text-xs">
+        <Text
+          component="li"
+          key={tag}
+          size="xs"
+          px={8}
+          py={2}
+          bg="var(--selected)"
+          lh={4 / 3}
+          style={{ borderRadius: 6 }}
+        >
           {tag}
-        </li>
+        </Text>
       ))}
-    </ul>
+    </Group>
   )
 }

@@ -1,5 +1,6 @@
 import { useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
+import { Text } from '@mantine/core'
+import { RouterAnchor } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
 import { Placeholder, View } from './View'
 
@@ -10,14 +11,18 @@ export function NotFoundView() {
   return (
     <View title={t`Page not found`}>
       <Placeholder>
-        <p>{t`There is nothing at this address.`}</p>
-        <Link
+        <Text size="sm">{t`There is nothing at this address.`}</Text>
+        <RouterAnchor
           to="/$lang"
           params={{ lang }}
-          className="mt-3 inline-block font-medium text-ink underline"
+          size="sm"
+          fw={500}
+          underline="always"
+          mt="sm"
+          display="inline-block"
         >
           {t`Back to the Overview`}
-        </Link>
+        </RouterAnchor>
       </Placeholder>
     </View>
   )

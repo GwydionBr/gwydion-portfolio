@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Box, SimpleGrid } from '@mantine/core'
 import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import { CareerList } from '#/components/CareerList'
@@ -8,6 +9,7 @@ import { Tile } from '#/components/Tile'
 import { useCareerEntries } from '#/content/react'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
+import classes from './about.module.css'
 
 export const Route = createFileRoute('/$lang/about')({
   head: ({ match }) =>
@@ -28,18 +30,18 @@ function About() {
   const entries = useCareerEntries()
   return (
     <View title={t`About`}>
-      <div className="grid items-start gap-4 lg:grid-cols-3">
-        <Tile title={t`Career`} className="lg:col-span-2">
+      <SimpleGrid cols={{ base: 1, md: 3 }} spacing={16} className={classes.tiles}>
+        <Tile title={t`Career`} className={classes.career}>
           <CareerList entries={entries} />
         </Tile>
-        {/* A column of its own from lg; below it its tiles join the one column, the CV first. */}
-        <div className="grid gap-4 max-lg:contents">
-          <CvTile className="max-lg:order-first" />
+        {/* On narrower screens the tiles share one column, with the CV first. */}
+        <Box className={classes.profile}>
+          <CvTile className={classes.cv} />
           <Tile title={t`Skills`}>
             <SkillList />
           </Tile>
-        </div>
-      </div>
+        </Box>
+      </SimpleGrid>
     </View>
   )
 }

@@ -6,12 +6,14 @@ import {
   createRootRouteWithContext,
   redirect,
 } from '@tanstack/react-router'
+import { MantineProvider } from '@mantine/core'
 import { umamiScript } from '#/analytics/umami'
 import { SiteLanguageProvider, useSiteLanguage } from '#/i18n/react'
 import { AppShell } from '#/shell/AppShell'
 import { NotFoundView } from '#/shell/NotFoundView'
 import type { RouterContext } from '#/router'
 import { legacyRedirectTarget } from '#/seo/legacyRedirects'
+import { siteColorSchemeManager, siteCssVariables, siteTheme } from '#/theme/mantine'
 import { ThemeHeadTags } from '#/theme/ThemeHeadTags'
 
 import appCss from '../styles/app.css?url'
@@ -46,17 +48,26 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFoundView,
 })
 
+const colorSchemeManager = siteColorSchemeManager()
+
 function RootDocument({ children }: { children: ReactNode }) {
   const language = useSiteLanguage()
   return (
-    // The pre-paint script sets `data-theme` before React hydrates.
+    // The pre-paint script sets the theme shown on `<html>` before React hydrates.
     <html lang={language} suppressHydrationWarning>
       <head>
         <HeadContent />
         <ThemeHeadTags />
       </head>
       <body>
-        <SiteLanguageProvider>{children}</SiteLanguageProvider>
+        <MantineProvider
+          theme={siteTheme}
+          cssVariablesResolver={siteCssVariables}
+          colorSchemeManager={colorSchemeManager}
+          defaultColorScheme="auto"
+        >
+          <SiteLanguageProvider>{children}</SiteLanguageProvider>
+        </MantineProvider>
         <Scripts />
       </body>
     </html>

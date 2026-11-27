@@ -1,8 +1,11 @@
+import { Box, Text } from '@mantine/core'
 import type { CareerEntry } from '#/content'
 import { useContent } from '#/content/react'
 import { useSiteLanguage } from '#/i18n/react'
 import { PeriodText } from './PeriodText'
 import { ProjectPageLink } from './ProjectPageLink'
+import lists from './lists.module.css'
+import classes from './CareerList.module.css'
 
 /**
  * Career entries in the order given, each with period, title, organisation
@@ -10,25 +13,25 @@ import { ProjectPageLink } from './ProjectPageLink'
  */
 export function CareerList({ entries }: { entries: readonly CareerEntry[] }) {
   return (
-    <ol className="mt-2">
+    <Box component="ol" mt={8} className={`${lists.reset} ${lists.divided}`}>
       {entries.map((entry) => (
         <li
           key={`${entry.start}-${entry.organisation}`}
-          className={`grid gap-1 border-b border-line py-3 last:border-0 sm:grid-cols-[8rem_1fr] sm:gap-4 ${entry.placeholder ? 'stand-in' : ''}`}
+          className={`${classes.entry} ${entry.placeholder ? 'stand-in' : ''}`}
         >
-          <p className="text-xs text-subtle">
+          <Text size="xs" c="var(--subtle)">
             <PeriodText period={entry} />
-          </p>
+          </Text>
           <div>
-            <h3 className="font-medium text-ink">
+            <Text component="h3" inherit fw={500} c="var(--ink)">
               {entry.title} · {entry.organisation}
-            </h3>
-            <p>{entry.summary}</p>
+            </Text>
+            <Text inherit>{entry.summary}</Text>
             {entry.project && <ProjectLink slug={entry.project} />}
           </div>
         </li>
       ))}
-    </ol>
+    </Box>
   )
 }
 
@@ -39,10 +42,7 @@ function ProjectLink({ slug }: { slug: string }) {
   if (!project) return null
   const { title } = project
   return (
-    <ProjectPageLink
-      slug={slug}
-      className="mt-1 inline-block text-xs font-medium text-ink underline-offset-2 hover:underline"
-    >
+    <ProjectPageLink slug={slug} className={classes.link}>
       {title} <span aria-hidden>→</span>
     </ProjectPageLink>
   )

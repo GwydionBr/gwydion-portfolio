@@ -1,0 +1,12 @@
+.pill {
+  display: inline-flex;
+  border-radius: 9999px;
+  background: var(--available-surface);
+  box-shadow: 0 0 0 1px var(--available-line);
+}
+
+.dot {
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--available);
+}

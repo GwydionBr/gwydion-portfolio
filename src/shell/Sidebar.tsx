@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLingui } from '@lingui/react/macro'
+import { AppShell, Box, Group, ScrollArea, Stack } from '@mantine/core'
 import { CircleHalf, Globe, type Icon } from '@phosphor-icons/react'
 import { AvailabilityTile } from '#/components/AvailabilityTile'
 import { ProfileLinkRows } from '#/components/ProfileLinks'
@@ -8,6 +9,7 @@ import { LanguageSwitch } from './LanguageSwitch'
 import { LegalLinks } from './LegalLinks'
 import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
+import classes from './Sidebar.module.css'
 import { ThemeSwitch } from './ThemeSwitch'
 
 /** The desktop sidebar: identity, navigation and, at the bottom, the Availability, the Profile links, the Site language and theme switches and the legal links. */
@@ -15,53 +17,60 @@ export function Sidebar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
   return (
-    <aside
+    <AppShell.Navbar
+      // A sidebar of several parts, the navigation only one of them.
+      renderRoot={(props) => <aside {...props} />}
       aria-label={t`Sidebar`}
-      className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col overflow-y-auto border-r border-line bg-sidebar p-3 md:flex"
+      className={classes.sidebar}
     >
-      <Identity className="p-2" />
-      <nav aria-label={t`Main navigation`} className="mt-3">
-        <ul className="space-y-0.5">
-          {entries.map((entry) => (
-            <li key={entry.to}>
-              <NavigationLink
-                entry={entry}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-1.5 hover:bg-hover aria-[current=page]:bg-selected aria-[current=page]:font-medium aria-[current=page]:text-ink"
-              >
-                {(label) => (
-                  <>
-                    <entry.icon aria-hidden className="size-4 text-subtle" />
-                    {label}
-                  </>
-                )}
-              </NavigationLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="mt-auto space-y-2 pt-4">
-        <AvailabilityTile compact />
-        <ProfileLinkRows />
-        <div className="space-y-1.5 border-t border-line pt-2.5">
-          <Setting icon={Globe}>
-            <LanguageSwitch />
-          </Setting>
-          <Setting icon={CircleHalf}>
-            <ThemeSwitch />
-          </Setting>
-        </div>
-        <LegalLinks className="pl-3 pt-1" />
-      </div>
-    </aside>
+      <AppShell.Section p="xs">
+        <Identity />
+      </AppShell.Section>
+      <AppShell.Section grow component={ScrollArea} scrollbarSize={6} mt="xs">
+        <nav aria-label={t`Main navigation`}>
+          <Stack component="ul" gap={2} className={classes.list}>
+            {entries.map((entry) => (
+              <li key={entry.to}>
+                <NavigationLink entry={entry} className={classes.entry}>
+                  {(label) => (
+                    <>
+                      <entry.icon aria-hidden className={classes.icon} />
+                      {label}
+                    </>
+                  )}
+                </NavigationLink>
+              </li>
+            ))}
+          </Stack>
+        </nav>
+      </AppShell.Section>
+      <AppShell.Section>
+        <Stack gap="xs" pt="md">
+          <AvailabilityTile compact />
+          <ProfileLinkRows />
+          <Stack gap={6} className={classes.settings}>
+            <Setting icon={Globe}>
+              <LanguageSwitch />
+            </Setting>
+            <Setting icon={CircleHalf}>
+              <ThemeSwitch />
+            </Setting>
+          </Stack>
+          <LegalLinks className={classes.legal} />
+        </Stack>
+      </AppShell.Section>
+    </AppShell.Navbar>
   )
 }
 
 /** A control in the sidebar's settings, its icon aligned with the rows above it. */
 function Setting({ icon: Icon, children }: { icon: Icon; children: ReactNode }) {
   return (
-    <div className="flex items-center gap-3 pl-3">
-      <Icon aria-hidden className="size-4 shrink-0 text-subtle" />
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
+    <Group gap="sm" wrap="nowrap" pl="sm">
+      <Icon aria-hidden className={classes.icon} />
+      <Box miw={0} flex={1}>
+        {children}
+      </Box>
+    </Group>
   )
 }

@@ -1,27 +1,31 @@
 import { useLingui } from '@lingui/react/macro'
-import { Link } from '@tanstack/react-router'
+import { Group } from '@mantine/core'
+import { RouterAnchor } from '#/components/links'
 import { useSiteLanguage } from '#/i18n/react'
 import { LEGAL_PAGES } from '#/legal/pages'
+import classes from './LegalLinks.module.css'
 
 /** Links to the Impressum and the privacy policy in the current Site language. */
-export function LegalLinks({ className = '' }: { className?: string }) {
+export function LegalLinks({ className }: { className?: string }) {
   const { t, i18n } = useLingui()
   const lang = useSiteLanguage()
   return (
     <nav aria-label={t`Legal`} className={className}>
-      <ul className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
+      <Group component="ul" gap="sm" className={classes.list}>
         {LEGAL_PAGES.map((page) => (
           <li key={page.to}>
-            <Link
+            <RouterAnchor
               to={page.to}
               params={{ lang }}
-              className="text-subtle hover:text-ink aria-[current=page]:text-ink"
+              size="xs"
+              underline="never"
+              className={classes.link}
             >
               {i18n._(page.title)}
-            </Link>
+            </RouterAnchor>
           </li>
         ))}
-      </ul>
+      </Group>
     </nav>
   )
 }

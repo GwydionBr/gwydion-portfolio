@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
+import { Box, Group, Text } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
 import { ProjectFacts } from '#/components/ProjectFacts'
 import { ProjectMeta } from '#/components/ProjectMeta'
@@ -8,6 +9,7 @@ import { useProject } from '#/content/react'
 import { NotFoundView } from '#/shell/NotFoundView'
 import { pageHead } from '#/seo/pageHead'
 import { View } from '#/shell/View'
+import classes from './Projects.module.css'
 
 export const Route = createFileRoute('/$lang/projects/$slug')({
   // An unknown slug is not found. The Project itself is read again in the
@@ -25,7 +27,7 @@ export const Route = createFileRoute('/$lang/projects/$slug')({
 
 /**
  * A Project's page: its meta and summary, its facts, its numbers, then its
- * story in the Site language. From `lg` up the facts are a sticky rail beside
+ * story in the Site language. On wide screens the facts are a sticky rail beside
  * the story; below it they follow the summary.
  */
 function ProjectPage() {
@@ -39,22 +41,21 @@ function ProjectPage() {
       location={[t`Projects`, project.title]}
       back={{ to: '/$lang/projects', label: t`Back to Projects`, text: t`Projects` }}
     >
-      {/* One column below lg in source order; from lg the facts span both rows of the right column. */}
-      <article className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-x-10">
-        <div className="max-w-2xl">
-          <p className="flex items-center gap-2 text-xs text-subtle">
+      {/* The facts span both rows of the right column when there is room. */}
+      <Box component="article" fz="sm" lh="1.25rem" className={classes.article}>
+        <Box maw={672}>
+          <Group component="p" wrap="nowrap" gap={8} fz="xs" lh="1rem" c="var(--subtle)" m={0}>
             <ProjectSwatch accent={project.accent} />
             <span>
               <ProjectMeta project={project} />
             </span>
-          </p>
-          <p className="mt-2 text-base leading-relaxed text-ink">{project.summary}</p>
-        </div>
-        <ProjectFacts
-          project={project}
-          className="self-start lg:sticky lg:top-10 lg:col-start-2 lg:row-span-2 lg:row-start-1"
-        />
-        <div className="min-w-0 max-w-2xl">
+          </Group>
+          <Text mt={8} size="md" lh={1.625} c="var(--ink)">
+            {project.summary}
+          </Text>
+        </Box>
+        <ProjectFacts project={project} className={classes.facts} />
+        <Box miw={0} maw={672}>
           {project.stats && (
             <NumberTiles label={t`Numbers`}>
               {project.stats.map((stat) => (
@@ -63,14 +64,14 @@ function ProjectPage() {
             </NumberTiles>
           )}
           {Story && (
-            <div className={project.stats ? 'mt-8' : ''}>
+            <Box mt={project.stats ? 32 : undefined}>
               <StoryProject slug={project.slug}>
                 <Story components={storyComponents} />
               </StoryProject>
-            </div>
+            </Box>
           )}
-        </div>
-      </article>
+        </Box>
+      </Box>
     </View>
   )
 }
