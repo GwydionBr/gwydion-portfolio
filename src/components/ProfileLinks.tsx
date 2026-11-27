@@ -22,6 +22,7 @@ import {
 import { eventAttributes, trackEvent, type AnalyticsEvent } from '#/analytics/umami'
 import type { Profile, ProfileLink } from '#/content'
 import { useProfile } from '#/content/react'
+import { SIDEBAR_ICON_SIZE } from '#/shell/sidebarLayout'
 import { useToast } from '#/shell/toast'
 
 /** The address of the Profile's email link ("hello@gwydion.dev"). */
@@ -151,7 +152,7 @@ export function ProfileLinkRows({
   return (
     <Stack component="ul" gap={2} m={0} p={0} style={{ listStyle: 'none' }}>
       {useProfileLinkItems().map((link) => {
-        const icon = <link.icon aria-hidden size={16} />
+        const icon = <link.icon aria-hidden size={SIDEBAR_ICON_SIZE} />
         return (
           <li key={link.kind}>
             {wrapRow(

@@ -22,6 +22,13 @@ export const SIDEBAR_WIDTH_CSS = paneWidthCss(SIDEBAR_WIDTH)
 export const SIDEBAR_RAIL_WIDTH = 64
 
 /**
+ * The size of the sidebar's icons, in px, the same in the full sidebar and
+ * the rail, where they stand alone; the More sheet's rows, which repeat some
+ * of the sidebar's, take it too.
+ */
+export const SIDEBAR_ICON_SIZE = 18
+
+/**
  * Dragged narrower than this (in px, past the minimum width), the sidebar
  * collapses to the rail; dragged back out in the same move, it opens again.
  */

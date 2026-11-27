@@ -6,6 +6,7 @@ import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useSearchGroups } from './searchEntries'
 import { filterSearchGroups } from './searchFilter'
 import { useShortcutLabel } from './shortcut'
+import { SIDEBAR_ICON_SIZE } from './sidebarLayout'
 
 const [searchStore, search] = createSpotlight()
 
@@ -126,7 +127,7 @@ export function SearchField() {
       onClick={search.open}
       aria-haspopup="dialog"
       aria-keyshortcuts={ARIA_SHORTCUTS}
-      leftSection={<MagnifyingGlass aria-hidden size={16} />}
+      leftSection={<MagnifyingGlass aria-hidden size={SIDEBAR_ICON_SIZE} />}
       rightSection={shortcut && <Kbd aria-hidden>{shortcut}</Kbd>}
       // As wide as the rail's icons sit in from the edge (src/shell/Sidebar.module.css).
       leftSectionWidth={38}
