@@ -56,7 +56,7 @@ describe('Theme', () => {
   })
 
   it('offers the switch on phones too, in the More sheet', async () => {
-    const page = await visit('/en', { systemTheme: 'light' })
+    const page = await visit('/en', { systemTheme: 'light', screen: 'phone' })
     const more = await page.openMore()
 
     await page.click(option(more, 'Dark'))

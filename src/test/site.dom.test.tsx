@@ -119,13 +119,31 @@ describe('Phones', () => {
   })
 
   it('switch the Site language from the More sheet, which closes on the way', async () => {
-    const page = await visit('/en/about')
+    const page = await visit('/en/about', { screen: 'phone' })
     const more = await page.openMore()
 
     const switcher = within(more).getByRole('navigation', { name: 'Site language' })
     await page.click(within(switcher).getByRole('link', { name: 'Deutsch' }))
 
     expect(page.path()).toBe('/de/about')
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+  })
+
+  it('close the More sheet when the window gets wide enough for the sidebar', async () => {
+    const page = await visit('/en', { screen: 'phone' })
+    await page.openMore()
+
+    await page.resize('desktop')
+
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+  })
+
+  it('close the sidebar’s Settings when the window gets too narrow for the sidebar', async () => {
+    const page = await visit('/en')
+    await page.openSettings()
+
+    await page.resize('phone')
+
     expect(queryByRole(document.body, 'dialog')).toBeNull()
   })
 

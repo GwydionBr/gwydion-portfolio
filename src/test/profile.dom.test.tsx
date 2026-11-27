@@ -136,6 +136,7 @@ describe('The Profile links in the shell', () => {
 
       expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
       // Phones have no sidebar: the tab bar's More sheet holds the same links.
+      await page.resize('phone')
       expect(linksOf(await page.openMore(url.startsWith('/de') ? 'Mehr' : 'More'))).toEqual(
         expected,
       )

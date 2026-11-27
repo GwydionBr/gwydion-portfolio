@@ -66,6 +66,7 @@ describe('Legal links', () => {
 
       expect(linksOf(page.sidebar(sidebar))).toEqual(expected)
       // Phones have no sidebar: the tab bar's More sheet holds the same links.
+      await page.resize('phone')
       expect(linksOf(await page.openMore(lang === 'de' ? 'Mehr' : 'More'))).toEqual(expected)
     },
   )

@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro'
 import { AppShell, UnstyledButton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { DotsThreeCircle, type Icon } from '@phosphor-icons/react'
-import { SHELL_BREAKPOINT } from './breakpoint'
+import { SHELL_BREAKPOINT, useCloseWhenHidden } from './breakpoint'
 import { MoreSheet } from './MoreSheet'
 import { useNavigationEntries } from './navigation'
 import { NavigationLink } from './NavigationLink'
@@ -18,6 +18,8 @@ export function TabBar() {
   const { t } = useLingui()
   const entries = useNavigationEntries()
   const [moreOpened, more] = useDisclosure(false)
+  // The sheet closes when the window gets wide enough for the sidebar.
+  useCloseWhenHidden('tabBar', more.close)
   return (
     <AppShell.Footer hiddenFrom={SHELL_BREAKPOINT}>
       <nav aria-label={t`Tab bar`}>

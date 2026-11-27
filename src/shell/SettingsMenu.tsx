@@ -2,16 +2,19 @@ import { useLingui } from '@lingui/react/macro'
 import { NavLink, Popover } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { GearSix } from '@phosphor-icons/react'
+import { useCloseWhenHidden } from './breakpoint'
 import { SiteSettings } from './SiteSettings'
 
 /**
  * The sidebar's Settings row: opens the Site language and theme switches
  * beside the sidebar, so they don't take room in it. The open panel is a
- * dialog named after the row, which stays selected while it is open.
+ * dialog named after the row, which stays selected while it is open; it
+ * closes when the window gets too narrow for the sidebar.
  */
 export function SettingsMenu() {
   const { t } = useLingui()
   const [opened, { toggle, close }] = useDisclosure(false)
+  useCloseWhenHidden('sidebar', close)
   return (
     <Popover
       opened={opened}
