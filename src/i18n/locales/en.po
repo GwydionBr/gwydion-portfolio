@@ -46,7 +46,7 @@ msgstr "Career"
 msgid "Client work"
 msgstr "Client work"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 #: src/shell/MoreSheet.tsx
 msgid "Close"
 msgstr "Close"
@@ -111,7 +111,7 @@ msgid "Email address copied"
 msgstr "Email address copied"
 
 #. placeholder {0}: shot.caption
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Enlarge screenshot: {0}"
 msgstr "Enlarge screenshot: {0}"
 
@@ -127,10 +127,6 @@ msgstr "Expand sidebar"
 msgid "Facts"
 msgstr "Facts"
 
-#: src/routes/$lang/index.tsx
-msgid "Featured Projects"
-msgstr "Featured Projects"
-
 #: src/shell/View.tsx
 msgid "Get in touch"
 msgstr "Get in touch"
@@ -143,6 +139,10 @@ msgstr "Gwydion's path as a developer: his Career entries, his skills and his CV
 msgid "Gwydion's Posts on building software."
 msgstr "Gwydion's Posts on building software."
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Hide thumbnails"
+msgstr "Hide thumbnails"
+
 #: src/legal/pages.ts
 msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
 msgstr "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
@@ -152,7 +152,7 @@ msgstr "How gwydion.dev handles personal data: hosting, analytics, the contact f
 msgid "How I handle your details is explained in the <0>{0}</0>."
 msgstr "How I handle your details is explained in the <0>{0}</0>."
 
-#: src/components/ProjectEntry.tsx
+#: src/components/KeyPoints.tsx
 msgid "Key points"
 msgstr "Key points"
 
@@ -197,7 +197,7 @@ msgstr "Name"
 msgid "Next Project"
 msgstr "Next Project"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Next screenshot"
 msgstr "Next screenshot"
 
@@ -217,7 +217,6 @@ msgstr "now"
 msgid "Now"
 msgstr "Now"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectDetail.tsx
 msgid "Numbers"
 msgstr "Numbers"
@@ -225,6 +224,10 @@ msgstr "Numbers"
 #: src/components/StoryContents.tsx
 msgid "On this page"
 msgstr "On this page"
+
+#: src/components/ProjectCard.tsx
+msgid "Open project"
+msgstr "Open project"
 
 #: src/components/ProjectMeta.tsx
 msgid "Open source"
@@ -262,7 +265,7 @@ msgstr "Period"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Please enter your name ({nameMin} to {nameMax} characters)."
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Previous screenshot"
 msgstr "Previous screenshot"
 
@@ -302,6 +305,11 @@ msgstr "Results"
 msgid "Role"
 msgstr "Role"
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Screenshot {position} of {total}"
+msgstr "Screenshot {position} of {total}"
+
+#: src/components/ScreenshotLightbox.tsx
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Screenshots"
 msgstr "Screenshots"
@@ -324,6 +332,14 @@ msgstr "Sending…"
 msgid "Settings"
 msgstr "Settings"
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show screenshot: {caption}"
+msgstr "Show screenshot: {caption}"
+
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show thumbnails"
+msgstr "Show thumbnails"
+
 #: src/shell/Sidebar.tsx
 msgid "Sidebar"
 msgstr "Sidebar"
@@ -334,6 +350,7 @@ msgid "Site language"
 msgstr "Site language"
 
 #: src/routes/$lang/about.tsx
+#: src/routes/$lang/index.tsx
 msgid "Skills"
 msgstr "Skills"
 
@@ -345,7 +362,6 @@ msgstr "Skip to content"
 msgid "Source code"
 msgstr "Source code"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectFacts.tsx
 msgid "Stack"
 msgstr "Stack"
@@ -394,6 +410,10 @@ msgstr "View source"
 #: src/components/ProjectEntry.tsx
 msgid "Visit website"
 msgstr "Visit website"
+
+#: src/routes/$lang/index.tsx
+msgid "What I built"
+msgstr "What I built"
 
 #: src/legal/pages.ts
 msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."

@@ -110,7 +110,7 @@ export const projects: ProjectSource[] = [
         label: { en: 'architecture decisions (ADRs)', de: 'Architektur-Entscheidungen (ADRs)' },
       },
     ],
-    // Two Projects are featured: the Overview's grid and the share image are laid out for two.
+    // Two Projects are featured: the share image is laid out for two.
     featured: false,
     order: 3,
     accent: '#17777a',

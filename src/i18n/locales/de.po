@@ -46,7 +46,7 @@ msgstr "Werdegang"
 msgid "Client work"
 msgstr "Kundenprojekt"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 #: src/shell/MoreSheet.tsx
 msgid "Close"
 msgstr "Schließen"
@@ -111,7 +111,7 @@ msgid "Email address copied"
 msgstr "E-Mail-Adresse kopiert"
 
 #. placeholder {0}: shot.caption
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Enlarge screenshot: {0}"
 msgstr "Screenshot vergrößern: {0}"
 
@@ -127,10 +127,6 @@ msgstr "Seitenleiste ausklappen"
 msgid "Facts"
 msgstr "Fakten"
 
-#: src/routes/$lang/index.tsx
-msgid "Featured Projects"
-msgstr "Ausgewählte Projekte"
-
 #: src/shell/View.tsx
 msgid "Get in touch"
 msgstr "Kontakt aufnehmen"
@@ -143,6 +139,10 @@ msgstr "Gwydions Weg als Entwickler: seine Stationen, seine Kenntnisse und sein 
 msgid "Gwydion's Posts on building software."
 msgstr "Gwydions Beiträge darüber, wie man Software baut."
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Hide thumbnails"
+msgstr "Vorschaubilder ausblenden"
+
 #: src/legal/pages.ts
 msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
 msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Kontaktformular und auf deinem Gerät gespeicherte Einstellungen."
@@ -152,7 +152,7 @@ msgstr "Wie gwydion.dev mit personenbezogenen Daten umgeht: Hosting, Analyse, Ko
 msgid "How I handle your details is explained in the <0>{0}</0>."
 msgstr "Wie ich deine Angaben verarbeite, erfährst du in der <0>{0}</0>."
 
-#: src/components/ProjectEntry.tsx
+#: src/components/KeyPoints.tsx
 msgid "Key points"
 msgstr "Kernpunkte"
 
@@ -197,7 +197,7 @@ msgstr "Name"
 msgid "Next Project"
 msgstr "Nächstes Projekt"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Next screenshot"
 msgstr "Nächster Screenshot"
 
@@ -217,7 +217,6 @@ msgstr "heute"
 msgid "Now"
 msgstr "Aktuell"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectDetail.tsx
 msgid "Numbers"
 msgstr "Zahlen"
@@ -225,6 +224,10 @@ msgstr "Zahlen"
 #: src/components/StoryContents.tsx
 msgid "On this page"
 msgstr "Auf dieser Seite"
+
+#: src/components/ProjectCard.tsx
+msgid "Open project"
+msgstr "Zum Projekt"
 
 #: src/components/ProjectMeta.tsx
 msgid "Open source"
@@ -262,7 +265,7 @@ msgstr "Zeitraum"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Bitte gib deinen Namen ein ({nameMin} bis {nameMax} Zeichen)."
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Previous screenshot"
 msgstr "Vorheriger Screenshot"
 
@@ -302,6 +305,11 @@ msgstr "Ergebnisse"
 msgid "Role"
 msgstr "Rolle"
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Screenshot {position} of {total}"
+msgstr "Screenshot {position} von {total}"
+
+#: src/components/ScreenshotLightbox.tsx
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Screenshots"
 msgstr "Screenshots"
@@ -324,6 +332,14 @@ msgstr "Wird gesendet …"
 msgid "Settings"
 msgstr "Einstellungen"
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show screenshot: {caption}"
+msgstr "Screenshot zeigen: {caption}"
+
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show thumbnails"
+msgstr "Vorschaubilder einblenden"
+
 #: src/shell/Sidebar.tsx
 msgid "Sidebar"
 msgstr "Seitenleiste"
@@ -334,6 +350,7 @@ msgid "Site language"
 msgstr "Seitensprache"
 
 #: src/routes/$lang/about.tsx
+#: src/routes/$lang/index.tsx
 msgid "Skills"
 msgstr "Kenntnisse"
 
@@ -345,7 +362,6 @@ msgstr "Zum Inhalt springen"
 msgid "Source code"
 msgstr "Quellcode"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectFacts.tsx
 msgid "Stack"
 msgstr "Stack"
@@ -394,6 +410,10 @@ msgstr "Quellcode ansehen"
 #: src/components/ProjectEntry.tsx
 msgid "Visit website"
 msgstr "Website besuchen"
+
+#: src/routes/$lang/index.tsx
+msgid "What I built"
+msgstr "Was ich gebaut habe"
 
 #: src/legal/pages.ts
 msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."

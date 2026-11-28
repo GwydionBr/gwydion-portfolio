@@ -4,6 +4,7 @@ import { Box, Group, Paper, Text, Title } from '@mantine/core'
 import { CaretLeft } from '@phosphor-icons/react'
 import { trackEvent } from '#/analytics/umami'
 import { RouterButton } from '#/components/links'
+import { ScreenshotLightbox } from '#/components/ScreenshotLightbox'
 import { useSiteLanguage } from '#/i18n/react'
 import { SHELL_BREAKPOINT } from './breakpoint'
 
@@ -27,6 +28,9 @@ export interface BackTarget {
  *   hero's content (pitch, calls to action) under it, and no action beside it.
  * - `back` (a detail view): on phones, where the sidebar is gone, a Back
  *   control to its list instead of the location line.
+ *
+ * The view is the page's lightbox too (`ScreenshotLightbox`): its
+ * screenshots open there, one after another.
  */
 export function View({
   title,
@@ -55,7 +59,7 @@ export function View({
   )
   if (hero)
     return (
-      <>
+      <ScreenshotLightbox>
         <Box component="header" mb={40} maw={768}>
           {locationLine}
           <Title order={1} mt="sm" fz={{ base: '1.875rem', xs: '2.25rem' }} lh={1.2}>
@@ -64,10 +68,10 @@ export function View({
           {hero}
         </Box>
         {children}
-      </>
+      </ScreenshotLightbox>
     )
   return (
-    <>
+    <ScreenshotLightbox>
       <Group component="header" mb="lg" justify="space-between" align="flex-end" gap="md">
         <Box miw={0}>
           {back && (
@@ -95,7 +99,7 @@ export function View({
         {action === undefined ? <ContactAction style={{ flexShrink: 0 }} /> : action}
       </Group>
       {children}
-    </>
+    </ScreenshotLightbox>
   )
 }
 

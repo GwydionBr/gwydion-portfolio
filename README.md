@@ -70,7 +70,7 @@ It renders `scripts/cv/` (layout and CV-only wording) to HTML and prints it with
 
 ## Share Image
 
-`public/og-image.png` (the Open Graph and Twitter image of every page) is generated the same way, from the Profile and the featured Projects:
+`public/og-image.png` (the Open Graph and Twitter image of every page) is generated the same way, from the Profile and the featured Projects (`featured` in `src/content/data/projects.ts` picks them for the share image only; the Overview shows every Project):
 
 ```bash
 bun run og:build

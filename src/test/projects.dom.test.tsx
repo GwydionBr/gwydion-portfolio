@@ -318,44 +318,68 @@ describe('The site’s own Projects', () => {
   })
 })
 
-describe('Projects on the Overview and in the sidebar', () => {
-  it('the Overview shows the featured Projects as cards, linking to their pages', async () => {
+describe('Projects on the Overview', () => {
+  const work = (page: { main(): HTMLElement }, name: string) =>
+    within(within(page.main()).getByRole('region', { name })).getAllByRole('article')
+
+  it('shows every Project as a card in the configured order, each one link to its page', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    const featured = within(page.main()).getByRole('region', { name: 'Featured Projects' })
-    const cards = within(featured).getAllByRole('article')
+    const cards = work(page, 'What I built')
     expect(
       cards.map((card) => within(card).getByRole('heading', { level: 3 }).textContent),
-    ).toEqual(['Fixture Engine', 'Fixture Studio'])
+    ).toEqual(['Fixture Engine', 'Fixture Studio', 'Fixture Kit'])
     expect(
-      within(cards[1]!).getByRole('link', { name: 'Fixture Studio' }).getAttribute('href'),
-    ).toBe('/en/projects/fixture-studio')
-    expect(within(featured).getByRole('link', { name: 'View all' }).getAttribute('href')).toBe(
-      '/en/projects',
-    )
+      cards.map((card) =>
+        within(card)
+          .getAllByRole('link')
+          .map((link) => [link.textContent, link.getAttribute('href')]),
+      ),
+    ).toEqual([
+      [['Fixture Engine', '/en/projects/self-engine']],
+      [['Fixture Studio', '/en/projects/fixture-studio']],
+      [['Fixture Kit', '/en/projects/fixture-kit']],
+    ])
   })
 
-  it('a featured Project with numbers shows them and its stack on its card', async () => {
+  it('says on each card what the Project is, what stands out, and when and as what it was built', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    const [engine, studio] = within(
-      within(page.main()).getByRole('region', { name: 'Featured Projects' }),
-    ).getAllByRole('article')
-    expect(within(engine!).getByRole('list', { name: 'Numbers' }).textContent).toBe(
-      '1,234commits56+releases',
-    )
-    expect(within(engine!).getByRole('list', { name: 'Stack' }).textContent).toBe(
-      'TypeScriptPostgres',
-    )
-    expect(within(studio!).queryByRole('list', { name: 'Numbers' })).toBeNull()
+    const [engine, studio] = work(page, 'What I built')
+    expect(engine!.textContent).toContain('Own product')
+    expect(engine!.textContent).toContain('Live, commercial')
+    expect(engine!.textContent).toContain('An engine for fixtures.')
+    expect(
+      within(engine!)
+        .getAllByRole('listitem')
+        .map((point) => point.textContent),
+    ).toEqual(['Fast engine', 'Tested engine', 'Typed engine'])
+    expect(within(engine!).getByRole('list', { name: 'Key points' })).toBeTruthy()
+    expect(engine!.textContent).toContain('2025–now · Sole developer')
+    expect(studio!.textContent).toContain('Client work')
+    expect(studio!.textContent).toContain('Launching soon')
   })
 
-  it('the German Overview names them in German', async () => {
+  it('leads a card with its cover, and a Project without one with no image', async () => {
+    const page = await visit('/en', { content: fixtureContent() })
+
+    const [engine, studio] = work(page, 'What I built')
+    const covers = within(engine!).getAllByRole('img', { name: 'The fixture dashboard' })
+    expect(covers.length).toBeGreaterThan(0)
+    expect(covers[0]!.getAttribute('srcset')).toContain('dashboard-en-')
+    expect(engine!.textContent).toContain('engine.example')
+    expect(within(studio!).queryByRole('img')).toBeNull()
+  })
+
+  it('names them in German under /de, each card leading to its German page', async () => {
     const page = await visit('/de', { content: fixtureContent() })
 
-    const featured = within(page.main()).getByRole('region', { name: 'Ausgewählte Projekte' })
-    expect(within(featured).getByRole('list', { name: 'Zahlen' }).textContent).toContain(
-      '1.234Commits',
+    const [engine, , kit] = work(page, 'Was ich gebaut habe')
+    expect(engine!.textContent).toContain('Eigenes Produkt')
+    expect(within(engine!).getByRole('list', { name: 'Kernpunkte' }).textContent).toContain(
+      'Schnelles engine',
     )
+    expect(engine!.textContent).toContain('2025–heute · Alleinige Entwicklerin')
+    expect(within(kit!).getByRole('link').getAttribute('href')).toBe('/de/projects/fixture-kit')
   })
 })

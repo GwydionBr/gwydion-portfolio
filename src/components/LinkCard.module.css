@@ -1,6 +1,6 @@
 /*
  * A card that is one link: its title's link covers the whole card, so the
- * card's other content stays plain content (ProjectCards, NextProject).
+ * card's other content stays plain content (ProjectCard, NextProject).
  */
 .card {
   position: relative;
@@ -15,4 +15,14 @@
   position: absolute;
   inset: 0;
   border-radius: var(--mantine-radius-lg);
+}
+
+/* Focused by keyboard, the whole card is ringed, not only its title. */
+.link:focus-visible {
+  outline: none;
+
+  &::after {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
 }

@@ -1,0 +1,19 @@
+/* The Overview's rail (RailLayout): more room between its parts than a Project page's cards need. */
+.layout {
+  --rail-stack-gap: var(--mantine-spacing-xl);
+}
+
+/*
+ * The two actions side by side where they fit, one under the other where
+ * they don't (in the rail, on phones), each then as wide as the column.
+ */
+.actions > * {
+  flex: 1 1 14rem;
+  max-width: 24rem;
+}
+
+/* "Now" and skills each open with a hairline, as parts of the rail rather than cards of their own. */
+.part {
+  padding-top: var(--mantine-spacing-lg);
+  border-top: 1px solid var(--line);
+}

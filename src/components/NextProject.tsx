@@ -12,18 +12,14 @@ import { Tile } from './Tile'
  * last, the first again), as a card linking to its page: what to read next.
  * Nothing when there is no other Project.
  */
-export function NextProject({ slug, className }: { slug: string; className?: string }) {
+export function NextProject({ slug }: { slug: string }) {
   const { t } = useLingui()
   const projects = useProjects()
   const next =
     projects[(projects.findIndex((project) => project.slug === slug) + 1) % projects.length]
   if (!next || next.slug === slug) return null
   return (
-    <Tile
-      title={t`Next Project`}
-      density="snug"
-      className={className ? `${classes.card} ${className}` : classes.card}
-    >
+    <Tile title={t`Next Project`} density="snug" className={classes.card}>
       <Group mt={8} gap={8} wrap="nowrap" align="center">
         <ProjectSwatch accent={next.accent} />
         <Text component="span" fw={600} c="var(--ink)" style={{ flex: 1 }}>

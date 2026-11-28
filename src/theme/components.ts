@@ -25,6 +25,7 @@ import {
   Typography,
   type MantineThemeComponents,
 } from '@mantine/core'
+import { Lightbox } from '@mantine/lightbox'
 import { Spotlight } from '@mantine/spotlight'
 import classes from './components.module.css'
 
@@ -248,6 +249,26 @@ export const siteComponents: MantineThemeComponents = {
       action: classes.spotlightAction,
       actionDescription: classes.spotlightDescription,
       empty: classes.spotlightEmpty,
+    },
+  }),
+
+  /**
+   * The enlarged screenshots (src/components/ScreenshotLightbox.tsx): dark in
+   * both themes, so a screenshot stands out like a photo in a viewer. It
+   * zooms, pages round from the last to the first, and closes on a click
+   * beside the image.
+   */
+  Lightbox: Lightbox.extend({
+    defaultProps: { withZoom: true, loop: true, closeOnClickOutside: true },
+    classNames: {
+      root: classes.lightbox,
+      content: classes.lightboxContent,
+      toolbarButton: classes.lightboxControl,
+      navigation: classes.lightboxNavigation,
+      navigationButton: classes.lightboxControl,
+      counter: classes.lightboxCounter,
+      caption: classes.lightboxCaption,
+      thumbnail: classes.lightboxThumbnail,
     },
   }),
 }

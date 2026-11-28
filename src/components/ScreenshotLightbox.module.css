@@ -1,0 +1,25 @@
+/* The button a screenshot enlarges from: the whole image, rounded like the card it sits in. */
+.trigger {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-md);
+  cursor: zoom-in;
+
+  /* Edge to edge in a frame that clips it: square, the focus ring drawn inside. */
+  &[data-flush] {
+    border-radius: 0;
+    outline-offset: -2px;
+  }
+}
+
+/*
+ * A thumbnail in the lightbox's strip fills its button from the top, where an
+ * app window has its header. No `display`: see story/ScreenshotGallery.module.css.
+ */
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
