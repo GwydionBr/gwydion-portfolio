@@ -17,6 +17,7 @@ import {
 } from '@mantine/lightbox'
 import { SquaresFour, X } from '@phosphor-icons/react'
 import { useLingui } from '@lingui/react/macro'
+import { useLocation } from '@tanstack/react-router'
 import type { Screenshot } from '#/content'
 import { useTheme } from '#/theme/react'
 import type { Theme } from '#/theme/theme'
@@ -113,8 +114,10 @@ const toolbarItems = ({
  * `EnlargeableScreenshot` inside adds itself while it is shown; opening one
  * collects them at that moment, in the order they appear on the page and each
  * screenshot once, so the lightbox pages through all of them, whichever
- * component shows them and however a story orders its galleries. It shows the
- * theme the page is shown in; its look and paging defaults are in the theme
+ * component shows them and however a story orders its galleries. It closes
+ * when the visitor goes to another page (Back, another Project, the other
+ * Site language), whose screenshots are others. It shows the theme the page
+ * is shown in; its look and paging defaults are in the theme
  * (src/theme/components.ts).
  */
 export function ScreenshotLightbox({ children }: { children: ReactNode }) {
@@ -125,6 +128,14 @@ export function ScreenshotLightbox({ children }: { children: ReactNode }) {
   const [openedBy, setOpenedBy] = useState<string | null>(null)
   const [shots, setShots] = useState<Screenshot[]>([])
   const [index, setIndex] = useState(0)
+
+  // The page's frame may stay mounted from one page to the next, and what it had open with it.
+  const path = useLocation({ select: (location) => location.pathname })
+  const [lastPath, setLastPath] = useState(path)
+  if (lastPath !== path) {
+    setLastPath(path)
+    setOpenedBy(null)
+  }
 
   const show = useCallback((id: string, entry: Shown) => {
     shown.current.set(id, entry)

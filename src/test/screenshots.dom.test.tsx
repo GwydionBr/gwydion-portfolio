@@ -182,6 +182,27 @@ describe('Self-Engine screenshots', () => {
     expect(document.activeElement).toBe(again)
   })
 
+  it('closes when the visitor goes to another page, as with Back, and opens that page’s screenshots after', async () => {
+    const page = await visit('/en/projects/self-engine', { content: fixtureContent() })
+    const [cover] = within(page.main()).getAllByRole('button', {
+      name: 'Enlarge screenshot: Dashboard',
+    })
+    await page.click(cover!)
+    expect(getByRole(document.body, 'dialog', { name: 'Screenshots' })).toBeTruthy()
+
+    // The same Project in German: the page's frame stays, its screenshots change.
+    await page.settle(() => page.router.history.push('/de/projects/self-engine'))
+
+    expect(page.path()).toBe('/de/projects/self-engine')
+    expect(queryByRole(document.body, 'dialog')).toBeNull()
+    await page.click(
+      within(page.main()).getByRole('button', { name: 'Screenshot vergrößern: Timer' }),
+    )
+    expect(shownSlide(getByRole(document.body, 'dialog')).announced).toBe(
+      'Screenshot 2 von 2: Ein laufender Fixture-Timer',
+    )
+  })
+
   it('shows a page’s only screenshot without arrows or thumbnails', async () => {
     const source = fixtureSource()
     const set = source.screenshots['self-engine']!
