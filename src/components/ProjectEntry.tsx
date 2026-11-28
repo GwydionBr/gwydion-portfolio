@@ -1,12 +1,13 @@
 import { Button, Group, Stack, Text } from '@mantine/core'
 import { useLingui } from '@lingui/react/macro'
-import { ArrowSquareOut, CheckCircle, GithubLogo } from '@phosphor-icons/react'
+import { ArrowSquareOut, GithubLogo } from '@phosphor-icons/react'
 import { eventAttributes } from '#/analytics/umami'
 import type { ProjectWithStory } from '#/content'
+import { websiteAddress } from './BrowserFrame'
 import { ProjectCover } from './ProjectCover'
 import classes from './ProjectEntry.module.css'
-import { ProjectKindBadge } from './ProjectMeta'
-import { StatusPill } from './StatusPill'
+import { KeyPoints } from './KeyPoints'
+import { ProjectKindAndStatus } from './ProjectMeta'
 
 /**
  * How a Project's page opens, so a visitor sees in seconds what it is: its
@@ -22,35 +23,11 @@ export function ProjectEntry({ project }: { project: ProjectWithStory }) {
   return (
     <div className={classes.entry} data-with-cover={cover ? true : undefined}>
       <Stack gap="md" className={classes.text}>
-        <Group gap="xs">
-          <ProjectKindBadge kind={project.kind} />
-          <StatusPill live={project.status.live}>{project.status.label}</StatusPill>
-        </Group>
+        <ProjectKindAndStatus project={project} />
         <Text fz={{ base: 18, xs: 20 }} lh={1.5} fw={500} c="var(--ink)" lts="-0.01em" m={0}>
           {project.summary}
         </Text>
-        <Stack
-          component="ul"
-          role="list"
-          aria-label={t`Key points`}
-          gap={8}
-          m={0}
-          p={0}
-          style={{ listStyle: 'none' }}
-        >
-          {project.keyPoints.map((point) => (
-            <Group component="li" key={point} gap="sm" wrap="nowrap" align="flex-start">
-              <CheckCircle
-                aria-hidden
-                size={18}
-                weight="fill"
-                color="var(--available)"
-                className={classes.check}
-              />
-              <Text c="var(--ink)">{point}</Text>
-            </Group>
-          ))}
-        </Stack>
+        <KeyPoints points={project.keyPoints} look="lead" />
         {(live || source) && (
           <Group gap="sm" mt="xs">
             {live && (
@@ -77,7 +54,7 @@ export function ProjectEntry({ project }: { project: ProjectWithStory }) {
           </Group>
         )}
       </Stack>
-      {cover && <ProjectCover shot={cover} address={live && new URL(live).host} />}
+      {cover && <ProjectCover shot={cover} address={websiteAddress(project)} />}
     </div>
   )
 }

@@ -13,36 +13,45 @@ describe('The Profile on the Overview', () => {
     expect(page.title()).toBe('Ada Example')
     const hero = page.main().querySelector('header')!
     expect(hero.textContent).toContain('Fixture developer · Testland')
-    expect(hero.textContent).toContain('I am a fixture.')
+    expect(page.main().textContent).toContain('I am a fixture.')
     const availability = tile(page, 'Availability')
     expect(availability.textContent).toContain('Open to fixtures')
     expect(availability.textContent).toContain('Also fixtures on the side')
   })
 
-  it('offers the CV and "Get in touch" right under the pitch', async () => {
+  it('offers the CV and "Get in touch" under the pitch, before the Projects', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    const hero = within(page.main().querySelector('header')!)
-    expect(hero.getByRole('link', { name: 'Download CV' }).getAttribute('href')).toBe(
-      '/cv/ada-example-cv-en.pdf',
-    )
-    expect(hero.getByRole('link', { name: 'Get in touch' }).getAttribute('href')).toBe(
-      '/en/contact',
-    )
+    const main = within(page.main())
+    const cv = main.getByRole('link', { name: 'Download CV' })
+    const contact = main.getByRole('link', { name: 'Get in touch' })
+    expect(cv.getAttribute('href')).toBe('/cv/ada-example-cv-en.pdf')
+    expect(contact.getAttribute('href')).toBe('/en/contact')
+    const projects = tile(page, 'What I built')
+    for (const action of [cv, contact])
+      expect(
+        action.compareDocumentPosition(projects) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy()
   })
 
-  it('shows "Now" below the Projects, and leaves the skills to About', async () => {
+  it('shows "Now" and the first skills, with nothing in them to tab to', async () => {
     const page = await visit('/en', { content: fixtureContent() })
 
-    expect(within(page.main()).queryByRole('region', { name: 'Skills' })).toBeNull()
-    expect(tile(page, 'Now').textContent).toContain('Learning · More tests.')
+    const now = tile(page, 'Now')
+    const skills = tile(page, 'Skills')
+    expect(now.textContent).toContain('Learning · More tests.')
+    expect(within(skills).getByRole('list', { name: 'Skills' }).textContent).toBe('Testing')
+    // Narrow they show after the Projects but come before them in the page: a link would be tabbed to out of turn.
+    for (const part of [now, skills])
+      expect(part.querySelectorAll('a, button, [tabindex]')).toHaveLength(0)
   })
 
   it('shows the same in German under /de', async () => {
     const page = await visit('/de', { content: fixtureContent() })
 
-    expect(page.main().querySelector('header')!.textContent).toContain('Ich bin ein Fixture.')
+    expect(page.main().textContent).toContain('Ich bin ein Fixture.')
     expect(tile(page, 'Aktuell').textContent).toContain('Lernen · Mehr Tests.')
+    expect(tile(page, 'Kenntnisse').textContent).toContain('Testing')
     const availability = tile(page, 'Verfügbarkeit')
     expect(availability.textContent).toContain('Offen für Fixtures')
     expect(availability.textContent).toContain('Nebenbei auch Fixtures')

@@ -11,16 +11,22 @@ import { THEMES, type Theme } from '#/theme/theme'
  * the same on server and client and the first paint is already right; the
  * hidden one is lazy, so it is never fetched. Once the theme is known only
  * its image renders, and a theme switch swaps it.
+ *
+ * `priority` is for an image in the first screen: fetched first, and no
+ * longer lazy once the theme is known (before that, lazy keeps the hidden
+ * theme's image from being fetched too).
  */
 export function ScreenshotImage({
   shot,
   theme,
   sizes,
+  priority = false,
   className,
 }: {
   shot: Screenshot
   theme: Theme | null
   sizes: string
+  priority?: boolean
   /** Sizing only; must not set `display`, which hides the other theme's image. */
   className?: string
 }) {
@@ -37,7 +43,8 @@ export function ScreenshotImage({
         width={shot.width}
         height={shot.height}
         alt={shot.alt}
-        loading="lazy"
+        loading={priority && theme ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
         decoding="async"
         className={className}
         lightHidden={theme === null && shown === 'dark'}

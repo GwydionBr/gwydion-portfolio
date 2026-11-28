@@ -1,6 +1,6 @@
 /*
- * The entry decides its layout by the room the Project page gives it (the
- * page is the size container, ProjectDetail.module.css): text and cover side
+ * The entry decides its layout by the room the Project page gives it (its
+ * RailLayout is the size container): text and cover side
  * by side where both have room, the cover under the text otherwise.
  */
 .entry {
@@ -15,13 +15,7 @@
   }
 }
 
-/* Without a cover the text keeps to the story's column, so it reads as the start of the page, not a gap. */
+/* Without a cover the text keeps to the story's column (RailLayout), so it reads as the start of the page, not a gap. */
 .entry:not([data-with-cover]) .text {
-  max-width: var(--story-width);
-}
-
-/* Beside the key point's first line. */
-.check {
-  flex-shrink: 0;
-  margin-top: 2px;
+  max-width: var(--main-width);
 }

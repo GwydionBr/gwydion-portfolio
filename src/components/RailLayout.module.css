@@ -1,0 +1,126 @@
+/*
+ * A page with a rail (RailLayout.tsx) decides its layout by the room it gets,
+ * not by the window: the rail needs space beside the main column. The
+ * layout is the size container, and this is the one place that says how
+ * much room that is.
+ *
+ * Narrow, one column: the rail's lead, the main column, the rail's tail,
+ * the foot. The rail and its cell then make no box of their own
+ * (`display: contents`), so their parts take their places in that column.
+ *
+ * Wide, two columns: the rail beside the main column, at the start or the
+ * end, in view while the main column scrolls, and the foot under the rail,
+ * level with the main column's end.
+ */
+.layout {
+  --rail-width: 17rem;
+  --rail-gap: 2.5rem;
+  /* Between the rail's parts while it stands beside the main column. */
+  --rail-stack-gap: var(--mantine-spacing-md);
+
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xl);
+}
+
+/* How wide the main column is, for what lines up with it above the columns (a Project's entry without a cover). */
+.layout > * {
+  --main-width: 100%;
+
+  @container (min-width: 50rem) {
+    --main-width: calc(100% - var(--rail-width) - var(--rail-gap));
+  }
+}
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xl);
+}
+
+.railCell,
+.rail {
+  display: contents;
+}
+
+.lead {
+  order: 1;
+}
+
+.main {
+  order: 2;
+  min-width: 0;
+}
+
+.tail {
+  order: 3;
+}
+
+.foot {
+  order: 4;
+}
+
+@container (min-width: 50rem) {
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--rail-width);
+    /* The rail takes what the foot leaves of the main column's height. */
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+      'main rail'
+      'main foot';
+    gap: 0 var(--rail-gap);
+  }
+
+  .columns[data-rail-side='start'] {
+    grid-template-columns: var(--rail-width) minmax(0, 1fr);
+    grid-template-areas:
+      'rail main'
+      'foot main';
+  }
+
+  .railCell {
+    display: block;
+    grid-area: rail;
+  }
+
+  /*
+   * In view while the main column scrolls, level with the page's top
+   * padding, until its cell ends (where the foot begins, or with the main
+   * column). On a window too short for it, it scrolls on its own. The
+   * padding (taken back by the margin) keeps its focus rings from being cut
+   * off by that scrolling.
+   */
+  .rail {
+    --rail-ring-room: 0.25rem;
+
+    position: sticky;
+    top: calc(var(--app-shell-padding) - var(--rail-ring-room));
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-stack-gap);
+    max-height: calc(100dvh - 2 * var(--app-shell-padding) + 2 * var(--rail-ring-room));
+    margin: calc(-1 * var(--rail-ring-room));
+    padding: var(--rail-ring-room);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .foot {
+    grid-area: foot;
+    align-self: end;
+    margin-top: var(--mantine-spacing-lg);
+  }
+}
+
+@container not (min-width: 50rem) {
+  .wideOnly {
+    display: none;
+  }
+}

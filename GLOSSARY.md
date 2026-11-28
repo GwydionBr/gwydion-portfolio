@@ -53,7 +53,7 @@ A piece of Gwydion's writing, published under Writing. Written in exactly one Po
 _Avoid_: article, blog entry, note
 
 **Overview** (de: _Übersicht_):
-The site's home: a dashboard of tiles summarising the Profile, featured Projects, latest Posts and Availability.
+The site's home, built so real work shows within the first screen: every Project as a card led by its screenshot, beside a rail with the pitch, the CV, Availability (on phones), "Now" and skills, and the latest Posts once there are any.
 _Avoid_: home page, landing page, dashboard (in copy)
 
 ### Languages

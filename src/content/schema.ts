@@ -94,18 +94,18 @@ export interface ProjectSource {
   /** Where to see it: the running product, and the source code when it is public. */
   links: ProjectLinks
   stack: string[]
-  /** Its numbers, if any; shown on its page and its Overview card. */
+  /** Its numbers, if any; shown on its page. */
   stats?: ProjectStatSource[]
-  /** Shown on the Overview and in the share image. */
+  /** Shown in the share image (the Overview shows every Project). */
   featured: boolean
   /** Position in every list, ascending. */
   order: number
   /** Its colour (a CSS colour), for its swatch. */
   accent: string
   /**
-   * The view of the screenshot that opens its page, beside the key points;
-   * left out for a Project without screenshots. Its story should not open
-   * with the same screenshot again.
+   * The view of the screenshot that opens its page, beside the key points,
+   * and leads its Overview card; left out for a Project without screenshots.
+   * Its story should not open with the same screenshot again.
    */
   cover?: string
 }

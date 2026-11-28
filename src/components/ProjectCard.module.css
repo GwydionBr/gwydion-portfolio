@@ -1,0 +1,44 @@
+/*
+ * A Project's card on the Overview. The card is its own size container, so
+ * its parts arrange by the room the card gets, wherever it stands.
+ */
+.card {
+  container-type: inline-size;
+}
+
+/* The cover cropped to a wide strip from its top: the part of a page a visitor sees first. */
+.crop {
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+}
+
+/* No `display`: ScreenshotImage hides the other theme's image through it. */
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Where a Project has no screenshot: a lower strip in its accent, its name and stack in it. */
+.noCover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  /* A quarter of the card's width, never lower than its two lines need. (An `aspect-ratio` would widen it past a narrow card.) */
+  min-height: max(7rem, 25cqi);
+  padding: var(--mantine-spacing-md);
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+}
+
+/* The key points side by side where the card is wide enough for three short lines. */
+.points {
+  display: grid;
+  gap: 6px var(--mantine-spacing-md);
+
+  @container (min-width: 34rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

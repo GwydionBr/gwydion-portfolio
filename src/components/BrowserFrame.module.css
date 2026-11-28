@@ -1,0 +1,37 @@
+/* A plain browser window: a bar with three dots and the address, the page below. */
+.window {
+  overflow: hidden;
+}
+
+/* As tall with the address as without. */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: calc(2.5rem + 1px);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--subtle) 30%, transparent);
+}
+
+.address {
+  flex: 1;
+  min-width: 0;
+  margin-inline-start: 8px;
+  padding: 2px 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--selected);
+  font-size: 11px;
+  line-height: 1rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+}

@@ -1,10 +1,11 @@
 import { msg } from '@lingui/core/macro'
 import type { MessageDescriptor } from '@lingui/core'
 import { useLingui } from '@lingui/react/macro'
-import { Badge } from '@mantine/core'
+import { Badge, Group } from '@mantine/core'
 import { Briefcase, Cube, GitBranch, type Icon } from '@phosphor-icons/react'
 import type { Project, ProjectKind } from '#/content'
 import { PeriodText } from './PeriodText'
+import { StatusPill } from './StatusPill'
 
 /** What each kind of Project is called in the interface. */
 const PROJECT_KIND_LABELS: Record<ProjectKind, MessageDescriptor> = {
@@ -42,5 +43,15 @@ export function ProjectMeta({ project }: { project: Pick<Project, 'kind' | 'peri
     <>
       <ProjectKindText kind={project.kind} /> · <PeriodText period={project.period} />
     </>
+  )
+}
+
+/** A Project's kind and its status, side by side as chips: how its page and its Overview card name them. */
+export function ProjectKindAndStatus({ project }: { project: Pick<Project, 'kind' | 'status'> }) {
+  return (
+    <Group gap="xs">
+      <ProjectKindBadge kind={project.kind} />
+      <StatusPill live={project.status.live}>{project.status.label}</StatusPill>
+    </Group>
   )
 }

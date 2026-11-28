@@ -127,10 +127,6 @@ msgstr "Expand sidebar"
 msgid "Facts"
 msgstr "Facts"
 
-#: src/routes/$lang/index.tsx
-msgid "Featured Projects"
-msgstr "Featured Projects"
-
 #: src/shell/View.tsx
 msgid "Get in touch"
 msgstr "Get in touch"
@@ -156,7 +152,7 @@ msgstr "How gwydion.dev handles personal data: hosting, analytics, the contact f
 msgid "How I handle your details is explained in the <0>{0}</0>."
 msgstr "How I handle your details is explained in the <0>{0}</0>."
 
-#: src/components/ProjectEntry.tsx
+#: src/components/KeyPoints.tsx
 msgid "Key points"
 msgstr "Key points"
 
@@ -221,7 +217,6 @@ msgstr "now"
 msgid "Now"
 msgstr "Now"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectDetail.tsx
 msgid "Numbers"
 msgstr "Numbers"
@@ -229,6 +224,10 @@ msgstr "Numbers"
 #: src/components/StoryContents.tsx
 msgid "On this page"
 msgstr "On this page"
+
+#: src/components/ProjectCard.tsx
+msgid "Open project"
+msgstr "Open project"
 
 #: src/components/ProjectMeta.tsx
 msgid "Open source"
@@ -351,6 +350,7 @@ msgid "Site language"
 msgstr "Site language"
 
 #: src/routes/$lang/about.tsx
+#: src/routes/$lang/index.tsx
 msgid "Skills"
 msgstr "Skills"
 
@@ -362,7 +362,6 @@ msgstr "Skip to content"
 msgid "Source code"
 msgstr "Source code"
 
-#: src/components/ProjectCards.tsx
 #: src/components/ProjectFacts.tsx
 msgid "Stack"
 msgstr "Stack"
@@ -411,6 +410,10 @@ msgstr "View source"
 #: src/components/ProjectEntry.tsx
 msgid "Visit website"
 msgstr "Visit website"
+
+#: src/routes/$lang/index.tsx
+msgid "What I built"
+msgstr "What I built"
 
 #: src/legal/pages.ts
 msgid "Who is responsible for gwydion.dev and how to reach him (Impressum)."
