@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useScreenshots } from '#/content/react'
 import type { Screenshot } from '#/content'
 import classes from './ScreenshotGallery.module.css'
-import { EnlargeableScreenshot, useScreenshotViewer } from './ScreenshotViewer'
+import { EnlargeableScreenshot } from '#/components/ScreenshotLightbox'
 import { useStoryProject } from './StoryProject'
 
 /** Wide enough to take the whole row: a whole app window or a wide close-up. */
@@ -19,8 +19,8 @@ const PHONES_PER_ROW = 4
  * The story's Project's screenshots (`<ScreenshotGallery />`), or only
  * `views`, in that order (`<ScreenshotGallery views={['dashboard']} />`), in
  * the Site language and the theme shown. A gallery of phone screens only
- * sets them side by side, up to four in a row. Each opens enlarged; the
- * enlarged view pages through this gallery's screenshots and closes with Escape.
+ * sets them side by side, up to four in a row. Each opens in the page's
+ * lightbox, which pages through every screenshot on the page.
  */
 export function ScreenshotGallery({ views }: { views?: string[] }) {
   const { t } = useLingui()
@@ -34,43 +34,38 @@ export function ScreenshotGallery({ views }: { views?: string[] }) {
       })
     : all
   const phones = shots.length > 0 && shots.every(isPortrait)
-  const { enlarge, viewer } = useScreenshotViewer(shots)
 
   return (
-    <>
-      <SimpleGrid
-        component="ul"
-        role="list"
-        aria-label={t`Screenshots`}
-        cols={phones ? { base: 2, xs: Math.min(shots.length, PHONES_PER_ROW) } : { base: 1, xs: 2 }}
-        spacing="sm"
-        p={0}
-        mb={0}
-        style={{ listStyle: 'none' }}
-      >
-        {shots.map((shot, position) => (
-          <Paper
-            component="li"
-            key={shot.view}
-            mt={0}
-            p={8}
-            className={isWide(shot) ? classes.wide : undefined}
-          >
-            <EnlargeableScreenshot
-              shot={shot}
-              enlarge={enlarge(position)}
-              sizes={
-                isWide(shot) ? '(min-width: 1024px) 42rem, 100vw' : `min(100vw, ${shot.width}px)`
-              }
-              className={classes.thumbnail}
-            />
-            <Text m={0} px={8} pt={8} pb={4} size="xs" lh="1rem" c="var(--subtle)">
-              {shot.caption}
-            </Text>
-          </Paper>
-        ))}
-      </SimpleGrid>
-      {viewer}
-    </>
+    <SimpleGrid
+      component="ul"
+      role="list"
+      aria-label={t`Screenshots`}
+      cols={phones ? { base: 2, xs: Math.min(shots.length, PHONES_PER_ROW) } : { base: 1, xs: 2 }}
+      spacing="sm"
+      p={0}
+      mb={0}
+      style={{ listStyle: 'none' }}
+    >
+      {shots.map((shot) => (
+        <Paper
+          component="li"
+          key={shot.view}
+          mt={0}
+          p={8}
+          className={isWide(shot) ? classes.wide : undefined}
+        >
+          <EnlargeableScreenshot
+            shot={shot}
+            sizes={
+              isWide(shot) ? '(min-width: 1024px) 42rem, 100vw' : `min(100vw, ${shot.width}px)`
+            }
+            className={classes.thumbnail}
+          />
+          <Text m={0} px={8} pt={8} pb={4} size="xs" lh="1rem" c="var(--subtle)">
+            {shot.caption}
+          </Text>
+        </Paper>
+      ))}
+    </SimpleGrid>
   )
 }

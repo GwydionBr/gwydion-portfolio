@@ -46,7 +46,7 @@ msgstr "Career"
 msgid "Client work"
 msgstr "Client work"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 #: src/shell/MoreSheet.tsx
 msgid "Close"
 msgstr "Close"
@@ -111,7 +111,7 @@ msgid "Email address copied"
 msgstr "Email address copied"
 
 #. placeholder {0}: shot.caption
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Enlarge screenshot: {0}"
 msgstr "Enlarge screenshot: {0}"
 
@@ -142,6 +142,10 @@ msgstr "Gwydion's path as a developer: his Career entries, his skills and his CV
 #: src/routes/$lang/writing/index.tsx
 msgid "Gwydion's Posts on building software."
 msgstr "Gwydion's Posts on building software."
+
+#: src/components/ScreenshotLightbox.tsx
+msgid "Hide thumbnails"
+msgstr "Hide thumbnails"
 
 #: src/legal/pages.ts
 msgid "How gwydion.dev handles personal data: hosting, analytics, the contact form and preferences stored on your device."
@@ -197,7 +201,7 @@ msgstr "Name"
 msgid "Next Project"
 msgstr "Next Project"
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Next screenshot"
 msgstr "Next screenshot"
 
@@ -262,7 +266,7 @@ msgstr "Period"
 msgid "Please enter your name ({nameMin} to {nameMax} characters)."
 msgstr "Please enter your name ({nameMin} to {nameMax} characters)."
 
-#: src/components/story/ScreenshotViewer.tsx
+#: src/components/ScreenshotLightbox.tsx
 msgid "Previous screenshot"
 msgstr "Previous screenshot"
 
@@ -302,6 +306,11 @@ msgstr "Results"
 msgid "Role"
 msgstr "Role"
 
+#: src/components/ScreenshotLightbox.tsx
+msgid "Screenshot {position} of {total}"
+msgstr "Screenshot {position} of {total}"
+
+#: src/components/ScreenshotLightbox.tsx
 #: src/components/story/ScreenshotGallery.tsx
 msgid "Screenshots"
 msgstr "Screenshots"
@@ -323,6 +332,14 @@ msgstr "Sending…"
 #: src/shell/SettingsMenu.tsx
 msgid "Settings"
 msgstr "Settings"
+
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show screenshot: {caption}"
+msgstr "Show screenshot: {caption}"
+
+#: src/components/ScreenshotLightbox.tsx
+msgid "Show thumbnails"
+msgstr "Show thumbnails"
 
 #: src/shell/Sidebar.tsx
 msgid "Sidebar"

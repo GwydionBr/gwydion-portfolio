@@ -397,6 +397,65 @@
   color: var(--subtle);
 }
 
+/*
+ * Lightbox: the enlarged screenshots on the canvas, dark in both themes (the
+ * tokens resolve to their dark side inside it). Opaque: the page behind it
+ * would show through as noise around the screenshot.
+ */
+.lightbox {
+  --lightbox-overlay-color: var(--canvas);
+  color-scheme: dark;
+}
+
+/* On a phone the arrows would sit on the screenshot: there it pages by swipe and thumbnails. */
+.lightboxNavigation {
+  @media (max-width: 36em) {
+    display: none;
+  }
+}
+
+.lightboxContent {
+  color: var(--ink);
+}
+
+/* Its buttons: the toolbar's (thumbnails, close) and the arrows beside the image. */
+.lightboxControl {
+  border-radius: var(--mantine-radius-md);
+  color: var(--muted);
+  opacity: 1;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--selected);
+      color: var(--ink);
+    }
+  }
+}
+
+.lightboxCounter {
+  color: var(--muted);
+  opacity: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.lightboxCaption {
+  color: var(--ink);
+  opacity: 1;
+}
+
+/* The open screenshot's thumbnail is outlined in ink; the focus ring sits inside, the strip clips it. */
+.lightboxThumbnail {
+  border-radius: var(--mantine-radius-sm);
+
+  &:where([data-active]) {
+    border-color: var(--ink);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+}
+
 /* Read by screen readers, not shown. */
 .visuallyHidden {
   position: absolute;
